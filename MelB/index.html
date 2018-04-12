@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>       
+        <title>MelB - Sistema de inventario</title>        
+        <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon"/>     
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">        
+	    <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+	    <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>    
+	    <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="Content/style4.css" rel="stylesheet" /> 
+</head>
+<body>
+        <!--Contenedor Global-->
+        <div class="wrapper">
+            <!-- Contenedor SideBar-->
+            <div class="contentsidebar">                
+                <!-- Sidebar Holder -->
+                <nav id="sidebar" class="active">
+                    <div class="sidebar-header">
+                        <h3>Musica en los barrios</h3>
+                        <strong>MelB</strong>
+                    </div>
+                    <ul class="list-unstyled components">
+                        <li id="menuinicio">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Inicio
+                            </a>
+                        </li>                                                                                                       
+                        <li>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                Inventario
+                            </a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu">
+                                <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>
+                                <li id="proveedoressubmenu"><a href="#">Proveedores</a></li>
+                                <li id="remisionessubmenu"><a href="#">Remisiones</a></li>
+                                <li id="accesoriossubmenu"><a href="#">Accesorios</a></li>
+                                <li id="estuchessubmenu"><a href="#">Estuches</a></li>
+                            </ul>
+                        </li>
+                        <li id="menucontacto" >
+                            <a href="#">
+                                <i class="glyphicon glyphicon-send"></i>
+                                Contacto
+                            </a>
+                        </li>
+                        <li id="menuacercade">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-info-sign"></i>
+                                Acerca de
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </nav>
+            </div>
+            
+
+            <!-- Page Content Holder - Contenedor NavBar-->
+            <div id="content">
+                <nav class="navbar navbar-default" id="cabezera_header">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Menu</span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                
+                <div >                    
+                    <!--  contenedor extra para las vistas del sidebar-->
+                    <div id="Inicio">
+                        <h4>Inicio</h4>                                                                                
+                    </div>
+                   
+                   <div id="Instrumentos">
+                    <div class="row" id="row_instrumento">                    	
+                    	<div class="panel panel-color panel-danger">
+									<div class="panel-heading">
+										<i class="ion-music-note" aria-hidden="true"></i>
+										<h3 class="TextoHeader">Instrumentos registrados en inventario</h3>
+									</div>
+									<div class="panel-body">
+									    <div class="table-responsive">
+											<table id="Instrumento_T" class="table table-striped table-bordered dt-responsive nowrap">
+											        <thead>
+											            <tr>
+											                <th>ID</th>
+											                <th>Imagen</th>
+											                <th>Tipo</th>
+											                <th>Marca</th>
+											                <th>Ubicación</th>
+											                <th>Detalle</th>
+											                <th>Eliminar</th>											                
+											            </tr>
+											        </thead>
+											        <tbody id="Instrumento_TBody">
+											            										            											            											            
+											        </tbody>
+											 </table>
+										</div>
+									</div>
+						</div>
+                    </div>             
+                    </div>      
+                    <div id="Proveedores">
+                        <h4>Proveedores
+                            <span style="float:right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalP" onclick="clearTextBoxP();">Nuevo Proveedor</button><br /><br />
+                            </span>
+                        </h4>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Telefono#1</th>
+                                    <th>Telefono#2</th>
+                                    <th>Correo</th>
+                                    <th>Direccion</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyP">
+                            </tbody>
+                        </table>     
+                    </div>
+
+                    <div id="Remisiones">
+                        <h4>Remisiones
+                            <span style="float:right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalR" onclick="clearTextBoxR();">Nueva Remision</button><br /><br />
+                            </span>
+                        </h4>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID_Remision</th>
+                                    <th>Estudiante</th>
+                                    <th>Fecha Prestamo</th>
+                                    <th>Fecha Entrega</th>
+                                    <th>Estado</th>
+                                    <th>Empleado</th>
+                                    <th>Instrumento</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyR">
+                            </tbody>
+                        </table>     
+                    </div>
+
+                    <div id="Accesorios">
+                        <h4>Accesorios
+                            <span style="float:right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalA" onclick="clearTextBoxA();">Nuevo Accesorio</button><br /><br />
+                            </span>
+                        </h4>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID_Accesorio</th>
+                                    <th>ID_Instrumento</th>                                    
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyA">
+                            </tbody>
+                        </table>     
+                    </div>
+
+                    <div id="Estuches">
+                        <h4>Estuches
+                            <span style="float:right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalE" onclick="clearTextBoxE();">Nueva Estuche</button><br /><br />
+                            </span>
+                        </h4>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Marca</th>
+                                    <th>Material</th>
+                                    <th>Color</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyE">
+                            </tbody>
+                        </table>     
+                    </div>
+
+                    <div id="Contacto">
+                        <h4>Musica en los barrios, Linda vista - Managua</h4>
+                    </div>
+
+                    <div id="Acerca de">
+                        <h4>Un proyecto musical asociado a la ONG Pan y Arte</h4>
+                    </div>
+                </div>
+            </div>
+
+    <!--SideBar NavBar-->
+         <!-- jQuery CDN -->
+
+
+         <script src="Scripts/jquery-3.0.0.min.js"></script>
+         <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+	 	 <script src="plugins/datatables/dataTables.bootstrap.js"></script>
+
+         <script src="Scripts/bootstrap.min.js"></script>             
+	    <!--Scripts MelB-->
+
+         <script src="Scripts/EventoNavegador.js"></script>
+
+    <!--Scripts Table Estudiantes-->
+         <script src="Scripts/WebAPI/Estudiante.js"></script>
+
+   
+    
+    <!--Scripts Table Instrumentos-->     
+            <script src="Scripts/WebAPI/Instrumentos.js"></script>          
+
+    <!--Scripts Table Proveedores-->
+            <script src="Scripts/WebAPI/Proveedor.js"></script>
+
+   <!--Scripts Table Remisiones-->
+            <script src="Scripts/WebAPI/Remision.js"></script>
+            
+
+    <!--Scripts Table Accesorios-->
+            <script src="Scripts/WebAPI/Accesorio.js"></script>
+
+    <!--Scripts Table Estuches-->
+            <script src="Scripts/WebAPI/Estuche.js"></script>
+
+
+           
+
+</body>
+</html>

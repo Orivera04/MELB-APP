@@ -1,0 +1,133 @@
+﻿var Tabla_Instrumento;
+$(document).ready(function ()
+{
+
+    $('#menuinicio').click(function (event) 
+    {
+        document.getElementById('Inicio').style.display = 'block';        
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+   
+
+    $('#instrumentossubmenu').click(function (event) 
+    {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Instrumentos').style.display = 'block';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+
+    $('#proveedoressubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';        
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'block';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+
+    $('#remisionessubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'block';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+
+    $('#accesoriossubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'block';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+
+    $('#estuchessubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'block';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+
+    $('#menucontacto').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';        
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'block';
+        document.getElementById('Acerca de').style.display = 'none';
+    });
+
+    $('#menuacercade').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';        
+        document.getElementById('Instrumentos').style.display = 'none';
+        document.getElementById('Proveedores').style.display = 'none';
+        document.getElementById('Remisiones').style.display = 'none';
+        document.getElementById('Accesorios').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';
+        document.getElementById('Contacto').style.display = 'none';
+        document.getElementById('Acerca de').style.display = 'block';
+    }); 
+
+     $('#sidebarCollapse').on('click', function () 
+     {
+         $('#sidebar').toggleClass('active');
+     });
+
+    
+    document.getElementById('Inicio').style.display = 'block';    
+    document.getElementById('Instrumentos').style.display = 'none';
+    document.getElementById('Proveedores').style.display = 'none';
+    document.getElementById('Remisiones').style.display = 'none';
+    document.getElementById('Accesorios').style.display = 'none';
+    document.getElementById('Estuches').style.display = 'none';
+    document.getElementById('Contacto').style.display = 'none';
+    document.getElementById('Acerca de').style.display = 'none';
+
+    Tabla_Instrumento = $('#Instrumento_T').DataTable
+    (   
+    {
+        "language": 
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate": 
+            {        
+                "next":       "Siguiente pagina",
+                "previous":   "Pagina anterior"
+            },
+            "columnDefs": [ {"className": "dt-center", "targets": "_all"}]
+        }
+    }
+    );
+
+});
+
