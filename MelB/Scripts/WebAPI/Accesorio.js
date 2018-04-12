@@ -18,32 +18,16 @@ function loadDataA() {
         success: function (result) {
             //alert("listo");
 
-            Resultado = JSON.parse(result);
-
-            var html = '';
-
-            for (i = 0; i < Resultado.length; i++) {
-
-                html += '<tr>';
-
-                html += '<td>' + Resultado[i].ID_Accesorio + '</td>';
-
-                html += '<td>' + Resultado[i].ID_Instrumento + '</td>';                
-
-                html += '<td>' + Resultado[i].Nombre + '</td>';
-
-                html += '<td>' + Resultado[i].Descripcion + '</td>';
-
-                html += '<td><a href="#" onclick="return getbyIDA(' + Resultado[i].ID_Accesorio + ')">Editar</a> | <a href="#" onclick="DeleleA(' + Resultado[i].ID_Accesorio + ')">Eliminar</a></td>';
-
-                html += '</tr>';
-
-            }//);
-
-            $('.tbodyA').html(html);
-
-
-
+            Resultado = JSON.parse(result);for (i = 0; i < Resultado.length; i++) 
+            {      
+                    Tabla_Accesorios.row.add( [
+                    Resultado[i].ID_Instrumento,
+                    Resultado[i].ID_Accesorio,
+                    Resultado[i].Nombre,
+                    Resultado[i].Descripcion,
+                    'd'
+                ] ).draw( false );                        
+            }
         },
 
         error: function (errormessage) {

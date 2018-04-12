@@ -18,36 +18,18 @@ function loadDataE() {
         success: function (result) {
             //alert("listo");
 
-            Resultado = JSON.parse(result);
-
-            var html = '';
-
-            for (i = 0; i < Resultado.length; i++) {
-
-                html += '<tr>';
-
-                html += '<td>' + Resultado[i].ID_Estuche + '</td>';
-
-                html += '<td>' + Resultado[i].Nombre + '</td>';
-
-                html += '<td>' + Resultado[i].Marca + '</td>';
-
-                html += '<td>' + Resultado[i].Material + '</td>';
-
-                html += '<td>' + Resultado[i].Color + '</td>';
-
-                html += '<td>' + Resultado[i].Estado + '</td>';
-
-                html += '<td><a href="#" onclick="return getbyIDE(' + Resultado[i].ID_Estuche + ')">Editar</a> | <a href="#" onclick="DeleleE(' + Resultado[i].ID_Estuche + ')">Eliminar</a></td>';
-
-                html += '</tr>';
-
-            }//);
-
-            $('.tbodyE').html(html);
-
-
-
+            Resultado = JSON.parse(result);for (i = 0; i < Resultado.length; i++) 
+            {      
+                    Tabla_Estuche.row.add( [
+                    Resultado[i].ID_Estuche,
+                    Resultado[i].Nombre,
+                    Resultado[i].Marca,
+                    Resultado[i].Material,
+                    Resultado[i].Color,
+                    Resultado[i].Estado,
+                    'd'
+                ] ).draw( false );                        
+            }
         },
 
         error: function (errormessage) {

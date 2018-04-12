@@ -119,92 +119,130 @@
 									</div>
 						</div>
                     </div>             
-                    </div>      
-                    <div id="Proveedores">
-                        <h4>Proveedores
-                            <span style="float:right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalP" onclick="clearTextBoxP();">Nuevo Proveedor</button><br /><br />
-                            </span>
-                        </h4>
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Telefono#1</th>
-                                    <th>Telefono#2</th>
-                                    <th>Correo</th>
-                                    <th>Direccion</th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbodyP">
-                            </tbody>
-                        </table>     
                     </div>
+
+
+                    <div id="Proveedores">
+                        <div class="row" id="row_proveedor">                     
+                           <div class="panel panel-color panel-danger">
+                                <div class="panel-heading">
+                                    <i class="ion-music-note" aria-hidden="true"></i>
+                                    <h3 class="TextoHeader">Proveedores de Instrumentos</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="Proveedor_T" class="table table-striped table-bordered dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Telefono#1</th>
+                                                    <th>Telefono#2</th>
+                                                    <th>Correo</th>
+                                                    <th>Direccion</th>
+                                                    <th>Eliminar</th>                                                           
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Proveedor_TBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <div id="Remisiones">
-                        <h4>Remisiones
-                            <span style="float:right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalR" onclick="clearTextBoxR();">Nueva Remision</button><br /><br />
-                            </span>
-                        </h4>
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID_Remision</th>
-                                    <th>Estudiante</th>
-                                    <th>Fecha Prestamo</th>
-                                    <th>Fecha Entrega</th>
-                                    <th>Estado</th>
-                                    <th>Empleado</th>
-                                    <th>Instrumento</th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbodyR">
-                            </tbody>
-                        </table>     
+                        <div class="row" id="row_remisiones">                     
+                           <div class="panel panel-color panel-danger">
+                                <div class="panel-heading">
+                                    <i class="ion-music-note" aria-hidden="true"></i>
+                                    <h3 class="TextoHeader">Remisiones de Préstamos de Instrumentos</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="Remision_T" class="table table-striped table-bordered dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID_Remision</th>
+                                                    <th>Estudiante</th>
+                                                    <th>Fecha Prestamo</th>
+                                                    <th>Fecha Entrega</th>
+                                                    <th>Estado</th>
+                                                    <th>Empleado</th>
+                                                    <th>Instrumento</th>
+                                                    <th>Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Remision_TBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                              
                     </div>
 
+
+
                     <div id="Accesorios">
-                        <h4>Accesorios
-                            <span style="float:right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalA" onclick="clearTextBoxA();">Nuevo Accesorio</button><br /><br />
-                            </span>
-                        </h4>
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID_Accesorio</th>
-                                    <th>ID_Instrumento</th>                                    
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbodyA">
-                            </tbody>
-                        </table>     
+                        <div class="row" id="row_accesorios">                     
+                           <div class="panel panel-color panel-danger">
+                                <div class="panel-heading">
+                                    <i class="ion-music-note" aria-hidden="true"></i>
+                                    <h3 class="TextoHeader">Listado de todos los Accesorios existentes</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="Accesorios_T" class="table table-striped table-bordered dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID_Accesorio</th>
+                                                    <th>ID_Instrumento</th>                                    
+                                                    <th>Nombre</th>
+                                                    <th>Descripcion</th>
+                                                    <th>Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Accesorios_TBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                              
                     </div>
 
                     <div id="Estuches">
-                        <h4>Estuches
-                            <span style="float:right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalE" onclick="clearTextBoxE();">Nueva Estuche</button><br /><br />
-                            </span>
-                        </h4>
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Marca</th>
-                                    <th>Material</th>
-                                    <th>Color</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody class="tbodyE">
-                            </tbody>
-                        </table>     
+                        <div class="row" id="row_estuches">                     
+                           <div class="panel panel-color panel-danger">
+                                <div class="panel-heading">
+                                    <i class="ion-music-note" aria-hidden="true"></i>
+                                    <h3 class="TextoHeader">Estuches correspondientes a Instrumentos en Inventario</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="Estuche_T" class="table table-striped table-bordered dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Marca</th>
+                                                    <th>Material</th>
+                                                    <th>Color</th>
+                                                    <th>Estado</th>
+                                                    <th>Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Estuche_TBody">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                                      
                     </div>
 
                     <div id="Contacto">

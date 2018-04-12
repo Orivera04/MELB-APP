@@ -8,54 +8,28 @@
 
 function loadDataP() {
     var Resultado
-
     $.ajax({
-
         url: 'http://melbws.azurewebsites.net/api/Proveedor',
-
         type: 'GET',
-
         success: function (result) {
             //alert("listo");
-
             Resultado = JSON.parse(result);
-
-            var html = '';
-
-            for (i = 0; i < Resultado.length; i++) {//$.each(result, function (key, item) {
-                
-                html += '<tr>';
-
-                html += '<td>' + Resultado[i].ID_Proveedor + '</td>';
-
-                html += '<td>' + Resultado[i].Nombre + '</td>';
-
-                html += '<td>' + Resultado[i].Telefono_1 + '</td>';
-
-                html += '<td>' + Resultado[i].Telefono_2 + '</td>';
-
-                html += '<td>' + Resultado[i].Correo + '</td>';
-
-                html += '<td>' + Resultado[i].Direccion + '</td>';
-
-                html += '<td><a href="#" onclick="return getbyIDP(' + Resultado[i].ID_Proveedor + ')">Editar</a> | <a href="#" onclick="DeleleP(' + Resultado[i].ID_Proveedor + ')">Eliminar</a></td>';
-
-                html += '</tr>';
-
-            }//);
-
-            $('.tbodyP').html(html);
-
-
-
+            for (i = 0; i < Resultado.length; i++) 
+            {      
+                    Tabla_Proveedor.row.add( [
+                    Resultado[i].ID_Proveedor,
+                    Resultado[i].Nombre,
+                    Resultado[i].Telefono_1,
+                    Resultado[i].Telefono_1,
+                    Resultado[i].Correo,
+                    Resultado[i].Direccion,
+                    'd'
+                ] ).draw( false );                        
+            }
         },
-
         error: function (errormessage) {
-
             alert(errormessage.responseText);
-
         }
-
     });
 }
 

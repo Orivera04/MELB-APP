@@ -20,51 +20,19 @@ function loadDataR() {
         success: function (result) {
 
             Resultado = JSON.parse(result);
-
-            var html = '';
-
-            for (i = 0; i < Resultado.length; i++) {
-
-                //if (Resultado[i].Lista_Desglose.length == 0) {
-                    
-                //}
-
-                html += '<tr>';
-
-                html += '<td>' + Resultado[i].ID_Remision + '</td>';
-
-                html += '<td>' + Resultado[i].Nombre_Estudiante + '</td>';
-
-                html += '<td>' + Resultado[i].Fecha_Prestamo + '</td>';
-
-                html += '<td>' + Resultado[i].Fecha_Entrega + '</td>';
-
-                html += '<td>' + Resultado[i].Estado_Remision + '</td>';
-
-                html += '<td>' + Resultado[i].Empleado_Nombre + '</td>';
-
-                html += '<td>';
-
-                Resultado[i].Lista_Desglose.forEach(function (iteracion) {
-                    if (Resultado[i].Lista_Desglose.length > 0) {
-
-                        html += iteracion.Nombre + "   ";
-                        //html += '<td>' + iteracion.Nombre + '</td>';
-                    }
-                });
-
-                html += '</td>';
-
-                html += '<td><a href="#" onclick="return getbyIDR(' + Resultado[i].ID_Remision + ')">Editar</a> | <a href="#" onclick="DeleleR(' + Resultado[i].ID_Remision + ')">Eliminar</a></td>';
-
-                html += '</tr>';
-
-                
-
-            }//);
-
-            $('.tbodyR').html(html);
-
+             for (i = 0; i < Resultado.length; i++) 
+            {      
+                    Tabla_Remision.row.add( [
+                    Resultado[i].ID_Remision,
+                    Resultado[i].Nombre_Estudiante,
+                    Resultado[i].Fecha_Prestamo,
+                    Resultado[i].Fecha_Entrega,
+                    Resultado[i].Estado_Remision,
+                    Resultado[i].Empleado_Nombre,
+                    Resultado[i].Lista_Desglose,
+                    'd'
+                ] ).draw( false );                        
+            }
         },
 
         error: function (errormessage) {

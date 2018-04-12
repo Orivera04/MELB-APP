@@ -35,23 +35,15 @@ $(document).ready(function () {
 
 function loadData() {
     var Resultado
-
     $.ajax({
-
         url: 'http://melbws.azurewebsites.net/api/Instrumentos',
-        
         type: 'GET',
-
         success: function (result) {
             //alert("listo");
-
             Resultado = JSON.parse(result);
-            
-
             for (i = 0; i < Resultado.length; i++) 
             {      
-
-                     Tabla_Instrumento.row.add( [
+                    Tabla_Instrumento.row.add( [
                     Resultado[i].ID_Instrumento,
                     Resultado[i].Imagen,
                     Resultado[i].Nombre,
@@ -62,13 +54,9 @@ function loadData() {
                 ] ).draw( false );                        
             }
         },
-
         error: function (errormessage) {
-
             alert(errormessage.responseText);
-
         }
-
     });
 }
 

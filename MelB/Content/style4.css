@@ -312,6 +312,30 @@ a.article, a.article:hover {
     margin-right: 1px;
 }
 
+#row_proveedor
+{
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+#row_remisiones
+{
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+#row_accesorios
+{
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+#row_estuches
+{
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
 .panel-heading > i
 {
     font-size: 25px !important;
