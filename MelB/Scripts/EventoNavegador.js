@@ -2,6 +2,7 @@
 $(document).ready(function ()
 {
 
+
     $('#menuinicio').click(function (event) 
     {
         document.getElementById('Inicio').style.display = 'block';        
@@ -10,8 +11,7 @@ $(document).ready(function ()
         document.getElementById('Remisiones').style.display = 'none';
         document.getElementById('Accesorios').style.display = 'none';
         document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'none';
+       
     });
    
 
@@ -22,9 +22,7 @@ $(document).ready(function ()
         document.getElementById('Proveedores').style.display = 'none';
         document.getElementById('Remisiones').style.display = 'none';
         document.getElementById('Accesorios').style.display = 'none';
-        document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';        
     });
 
     $('#proveedoressubmenu').click(function (event) {
@@ -34,8 +32,6 @@ $(document).ready(function ()
         document.getElementById('Remisiones').style.display = 'none';
         document.getElementById('Accesorios').style.display = 'none';
         document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'none';
     });
 
     $('#remisionessubmenu').click(function (event) {
@@ -44,9 +40,7 @@ $(document).ready(function ()
         document.getElementById('Proveedores').style.display = 'none';
         document.getElementById('Remisiones').style.display = 'block';
         document.getElementById('Accesorios').style.display = 'none';
-        document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';         
     });
 
     $('#accesoriossubmenu').click(function (event) {
@@ -55,9 +49,7 @@ $(document).ready(function ()
         document.getElementById('Proveedores').style.display = 'none';
         document.getElementById('Remisiones').style.display = 'none';
         document.getElementById('Accesorios').style.display = 'block';
-        document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'none';
+        document.getElementById('Estuches').style.display = 'none';        
     });
 
     $('#estuchessubmenu').click(function (event) {
@@ -67,46 +59,13 @@ $(document).ready(function ()
         document.getElementById('Remisiones').style.display = 'none';
         document.getElementById('Accesorios').style.display = 'none';
         document.getElementById('Estuches').style.display = 'block';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'none';
+
     });
-
-    $('#menucontacto').click(function (event) {
-        document.getElementById('Inicio').style.display = 'none';        
-        document.getElementById('Instrumentos').style.display = 'none';
-        document.getElementById('Proveedores').style.display = 'none';
-        document.getElementById('Remisiones').style.display = 'none';
-        document.getElementById('Accesorios').style.display = 'none';
-        document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'block';
-        document.getElementById('Acerca de').style.display = 'none';
-    });
-
-    $('#menuacercade').click(function (event) {
-        document.getElementById('Inicio').style.display = 'none';        
-        document.getElementById('Instrumentos').style.display = 'none';
-        document.getElementById('Proveedores').style.display = 'none';
-        document.getElementById('Remisiones').style.display = 'none';
-        document.getElementById('Accesorios').style.display = 'none';
-        document.getElementById('Estuches').style.display = 'none';
-        document.getElementById('Contacto').style.display = 'none';
-        document.getElementById('Acerca de').style.display = 'block';
-    }); 
-
      $('#sidebarCollapse').on('click', function () 
      {
          $('#sidebar').toggleClass('active');
      });
-
     
-    document.getElementById('Inicio').style.display = 'block';    
-    document.getElementById('Instrumentos').style.display = 'none';
-    document.getElementById('Proveedores').style.display = 'none';
-    document.getElementById('Remisiones').style.display = 'none';
-    document.getElementById('Accesorios').style.display = 'none';
-    document.getElementById('Estuches').style.display = 'none';
-    document.getElementById('Contacto').style.display = 'none';
-    document.getElementById('Acerca de').style.display = 'none';
 
     Tabla_Instrumento = $('#Instrumento_T').DataTable
     (   
@@ -210,7 +169,7 @@ $(document).ready(function ()
                 "next":       "Siguiente pagina",
                 "previous":   "Pagina anterior"
             },
-            "columnDefs": [ {"className": "dt-center", "targets": "_all"}]
+            "columnDefs": [ {"className": "dt-center", "targets": "_all"}]        
         }
     }
     );

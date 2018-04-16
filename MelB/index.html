@@ -39,25 +39,17 @@
                                 Inventario
                             </a>
                             <ul class="collapse list-unstyled" id="pageSubmenu">
-                                <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>
-                                <li id="proveedoressubmenu"><a href="#">Proveedores</a></li>
-                                <li id="remisionessubmenu"><a href="#">Remisiones</a></li>
                                 <li id="accesoriossubmenu"><a href="#">Accesorios</a></li>
                                 <li id="estuchessubmenu"><a href="#">Estuches</a></li>
+                                <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>                                                           
                             </ul>
-                        </li>
-                        <li id="menucontacto" >
-                            <a href="#">
-                                <i class="glyphicon glyphicon-send"></i>
-                                Contacto
+                            <a href ="#"  id="proveedoressubmenu" aria-expanded="false">
+                                <i class="glyphicon glyphicon-bookmark"></i> Proveedores                                
                             </a>
-                        </li>
-                        <li id="menuacercade">
-                            <a href="#">
-                                <i class="glyphicon glyphicon-info-sign"></i>
-                                Acerca de
+                            <a href="#" id="remisionessubmenu" aria-expanded="false">
+                                <i class="glyphicon glyphicon-file"></i> Remisiones
                             </a>
-                        </li>
+                        </li>                        
                     </ul>
                     
                 </nav>
@@ -119,8 +111,91 @@
 									</div>
 						</div>
                     </div>             
-                    </div>
+                   </div>
 
+                   <div id="Instrumento_Detalle">
+                        <div class="row" id="row_instrumento">                     
+                              <div class="panel panel-color panel-danger">
+                                    <div class="panel-heading">
+                                         <i class="ion-music-note" aria-hidden="true"></i>
+                                         <h3 class="TextoHeader">Descripción del instrumento</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-3 ">                                                 
+                                               <img src="https://k62.kn3.net/C5E61EEF4.png" class='img-thumbnail'>
+                                               <button type="button" class="btn btn-Custom">
+                                                   <span class="btn-label"><l class="ion-image" data-pack="default" data-tags="photo"></i></span>Cambiar imagen
+                                                </button>                                               
+                                            </div>
+                                            <div class="col-sm-9 ">
+                                                <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="p-20">
+                                                                <form>
+                                                                    <div class="form-group">
+                                                                      <label class="control-label">Identificador</label>
+                                                                      <div class="input-group m-t-10">
+                                                                            <input type="text" id="example-input2-group2" class="form-control" placeholder="ID">
+                                                                            <span class="input-group-btn">
+                                                                            <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pound" data-pack="default" data-tags="hashtag, #"></i></button>
+                                                                            </span>
+                                                                      </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Color</label>
+                                                                        <input type="password" class="form-control" id="pwd">
+                                                                        
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Proveedor</label>
+                                                                        <input type="password" class="form-control" id="pwd">
+                                                                    </div> 
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Material</label>
+                                                                        <input type="password" class="form-control" id="pwd">
+                                                                    </div>                                              
+                                                                                                                                                                                              
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <div class="col-md-6">
+                                                            <div class="p-20">
+                                                                <form>                                                   
+                                                                    <div class="form-group">
+                                                                               <label class="control-label">Tipo</label>
+                                                                      <div class="input-group m-t-10">
+                                                                            <input type="text" id="example-input2-group2" class="form-control" placeholder="ID">
+                                                                            <span class="input-group-btn">
+                                                                            <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-grid" data-pack="default" data-tags="menu"></i></button>
+                                                                            </span>
+                                                                      </div>                                                
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Marca</label>                                                                  
+                                                                        <input type="password" class="form-control" id="pwd">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Estuche</label>             
+                                                                        <input type="password" class="form-control" id="pwd">
+                                                                    </div>                                                 
+                                                                     <div class="form-group">
+                                                                        <label class="control-label">Descripción</label> 
+                                                                        <input type="password" class="form-control" id="pwd">
+                                                                    </div>                  
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              </div>                    
+                        </div>
+                   </div>
 
                     <div id="Proveedores">
                         <div class="row" id="row_proveedor">                     
@@ -243,15 +318,7 @@
                                 </div>
                             </div>
                         </div>                                                      
-                    </div>
-
-                    <div id="Contacto">
-                        <h4>Musica en los barrios, Linda vista - Managua</h4>
-                    </div>
-
-                    <div id="Acerca de">
-                        <h4>Un proyecto musical asociado a la ONG Pan y Arte</h4>
-                    </div>
+                    </div>                   
                 </div>
             </div>
 

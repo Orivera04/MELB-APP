@@ -306,31 +306,7 @@ a.article, a.article:hover {
     padding: 10px 20px;
 }
 
-#row_instrumento
-{
-    margin-left: 1px;
-    margin-right: 1px;
-}
-
-#row_proveedor
-{
-    margin-left: 1px;
-    margin-right: 1px;
-}
-
-#row_remisiones
-{
-    margin-left: 1px;
-    margin-right: 1px;
-}
-
-#row_accesorios
-{
-    margin-left: 1px;
-    margin-right: 1px;
-}
-
-#row_estuches
+#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches
 {
     margin-left: 1px;
     margin-right: 1px;
@@ -363,7 +339,7 @@ th {
 
 label 
 {
-font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: #797979;
     font-size: 14px;
 }
@@ -371,4 +347,94 @@ font-family: 'Roboto', sans-serif;
 th,td 
 { 
     text-align: center !important; 
+}
+
+#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle
+{
+    display: none;
+}
+table.dataTable tbody td 
+{
+  vertical-align: middle;
+}
+
+
+
+.btn-Custom, .btn-Custom:hover, .btn-Custom:focus, .btn-Custom:active, .btn-Custom.active, .btn-Custom.focus, .btn-Custom:active, .btn-Custom:focus, .btn-Custom:hover, .open > .dropdown-toggle.btn-Custom {
+    display: block;
+    background-color: #7e57c2 !important;
+    border: 1px solid #7e57c2 !important;
+    color: white;
+    margin:0 auto;
+    margin-top: 15px;
+
+}
+
+
+
+.btn-label {
+    background: rgba(0, 0, 0, 0.05);
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 3px 0 0 3px;
+    margin: -7px -13px;
+    margin-right: 12px;
+}
+
+
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+    color: #565656;
+    padding: 7px 12px;
+    height: 38px;
+    max-width: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control 
+{
+    background-color: #eee;
+    opacity: 1;
+}
+
+.input-group-btn {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+}
+.input-group-addon, .input-group-btn 
+{
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.input-group .form-control, .input-group-addon, .input-group-btn 
+{
+    display: table-cell;
+}
+
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    z-index: 2;
+    margin-left: -1px;
+}
+.input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:first-child>.btn-group:not(:first-child)>.btn, .input-group-btn:first-child>.btn:not(:first-child), .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group>.btn, .input-group-btn:last-child>.dropdown-toggle {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.input-group-btn .btn {
+    padding: 8px 12px;
+}
+
+.btn-color
+{
+        background-color: #5d9cec !important;
+        border: 1px solid #5d9cec !important;
 }
