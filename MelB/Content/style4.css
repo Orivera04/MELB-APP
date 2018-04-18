@@ -457,3 +457,114 @@ table.dataTable tbody td
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
+/*
+.onoffswitch {
+    position: relative; width: 100px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #FFF; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "";
+    padding-left: 10px;
+    background-color: #FFFFFF; color: #FFFFFF;
+    visibility: hidden;
+
+}
+.onoffswitch-inner:after {
+    content: "";
+    padding-right: 10px;
+    background-color: #FFFFFF; color: #FFFFFF;
+    text-align: right;
+    visibility: hidden;
+
+}
+.onoffswitch-switch {
+    display: block; width: 21px; margin: 4.5px;
+    background: #fff;
+    position: absolute; top: 0; bottom: 0;
+    right: 66px;
+    border: 2px solid #FFF; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+*/
+
+.onoffswitch {
+    position: relative; width: 44px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    float: right;
+    margin-top: 6px;
+    margin-left: 15px;
+    top:50%;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #FFF; border-radius: 50px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
+    font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before 
+{
+    content: "";
+    padding-left: 5px;
+    visibility: hidden;    
+}
+.onoffswitch-inner:after {
+    content: "";
+    padding-right: 5px;
+    background-color: #FFFFFF; color: #FFFFFF;
+    text-align: right;
+    visibility: hidden;
+}
+.onoffswitch-switch {
+    display: block; width: 16px; margin: 3.5px;
+    background: #fff;
+    position: absolute; top: 0; bottom: 0;
+    right: 20px;
+    border: 2px solid #FFF; border-radius: 50px;
+    transition: all 0.3s ease-in 0s;
+    margin-bottom: 9px; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
+.FlotarDerecha
+{
+    float: right;
+    color: white;
+    font-size: 25px !important;    
+}
