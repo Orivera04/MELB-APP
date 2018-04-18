@@ -2,6 +2,8 @@
 $(document).ready(function ()
 {
 
+    $('.selectpicker').selectpicker();
+    $('#Color_Instrumento').colorpicker();
 
     $('#menuinicio').click(function (event) 
     {
