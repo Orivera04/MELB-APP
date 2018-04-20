@@ -80,17 +80,21 @@
                             <h3 class="TextNavHeader"> Sistema de control de inventario</h3>                                        
                         </ul>
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <!--<button type="button" class="btn btn-success" onclick="Detallar_Datos_Instrumento(1111221)"><i class="ion-navicon-round" data-pack="default"></i></button> -->
+                        <ul class="nav navbar-nav navbar-right">                
+
+							<form class="navbar-form navbar-left" role="search">
+                                <button id="Busqueda" type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                    <span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
+                                    </span>   Añadir Instrumento               
+                                </button>
                                 <div class="input-group m-t-10">
-                                    <input type="text" id="Descripcion_Instrumento" class="form-control" placeholder="Descripción general del instrumento" maxlength="50">
+                                    <input type="text" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="write"></i></button>
+                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
                                     </span>
                                 </div>
-
-                        </ul>
-
+							</form>
+                        </ul>                            
                     </div>
                 </div>
             </nav>
