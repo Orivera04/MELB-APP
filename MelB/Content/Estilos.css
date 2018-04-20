@@ -272,6 +272,9 @@ a.article, a.article:hover {
 #cabezera_header
 {
     margin-bottom: 30px !important;
+    border: none;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02) !important;
+    border-radius:  3px;    
 }
 
 .TextoHeader
@@ -522,4 +525,14 @@ button
 {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
+}
+
+.TextNavHeader
+{
+    color: #5f5e61;
+    font-size: 18px;
+    margin-left: 10px;
+    margin-top: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
 }
