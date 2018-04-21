@@ -1,12 +1,5 @@
-﻿$(document).ready(function () {
-
-    loadDataP();
-
-});
-
-//Load Data function
-
-function loadDataP() {
+﻿function Cargar_Proveedores()
+{
     var Resultado
     $.ajax({
         url: 'http://melbws.azurewebsites.net/api/Proveedor',
@@ -24,11 +17,18 @@ function loadDataP() {
                     Resultado[i].Correo,
                     Resultado[i].Direccion,
                     'd'
-                ] ).draw( false );                        
+                ] ).draw( false );                      
             }
+            Cargar_Remisiones();
         },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
+        error: function (Mensaje) 
+        {
+            swal
+            ({
+                  title: "Error listando proveedores",
+                  text: "No se pudo conectar con el servidor.",
+                  type: "error",
+            });
         }
     });
 }

@@ -21,6 +21,7 @@
 	    <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
         <link href="plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/sweetalert2/latest/sweetalert2.min.css" rel="stylesheet">
         <link href="Content/Estilos.css" rel="stylesheet" /> 
 </head>
 <body>
@@ -48,12 +49,12 @@
                         </a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li id="estuchessubmenu"><a href="#">Estuches</a></li>
-                            <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>                                                           
+                            <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>                                                          
                         </ul>
-                        <a href ="#"  id="proveedoressubmenu" aria-expanded="false">
+                        <a href ="#"  id="proveedoressubmenu">
                             <i class="glyphicon glyphicon-bookmark"></i> Proveedores                                
                         </a>
-                        <a href="#" id="remisionessubmenu" aria-expanded="false">
+                        <a href="#" id="remisionessubmenu">
                             <i class="glyphicon glyphicon-file"></i> Remisiones
                         </a>
                     </li>                        
@@ -68,10 +69,9 @@
             <nav class="navbar navbar-default" id="cabezera_header">
                 <div class="container-fluid">
 
-                    <div class="navbar-header">
+                    <div class="navbar-header" id="Header_Nav">
                         <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            <span>Menu</span>
+                            <i class="ion-navicon-round" data-pack="default" data-tags="menu, hamburger, slide menu"></i>
                         </button>
                     </div>
 
@@ -79,15 +79,14 @@
                         <ul class="nav navbar-nav navbar-left">
                             <h3 class="TextNavHeader"> Sistema de control de inventario</h3>                                        
                         </ul>
-
-                        <ul class="nav navbar-nav navbar-right">                
+                        <ul class="nav navbar-nav navbar-right" id="Form_Right">                
 
 							<form class="navbar-form navbar-left" role="search">
-                                <button id="Busqueda" type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                <button id="ADD" type="button" class="btn waves-effect waves-light btn-primary btn-color">
                                     <span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
                                     </span>   Añadir Instrumento               
                                 </button>
-                                <div class="input-group m-t-10">
+                                <div class="input-group m-t-10" id="Busqueda_Form">
                                     <input type="text" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
@@ -410,14 +409,19 @@
             </div>
         </div>
 
-     <!-- Plugins Boostrap -->
      <script src="Scripts/jquery-3.0.0.min.js"></script>
+     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+     <!-- Plugins Boostrap -->     
      <script src="plugins/datatables/jquery.dataTables.min.js"></script>
  	 <script src="plugins/datatables/dataTables.bootstrap.js"></script>
      <script src="plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
      <script src="plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
      <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
      <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
+
+     <!-- Plugins Alertas -->
+     <script src="https://cdn.jsdelivr.net/sweetalert2/latest/sweetalert2.min.js"></script>
 
      <!-- Cargando Boostrap y sus dependencias -->
      <script src="Scripts/bootstrap.min.js"></script>             

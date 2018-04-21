@@ -1,14 +1,5 @@
-﻿var edicion = false;
-
-$(document).ready(function () {
-
-    loadDataR();
-
-});
-
-//Load Data function
-
-function loadDataR() {
+﻿function Cargar_Remisiones() 
+{
     var Resultado
 
     $.ajax({
@@ -20,7 +11,7 @@ function loadDataR() {
         success: function (result) {
 
             Resultado = JSON.parse(result);
-             for (i = 0; i < Resultado.length; i++) 
+            for (i = 0; i < Resultado.length; i++) 
             {      
                     Tabla_Remision.row.add( [
                     Resultado[i].ID_Remision,
@@ -33,12 +24,17 @@ function loadDataR() {
                     'd'
                 ] ).draw( false );                        
             }
+            swal.closeModal();
         },
 
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
+        error: function (Mensaje) 
+        {        
+            swal
+            ({
+                  title: "Error listando remisiones",
+                  text: "No se pudo conectar con el servidor.",
+                  type: "error",
+            });
         }
 
     });

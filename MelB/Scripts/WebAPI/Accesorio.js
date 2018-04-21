@@ -6,16 +6,15 @@
 
 //Load Data function
 
-function loadDataA() {
-    var Resultado
-
+function loadDataA() 
+{
     $.ajax({
 
         url: 'http://melbws.azurewebsites.net/api/Accesorio',
 
         type: 'GET',
 
-        success: function (result) {
+        success: function (Mensaje) {
             //alert("listo");
 
             Resultado = JSON.parse(result);for (i = 0; i < Resultado.length; i++) 
@@ -30,9 +29,9 @@ function loadDataA() {
             }
         },
 
-        error: function (errormessage) {
+        error: function (Mensaje) 
+        {
 
-            alert(errormessage.responseText);
 
         }
 

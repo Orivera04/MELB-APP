@@ -1,24 +1,17 @@
-﻿$(document).ready(function () {
-
-    loadDataE();
-
-});
-
-//Load Data function
-
-function loadDataE() {
+﻿function Cargar_Estuches() {
     var Resultado
 
-    $.ajax({
+    $.ajax(
+    {
 
         url: 'http://melbws.azurewebsites.net/api/Estuche',
 
         type: 'GET',
 
-        success: function (result) {
-            //alert("listo");
-
-            Resultado = JSON.parse(result);for (i = 0; i < Resultado.length; i++) 
+        success: function (result) 
+        {
+            Resultado = JSON.parse(result); 
+            for (i = 0; i < Resultado.length; i++) 
             {      
                     Tabla_Estuche.row.add( [
                     Resultado[i].ID_Estuche,
@@ -28,14 +21,19 @@ function loadDataE() {
                     Resultado[i].Color,
                     Resultado[i].Estado,
                     'd'
-                ] ).draw( false );                        
-            }
+                ] ).draw( false );                       
+            }         
+            Cargar_Proveedores();
         },
 
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
+        error: function (Mensaje) 
+        {
+           swal
+            ({
+                  title: "Error listando estuches",
+                  text: "No se pudo conectar con el servidor.",
+                  type: "error",
+            });
         }
 
     });
