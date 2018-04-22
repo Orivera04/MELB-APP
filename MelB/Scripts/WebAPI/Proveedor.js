@@ -20,7 +20,7 @@
                     'd'
 
                 ]).draw( false );
-                $('#Proveedor_Instrumento').append('<option value="'+Resultado[i].Nombre+'"></option>');
+                $('#Proveedor_Instrumento').append('<option data-subtext="ID:#'+Resultado[i].ID_Proveedor+'">'+Resultado[i].Nombre+'</option>');
 
             }
             $('select[name=Proveedor_Instrumento]').val(1);
