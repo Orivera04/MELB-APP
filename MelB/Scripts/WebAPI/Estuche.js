@@ -13,7 +13,7 @@
             Resultado = JSON.parse(result); 
             for (i = 0; i < Resultado.length; i++) 
             {      
-                    Tabla_Estuche.row.add
+                Tabla_Estuche.row.add
                 ([
                     Resultado[i].ID_Estuche,
                     Resultado[i].Nombre,

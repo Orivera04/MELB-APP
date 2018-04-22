@@ -1,6 +1,6 @@
-
-var Tabla_Instrumento;
 var Formulario_Activo;
+var Operacion;
+
 $(document).ready(function ()
 {   
     swal({title:'Cargando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
@@ -208,6 +208,7 @@ function Inicializacion_Eventos()
         { 
             if(Formulario_Activo == 'Instrumento')
             {       
+                 Operacion = 'Nuevo';
                  $('#Header_Instrumento_Texto').text('Añadir Instrumento')           
                  Reiniciar_Controles_Instrumento()
                  Habilitar_Deshabilitar_Instrumentos(true);
@@ -215,8 +216,7 @@ function Inicializacion_Eventos()
                  $('#Instrumentos').hide(300);
                  $('#Instrumento_Detalle').show(400);   
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
-            }    $('#Imagen_Instrumento').attr("src","Content/Imagenes/img-placeholder.png");
-            
+            }    $('#Imagen_Instrumento').attr("src","Content/Imagenes/img-placeholder.png");                    
             $('#ADD').hide('drop',400);
             $('#Busqueda_Form').hide(400);
             $('#Contenedor_Panel').hide(); 
@@ -242,8 +242,8 @@ function Inicializacion_Eventos()
         });
 
         $('#Actualizar_Instrumento').click(function(event)
-        {
-              Insertar_Instrumento();
+        {              
+              Insertar_Actualizar_Instrumento(Operacion);
         });
 }
 
