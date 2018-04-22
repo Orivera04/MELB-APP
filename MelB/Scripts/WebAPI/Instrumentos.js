@@ -12,7 +12,7 @@
                     for (i = 0; i < Resultado.length; i++) 
                     {      
                             var Bodega_HTML = (Resultado[i].Tipo_Ubicacion == 'Bodega') ? '<span class="label label-warning ">Bodega</span>' : '<span class="label label-info">Aula</span>'
-                            var Imagen = '<img width = "65" height = "65" src= "https://k62.kn3.net/C5E61EEF4.png" ></img>'
+                            var Imagen = '<img width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
                             Tabla_Instrumento.row.add
                             ([
                                     Resultado[i].ID_Instrumento,
@@ -59,7 +59,7 @@
                       $('#Descripcion_Inst').val(Resultado.Descripcion);
                       $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
                       $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
-                      $('#Imagen_Instrumento').attr("src","https://k62.kn3.net/C5E61EEF4.png");
+                      $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
 
                       if(Resultado.Tipo_Ubicacion == "Bodega")
                       {   
@@ -94,7 +94,7 @@
             var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
             var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
 
-            if(Ancho == 300 & Altura == 300)
+            if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
             {       
                 Insertar_Imagen_API();
                 swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el instrumento',type: 'info', allowOutsideClick: false});
