@@ -1,7 +1,4 @@
-﻿var IDEstuche = []; 
-var IDProveedor = [];
-
-
+﻿var ImagenBase64;
 /* Funciones de la API*/
         function Cargar_Instrumentos() 
         {
@@ -92,6 +89,28 @@ var IDProveedor = [];
             });
         }
 
+        function Insertar_Instrumento(Ubicacion)
+        {            
+            var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
+            var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
+
+            if(Ancho == 300 & Altura == 300)
+            {       
+                Insertar_Imagen_API();
+                swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el instrumento',type: 'info', allowOutsideClick: false});
+                swal.showLoading();                       
+            }                  
+            else
+            {
+                swal
+                    ({
+                          title: "Error al añadir el instrumento",
+                          text: "La imagen debe ser de 300 x 300.",
+                          type: "error",
+                    });
+            }
+        };
+    
 /* Funcionalidad de formularios  */
 
         function Detallar_Datos_Instrumento(ID)
@@ -160,4 +179,70 @@ var IDProveedor = [];
             $('#Ubicacion_Instrumento').selectpicker('val','Bodega');
             $('#Estante_Instrumento').val(1);
             $('#Gaveta_Instrumento').val(1);
+        }
+
+
+        var Imagen_Instrumento = function(Archivo)
+        {
+            var IMG = Archivo.target;
+            var Lector = new FileReader();
+
+            Lector.onload = function()
+            {
+               ImagenBase64 = (Lector.result).split(',')[1];
+               $('#Imagen_Instrumento').prop('src',Lector.result);
+
+            }
+            Lector.readAsDataURL(IMG.files[0]);
+        };
+
+/* Funciones de soporte */
+        
+        function Insertar_Imagen_API()
+        {
+            $.ajax
+            ({
+                url: 'https://api.imgur.com/3/image',
+                type: 'POST',
+                headers: 
+                {
+                    'Authorization':'Client-ID 46be03ad12c8728'                    
+                },
+                data : {image : ImagenBase64},
+                success: function (Resultado)
+                {
+                    var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
+                                           ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val(),Tipo_Ubicacion: 0,Numero_Aula: $('#Estante_Instrumento').val()}
+                                           : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val(),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}
+                    
+                    $.ajax
+                    ({
+
+                          url: 'http://melbws.azurewebsites.net/api/Instrumentos',
+                          type: 'POST',
+                          data: Instrumento_BBDD,
+                          success: function(Resultado)
+                          {
+                             swal.closeModal();
+                             swal("Exito!", "El instrumento se ha registrado", "success");
+
+                          },
+                          error: function(Resultado)
+                          {
+                             swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                          },
+                    });
+                    swal.closeModal();
+                },                  
+                error: function (Mensaje) 
+                {
+                    swal.closeModal();
+                    swal
+                    ({
+                          title: "Error",
+                          text: "Ocurrio un error al subir la imagen,intentelo de nuevo",
+                          type: "error",
+                    });
+                }               
+            })
         }

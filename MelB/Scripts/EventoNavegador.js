@@ -240,5 +240,10 @@ function Inicializacion_Eventos()
         {
               document.getElementById('Imagen_Archivo').click();
         });
+
+        $('#Actualizar_Instrumento').click(function(event)
+        {
+              Insertar_Instrumento();
+        });
 }
 

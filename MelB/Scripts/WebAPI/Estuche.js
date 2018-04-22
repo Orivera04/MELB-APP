@@ -23,7 +23,7 @@
                     Resultado[i].Estado,
                     'd'
                 ] ).draw( false ); 
-                $('#Estuche_Instrumento').append('<option data-subtext="ID:#'+Resultado[i].ID_Estuche+'">'+Resultado[i].Nombre+'</option>');                      
+                $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">'+Resultado[i].ID_Estuche+'</option>'); 
             }       
             $('select[name=Estuche_Instrumento]').val(1);
             $('.selectpicker').selectpicker('refresh');  
