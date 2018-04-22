@@ -24,7 +24,7 @@
 
             }
             $('select[name=Proveedor_Instrumento]').val(1);
-            $('.selectpicker').selectpicker('refresh')
+            $('.selectpicker').selectpicker('refresh');            
             Cargar_Remisiones();
         },
         error: function (Mensaje) 

@@ -56,7 +56,7 @@ var IDProveedor = [];
                       $('#Color_Instrumento').selectpicker('val', Resultado.Color);
                       $('#Marca_Instrumento').val(Resultado.Marca);
                       $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
-                      $('#Proveedor_Instrumento').prop('disabled','true');
+                      $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
                       $('#Estuche_Instrumento').prop('disabled','true');
                       $('#Material_Instrumento').prop('disabled','true');
                       $('#Descripcion_Inst').prop('disabled','true');
