@@ -13,7 +13,8 @@
             Resultado = JSON.parse(result); 
             for (i = 0; i < Resultado.length; i++) 
             {      
-                    Tabla_Estuche.row.add( [
+                    Tabla_Estuche.row.add
+                ([
                     Resultado[i].ID_Estuche,
                     Resultado[i].Nombre,
                     Resultado[i].Marca,
@@ -21,8 +22,11 @@
                     Resultado[i].Color,
                     Resultado[i].Estado,
                     'd'
-                ] ).draw( false );                       
-            }         
+                ] ).draw( false ); 
+                $('#Estuche_Instrumento').append('<option data-subtext="ID:#'+Resultado[i].ID_Estuche+'">'+Resultado[i].Nombre+'</option>');                      
+            }       
+            $('select[name=Estuche_Instrumento]').val(1);
+            $('.selectpicker').selectpicker('refresh');  
             Cargar_Proveedores();
         },
 
