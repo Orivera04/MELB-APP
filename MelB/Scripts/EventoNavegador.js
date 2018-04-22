@@ -24,7 +24,7 @@ function Inicializacion_Controles()
 {
 
     /* Inicialziación de los controles de los formularios */
-    $('.selectpicker').selectpicker();
+    $('.selectpicker').selectpicker({noneResultsText: 'No se encontraron resultados'});
     $("input[name='ID_Instrumento']").TouchSpin({});
     $("input[name='Estante']").TouchSpin({});
     $("input[name='Gaveta']").TouchSpin({});
