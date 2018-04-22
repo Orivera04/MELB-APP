@@ -75,6 +75,7 @@
                            $('#Gaveta_Form').hide(150);
 
                       }                
+                      Base64Imagen(Resultado.Imagen) 
                       $('.selectpicker').selectpicker('refresh');               
                 },
                 error: function (Mensaje) 
@@ -90,7 +91,7 @@
         }
 
         function Insertar_Actualizar_Instrumento(Comando)
-        {            
+        {     
             var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
             var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
 
@@ -121,7 +122,7 @@
 /* Funcionalidad de formularios  */
 
         function Detallar_Datos_Instrumento(ID)
-        {         
+        {                   
             Operacion = 'Actualizar';                
             $('#Instrumentos').hide(300);
             $('#Instrumento_Detalle').show(400);
@@ -220,14 +221,14 @@
                 success: function (Resultado)
                 {
                     var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
-                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val(),Tipo_Ubicacion: 0,Numero_Aula: $('#Estante_Instrumento').val()}
-                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val(),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}                       
+                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,Numero_Aula: $('#Estante_Instrumento').val()}
+                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}                       
                     if(Comando == 'Nuevo')
                     {                                                
                         $.ajax
                         ({
 
-                              url: 'http://localhost:53603/api/Instrumentos/',
+                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/',
                               type: 'POST',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
@@ -248,13 +249,13 @@
                         $.ajax
                         ({
 
-                              url: 'http://melbws.azurewebsites.net/api/Instrumentos',
+                              url: 'http://localhost:53603/api/Instrumentos/',
                               type: 'PUT',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
                               {
                                  swal.closeModal();
-                                 swal("Exito!", "El instrumento se ha registrado", "success");
+                                 swal("Exito!", "El instrumento se ha actualizado", "success");
 
                               },
                               error: function(Resultado)
@@ -276,4 +277,22 @@
                     });
                 }               
             })
+        }
+
+        function Base64Imagen(URL) 
+        {
+            var Imagen = new Image();
+            Imagen.setAttribute('crossOrigin', 'anonymous');
+
+            Imagen.onload = function () 
+            {
+                var Canvas = document.createElement("canvas");
+                Canvas.width =this.width;
+                Canvas.height =this.height;
+                var Contexto = Canvas.getContext("2d");
+                Contexto.drawImage(this, 0, 0);
+                ImagenBase64 = Canvas.toDataURL().split(',')[1];                
+            };
+
+            Imagen.src = URL;
         }

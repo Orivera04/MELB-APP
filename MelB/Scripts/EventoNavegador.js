@@ -138,6 +138,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedores').style.display = 'none';
             document.getElementById('Remisiones').style.display = 'none';
             document.getElementById('Estuches').style.display = 'none';   
+
+            document.getElementById('Instrumento_Detalle').style.display = 'none';
         });
        
 
@@ -148,6 +150,9 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedores').style.display = 'none';
             document.getElementById('Remisiones').style.display = 'none';
             document.getElementById('Estuches').style.display = 'none';     
+            document.getElementById('Instrumento_Detalle').style.display = 'none';
+
+
             Formulario_Activo = 'Instrumento';                       
             $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Instrumento');
             $('#ADD').show("drop", 400);               
@@ -159,6 +164,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedores').style.display = 'block';
             document.getElementById('Remisiones').style.display = 'none';
             document.getElementById('Estuches').style.display = 'none';
+            document.getElementById('Instrumento_Detalle').style.display = 'none';
         });
 
         $('#remisionessubmenu').click(function (event) {
@@ -167,6 +173,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedores').style.display = 'none';
             document.getElementById('Remisiones').style.display = 'block';
             document.getElementById('Estuches').style.display = 'none';         
+            document.getElementById('Instrumento_Detalle').style.display = 'none';
+
         });
 
         $('#accesoriossubmenu').click(function (event) {
@@ -174,7 +182,8 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumentos').style.display = 'none';
             document.getElementById('Proveedores').style.display = 'none';
             document.getElementById('Remisiones').style.display = 'none';
-            document.getElementById('Estuches').style.display = 'none';        
+            document.getElementById('Estuches').style.display = 'none';
+            document.getElementById('Instrumento_Detalle').style.display = 'none';   
         });
 
         $('#estuchessubmenu').click(function (event) {
@@ -183,6 +192,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedores').style.display = 'none';
             document.getElementById('Remisiones').style.display = 'none';
             document.getElementById('Estuches').style.display = 'block';
+            document.getElementById('Instrumento_Detalle').style.display = 'none';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
             $('#ADD').show("drop", 400);  
 
@@ -216,7 +226,8 @@ function Inicializacion_Eventos()
                  $('#Instrumentos').hide(300);
                  $('#Instrumento_Detalle').show(400);   
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
-            }    $('#Imagen_Instrumento').attr("src","Content/Imagenes/img-placeholder.png");                    
+            }    $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
+            Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
             $('#ADD').hide('drop',400);
             $('#Busqueda_Form').hide(400);
             $('#Contenedor_Panel').hide(); 
