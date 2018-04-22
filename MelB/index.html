@@ -139,8 +139,8 @@
                         <div class="panel panel-color panel-danger">
                             <div class="panel-heading">                                        
                                 <i class="ion-music-note" aria-hidden="true"></i>
-                                <h3 class="TextoHeader">Descripción del instrumento</h3>
-                                <div class="FlotarDerecha">
+                                <h3 id="Header_Instrumento_Texto" class="TextoHeader">Descripción del instrumento</h3>
+                                <div class="FlotarDerecha" id="Contenedor_Panel">
                                     <i class="ion-grid" data-pack="default" data-tags="menu"></i>                           
                                     <div class="onoffswitch">                                             
                                         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar">
@@ -154,7 +154,8 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-3 ">                                                 
-                                   <img src="https://k62.kn3.net/C5E61EEF4.png" class='img-thumbnail'>
+                                   <img id="Imagen_Instrumento" src="" class='img-thumbnail'>
+                                   <input type="file" id="Imagen_Archivo" >
                                    <button id="Cambiar_Imagen_Instrumento" type="button" class="btn btn-Custom" disabled>
                                         <span class="btn-label"><l class="ion-image" data-pack="default" data-tags="photo"></i></span>Cambiar imagen
                                    </button>                                               
@@ -266,7 +267,6 @@
                                                         <label class="control-label">Estuche</label>
                                                             <div class="input-group m-t-10" disabled>                                       
                                                                 <select data-live-search="true" id="Estuche_Instrumento" class="selectpicker" data-style="btn-white" disabled>
-                                                                    <option data-subtext="#1">Bolso</option>
                                                                 </select>                    
                                                             </div>
                                                     </div>                                                 

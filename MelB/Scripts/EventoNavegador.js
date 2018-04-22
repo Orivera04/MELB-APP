@@ -148,7 +148,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedores').style.display = 'none';
             document.getElementById('Remisiones').style.display = 'none';
             document.getElementById('Estuches').style.display = 'none';     
-            Formulario_Activo = 'Instrumento';
+            Formulario_Activo = 'Instrumento';                       
             $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Instrumento');
             $('#ADD').show("drop", 400);               
         });
@@ -187,6 +187,10 @@ function Inicializacion_Eventos()
             $('#ADD').show("drop", 400);  
 
         });
+
+    /* Eventos : uso en formularios de forma global */
+
+
          $('#sidebarCollapse').on('click', function () 
          {
              $('#sidebar').toggleClass('active');
@@ -198,46 +202,43 @@ function Inicializacion_Eventos()
              {
                 $('#content').css("margin-left","110px");
              }
-         });
+        });
+
+        $('#ADD').click(function(event)
+        { 
+            if(Formulario_Activo == 'Instrumento')
+            {       
+                 $('#Header_Instrumento_Texto').text('Añadir Instrumento')           
+                 Reiniciar_Controles_Instrumento()
+                 Habilitar_Deshabilitar_Instrumentos(true);
+                 $('#ID_Instrumento').removeAttr('disabled');
+                 $('#Instrumentos').hide(300);
+                 $('#Instrumento_Detalle').show(400);   
+                 $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
+            }    $('#Imagen_Instrumento').attr("src","Content/Imagenes/img-placeholder.png");
+            
+            $('#ADD').hide('drop',400);
+            $('#Busqueda_Form').hide(400);
+            $('#Contenedor_Panel').hide(); 
+        });   
 
     /* Eventos : Formulario Instrumento */
 
-    $('#Switch_Editar').change(function()
-    {
-        if( $('#Switch_Editar').prop('checked') == true)
+        $('#Switch_Editar').change(function()
         {
-            $("#Tipo_Instrumento").prop("disabled", false);
+            if( $('#Switch_Editar').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Instrumentos(true);
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Instrumentos(false);
+            }
+        });
 
-            $('#Color_Instrumento').removeAttr('disabled');
-            $('#Marca_Instrumento').removeAttr('disabled');
-            $('#Proveedor_Instrumento').removeAttr('disabled');
-            $('#Estuche_Instrumento').removeAttr('disabled');
-            $('#Material_Instrumento').removeAttr('disabled');
-            $('#Descripcion_Inst').removeAttr('disabled');
-            $('#Estado_Instrumento').removeAttr('disabled');
-            $('#Ubicacion_Instrumento').removeAttr('disabled');
-            $('#Estante_Instrumento').removeAttr('disabled');
-            $('#Gaveta_Instrumento').removeAttr('disabled');
-            $('#Cambiar_Imagen_Instrumento').removeAttr('disabled');
-            $('#Actualizar_Instrumento').removeAttr('disabled');
-            $('.selectpicker').selectpicker('refresh');
-        }
-        else
+        $('#Cambiar_Imagen_Instrumento').click(function(event)
         {
-            $('#Tipo_Instrumento').prop('disabled','true');
-            $('#Color_Instrumento').prop('disabled','true');
-            $('#Marca_Instrumento').prop('disabled','true');
-            $('#Proveedor_Instrumento').prop('disabled','true');
-            $('#Estuche_Instrumento').prop('disabled','true');
-            $('#Material_Instrumento').prop('disabled','true');
-            $('#Descripcion_Inst').prop('disabled','true');
-            $('#Estado_Instrumento').prop('disabled','true');
-            $('#Ubicacion_Instrumento').prop('disabled','true');
-            $('#Estante_Instrumento').prop('disabled','true');
-            $('#Gaveta_Instrumento').prop('disabled','true');
-            $('#Cambiar_Imagen_Instrumento').prop('disabled','true');
-            $('#Actualizar_Instrumento').prop('disabled','true');
-            $('.selectpicker').selectpicker('refresh');
-        }
-    });
+              document.getElementById('Imagen_Archivo').click();
+        });
 }
+
