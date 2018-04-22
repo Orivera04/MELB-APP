@@ -1,9 +1,9 @@
-﻿
+
 var Tabla_Instrumento;
 var Formulario_Activo;
 $(document).ready(function ()
 {   
-    swal({title:'Cargando',text: 'Espere por favor',type: 'info'});
+    swal({title:'Cargando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
     swal.showLoading();
 
     
@@ -35,7 +35,7 @@ function Inicializacion_Controles()
         threshold: 25
     });
 
-    $('#Descripcion_Instrumento').maxlength
+    $('#Descripcion_Inst').maxlength
     ({
         alwaysShow: true,
         threshold: 25
@@ -199,5 +199,45 @@ function Inicializacion_Eventos()
                 $('#content').css("margin-left","110px");
              }
          });
-    /* Eventos : Contenido */
+
+    /* Eventos : Formulario Instrumento */
+
+    $('#Switch_Editar').change(function()
+    {
+        if( $('#Switch_Editar').prop('checked') == true)
+        {
+            $("#Tipo_Instrumento").prop("disabled", false);
+
+            $('#Color_Instrumento').removeAttr('disabled');
+            $('#Marca_Instrumento').removeAttr('disabled');
+            $('#Proveedor_Instrumento').removeAttr('disabled');
+            $('#Estuche_Instrumento').removeAttr('disabled');
+            $('#Material_Instrumento').removeAttr('disabled');
+            $('#Descripcion_Inst').removeAttr('disabled');
+            $('#Estado_Instrumento').removeAttr('disabled');
+            $('#Ubicacion_Instrumento').removeAttr('disabled');
+            $('#Estante_Instrumento').removeAttr('disabled');
+            $('#Gaveta_Instrumento').removeAttr('disabled');
+            $('#Cambiar_Imagen_Instrumento').removeAttr('disabled');
+            $('#Actualizar_Instrumento').removeAttr('disabled');
+            $('.selectpicker').selectpicker('refresh');
+        }
+        else
+        {
+            $('#Tipo_Instrumento').prop('disabled','true');
+            $('#Color_Instrumento').prop('disabled','true');
+            $('#Marca_Instrumento').prop('disabled','true');
+            $('#Proveedor_Instrumento').prop('disabled','true');
+            $('#Estuche_Instrumento').prop('disabled','true');
+            $('#Material_Instrumento').prop('disabled','true');
+            $('#Descripcion_Inst').prop('disabled','true');
+            $('#Estado_Instrumento').prop('disabled','true');
+            $('#Ubicacion_Instrumento').prop('disabled','true');
+            $('#Estante_Instrumento').prop('disabled','true');
+            $('#Gaveta_Instrumento').prop('disabled','true');
+            $('#Cambiar_Imagen_Instrumento').prop('disabled','true');
+            $('#Actualizar_Instrumento').prop('disabled','true');
+            $('.selectpicker').selectpicker('refresh');
+        }
+    });
 }

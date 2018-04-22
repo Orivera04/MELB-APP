@@ -9,7 +9,8 @@
             Resultado = JSON.parse(result);
             for (i = 0; i < Resultado.length; i++) 
             {      
-                    Tabla_Proveedor.row.add( [
+                Tabla_Proveedor.row.add
+                ([
                     Resultado[i].ID_Proveedor,
                     Resultado[i].Nombre,
                     Resultado[i].Telefono_1,
@@ -17,8 +18,13 @@
                     Resultado[i].Correo,
                     Resultado[i].Direccion,
                     'd'
-                ] ).draw( false );                      
+
+                ]).draw( false );
+                $('#Proveedor_Instrumento').append('<option value="'+Resultado[i].Nombre+'"></option>');
+
             }
+            $('select[name=Proveedor_Instrumento]').val(1);
+            $('.selectpicker').selectpicker('refresh')
             Cargar_Remisiones();
         },
         error: function (Mensaje) 
