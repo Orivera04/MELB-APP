@@ -297,7 +297,7 @@ th,td
     text-align: center !important; 
 }
 
-#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle
+#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle, #Estuche_Detalle
 {
     display: none;
 }
