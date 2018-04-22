@@ -94,7 +94,7 @@
             var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
             var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
 
-            if(Ancho == 300 & Altura == 300)
+            if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
             {       
                 Insertar_Imagen_API();
                 swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el instrumento',type: 'info', allowOutsideClick: false});
