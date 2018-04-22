@@ -51,21 +51,31 @@ var IDProveedor = [];
                 success: function (Resultado) 
                 {               
                       Resultado = JSON.parse(Resultado);     
-                      Resultado = Resultado[0];  
+                      Resultado = Resultado[0]; 
+                      $('#ID_Instrumento').val(Resultado.ID_Instrumento); 
                       $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
                       $('#Color_Instrumento').selectpicker('val', Resultado.Color);
                       $('#Marca_Instrumento').val(Resultado.Marca);
-                      $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
                       $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
-                      $('#Estuche_Instrumento').prop('disabled','true');
-                      $('#Material_Instrumento').prop('disabled','true');
-                      $('#Descripcion_Inst').prop('disabled','true');
-                      $('#Estado_Instrumento').prop('disabled','true');
-                      $('#Ubicacion_Instrumento').prop('disabled','true');
-                      $('#Estante_Instrumento').prop('disabled','true');
-                      $('#Gaveta_Instrumento').prop('disabled','true');
-                      $('#Cambiar_Imagen_Instrumento').prop('disabled','true');
-                      $('#Actualizar_Instrumento').prop('disabled','true');
+                      $('#Estuche_Instrumento').selectpicker('val', Resultado.Nombre_Estuche);
+                      $('#Material_Instrumento').selectpicker('val', Resultado.Material);
+                      $('#Descripcion_Inst').val(Resultado.Descripcion);
+                      $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
+                      $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
+                      if(Resultado.Tipo_Ubicacion == "Bodega")
+                      {   
+                          $('#Label_Tipo_A_B').text('Estante');
+                          $('#Estante_Instrumento').val(Resultado.Estante);
+                          $('#Gaveta_Instrumento').val(Resultado.Gaveta);
+                          $('#Gaveta_Form').show(150);
+                      }
+                      else
+                      {
+                           $('#Label_Tipo_A_B').text('ID Aula');
+                           $('#Estante_Instrumento').val(Resultado.Numero_Aula);
+                           $('#Gaveta_Form').hide(150);
+
+                      }                
                       $('.selectpicker').selectpicker('refresh');               
                 },
                 error: function (Mensaje) 
