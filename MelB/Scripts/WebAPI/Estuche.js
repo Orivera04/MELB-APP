@@ -1,35 +1,27 @@
-﻿function Cargar_Estuches() {
-    var Resultado
-
-    $.ajax(
-    {
-
+﻿/* Funciones de la API*/
+function Cargar_Estuches() 
+{
+    $.ajax
+    ({
         url: 'http://melbws.azurewebsites.net/api/Estuche',
-
         type: 'GET',
-
-        success: function (result) 
+        success: function (Resultado) 
         {
-            Resultado = JSON.parse(result); 
+            Resultado = JSON.parse(Resultado); 
             for (i = 0; i < Resultado.length; i++) 
-            {      
+            {   
+                var Imagen = '<img width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
                 Tabla_Estuche.row.add
                 ([
                     Resultado[i].ID_Estuche,
-                    Resultado[i].Nombre,
-                    Resultado[i].Marca,
-                    Resultado[i].Material,
+                    Imagen,
                     Resultado[i].Color,
-                    Resultado[i].Estado,
-                    'd'
+                    '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                    '<button type="button" class="btn btn-danger"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                 ] ).draw( false ); 
-                $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
             }       
-            $('select[name=Estuche_Instrumento]').val(1);
-            $('.selectpicker').selectpicker('refresh');  
             Cargar_Proveedores();
         },
-
         error: function (Mensaje) 
         {
            swal
@@ -39,9 +31,61 @@
                   type: "error",
             });
         }
-
     });
 }
+
+
+
+function Cargar_Instrumentos_Por_ID(ID) 
+        {
+            $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Estuche/'+ID,
+                type: 'GET',
+                success: function (Resultado) 
+                {               
+                      Resultado = JSON.parse(Resultado);     
+                      Resultado = Resultado[0]; 
+                      $('#ID_Estuche').val(Resultado.ID_Estuche); 
+                      $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
+                      $('#Color_Instrumento').selectpicker('val', Resultado.Color);
+                      $('#Marca_Instrumento').val(Resultado.Marca);
+                      $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
+                      $('#Estuche_Instrumento').selectpicker('val', Resultado.Nombre_Estuche);
+                      $('#Material_Instrumento').selectpicker('val', Resultado.Material);
+                      $('#Descripcion_Inst').val(Resultado.Descripcion);
+                      $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
+                      $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
+                      $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
+
+                      if(Resultado.Tipo_Ubicacion == "Bodega")
+                      {   
+                          $('#Label_Tipo_A_B').text('Estante');
+                          $('#Estante_Instrumento').val(Resultado.Estante);
+                          $('#Gaveta_Instrumento').val(Resultado.Gaveta);
+                          $('#Gaveta_Form').show(150);
+                      }
+                      else
+                      {
+                           $('#Label_Tipo_A_B').text('ID Aula');
+                           $('#Estante_Instrumento').val(Resultado.Numero_Aula);
+                           $('#Gaveta_Form').hide(150);
+
+                      }                
+                      Base64Imagen(Resultado.Imagen) 
+                      $('.selectpicker').selectpicker('refresh');               
+                },
+                error: function (Mensaje) 
+                {
+                    swal
+                    ({
+                          title: "Error al intentar ver el detalle del instrumento",
+                          text: "No se pudo conectar con el servidor.",
+                          type: "error",
+                    });
+                }
+            });
+        }
 
 //Add Data Function
 
