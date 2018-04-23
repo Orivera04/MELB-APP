@@ -34,9 +34,23 @@ function Cargar_Estuches()
     });
 }
 
+/*Funcionalidad de Formularios*/
 
+function Detallar_Datos_Estuche(ID)
+        {                   
+            Operacion = 'Actualizar';                
+            $('#Estuches').hide(300);
+            $('#Estuche_Detalle').show(400);
+            $('#ADD').hide('drop',400);
+            $('#Busqueda_Form').show(400);
+            $('#Busqueda_Form').css('display','inline-flex');
+            $('#Contenedor_Panel').show();
+            $('#Header_Estuche_Texto').text('Descripción del Estuche');
+            $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Estuche');
+            Cargar_Estuches_Por_ID(ID); 
+        }
 
-function Cargar_Instrumentos_Por_ID(ID) 
+function Cargar_Estuches_Por_ID(ID) 
         {
             $.ajax
             ({
@@ -47,10 +61,10 @@ function Cargar_Instrumentos_Por_ID(ID)
                       Resultado = JSON.parse(Resultado);     
                       Resultado = Resultado[0]; 
                       $('#ID_Estuche').val(Resultado.ID_Estuche); 
-                      $('#Color_Estuche').selectpicker('val', Resultado.Color);
+                      $('#Nombre_Estuche').val(Resultado.Nombre);
                       $('#Marca_Estuche').val(Resultado.Marca);
-                      $('#Proveedor_Estuche').selectpicker('val', Resultado.Proveedor);                      
-                      $('#Material_Instrumento').selectpicker('val', Resultado.Material);
+                      $('#Material_Estuche').selectpicker('val', Resultado.Material);
+                      $('#Color_Estuche').selectpicker('val', Resultado.Color);                      
                       $('#Estado_Estuche').selectpicker('val', Resultado.Estado); 
                       $('#Imagen_Estuche').attr("src",Resultado.Imagen);
 
@@ -132,7 +146,7 @@ function Cargar_Instrumentos_Por_ID(ID)
 
 
 
-
+/*
 
 //Add Data Function
 
@@ -483,3 +497,5 @@ function validateE() {
     return isValid;
 
 }
+
+*/
