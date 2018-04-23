@@ -47,31 +47,13 @@ function Cargar_Instrumentos_Por_ID(ID)
                       Resultado = JSON.parse(Resultado);     
                       Resultado = Resultado[0]; 
                       $('#ID_Estuche').val(Resultado.ID_Estuche); 
-                      $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
-                      $('#Color_Instrumento').selectpicker('val', Resultado.Color);
-                      $('#Marca_Instrumento').val(Resultado.Marca);
-                      $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
-                      $('#Estuche_Instrumento').selectpicker('val', Resultado.Nombre_Estuche);
+                      $('#Color_Estuche').selectpicker('val', Resultado.Color);
+                      $('#Marca_Estuche').val(Resultado.Marca);
+                      $('#Proveedor_Estuche').selectpicker('val', Resultado.Proveedor);                      
                       $('#Material_Instrumento').selectpicker('val', Resultado.Material);
-                      $('#Descripcion_Inst').val(Resultado.Descripcion);
-                      $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
-                      $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
-                      $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
+                      $('#Estado_Estuche').selectpicker('val', Resultado.Estado); 
+                      $('#Imagen_Estuche').attr("src",Resultado.Imagen);
 
-                      if(Resultado.Tipo_Ubicacion == "Bodega")
-                      {   
-                          $('#Label_Tipo_A_B').text('Estante');
-                          $('#Estante_Instrumento').val(Resultado.Estante);
-                          $('#Gaveta_Instrumento').val(Resultado.Gaveta);
-                          $('#Gaveta_Form').show(150);
-                      }
-                      else
-                      {
-                           $('#Label_Tipo_A_B').text('ID Aula');
-                           $('#Estante_Instrumento').val(Resultado.Numero_Aula);
-                           $('#Gaveta_Form').hide(150);
-
-                      }                
                       Base64Imagen(Resultado.Imagen) 
                       $('.selectpicker').selectpicker('refresh');               
                 },
@@ -79,13 +61,78 @@ function Cargar_Instrumentos_Por_ID(ID)
                 {
                     swal
                     ({
-                          title: "Error al intentar ver el detalle del instrumento",
+                          title: "Error al intentar ver el detalle del estuche",
                           text: "No se pudo conectar con el servidor.",
                           type: "error",
                     });
                 }
             });
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Add Data Function
 
