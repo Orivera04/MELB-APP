@@ -4,6 +4,7 @@ var Tabla_Instrumento;
 var Tabla_Proveedor;
 var Tabla_Remision;
 var Tabla_Estuche;
+var Tabla_Accesorios;
 
 $(document).ready(function ()
 {   
@@ -115,6 +116,27 @@ function Inicializacion_Tablas()
 
 
     Tabla_Estuche = $('#Estuche_T').DataTable
+    ({
+        "language": 
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate": 
+            {        
+                "next":       "Siguiente pagina",
+                "previous":   "Pagina anterior"
+            },
+            "columnDefs": [ {"className": "dt-center", "targets": "_all"}]        
+        }
+    });
+
+    /* Tablas de Instrumento */
+
+    Tabla_Accesorios = $('#Accesorios_T').DataTable
     ({
         "language": 
         {
@@ -251,22 +273,8 @@ function Inicializacion_Eventos()
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#ID_Instrumento').removeAttr('disabled');
                  $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
-                 Base64Imagen($('#Imagen_Instrumento').attr('src'));       
-            }
-            else if (Formulario_Activo == 'Estuche')
-            {
-                 Operacion = 'Nuevo';
-                 $('#Header_Instrumento_Texto').text('Añadir Estuche')           
-                 Reiniciar_Controles_Estuche()
-                 Habilitar_Deshabilitar_Estuche(true);
-                 $('#ID_Estuche').removeAttr('disabled');
-                 $('#Estuches').hide(300);
-                 $('#Estuche_Detalle').show(400);   
-                 $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
-                 $('#ID_Estuche').removeAttr('disabled');
-                 $('#Imagen_Estuche').attr("src","https://i.imgur.com/0oN2F22.png");   
-                 Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
             }                
+            Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
             $('#ADD').hide('drop',100);
             $('#Busqueda_Form').hide(400);
             $('#Contenedor_Panel').hide(); 
@@ -291,23 +299,6 @@ function Inicializacion_Eventos()
                      });
                 }
             }
-            else if(Formulario_Activo == 'Estuche')
-            {   
-                if($('#Descripcion_Estuche').val() != "")
-                {
-
-                    Detallar_Datos_Estuche($('#Descripcion_Estuche').val());
-                }
-                else
-                {
-                     swal
-                     ({
-                          title: "Aviso",
-                          text: "Debe introducir el identificador del instrumento",
-                          type: "warning",
-                     });
-                }
-            }
         });
 
         $('#Descripcion_Instrumento').keypress(function (e) 
@@ -319,22 +310,10 @@ function Inicializacion_Eventos()
               }
         });       
 
-        $('#Descripcion_Estuche').keypress(function (e) 
-        {             
-             if(e.which == 13)  
-              {                    
-                    $( "#Buscar_Boton" ).trigger( "click" );
-                    e.preventDefault();
-              }
-        });       
-
         $('#Actualizar').click(function(event)
         {
             swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-
             Tabla_Instrumento.clear().draw();
-            Tabla_Estuche.clear().draw();
-
             swal.showLoading();
             Cargar_Instrumentos();
         });
@@ -346,22 +325,12 @@ function Inicializacion_Eventos()
             if( $('#Switch_Editar').prop('checked') == true)
             {
                 Habilitar_Deshabilitar_Instrumentos(true);
+                $('#Busqueda_Form').hide();
             }
             else
             {
                 Habilitar_Deshabilitar_Instrumentos(false);
-            }
-        });
-
-        $('#Switch_Editar_Estuche').change(function()
-        {
-            if( $('#Switch_Editar_Estuche').prop('checked') == true)
-            {
-                Habilitar_Deshabilitar_Estuche(true);
-            }
-            else
-            {
-                Habilitar_Deshabilitar_Estuche(false);
+                $('#Busqueda_Form').show();
             }
         });
 
@@ -370,19 +339,9 @@ function Inicializacion_Eventos()
               document.getElementById('Imagen_Archivo').click();
         });
 
-        $('#Cambiar_Imagen_Estuche').click(function(event)
-        {
-              document.getElementById('Imagen_Archivo_Estuche').click();
-        });
-
         $('#Actualizar_Instrumento').click(function(event)
         {              
               Insertar_Actualizar_Instrumento(Operacion);
-        });
-
-        $('#Actualizar_Estuche').click(function(event)
-        {              
-              Insertar_Actualizar_Estuche(Operacion);
         });
 
         $('#Ubicacion_Instrumento').change(function(event)
@@ -399,4 +358,3 @@ function Inicializacion_Eventos()
             }
         }); 
 }
-

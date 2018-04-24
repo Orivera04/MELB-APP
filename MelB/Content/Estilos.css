@@ -564,3 +564,12 @@ button:focus:not(:active)::after
   animation: ripple 1s ease-out;
 }
 
+.Accesorios
+{
+  background: linear-gradient(to right, #614385, #516395) !important; 
+}
+
+.ExtraPadding
+{
+    padding: 30px !important;
+}
