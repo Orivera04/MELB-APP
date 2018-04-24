@@ -1,5 +1,9 @@
 var Formulario_Activo;
 var Operacion;
+var Tabla_Instrumento;
+var Tabla_Proveedor;
+var Tabla_Remision;
+var Tabla_Estuche;
 
 $(document).ready(function ()
 {   
@@ -158,7 +162,8 @@ function Inicializacion_Eventos()
 
             Formulario_Activo = 'Instrumento';                       
             $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Instrumento');
-            $('#ADD').show("drop", 400);               
+            $('#ADD').show("drop", 50);
+            $('#Busqueda_Form').hide("drop",50);
         });
 
         $('#proveedoressubmenu').click(function (event) {
@@ -171,7 +176,7 @@ function Inicializacion_Eventos()
             document.getElementById('Estuche_Detalle').style.display = 'none';
             Formulario_Activo = 'Proveedor';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
-            $('#ADD').show("drop", 400);  
+            $('#ADD').show("drop", 50);  
         });
 
         $('#remisionessubmenu').click(function (event) {
@@ -184,7 +189,7 @@ function Inicializacion_Eventos()
             document.getElementById('Estuche_Detalle').style.display = 'none';
             Formulario_Activo = 'Remision';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remisiones');
-            $('#ADD').show("drop", 400);  
+            $('#ADD').show("drop", 50);  
 
         });
 
@@ -198,7 +203,7 @@ function Inicializacion_Eventos()
             document.getElementById('Estuche_Detalle').style.display = 'none';
             Formulario_Activo = 'Accesorio';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Accesorios');
-            $('#ADD').show("drop", 400);  
+            $('#ADD').show("drop", 50);  
         });
 
         $('#estuchessubmenu').click(function (event) {
@@ -211,7 +216,7 @@ function Inicializacion_Eventos()
             document.getElementById('Estuche_Detalle').style.display = 'none';
             Formulario_Activo = 'Estuche';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
-            $('#ADD').show("drop", 400);  
+            $('#ADD').show("drop", 50);  
 
         });
 
@@ -233,6 +238,7 @@ function Inicializacion_Eventos()
 
         $('#ADD').click(function(event)
         { 
+            $('.FlotarDerecha').hide();
             if(Formulario_Activo == 'Instrumento')
             {       
                  Operacion = 'Nuevo';
@@ -243,9 +249,11 @@ function Inicializacion_Eventos()
                  $('#Instrumentos').hide(300);
                  $('#Instrumento_Detalle').show(400);   
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
-            }    $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
+                 $('#ID_Instrumento').removeAttr('disabled');
+                 $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
+            }                
             Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
-            $('#ADD').hide('drop',400);
+            $('#ADD').hide('drop',100);
             $('#Busqueda_Form').hide(400);
             $('#Contenedor_Panel').hide(); 
         });   
@@ -280,6 +288,16 @@ function Inicializacion_Eventos()
               }
         });       
 
+        $('#Actualizar').click(function(event)
+        {
+            swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+
+            Tabla_Instrumento.clear().draw();
+
+            swal.showLoading();
+            Cargar_Instrumentos();
+        });
+
     /* Eventos : Formulario Instrumento */
 
         $('#Switch_Editar').change(function()
@@ -303,5 +321,19 @@ function Inicializacion_Eventos()
         {              
               Insertar_Actualizar_Instrumento(Operacion);
         });
+
+        $('#Ubicacion_Instrumento').change(function(event)
+        {
+            if($('#Ubicacion_Instrumento').val() == 'Bodega')
+            { 
+                $('#Estante_Aula').text('Estante')
+                $('#Form_gaveta').show();
+            }
+            else
+            {
+                $('#Estante_Aula').text('ID Aula')
+                $('#Form_gaveta').hide()
+            }
+        }); 
 }
 

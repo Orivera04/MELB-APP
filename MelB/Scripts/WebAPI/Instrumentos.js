@@ -191,7 +191,9 @@
 /* Funcionalidad de formularios  */
 
         function Detallar_Datos_Instrumento(ID)
-        {                   
+        {           
+            $('#Switch_Editar').prop('checked',false);
+            Habilitar_Deshabilitar_Instrumentos(false);        
             Operacion = 'Actualizar';                
             $('#Instrumentos').hide(300);
             $('#Instrumento_Detalle').show(400);
@@ -202,14 +204,15 @@
             $('#Header_Instrumento_Texto').text('Descripción del instrumento');
             $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Instrumento');
             Cargar_Instrumentos_Por_ID(ID); 
+            $('.FlotarDerecha').show();
         }
 
         function Habilitar_Deshabilitar_Instrumentos(Cond)
         {
             if(Cond == true)
             {
-                $("#ID_Instrumento").prop("disabled", true);
-                $("#Tipo_Instrumento").prop("disabled", false);
+                $("#ID_Instrumento").prop("disabled", "false");
+                $("#Tipo_Instrumento").removeAttr('disabled');
                 $('#Color_Instrumento').removeAttr('disabled');
                 $('#Marca_Instrumento').removeAttr('disabled');
                 $('#Proveedor_Instrumento').removeAttr('disabled');
@@ -226,7 +229,7 @@
             }
             else
             {
-                $("#ID_Instrumento").prop("disabled", false);
+                $("#ID_Instrumento").prop("disabled", "true");
                 $('#Tipo_Instrumento').prop('disabled','true');
                 $('#Color_Instrumento').prop('disabled','true');
                 $('#Marca_Instrumento').prop('disabled','true');

@@ -82,6 +82,9 @@
                         <ul class="nav navbar-nav navbar-right" id="Form_Right">                
 
 							<form class="navbar-form navbar-left" role="search">
+                                <button id="Actualizar" type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                    <i class="ion-loop" data-pack="default" data-tags="refresh"></i>                                  
+                                </button>
                                 <button id="ADD" type="button" class="btn waves-effect waves-light btn-primary btn-color">
                                     <span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
                                     </span>   Añadir Instrumento               
@@ -169,11 +172,10 @@
                                             <div class="col-md-6">
                                                 <div class="p-20">
                                                     <form>
-
                                                         <div class="form-group">
                                                             <label class="control-label">Identificador</label>
                                                             <div class="form-group">
-                                                                <input id="ID_Instrumento" type="text" value="55" name="ID_Instrumento" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                                <input id="ID_Instrumento" type="text" value="1" name="ID_Instrumento" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
                                                         </div>
 
@@ -225,7 +227,7 @@
                                                         </div>    
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Estante</label>
+                                                            <label id="Estante_Aula" class="control-label">Estante</label>
                                                             <div class="form-group">
                                                                 <input id="Estante_Instrumento" type="text" value="55" name="Estante" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
@@ -237,7 +239,6 @@
                                             <div class="col-md-6">
                                                 <div class="p-20">
                                                     <form>     
-
                                                         <div class="form-group"> 
                                                             <label class="control-label">Tipo</label>
                                                                 <div class="input-group m-t-10">                                                   
@@ -297,10 +298,10 @@
                                                             </div>
                                                         </div>  
 
-                                                        <div class="form-group">
+                                                        <div class="form-group" id="Form_gaveta">
                                                             <label class="control-label">Gaveta</label>
                                                                 <div class="form-group">
-                                                                    <input id="Gaveta_Instrumento" type="text" value="55" name="Gaveta" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                                    <input id="Gaveta_Instrumento" type="text" value="1" name="Gaveta" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                                 </div>
                                                         </div>  
                                                     </form>
@@ -502,7 +503,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Estante</label>
                                                             <div class="form-group">
-                                                                <input id="Estante_Estuche" type="text" value="55" name="Estante_Estuche" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                                <input id="Estante_Estuche" type="text" value="1" name="Estante_Estuche" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
                                                         </div>
                                                     </form>
@@ -576,7 +577,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Gaveta</label>
                                                                 <div class="form-group">
-                                                                    <input id="Gaveta_Estuche" type="text" value="55" name="Gaveta_Estuche" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                                    <input id="Gaveta_Estuche" type="text" value="1" name="Gaveta_Estuche" data-bts-min="1" data-bts-max="10"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                                 </div>
                                                         </div>  
                                                     </form>
