@@ -291,9 +291,7 @@ function Inicializacion_Eventos()
         $('#Actualizar').click(function(event)
         {
             swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-
             Tabla_Instrumento.clear().draw();
-
             swal.showLoading();
             Cargar_Instrumentos();
         });
@@ -305,10 +303,12 @@ function Inicializacion_Eventos()
             if( $('#Switch_Editar').prop('checked') == true)
             {
                 Habilitar_Deshabilitar_Instrumentos(true);
+                $('#Busqueda_Form').hide();
             }
             else
             {
                 Habilitar_Deshabilitar_Instrumentos(false);
+                $('#Busqueda_Form').show();
             }
         });
 
