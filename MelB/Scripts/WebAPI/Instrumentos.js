@@ -12,7 +12,7 @@
                     for (i = 0; i < Resultado.length; i++) 
                     {      
                             var Bodega_HTML = (Resultado[i].Tipo_Ubicacion == 'Bodega') ? '<span class="label label-warning ">Bodega</span>' : '<span class="label label-info">Aula</span>'
-                            var Imagen = '<img width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
+                            var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
                             Tabla_Instrumento.row.add
                             ([
                                     Resultado[i].ID_Instrumento,
@@ -21,12 +21,12 @@
                                     Resultado[i].Marca,                    
                                     Resultado[i].Tipo_Ubicacion,
                                     '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                    '<button type="button" class="btn btn-danger"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                    '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ] ).draw( false );
                     }
                     Cargar_Estuches();                   
                 },
-                error: function (Mensaje) 
+                error: function (xhr, status, error) 
                 {
                     swal
                     ({
@@ -46,37 +46,45 @@
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
-                {               
+                {            
                       Resultado = JSON.parse(Resultado);     
-                      Resultado = Resultado[0]; 
-                      $('#ID_Instrumento').val(Resultado.ID_Instrumento); 
-                      $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
-                      $('#Color_Instrumento').selectpicker('val', Resultado.Color);
-                      $('#Marca_Instrumento').val(Resultado.Marca);
-                      $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
-                      $('#Estuche_Instrumento').selectpicker('val', Resultado.Nombre_Estuche);
-                      $('#Material_Instrumento').selectpicker('val', Resultado.Material);
-                      $('#Descripcion_Inst').val(Resultado.Descripcion);
-                      $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
-                      $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
-                      $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
+                      if(Resultado.Codigo == null)
+                      {       
+                          Resultado = Resultado[0];                  
+                          $('#ID_Instrumento').val(Resultado.ID_Instrumento); 
+                          $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
+                          $('#Color_Instrumento').selectpicker('val', Resultado.Color);
+                          $('#Marca_Instrumento').val(Resultado.Marca);
+                          $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
+                          $('#Estuche_Instrumento').selectpicker('val', Resultado.Nombre_Estuche);
+                          $('#Material_Instrumento').selectpicker('val', Resultado.Material);
+                          $('#Descripcion_Inst').val(Resultado.Descripcion);
+                          $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
+                          $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
+                          $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
 
-                      if(Resultado.Tipo_Ubicacion == "Bodega")
-                      {   
-                          $('#Label_Tipo_A_B').text('Estante');
-                          $('#Estante_Instrumento').val(Resultado.Estante);
-                          $('#Gaveta_Instrumento').val(Resultado.Gaveta);
-                          $('#Gaveta_Form').show(150);
+                          if(Resultado.Tipo_Ubicacion == "Bodega")
+                          {   
+                              $('#Label_Tipo_A_B').text('Estante');
+                              $('#Estante_Instrumento').val(Resultado.Estante);
+                              $('#Gaveta_Instrumento').val(Resultado.Gaveta);
+                              $('#Gaveta_Form').show(150);
+                          }
+                          else
+                          {
+                               $('#Label_Tipo_A_B').text('ID Aula');
+                               $('#Estante_Instrumento').val(Resultado.Numero_Aula);
+                               $('#Gaveta_Form').hide(150);
+
+                          }                
+                          Base64Imagen(Resultado.Imagen) 
+                          $('.selectpicker').selectpicker('refresh');    
                       }
                       else
                       {
-                           $('#Label_Tipo_A_B').text('ID Aula');
-                           $('#Estante_Instrumento').val(Resultado.Numero_Aula);
-                           $('#Gaveta_Form').hide(150);
+                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "warning");
 
-                      }                
-                      Base64Imagen(Resultado.Imagen) 
-                      $('.selectpicker').selectpicker('refresh');               
+                      }           
                 },
                 error: function (Mensaje) 
                 {
@@ -92,32 +100,93 @@
 
         function Insertar_Actualizar_Instrumento(Comando)
         {     
-            var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
-            var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
+            if($('#Marca_Instrumento').val() != "" && $('#Descripcion_Inst').val() != "")
+            {
+                var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
+                var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
 
-            if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
-            {       
-                if(Comando == "Nuevo")
-                {                    
-                    swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el instrumento',type: 'info', allowOutsideClick: false});
-                }
+                if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
+                {       
+                    if(Comando == "Nuevo")
+                    {                    
+                        swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el instrumento',type: 'info', allowOutsideClick: false});
+                    }
+                    else
+                    {
+                        swal({title:'Espere',text: 'Se esta actualizando el instrumento',type: 'info', allowOutsideClick: false});
+                    }
+                    swal.showLoading();
+                    Insertar_Imagen_API(Comando);
+                }                  
                 else
                 {
-                    swal({title:'Espere',text: 'Se esta actualizando el instrumento',type: 'info', allowOutsideClick: false});
+                    swal
+                        ({
+                              title: "Error al añadir el instrumento",
+                              text: "La imagen debe ser como maximo de  600 x 600.",
+                              type: "error",
+                        });
                 }
-                swal.showLoading();
-                Insertar_Imagen_API(Comando);
-            }                  
+            }
             else
             {
-                swal
-                    ({
-                          title: "Error al añadir el instrumento",
-                          text: "La imagen debe ser de 300 x 300.",
-                          type: "error",
-                    });
+                 swal
+                        ({
+                              title: "Aviso",
+                              text: "Algunos campos estan vacios",
+                              type: "warning",
+                        });
             }
         };
+
+        function Eliminar_Instrumento(ID)
+        {
+            swal
+            ({
+                  title: "¿Estas seguro?",
+                  text: "Una vez que lo borres, no hay marcha atras",
+                  type: "error",
+                  showCancelButton: true
+            })
+            .then((willDelete) => 
+            {
+                  if (willDelete) 
+                  {
+                        swal({title:'Eliminando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+                        swal.showLoading();
+                        $.ajax
+                        ({
+
+                          url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
+                          type: 'DELETE',
+                          success: function(Resultado)
+                          {
+                             Resultado = JSON.parse(Resultado);
+                             if(Resultado.Codigo == 5)
+                             {                                    
+                                 swal.closeModal();
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                             }
+                             else
+                             {
+                                 var Cadena_Errores = "";
+                                 for (var I = 0; I < Resultado.Errores.length; I++) 
+                                 {
+                                      Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                 }
+                                 swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                             }
+
+                          },
+                          error: function(Respuesta)
+                          {
+                             swal("Error", "Ocurrio un error al borrar el instrumento", "error");
+                          },
+                        });
+                  } 
+                  
+            });            
+        }
     
 /* Funcionalidad de formularios  */
 
@@ -233,11 +302,24 @@
                               data: Instrumento_BBDD,
                               success: function(Resultado)
                               {
-                                 swal.closeModal();
-                                 swal("Exito!", "El instrumento se ha registrado", "success");
+                                 Resultado = JSON.parse(Resultado);
+                                 if(Resultado.Codigo == 5)
+                                 {                                    
+                                     swal.closeModal();
+                                     swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 }
+                                 else
+                                 {
+                                     var Cadena_Errores = "";
+                                     for (var I = 0; I < Resultado.Errores.length; I++) 
+                                     {
+                                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                     }
+                                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                                 }
 
                               },
-                              error: function(Resultado)
+                              error: function(Respuesta)
                               {
                                  swal("Error", "Ocurrio un error al insertar el instrumento", "error");
                               },
@@ -248,17 +330,16 @@
                     {
                         $.ajax
                         ({
-
-                              url: 'http://localhost:53603/api/Instrumentos/',
+                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/',
                               type: 'PUT',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
                               {
+                                 Resultado = JSON.parse(Resultado);
                                  swal.closeModal();
-                                 swal("Exito!", "El instrumento se ha actualizado", "success");
-
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                               },
-                              error: function(Resultado)
+                              error: function(xhr, status, error)
                               {
                                  swal("Error", "Ocurrio un error al insertar el instrumento", "error");
                               },
@@ -266,7 +347,7 @@
                         swal.closeModal();
                     }
                 },                  
-                error: function (Mensaje) 
+                error: function (xhr, status, error) 
                 {
                     swal.closeModal();
                     swal

@@ -62,7 +62,10 @@ function Inicializacion_Tablas()
                 "previous":   "Pagina anterior"
             },
             "columnDefs": [ {"className": "dt-center", "targets": "_all"}],
-            responsive: true
+            "responsive": true,
+            "search": {
+                "caseInsensitive": false
+            }
         }
     });
 
@@ -246,6 +249,36 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide(400);
             $('#Contenedor_Panel').hide(); 
         });   
+
+        $('#Buscar_Boton').click(function(event)
+        {
+            if(Formulario_Activo == 'Instrumento')
+            {   
+                if($('#Descripcion_Instrumento').val() != "")
+                {
+
+                    Detallar_Datos_Instrumento($('#Descripcion_Instrumento').val());
+                }
+                else
+                {
+                     swal
+                     ({
+                          title: "Aviso",
+                          text: "Debe introducir el identificador del instrumento",
+                          type: "warning",
+                     });
+                }
+            }
+        });
+
+        $('#Descripcion_Instrumento').keypress(function (e) 
+        {             
+             if(e.which == 13)  
+              {                    
+                    $( "#Buscar_Boton" ).trigger( "click" );
+                    e.preventDefault();
+              }
+        });       
 
     /* Eventos : Formulario Instrumento */
 
