@@ -62,7 +62,7 @@ function Cargar_Estuches()
                     }
                     else
                     {
-                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "warning");
+                        swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "warning");
                     }              
                 },
                 error: function (Mensaje) 
