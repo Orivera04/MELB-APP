@@ -4,6 +4,7 @@ var Tabla_Instrumento;
 var Tabla_Proveedor;
 var Tabla_Remision;
 var Tabla_Estuche;
+var Tabla_Accesorios;
 
 $(document).ready(function ()
 {   
@@ -115,6 +116,27 @@ function Inicializacion_Tablas()
 
 
     Tabla_Estuche = $('#Estuche_T').DataTable
+    ({
+        "language": 
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate": 
+            {        
+                "next":       "Siguiente pagina",
+                "previous":   "Pagina anterior"
+            },
+            "columnDefs": [ {"className": "dt-center", "targets": "_all"}]        
+        }
+    });
+
+    /* Tablas de Instrumento */
+
+    Tabla_Accesorios = $('#Accesorios_T').DataTable
     ({
         "language": 
         {

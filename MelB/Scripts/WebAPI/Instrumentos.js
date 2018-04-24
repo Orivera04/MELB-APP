@@ -26,7 +26,7 @@
                     }
                     Cargar_Estuches();                   
                 },
-                error: function (xhr, status, error) 
+                error: function (Error) 
                 {
                     swal
                     ({
@@ -40,7 +40,7 @@
 
 
         function Cargar_Instrumentos_Por_ID(ID) 
-        {
+        {        
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
@@ -78,7 +78,8 @@
 
                           }                
                           Base64Imagen(Resultado.Imagen) 
-                          $('.selectpicker').selectpicker('refresh');    
+                          $('.selectpicker').selectpicker('refresh');
+                          Cargar_Accesorios(Resultado.ID_Instrumento);    
                       }
                       else
                       {
