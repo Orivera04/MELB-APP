@@ -251,8 +251,22 @@ function Inicializacion_Eventos()
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#ID_Instrumento').removeAttr('disabled');
                  $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
+                 Base64Imagen($('#Imagen_Instrumento').attr('src'));       
+            }
+            else if (Formulario_Activo == 'Estuche')
+            {
+                 Operacion = 'Nuevo';
+                 $('#Header_Instrumento_Texto').text('Añadir Estuche')           
+                 Reiniciar_Controles_Estuche()
+                 Habilitar_Deshabilitar_Estuche(true);
+                 $('#ID_Estuche').removeAttr('disabled');
+                 $('#Estuches').hide(300);
+                 $('#Estuche_Detalle').show(400);   
+                 $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
+                 $('#ID_Estuche').removeAttr('disabled');
+                 $('#Imagen_Estuche').attr("src","https://i.imgur.com/0oN2F22.png");   
+                 Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
             }                
-            Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
             $('#ADD').hide('drop',100);
             $('#Busqueda_Form').hide(400);
             $('#Contenedor_Panel').hide(); 
@@ -277,9 +291,35 @@ function Inicializacion_Eventos()
                      });
                 }
             }
+            else if(Formulario_Activo == 'Estuche')
+            {   
+                if($('#Descripcion_Estuche').val() != "")
+                {
+
+                    Detallar_Datos_Estuche($('#Descripcion_Estuche').val());
+                }
+                else
+                {
+                     swal
+                     ({
+                          title: "Aviso",
+                          text: "Debe introducir el identificador del instrumento",
+                          type: "warning",
+                     });
+                }
+            }
         });
 
         $('#Descripcion_Instrumento').keypress(function (e) 
+        {             
+             if(e.which == 13)  
+              {                    
+                    $( "#Buscar_Boton" ).trigger( "click" );
+                    e.preventDefault();
+              }
+        });       
+
+        $('#Descripcion_Estuche').keypress(function (e) 
         {             
              if(e.which == 13)  
               {                    
@@ -293,6 +333,7 @@ function Inicializacion_Eventos()
             swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
 
             Tabla_Instrumento.clear().draw();
+            Tabla_Estuche.clear().draw();
 
             swal.showLoading();
             Cargar_Instrumentos();
@@ -312,14 +353,36 @@ function Inicializacion_Eventos()
             }
         });
 
+        $('#Switch_Editar_Estuche').change(function()
+        {
+            if( $('#Switch_Editar_Estuche').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Estuche(true);
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Estuche(false);
+            }
+        });
+
         $('#Cambiar_Imagen_Instrumento').click(function(event)
         {
               document.getElementById('Imagen_Archivo').click();
         });
 
+        $('#Cambiar_Imagen_Estuche').click(function(event)
+        {
+              document.getElementById('Imagen_Archivo_Estuche').click();
+        });
+
         $('#Actualizar_Instrumento').click(function(event)
         {              
               Insertar_Actualizar_Instrumento(Operacion);
+        });
+
+        $('#Actualizar_Estuche').click(function(event)
+        {              
+              Insertar_Actualizar_Estuche(Operacion);
         });
 
         $('#Ubicacion_Instrumento').change(function(event)

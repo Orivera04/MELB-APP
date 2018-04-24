@@ -433,7 +433,8 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-3 ">
-                                        <img src="https://k62.kn3.net/1/B/4/C/F/3/C32.jpg" class="img-thumbnail">
+                                        <img id="Imagen_Estuche" class="img-thumbnail">
+                                        <input type="file" name="Cambiar_Imagen_Estuche" id="Imagen_Archivo_Estuche" onchange="Imagen_Estuche(event)">
                                         <button id="Cambiar_Imagen_Estuche" type="button" class="btn btn-Custom" disabled>
                                            <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
                                             Cambiar imagen
@@ -449,7 +450,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Identificador</label>
                                                             <div class="form-group">
-                                                                <input id="ID_Estuche" type="text" value="55" name="ID_Estuche" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                                <input id="ID_Estuche" type="text" value="1" name="ID_Estuche" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
                                                         </div>
 
@@ -471,20 +472,11 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Proveedor</label>
-                                                            <div class="input-group m-t-10">                         
-                                                                <select data-live-search="true" name="Proveedor_Estuche" id="Proveedor_Estuche" class="selectpicker" data-style="btn-white" disabled>
-                                                                </select>                    
-                                                            </div>
-                                                        </div> 
-
-                                                        <div class="form-group">
                                                             <label class="control-label">Material</label>
                                                                 <div class="input-group m-t-10">                            
                                                                     <select id="Material_Estuche" class="selectpicker" data-style="btn-white" disabled>
-                                                                        <option>Madera</option>
-                                                                        <option>Metal</option>
                                                                         <option>Plastico</option>                
+                                                                        <option>Tela</option>                
                                                                     </select>                    
                                                                 </div>
                                                         </div>   
@@ -500,12 +492,6 @@
                                                             </div>
                                                         </div>    
 
-                                                        <div class="form-group">
-                                                            <label class="control-label">Estante</label>
-                                                            <div class="form-group">
-                                                                <input id="Estante_Estuche" type="text" value="1" name="Estante_Estuche" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
-                                                            </div>
-                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -546,40 +532,15 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Estuche</label>
-                                                                <div class="input-group m-t-10" disabled>                                       
-                                                                    <select data-live-search="true" id="Estuche_Instrument" class="selectpicker" data-style="btn-white" disabled>
-                                                                        <option data-subtext="#1">Bolso</option>
-                                                                    </select>                    
-                                                                </div>
-                                                        </div>        
-
-                                                        <div class="form-group">
                                                             <label class="control-label">Descripción</label>
                                                             <div class="input-group m-t-10">
                                                                 <input id="Descripcion_Estuche" type="text" class="form-control" placeholder="Descripción del estuche" maxlength="50" disabled>
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon-briefcase" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label class="control-label">Ubicación</label>
-                                                            <div class="input-group m-t-10">                                                            
-                                                                <select id="Ubicacion_Estuche" class="selectpicker" data-style="btn-white" disabled>        
-                                                                    <option>Bodega</option>
-                                                                    <option>Aula</option>
-                                                                </select>                    
-                                                            </div>
-                                                        </div>  
-
-                                                        <div class="form-group">
-                                                            <label class="control-label">Gaveta</label>
-                                                                <div class="form-group">
-                                                                    <input id="Gaveta_Estuche" type="text" value="1" name="Gaveta_Estuche" data-bts-min="1" data-bts-max="10"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
-                                                                </div>
-                                                        </div>  
                                                     </form>
                                                 </div>
                                             </div>                                                                                              
