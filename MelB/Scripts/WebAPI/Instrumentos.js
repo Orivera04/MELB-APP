@@ -8,23 +8,26 @@
                 type: 'GET',
                 success: function (Resultado) 
                 {
-                    Resultado = JSON.parse(Resultado);
-                    for (i = 0; i < Resultado.length; i++) 
-                    {      
-                            var Bodega_HTML = (Resultado[i].Tipo_Ubicacion == 'Bodega') ? '<span class="label label-warning ">Bodega</span>' : '<span class="label label-info">Aula</span>'
-                            var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
-                            Tabla_Instrumento.row.add
-                            ([
-                                    Resultado[i].ID_Instrumento,
-                                    Imagen,
-                                    Resultado[i].Nombre,
-                                    Resultado[i].Marca,                    
-                                    Resultado[i].Tipo_Ubicacion,
-                                    '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                    '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                            ] ).draw( false );
-                    }
-                    Cargar_Estuches();                   
+                  if(Resultado.Codigo == null)
+                  {
+                      Resultado = JSON.parse(Resultado);
+                      for (i = 0; i < Resultado.length; i++) 
+                      {      
+                              var Bodega_HTML = (Resultado[i].Tipo_Ubicacion == 'Bodega') ? '<span class="label label-warning ">Bodega</span>' : '<span class="label label-info">Aula</span>'
+                              var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
+                              Tabla_Instrumento.row.add
+                              ([
+                                      Resultado[i].ID_Instrumento,
+                                      Imagen,
+                                      Resultado[i].Nombre,
+                                      Resultado[i].Marca,                    
+                                      Resultado[i].Tipo_Ubicacion,
+                                      '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                      '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                              ] ).draw( false );
+                      }
+                      Cargar_Estuches();
+                  }                   
                 },
                 error: function (Error) 
                 {
@@ -83,8 +86,7 @@
                       }
                       else
                       {
-                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "warning");
-
+                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
                       }           
                 },
                 error: function (Mensaje) 
@@ -123,7 +125,7 @@
                 {
                     swal
                         ({
-                              title: "Error al añadir el instrumento",
+                              title: "Error al subir la imagen",
                               text: "La imagen debe ser como maximo de  600 x 600.",
                               type: "error",
                         });
@@ -146,7 +148,7 @@
             ({
                   title: "¿Estas seguro?",
                   text: "Una vez que lo borres, no hay marcha atras",
-                  type: "error",
+                  type: "question",
                   showCancelButton: true
             })
             .then((willDelete) => 
