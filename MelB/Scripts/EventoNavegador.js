@@ -375,6 +375,11 @@ function Inicializacion_Eventos()
             }
         });
 
+        $('#Añadir_Accesorio').click(function(event)
+        {
+             Insertar_Accesorio($('#ID_Instrumento').val());   
+        });
+
         $('#Switch_Editar_Estuche').change(function()
         {
             if( $('#Switch_Editar_Estuche').prop('checked') == true)

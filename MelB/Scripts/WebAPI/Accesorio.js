@@ -45,9 +45,10 @@ function Insertar_Accesorio(ID)
   swal.setDefaults
   ({
         input: 'text',
-        confirmButtonText: 'Next &rarr;',
+        confirmButtonText: 'Siguiente',
+        cancelButtonText: 'Cancelar',
         showCancelButton: true,
-        animation: false,
+        animation: true,
         progressSteps: ['1', '2', '3']
   });
 
@@ -56,17 +57,37 @@ function Insertar_Accesorio(ID)
     {
         title: 'Añadir Accesorio',
         text: 'ID Accesorio',
-        input : 'number'
+        input : 'number',
+        inputPlaceholder: 'Ingrese el identificador unico de accesorio',
+        inputAttributes: 
+        {
+            min: 1,
+            max: 200000,
+            step: 1
+        },
+        inputClass: 'form-control'
     },
     {
         title: 'Añadir Accesorio',
         text: 'Nombre del accesorio',
-        input : 'text'
+        input : 'number',
+        inputPlaceholder: 'Ingrese el nombre que tendra el accesorio',
+        inputAttributes: 
+        {
+            maxlength : 15
+        },
+        inputClass: 'form-control'
     },
     {
         title: 'Añadir Accesorio',
-        text: 'Descripción del accesorio',
-        input : 'text'
+        text: 'Descripción del accessorio',
+        input : 'textarea',
+        inputPlaceholder: 'Ingrese la descripción que tendra el accesorio',
+        inputAttributes: 
+        {
+            maxlength : 50
+        },
+        inputClass: 'form-control'
     }
   ]
 
