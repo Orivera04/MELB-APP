@@ -42,10 +42,33 @@
 function wea()
 {
         
-        var a = '<div class="panel-heading"><i class="ion-music-note" aria-hidden="true"></i><h3 class="TextoHeader">Instrumentos registrados en inventario</h3></div>';
-        swal
-        ({
-              title: a,
-              html: a
-        })
+            swal.mixin({ 
+  confirmButtonText: 'Next &rarr;',
+  showCancelButton: true,
+  progressSteps: ['1', '2', '3']
+}).queue([
+  {
+    title: 'Question 1',
+    text: 'Chaining swal2 modals is easy',
+    input: 'number'
+  },
+  {
+    title: 'Question 1',
+    text: 'Chaining swal2 modals is easy',
+    input: 'text'
+  },
+  'Question 3'
+]).then((result) => {
+  if (result.value) {
+    swal({
+      title: 'All done!',
+      html:
+        'Your answers: <pre>' +
+          JSON.stringify(result.value) +
+        '</pre>',
+      confirmButtonText: 'Lovely!'
+    })
+  }
+})
+
 }
