@@ -375,14 +375,38 @@ function Inicializacion_Eventos()
             }
         });
 
+        $('#Switch_Editar_Estuche').change(function()
+        {
+            if( $('#Switch_Editar_Estuche').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Estuche(true);
+                $('#Busqueda_Form').hide();
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Estuche(false);
+                $('#Busqueda_Form').show();
+            }
+        });
+
         $('#Cambiar_Imagen_Instrumento').click(function(event)
         {
               document.getElementById('Imagen_Archivo').click();
         });
 
+        $('#Cambiar_Imagen_Estuche').click(function(event)
+        {
+              document.getElementById('Imagen_Archivo_Estuche').click();
+        });
+
         $('#Actualizar_Instrumento').click(function(event)
         {              
               Insertar_Actualizar_Instrumento(Operacion);
+        });
+
+        $('#Actualizar_Estuche').click(function(event)
+        {              
+              Insertar_Actualizar_Estuche(Operacion);
         });
 
         $('#Ubicacion_Instrumento').change(function(event)

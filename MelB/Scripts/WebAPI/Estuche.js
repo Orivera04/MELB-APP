@@ -91,7 +91,7 @@ function Cargar_Estuches()
             Cargar_Estuches_Por_ID(ID); 
         }
 
-        function Insertar_Actualizar_Estuche(Comando)
+        function Insertar_Actualizar_Instrumento(Comando)
         {     
             if($('#Marca_Instrumento').val() != "" && $('#Descripcion_Inst').val() != "")
             {
@@ -183,7 +183,7 @@ function Cargar_Estuches()
     
 /* Funcionalidad de formularios  */
 
-        function Detallar_Datos_Estuche(ID)
+        function Detallar_Datos_Instrumento(ID)
         {           
             $('#Switch_Editar').prop('checked',false);
             Habilitar_Deshabilitar_Instrumentos(false);        
@@ -356,4 +356,20 @@ function Cargar_Estuches()
             })
         }
 
+        function Base64Imagen(URL) 
+        {
+            var Imagen = new Image();
+            Imagen.setAttribute('crossOrigin', 'anonymous');
 
+            Imagen.onload = function () 
+            {
+                var Canvas = document.createElement("canvas");
+                Canvas.width =this.width;
+                Canvas.height =this.height;
+                var Contexto = Canvas.getContext("2d");
+                Contexto.drawImage(this, 0, 0);
+                ImagenBase64 = Canvas.toDataURL().split(',')[1];                
+            };
+
+            Imagen.src = URL;
+        }
