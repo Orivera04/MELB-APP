@@ -277,7 +277,7 @@ function Inicializacion_Eventos()
             else if(Formulario_Activo == 'Estuche')
             {       
                  Operacion = 'Nuevo';
-                 $('#Header_Instrumento_Texto').text('Añadir Estuche')           
+                 $('#Header_Estuche_Texto').text('Añadir Estuche')           
                  Reiniciar_Controles_Estuche()
                  Habilitar_Deshabilitar_Estuche(true);
                  $('#ID_Estuche').removeAttr('disabled');

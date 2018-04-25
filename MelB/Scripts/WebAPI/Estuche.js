@@ -7,21 +7,24 @@ function Cargar_Estuches()
         type: 'GET',
         success: function (Resultado) 
         {
-            Resultado = JSON.parse(Resultado); 
-            for (i = 0; i < Resultado.length; i++) 
-            {   
-                var Imagen = '<img width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
-                Tabla_Estuche.row.add
-                ([
-                    Resultado[i].ID_Estuche,
-                    Imagen,
-                    Resultado[i].Color,
-                    '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                    '<button type="button" class="btn btn-danger"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                ] ).draw( false ); 
-                $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>');
-            }       
-            Cargar_Proveedores();
+            if(Resultado.Codigo == null)
+            {
+                Resultado = JSON.parse(Resultado); 
+                for (i = 0; i < Resultado.length; i++) 
+                {   
+                    var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
+                    Tabla_Estuche.row.add
+                    ([
+                        Resultado[i].ID_Estuche,
+                        Imagen,
+                        Resultado[i].Color,
+                        '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                        '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                    ] ).draw( false ); 
+                    $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>');
+                }       
+                    Cargar_Proveedores();
+            }
         },
         error: function (Mensaje) 
         {
@@ -34,8 +37,6 @@ function Cargar_Estuches()
         }
     });
 }
-
-/*Funcionalidad de Formularios*/
 
         function Cargar_Estuches_Por_ID(ID) 
         {
@@ -62,7 +63,7 @@ function Cargar_Estuches()
                     }
                     else
                     {
-                        swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "warning");
+                        swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
                     }              
                 },
                 error: function (Mensaje) 
@@ -77,45 +78,31 @@ function Cargar_Estuches()
             });
         }
 
-        function Detallar_Datos_Estuche(ID)
-        {                   
-            Operacion = 'Actualizar';                
-            $('#Estuches').hide(300);
-            $('#Estuche_Detalle').show(400);
-            $('#ADD').hide('drop',400);
-            $('#Busqueda_Form').show(400);
-            $('#Busqueda_Form').css('display','inline-flex');
-            $('#Contenedor_Panel').show();
-            $('#Header_Estuche_Texto').text('Descripción del Estuche');
-            $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Estuche');
-            Cargar_Estuches_Por_ID(ID); 
-        }
-
-        function Insertar_Actualizar_Instrumento(Comando)
+        function Insertar_Actualizar_Estuche(Comando)
         {     
-            if($('#Marca_Instrumento').val() != "" && $('#Descripcion_Inst').val() != "")
+            if($('#Marca_Estuche').val() != "" && $('#Descripcion_Estuche').val() != "")
             {
-                var Ancho  =  document.getElementById('Imagen_Instrumento').naturalWidth;
-                var Altura =  document.getElementById('Imagen_Instrumento').naturalHeight;
+                var Ancho  =  document.getElementById('Imagen_Estuche').naturalWidth;
+                var Altura =  document.getElementById('Imagen_Estuche').naturalHeight;
 
                 if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
                 {       
                     if(Comando == "Nuevo")
                     {                    
-                        swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el instrumento',type: 'info', allowOutsideClick: false});
+                        swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el Estuche',type: 'info', allowOutsideClick: false});
                     }
                     else
                     {
-                        swal({title:'Espere',text: 'Se esta actualizando el instrumento',type: 'info', allowOutsideClick: false});
+                        swal({title:'Espere',text: 'Se esta actualizando el Estuche',type: 'info', allowOutsideClick: false});
                     }
                     swal.showLoading();
-                    Insertar_Imagen_API(Comando);
+                    Insertar_Imagen_API_Estuche(Comando);
                 }                  
                 else
                 {
                     swal
                         ({
-                              title: "Error al añadir el instrumento",
+                              title: "Error al subir la imagen",
                               text: "La imagen debe ser como maximo de  600 x 600.",
                               type: "error",
                         });
@@ -132,13 +119,13 @@ function Cargar_Estuches()
             }
         };
 
-        function Eliminar_Instrumento(ID)
+        function Eliminar_Estuche(ID)
         {
             swal
             ({
                   title: "¿Estas seguro?",
                   text: "Una vez que lo borres, no hay marcha atras",
-                  type: "error",
+                  type: "question",
                   showCancelButton: true
             })
             .then((willDelete) => 
@@ -150,10 +137,11 @@ function Cargar_Estuches()
                         $.ajax
                         ({
 
-                          url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
+                          url: 'http://melbws.azurewebsites.net/api/Estuche/'+ID,
                           type: 'DELETE',
                           success: function(Resultado)
                           {
+                             swal.closeModal();
                              Resultado = JSON.parse(Resultado);
                              if(Resultado.Codigo == 5)
                              {                                    
@@ -173,7 +161,7 @@ function Cargar_Estuches()
                           },
                           error: function(Respuesta)
                           {
-                             swal("Error", "Ocurrio un error al borrar el instrumento", "error");
+                             swal("Error", "Ocurrio un error al borrar el Estuche", "error");
                           },
                         });
                   } 
@@ -183,96 +171,82 @@ function Cargar_Estuches()
     
 /* Funcionalidad de formularios  */
 
-        function Detallar_Datos_Instrumento(ID)
+        function Detallar_Datos_Estuche(ID)
         {           
-            $('#Switch_Editar').prop('checked',false);
-            Habilitar_Deshabilitar_Instrumentos(false);        
+            $('#Switch_Editar_Estuche').prop('checked',false);
+            Habilitar_Deshabilitar_Estuche(false);        
             Operacion = 'Actualizar';                
-            $('#Instrumentos').hide(300);
-            $('#Instrumento_Detalle').show(400);
+            $('#Estuches').hide(300);
+            $('#Estuche_Detalle').show(400);
             $('#ADD').hide('drop',400);
             $('#Busqueda_Form').show(400);
             $('#Busqueda_Form').css('display','inline-flex');
             $('#Contenedor_Panel').show();
-            $('#Header_Instrumento_Texto').text('Descripción del instrumento');
-            $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Instrumento');
-            Cargar_Instrumentos_Por_ID(ID); 
+            $('#Header_Estuche_Texto').text('Descripción del Estuche');
+            $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Estuche');
+            Cargar_Estuches_Por_ID(ID);
             $('.FlotarDerecha').show();
         }
 
-        function Habilitar_Deshabilitar_Instrumentos(Cond)
+        function Habilitar_Deshabilitar_Estuche(Cond)
         {
             if(Cond == true)
             {
-                $("#ID_Instrumento").prop("disabled", "false");
-                $("#Tipo_Instrumento").removeAttr('disabled');
-                $('#Color_Instrumento').removeAttr('disabled');
-                $('#Marca_Instrumento').removeAttr('disabled');
-                $('#Proveedor_Instrumento').removeAttr('disabled');
-                $('#Estuche_Instrumento').removeAttr('disabled');
-                $('#Material_Instrumento').removeAttr('disabled');
-                $('#Descripcion_Inst').removeAttr('disabled');
-                $('#Estado_Instrumento').removeAttr('disabled');
-                $('#Ubicacion_Instrumento').removeAttr('disabled');
-                $('#Estante_Instrumento').removeAttr('disabled');
-                $('#Gaveta_Instrumento').removeAttr('disabled');
-                $('#Cambiar_Imagen_Instrumento').removeAttr('disabled');
-                $('#Actualizar_Instrumento').removeAttr('disabled');
+                $("#ID_Estuche").prop("disabled", "false");
+                $("#Tipo_Estuche").removeAttr('disabled');
+                $('#Color_Estuche').removeAttr('disabled');
+                $('#Marca_Estuche').removeAttr('disabled');
+                $('#Material_Estuche').removeAttr('disabled');
+                $('#Descripcion_Estuche').removeAttr('disabled');
+                $('#Estado_Estuche').removeAttr('disabled');
+                $('#Cambiar_Imagen_Estuche').removeAttr('disabled');
+                $('#Actualizar_Estuche').removeAttr('disabled');
                 $('.selectpicker').selectpicker('refresh');
             }
             else
             {
-                $("#ID_Instrumento").prop("disabled", "true");
-                $('#Tipo_Instrumento').prop('disabled','true');
-                $('#Color_Instrumento').prop('disabled','true');
-                $('#Marca_Instrumento').prop('disabled','true');
-                $('#Proveedor_Instrumento').prop('disabled','true');
-                $('#Estuche_Instrumento').prop('disabled','true');
-                $('#Material_Instrumento').prop('disabled','true');
-                $('#Descripcion_Inst').prop('disabled','true');
-                $('#Estado_Instrumento').prop('disabled','true');
-                $('#Ubicacion_Instrumento').prop('disabled','true');
-                $('#Estante_Instrumento').prop('disabled','true');
-                $('#Gaveta_Instrumento').prop('disabled','true');
-                $('#Cambiar_Imagen_Instrumento').prop('disabled','true');
-                $('#Actualizar_Instrumento').prop('disabled','true');
+                $("#ID_Estuche").prop("disabled", "true");
+                $('#Tipo_Estuche').prop('disabled','true');
+                $('#Color_Estuche').prop('disabled','true');
+                $('#Marca_Estuche').prop('disabled','true');
+                $('#Material_Estuche').prop('disabled','true');
+                $('#Descripcion_Estuche').prop('disabled','true');
+                $('#Estado_Estuche').prop('disabled','true');
+                $('#Cambiar_Imagen_Estuche').prop('disabled','true');
+                $('#Actualizar_Estuche').prop('disabled','true');
                 $('.selectpicker').selectpicker('refresh');
             }
         }
 
-        function Reiniciar_Controles_Instrumento()
+        function Reiniciar_Controles_Estuche()
         {
-            $('#ID_Instrumento').val(1);
-            $("#Tipo_Instrumento").selectpicker('val', 'Guitarra');
-            $('#Color_Instrumento').selectpicker('val', 'Rojo');
-            $('#Marca_Instrumento').val('');
-            $('#Proveedor_Instrumento').selectpicker('val','Bansbach NIC');            
-            $('#Material_Instrumento').selectpicker('val','Madera');
-            $('#Descripcion_Inst').val('');
-            $('#Estado_Instrumento').selectpicker('val','Excelente');
-            $('#Ubicacion_Instrumento').selectpicker('val','Bodega');
-            $('#Estante_Instrumento').val(1);
-            $('#Gaveta_Instrumento').val(1);
+            $('#ID_Estuche').val(1);
+            $("#Tipo_Estuche").selectpicker('val', 'Guitarra');
+            $('#Color_Estuche').selectpicker('val', 'Rojo');
+            $('#Marca_Estuche').val('');
+            $('#Material_Estuche').selectpicker('val','Plastico');
+            $('#Descripcion_Estuche').val('');
+            $('#Estado_Estuche').selectpicker('val','Excelente');
         }
 
 
-        var Imagen_Instrumento = function(Archivo)
+        var Imagen_Estuche = function(Archivo)
         {
-            var IMG = Archivo.target;
-            var Lector = new FileReader();
+            var IMG_Estuche = Archivo.target;
+            var Lector_Estuche = new FileReader();
 
-            Lector.onload = function()
+            Lector_Estuche.onload = function()
             {
-               ImagenBase64 = (Lector.result).split(',')[1];
-               $('#Imagen_Instrumento').prop('src',Lector.result);
+               ImagenBase64 = (Lector_Estuche.result).split(',')[1];
+               $('#Imagen_Estuche').prop('src',Lector_Estuche.result);
 
             }
-            Lector.readAsDataURL(IMG.files[0]);
+            Lector_Estuche.readAsDataURL(IMG_Estuche.files[0]);
         };
 
 /* Funciones de soporte */
         
-        function Insertar_Imagen_API(Comando)
+        function Insertar_Imagen_API_Estuche(Comando)
         {
             $.ajax
             ({
@@ -285,17 +259,16 @@ function Cargar_Estuches()
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
-                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,Numero_Aula: $('#Estante_Instrumento').val()}
-                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}                       
+                    var Estuche_BBDD = {ID_Estuche: $('#ID_Estuche').val(), Nombre: $('#Tipo_Estuche').val(), Marca: $('#Marca_Estuche').val(),Material: $('#Material_Estuche').val(), Color: $('#Color_Estuche').val(), Estado: $('#Estado_Estuche').val(),Imagen: Resultado.data.link};
+                                       
                     if(Comando == 'Nuevo')
                     {                                                
                         $.ajax
                         ({
 
-                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/',
+                              url: 'http://melbws.azurewebsites.net/api/Estuche/',
                               type: 'POST',
-                              data: Instrumento_BBDD,
+                              data: Estuche_BBDD,
                               success: function(Resultado)
                               {
                                  Resultado = JSON.parse(Resultado);
@@ -317,7 +290,7 @@ function Cargar_Estuches()
                               },
                               error: function(Respuesta)
                               {
-                                 swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                                 swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
                         swal.closeModal();
@@ -326,9 +299,9 @@ function Cargar_Estuches()
                     {
                         $.ajax
                         ({
-                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/',
+                              url: 'http://melbws.azurewebsites.net/api/Estuche/',
                               type: 'PUT',
-                              data: Instrumento_BBDD,
+                              data: Estuche_BBDD,
                               success: function(Resultado)
                               {
                                  Resultado = JSON.parse(Resultado);
@@ -337,7 +310,7 @@ function Cargar_Estuches()
                               },
                               error: function(xhr, status, error)
                               {
-                                 swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                                 swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
                         swal.closeModal();
@@ -354,22 +327,4 @@ function Cargar_Estuches()
                     });
                 }               
             })
-        }
-
-        function Base64Imagen(URL) 
-        {
-            var Imagen = new Image();
-            Imagen.setAttribute('crossOrigin', 'anonymous');
-
-            Imagen.onload = function () 
-            {
-                var Canvas = document.createElement("canvas");
-                Canvas.width =this.width;
-                Canvas.height =this.height;
-                var Contexto = Canvas.getContext("2d");
-                Contexto.drawImage(this, 0, 0);
-                ImagenBase64 = Canvas.toDataURL().split(',')[1];                
-            };
-
-            Imagen.src = URL;
         }

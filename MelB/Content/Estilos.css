@@ -297,7 +297,7 @@ th,td
     text-align: center !important; 
 }
 
-#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle, #Estuche_Detalle,#Imagen_Archivo
+#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle, #Estuche_Detalle,#Imagen_Archivo, #Imagen_Archivo_Estuche
 {
     display: none;
 }
@@ -498,7 +498,7 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo
+#Busqueda_Form, #Imagen_Archivo,#Imagen_Archivo_Estuche
 {
     display: none;
 }
