@@ -39,36 +39,51 @@
 }
 
 
-function wea()
+function Insertar_Accesorio(ID)
 {
         
-            swal.mixin({ 
-  confirmButtonText: 'Next &rarr;',
-  showCancelButton: true,
-  progressSteps: ['1', '2', '3']
-}).queue([
-  {
-    title: 'Question 1',
-    text: 'Chaining swal2 modals is easy',
-    input: 'number'
-  },
-  {
-    title: 'Question 1',
-    text: 'Chaining swal2 modals is easy',
-    input: 'text'
-  },
-  'Question 3'
-]).then((result) => {
-  if (result.value) {
-    swal({
-      title: 'All done!',
-      html:
-        'Your answers: <pre>' +
-          JSON.stringify(result.value) +
-        '</pre>',
-      confirmButtonText: 'Lovely!'
-    })
-  }
-})
+  swal.setDefaults
+  ({
+        input: 'text',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        animation: false,
+        progressSteps: ['1', '2', '3']
+  });
 
+  var Pasos = 
+  [
+    {
+        title: 'Añadir Accesorio',
+        text: 'ID Accesorio',
+        input : 'number'
+    },
+    {
+        title: 'Añadir Accesorio',
+        text: 'Nombre del accesorio',
+        input : 'text'
+    },
+    {
+        title: 'Añadir Accesorio',
+        text: 'Descripción del accesorio',
+        input : 'text'
+    }
+  ]
+
+    swal.queue(Pasos).then(function (result) 
+    {
+
+        swal.resetDefaults()
+        swal({
+            title: 'All done!',
+            html: 'Your answers: <pre>' +
+            JSON.stringify(result) +
+            '</pre>',
+            confirmButtonText: 'Lovely!',
+            showCancelButton: false
+        })
+    }, function () {
+        swal.resetDefaults()
+    })
+    
 }
