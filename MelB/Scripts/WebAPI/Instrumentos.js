@@ -164,6 +164,7 @@
                           type: 'DELETE',
                           success: function(Resultado)
                           {
+                             swal.closeModal();
                              Resultado = JSON.parse(Resultado);
                              if(Resultado.Codigo == 5)
                              {                                    

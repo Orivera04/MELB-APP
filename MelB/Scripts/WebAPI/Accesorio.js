@@ -100,7 +100,7 @@ function Insertar_Accesorio(ID)
     swal.queue(Pasos).then(function (Modal) 
     {
         swal({title:'Añadiendo accesorio',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-        swal.showLoading();
+        swal.showLoading();        
         $.ajax({
 
             url: 'http://melbws.azurewebsites.net/api/Accesorio/',
@@ -110,7 +110,8 @@ function Insertar_Accesorio(ID)
             data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
 
             success: function (Resultado) 
-            {                
+            {   
+                swal.closeModal();             
                 Resultado = JSON.parse(Resultado);                                                     
                 swal.closeModal();
                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");                                      
@@ -118,7 +119,7 @@ function Insertar_Accesorio(ID)
 
             error: function (Mensaje) 
             {
-
+                swal.closeModal();
                 swal
                 ({
                       title: "Error",
@@ -130,3 +131,4 @@ function Insertar_Accesorio(ID)
         });        
     })
 }
+
