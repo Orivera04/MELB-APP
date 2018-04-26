@@ -455,7 +455,7 @@ function Inicializacion_Eventos()
 
         $('#Añadir_Accesorio').click(function(event)
         {
-             Insertar_Accesorio($('#ID_Instrumento').val());   
+             Insertar_Actualizar_Accesorio($('#ID_Instrumento').val(),'Nuevo',null);   
         });
 
         $('#Switch_Editar_Estuche').change(function()

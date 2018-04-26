@@ -22,8 +22,8 @@
                                 Resultado[i].ID_Accesorio,
                                 Resultado[i].Nombre,
                                 Resultado[i].Descripcion,
-                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Accesorio('+Resultado[i].ID_Instrumento+',\'Actualizar\','+Resultado[i].ID_Accesorio+',\''+Resultado[i].Nombre+'\',\''+Resultado[i].Descripcion+'\')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Accesorio('+Resultado[i].ID_Accesorio+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ]).draw( false );                        
                         }
                     }
@@ -45,7 +45,7 @@
 }
 
 
-function Insertar_Actualizar_Accesorio(ID,Comando,Accesorio)
+function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcion)
 {
         
   var Titulo;
@@ -106,25 +106,12 @@ function Insertar_Actualizar_Accesorio(ID,Comando,Accesorio)
       Titulo = 'Actualizando accesorio';
       Error = 'Ocurrio un inconveniente al actualizar el accesorio.';
       var Pasos = 
-      [
+      [  
         {
             title: 'Actualizar Accesorio',
-            text: 'ID Accesorio',
-            input : 'number',
-            inputValue : Accesorio.ID_Accesorio,
-            inputAttributes: 
-            {
-                min: 1,
-                max: 200000,
-                step: 1
-            },        
-            inputClass: 'form-control'
-        },
-        {
-            title: 'Añadir Accesorio',
             text: 'Nombre del accesorio',
             input : 'text',
-            inputValue : Accesorio.Nombre,
+            inputValue : Nombre,
             inputAttributes: 
             {
                 maxlength : 15
@@ -132,10 +119,10 @@ function Insertar_Actualizar_Accesorio(ID,Comando,Accesorio)
             inputClass: 'form-control'
         },
         {
-            title: 'Añadir Accesorio',
+            title: 'Actualizar Accesorio',
             text: 'Descripción del accessorio',
             input : 'textarea',
-            inputValue : Accesorio.Descripcion,
+            inputValue : Descripcion,
             inputAttributes: 
             {
                 maxlength : 50
@@ -151,46 +138,92 @@ function Insertar_Actualizar_Accesorio(ID,Comando,Accesorio)
         {         
             swal.resetDefaults();
             swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-            swal.showLoading();        
-            $.ajax({
+            swal.showLoading();   
 
-                url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+            if(Comando == 'Nuevo')
+            {                
+              $.ajax({
 
-                type: 'PUT',
+                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
 
-                data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
+                  type: 'POST',
 
-                success: function (Resultado) 
-                {   
-                   Resultado = JSON.parse(Resultado);
-                   if(Resultado.Codigo == 5)
-                   {                                    
-                         swal.closeModal();
-                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                      }
-                 else
-                 {
-                     var Cadena_Errores = "";
-                     for (var I = 0; I < Resultado.Errores.length; I++) 
-                     {
-                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
-                     }
-                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
-                 }                                     
-                },
+                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
 
-                error: function (Mensaje) 
-                {
-                    swal.closeModal();
-                    swal
-                    ({
-                          title: "Error",
-                          text: Error,
-                          type: "error",
-                    });
-                }
+                  success: function (Resultado) 
+                  {   
+                     Resultado = JSON.parse(Resultado);
+                     if(Resultado.Codigo == 5)
+                     {                                    
+                           swal.closeModal();
+                           swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                        }
+                   else
+                   {
+                       var Cadena_Errores = "";
+                       for (var I = 0; I < Resultado.Errores.length; I++) 
+                       {
+                            Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                       }
+                       swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                   }                                     
+                  },
 
-            });
+                  error: function (Mensaje) 
+                  {
+                      swal.closeModal();
+                      swal
+                      ({
+                            title: "Error",
+                            text: Error,
+                            type: "error",
+                      });
+                  }
+
+              });
+            }
+            else
+            {
+              $.ajax({
+
+                  url: 'http://localhost:53603/api/Accesorio/',
+
+                  type: 'PUT',
+
+                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: ID_Accesorio,Nombre: Modal[0],Descripcion:Modal[1]},
+
+                  success: function (Resultado) 
+                  {   
+                     Resultado = JSON.parse(Resultado);
+                     if(Resultado.Codigo == 5)
+                     {                                    
+                           swal.closeModal();
+                           swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                        }
+                   else
+                   {
+                       var Cadena_Errores = "";
+                       for (var I = 0; I < Resultado.Errores.length; I++) 
+                       {
+                            Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                       }
+                       swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                   }                                     
+                  },
+
+                  error: function (Mensaje) 
+                  {
+                      swal.closeModal();
+                      swal
+                      ({
+                            title: "Error",
+                            text: Error,
+                            type: "error",
+                      });
+                  }
+
+              });
+            }
         }
         else
         {
@@ -206,3 +239,52 @@ function Insertar_Actualizar_Accesorio(ID,Comando,Accesorio)
     })
 }
 
+ function Eliminar_Accesorio(ID)
+        {
+            swal
+            ({
+                  title: "¿Estas seguro?",
+                  text: "Una vez que lo borres, no hay marcha atras",
+                  type: "question",
+                  showCancelButton: true
+            })
+            .then((willDelete) => 
+            {
+                  if (willDelete) 
+                  {
+                        swal({title:'Eliminando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+                        swal.showLoading();
+                        $.ajax
+                        ({
+
+                          url: 'http://melbws.azurewebsites.net/api/Accesorio/'+ID,
+                          type: 'DELETE',
+                          success: function(Resultado)
+                          {
+                             
+                             Resultado = JSON.parse(Resultado);
+                             if(Resultado.Codigo == 5)
+                             {                                    
+                                 swal.closeModal();
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                             }
+                             else
+                             {
+                                 var Cadena_Errores = "";
+                                 for (var I = 0; I < Resultado.Errores.length; I++) 
+                                 {
+                                      Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                 }
+                                 swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                             }
+
+                          },
+                          error: function(Respuesta)
+                          {
+                             swal("Error", "Ocurrio un error al borrar el accesorio", "error");
+                          },
+                        });
+                  } 
+                  
+            });            
+        }
