@@ -22,7 +22,7 @@
 
                             ]).draw( false );
                       }
-                      Cargar_Estuches();
+                      Cargar_Remisiones();
                   }                   
                 },
                 error: function (Error) 

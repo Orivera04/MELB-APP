@@ -21,7 +21,6 @@ function Cargar_Estuches()
                         '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                     ] ).draw( false ); 
-                    //$('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>');
                 }       
                     Cargar_Proveedores();
             }
