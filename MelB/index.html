@@ -366,15 +366,129 @@
                                                 <th>ID</th>
                                                 <th>Nombre</th>
                                                 <th>Telefono#1</th>
-                                                <th>Telefono#2</th>
                                                 <th>Correo</th>
-                                                <th>Direccion</th>
+                                                <th>Detalle</th>
                                                 <th>Eliminar</th>                                                           
                                             </tr>
                                         </thead>
                                         <tbody id="Proveedor_TBody">
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Proveedor_Detalle">
+                    <div class="row" id="row_proveedor_Detalle">                     
+                        <div class="panel panel-color panel-danger ">
+                            <div class="panel-heading">                                        
+                                <i class="ion-music-note" aria-hidden="true"></i>
+                                <h3 id="Header_Proveedor_Texto" class="TextoHeader">Descripción del Proveedor</h3>
+                                <div class="FlotarDerecha">
+                                    <i class="ion-grid" data-pack="default" data-tags="menu"></i>                           
+                                    <div class="onoffswitch">                                             
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar_Proveedor">
+                                        <label class="onoffswitch-label" for="Switch_Editar_Proveedor">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-3 ">
+                                        <img id="Imagen_Proveedor" class="img-thumbnail">
+                                        <input type="file" name="Cambiar_Imagen_Proveedor" id="Imagen_Archivo_Proveedor" onchange="Imagen_Proveedor(event)">
+                                        <button id="Cambiar_Imagen_Proveedor" type="button" class="btn btn-Custom" disabled>
+                                           <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
+                                            Cambiar imagen
+                                        </button>                                               
+                                    </div>
+
+                                    <div class="col-sm-12 ">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Identificador</label>
+                                                            <div class="form-group">
+                                                                <input id="ID_Proveedor" type="text" value="1" name="ID_Proveedor" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Telefono 1</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Telefono1_Proveedor" type="number" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div> 
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Telefono 2</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Telefono2_Proveedor" type="number" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>       
+                                                    </form>
+                                                </div>
+                                            </div>
+                                                
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>     
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombre</label>
+                                                                <div class="input-group m-t-10">
+                                                                    <input id="Nombre_Proveedor" type="text" class="form-control" placeholder="Nombre del Proveedor" maxlength="25" disabled>
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pricetag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Dirección</label>
+                                                                <div class="input-group m-t-10">
+                                                                    <input id="Direccion_Proveedor" type="text" class="form-control" placeholder="Direccion del Proveedor" maxlength="100" disabled>
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pricetag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Correo</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Correo_Proveedor" type="text" class="form-control" placeholder="Correo del Proveedor" maxlength="25" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>                                                                                              
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <button id="Actualizar_Proveedor" type="button" class="btn btn-success" disabled>
+                                               <span class="btn-label"><i class="ion-upload active" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Proveedor
+                                            </button>  
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -511,16 +625,7 @@
                                                                 </div>
                                                         </div>   
 
-                                                        <div class="form-group">
-                                                            <label class="control-label">Estado</label>
-                                                            <div class="input-group m-t-10">
-                                                               <select id="Estado_Estuche" class="selectpicker" data-style="btn-white"     disabled>
-                                                                    <option >Excelente</option>
-                                                                    <option >Muy bueno</option>
-                                                                    <option >Bueno</option>
-                                                                </select>                    
-                                                            </div>
-                                                        </div>    
+                                                      
 
                                                     </form>
                                                 </div>
@@ -562,14 +667,15 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Descripción</label>
+                                                            <label class="control-label">Estado</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Descripcion_Estuche" type="text" class="form-control" placeholder="Descripción del estuche" maxlength="50" disabled>
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
-                                                                </span>
+                                                            <select id="Estado_Estuche" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option >Excelente</option>
+                                                                    <option >Muy bueno</option>
+                                                                    <option >Bueno</option>
+                                                            </select>                    
                                                             </div>
-                                                        </div>
+                                                        </div>    
 
                                                     </form>
                                                 </div>

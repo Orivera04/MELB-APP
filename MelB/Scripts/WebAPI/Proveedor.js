@@ -1,416 +1,321 @@
-﻿function Cargar_Proveedores()
-{
-    var Resultado
-    $.ajax({
-        url: 'http://melbws.azurewebsites.net/api/Proveedor',
-        type: 'GET',
-        success: function (result) {
-            //alert("listo");
-            Resultado = JSON.parse(result);
-            for (i = 0; i < Resultado.length; i++) 
-            {      
-                Tabla_Proveedor.row.add
-                ([
-                    Resultado[i].ID_Proveedor,
-                    Resultado[i].Nombre,
-                    Resultado[i].Telefono_1,
-                    Resultado[i].Telefono_1,
-                    Resultado[i].Correo,
-                    Resultado[i].Direccion,
-                    'd'
+﻿        function Cargar_Proveedores() 
+        {
+            $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Proveedor',
+                type: 'GET',
+                success: function (Resultado) 
+                {
+                  if(Resultado.Codigo == null)
+                  {
+                      Resultado = JSON.parse(Resultado);
+                      for (i = 0; i < Resultado.length; i++) 
+                      {      
+                        Tabla_Proveedor.row.add
+                            ([
+                                Resultado[i].ID_Proveedor,
+                                Resultado[i].Nombre,
+                                Resultado[i].Telefono_1,
+                                Resultado[i].Correo,
+                                '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
 
-                ]).draw( false );
-                $('#Proveedor_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>');
+                            ]).draw( false );
+                      }
+                      Cargar_Estuches();
+                  }                   
+                },
+                error: function (Error) 
+                {
+                    swal
+                    ({
+                          title: "Error listando Proveedores",
+                          text: "No se pudo conectar con el servidor.",
+                          type: "error",
+                    });
+                }
+            });
+        }
 
+
+        function Cargar_Proveedor_Por_ID(ID) 
+        {        
+            $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Proveedor/'+ID,
+                type: 'GET',
+                success: function (Resultado) 
+                {            
+                      Resultado = JSON.parse(Resultado);     
+                      if(Resultado.Codigo == null)
+                      {       
+                          Resultado = Resultado[0];                  
+                          $('#ID_Proveedor').val(Resultado.ID_Proveedor); 
+                          $('#Marca_Instrumento').val(Resultado.Marca);
+                          $('#Descripcion_Inst').val(Resultado.Descripcion);
+                          $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
+                          Base64Imagen(Resultado.Imagen) 
+                      }
+                      else
+                      {
+                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
+                      }           
+                },
+                error: function (Mensaje) 
+                {
+                    swal
+                    ({
+                          title: "Error al intentar ver el detalle del proveedor",
+                          text: "No se pudo conectar con el servidor.",
+                          type: "error",
+                    });
+                }
+            });
+        }
+
+        function Insertar_Actualizar_Proveedor(Comando)
+        {     
+            if($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "")
+            {
+                var Ancho  =  document.getElementById('Imagen_Proveedor').naturalWidth;
+                var Altura =  document.getElementById('Imagen_Proveedor').naturalHeight;
+
+                if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
+                {       
+                    if(Comando == "Nuevo")
+                    {                    
+                        swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el proveedor',type: 'info', allowOutsideClick: false});
+                    }
+                    else
+                    {
+                        swal({title:'Espere',text: 'Se esta actualizando el proveedor',type: 'info', allowOutsideClick: false});
+                    }
+                    swal.showLoading();
+                    Insertar_Imagen_API_Proveedor(Comando);
+                }                  
+                else
+                {
+                    swal
+                        ({
+                              title: "Error al subir la imagen",
+                              text: "La imagen debe ser como maximo de  600 x 600.",
+                              type: "error",
+                        });
+                }
             }
-            $('select[name=Proveedor_Instrumento]').val(1);
-            $('.selectpicker').selectpicker('refresh');            
-            Cargar_Remisiones();
-        },
-        error: function (Mensaje) 
+            else
+            {
+                 swal
+                        ({
+                              title: "Aviso",
+                              text: "Algunos campos estan vacios",
+                              type: "warning",
+                        });
+            }
+        };
+
+        function Eliminar_Proveedor(ID)
         {
             swal
             ({
-                  title: "Error listando proveedores",
-                  text: "No se pudo conectar con el servidor.",
-                  type: "error",
-            });
+                  title: "¿Estas seguro?",
+                  text: "Una vez que lo borres, no hay marcha atras",
+                  type: "question",
+                  showCancelButton: true
+            })
+            .then((willDelete) => 
+            {
+                  if (willDelete) 
+                  {
+                        swal({title:'Eliminando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+                        swal.showLoading();
+                        $.ajax
+                        ({
+
+                          url: 'http://melbws.azurewebsites.net/api/Proveedor/'+ID,
+                          type: 'DELETE',
+                          success: function(Resultado)
+                          {
+                             swal.closeModal();
+                             Resultado = JSON.parse(Resultado);
+                             if(Resultado.Codigo == 5)
+                             {                                    
+                                 swal.closeModal();
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                             }
+                             else
+                             {
+                                 var Cadena_Errores = "";
+                                 for (var I = 0; I < Resultado.Errores.length; I++) 
+                                 {
+                                      Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                 }
+                                 swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                             }
+
+                          },
+                          error: function(Respuesta)
+                          {
+                             swal("Error", "Ocurrio un error al borrar el proveedor", "error");
+                          },
+                        });
+                  } 
+                  
+            });            
         }
-    });
-}
-
-//Add Data Function
-
-function AddP() {
-
-    var res = validateP();
-
-    if (res == false) {
-
-        return false;
-
-    }
     
+/* Funcionalidad de formularios  */
 
-    var empObj = {
-
-        ID_Proveedor: $('#IdP').val(),
-
-        Nombre: $('#NombreP').val(),
-
-        Telefono_1: $('#Tel1P').val(),
-
-        Telefono_2: $('#Tel2P').val(),
-
-        Correo: $('#CorreoP').val(),
-
-        Direccion: $('#DireccionP').val(),
-
-        Imagen: $('#ImagenP').val()  
-
-    };
-
-    //alert(valueB + ", " + codigoE + ", " + codigoP);
-
-    $.ajax({
-
-        url: "http://melbws.azurewebsites.net/api/Proveedor",
-
-        data: JSON.stringify(empObj),
-
-        type: "POST",
-
-        contentType: "application/json;charset=utf-8",
-
-        dataType: "json",
-
-        success: function (result) {
-
-            loadDataP();
-
-            $('#myModalP').modal('hide');
-
-        },
-
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
+        function Detallar_Datos_Proveedor(ID)
+        {           
+            $('#Switch_Editar_Proveedor').prop('checked',false);
+            Habilitar_Deshabilitar_Proveedor(false);        
+            Operacion = 'Actualizar';                
+            $('#Proveedores').hide(300);
+            $('#Proveedor_Detalle').show(400);
+            $('#ADD').hide('drop',400);
+            $('#Busqueda_Form').show(400);
+            $('#Busqueda_Form').css('display','inline-flex');
+            $('#Contenedor_Panel').show();
+            $('#Header_Proveedor_Texto').text('Descripción del proveedor');
+            $('#Actualizar_Proveedor').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Proveedor');
+            Cargar_Proveedor_Por_ID(ID); 
+            $('.FlotarDerecha').show();
         }
 
-    });
-
-}
-
-//Function for getting the Data Based upon Employee ID
-
-function getbyIDP(EmpID) {
-    var getResultado
-
-    $('#IdP').css('border-color', 'lightgrey');
-
-    $('#NombreP').css('border-color', 'lightgrey');
-
-    $('#Tel1P').css('border-color', 'lightgrey');
-
-    $('#Tel2P').css('border-color', 'lightgrey');
-
-    $('#CorreoP').css('border-color', 'lightgrey');
-
-    $('#DireccionP').css('border-color', 'lightgrey');
-
-    $('#ImagenP').css('border-color', 'lightgrey');
-
-    $.ajax({
-
-        url: 'http://melbws.azurewebsites.net/api/Proveedor/' + EmpID,
-
-        typr: 'GET',
-
-        success: function (result) {
-            
-            getResultado = JSON.parse(result);
-
-            $('#IdP').val(getResultado[0].ID_Proveedor);
-            $('#IdP').prop('disabled', true);
-
-            $('#NombreP').val(getResultado[0].Nombre);
-
-            $('#Tel1P').val(getResultado[0].Telefono_1);
-
-            $('#Tel2P').val(getResultado[0].Telefono_2);
-
-            $('#CorreoP').val(getResultado[0].Correo);
-
-            $('#DireccionP').val(getResultado[0].Direccion);
-
-            $('#ImagenP').val(getResultado[0].Imagen);
-
-            $('#myModalP').modal('show');
-
-            $('#btnUpdateP').show();
-
-            $('#btnAddP').hide();
-
-        },
-
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
+        function Habilitar_Deshabilitar_Proveedor(Cond)
+        {
+            if(Cond == true)
+            {
+                $("#ID_Proveedor").prop("disabled", "false");
+                $('#Nombre_Proveedor').removeAttr('disabled');
+                $('#Direccion_Proveedor').removeAttr('disabled');
+                $('#Telefono1_Proveedor').removeAttr('disabled');
+                $('#Telefono2_Proveedor').removeAttr('disabled');
+                $('#Correo_Proveedor').removeAttr('disabled');
+                $('#Cambiar_Imagen_Proveedor').removeAttr('disabled');
+                $('#Actualizar_Proveedor').removeAttr('disabled');
+                $('.selectpicker').selectpicker('refresh');
+            }
+            else
+            {
+                $("#ID_Instrumento").prop("disabled", "true");
+                $('#Nombre_Proveedor').prop('disabled','true');
+                $('#Direccion_Proveedor').prop('disabled','true');
+                $('#Telefono1_Proveedor').prop('disabled','true');
+                $('#Telefono2_Proveedor').prop('disabled','true');
+                $('#Correo_Proveedor').prop('disabled','true');
+                $('#Cambiar_Imagen_Proveedor').prop('disabled','true');
+                $('#Actualizar_Proveedor').prop('disabled','true');
+                $('.selectpicker').selectpicker('refresh');
+            }
         }
 
-    });
-
-    return false;
-
-}
-
-//function for updating employee's record
-
-function UpdateP() {
-
-    var res = validateP();
-
-    if (res == false) {
-
-        return false;
-
-    }
-
-    var empObj = {
-
-        ID_Proveedor: $('#IdP').val(),
-
-        Nombre: $('#NombreP').val(),
-
-        Telefono_1: $('#Tel1P').val(),
-
-        Telefono_2: $('#Tel2P').val(),
-
-        Correo: $('#CorreoP').val(),
-
-        Direccion: $('#DireccionP').val(),
-
-        Imagen: $('#ImagenP').val()
-
-    };
-
-    $.ajax({
-
-        url: "http://melbws.azurewebsites.net/api/Proveedor",
-
-        data: JSON.stringify(empObj),
-
-        type: "PUT",
-
-        contentType: "application/json;charset=utf-8",
-
-        dataType: "json",
-
-        success: function (result) {
-
-            loadDataP();
-
-            $('#myModalP').modal('hide');
-
-            $('#IdP').val("");
-
-            $('#NombreP').val("");
-
-            $('#CorreoP').val("");
-
-            $('#Tel1P').val("");
-
-            $('#Tel2P').val("");
-
-        },
-
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
+        function Reiniciar_Controles_Proveedor()
+        {
+            $('#ID_Proveedor').val(1);
+            $('#Nombre_Proveedor').val('');
+            $('#Direccion_Proveedor').val('');
+            $('#Telefono1_Proveedor').val('');
+            $('#Telefono2_Proveedor').val('');
+            $('#Correo_Proveedor').val('');
         }
 
-    });
+        var Imagen_Proveedor = function(Archivo)
+        {
+            var IMG = Archivo.target;
+            var Lector = new FileReader();
 
-}
-
-//function for deleting employee's record
-
-function DeleleP(ID) {
-
-    var ans = confirm("¿Seguro que quieres eliminar este registro?");
-
-    if (ans) {
-
-        $.ajax({
-
-            url: 'http://melbws.azurewebsites.net/api/Proveedor/' + ID,
-
-            type: 'DELETE',
-
-            success: function (result) {
-
-                loadDataP();
-
-            },
-
-            error: function (errormessage) {
-
-                alert(errormessage.responseText);
+            Lector.onload = function()
+            {
+               ImagenBase64 = (Lector.result).split(',')[1];
+               $('#Imagen_Proveedor').prop('src',Lector.result);
 
             }
-
-        });
-
-    }
-
-}
-
-//Function for clearing the textboxes
-
-function clearTextBoxP() {
-
-    $('#IdP').val("");
-
-    $('#NombreP').val("");
-
-    $('#Tel1P').val("");
-
-    $('#Tel2P').val("");
-
-    $('#CorreoP').val("");
-
-    $('#DireccionP').val("");
-
-    $('#ImagenP').val("");
-
-    $('#btnUpdateP').hide();
-
-    $('#btnAddP').show();
-
-    $('#IdP').css('border-color', 'lightgrey');
-
-    $('#NombreP').css('border-color', 'lightgrey');
-
-    $('#Tel1P').css('border-color', 'lightgrey');
-
-    $('#Tel2P').css('border-color', 'lightgrey');
-
-    $('#CorreoP').css('border-color', 'lightgrey');
-
-    $('#DireccionP').css('border-color', 'lightgrey');
-
-    $('#ImagenP').css('border-color', 'lightgrey');
-
-}
-
-//Valdidation using jquery
-
-function validateP() {
-
-    var isValid = true;
-
-    if (isNaN($('#IdP').val()) || $('#IdP').val().trim() == "") {
-
-        $('#IdP').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#IdP').css('border-color', 'lightgrey');
-
-    }
-
-    if ($('#NombreP').val().trim() == "") {
-
-        $('#NombreP').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#NombreP').css('border-color', 'lightgrey');
-
-    }
-
-    if (!(/^\d{8}$/.test($('#Tel1P').val()))) {
-
-        $('#Tel1P').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#Tel1P').css('border-color', 'lightgrey');
-
-    }
-
-    if (!(/^\d{8}$/.test($('#Tel2P').val()))) {
-
-        $('#Tel2P').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#Tel2P').css('border-color', 'lightgrey');
-
-    }
-
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!(re.test($('#CorreoP').val()))) {
-
-        $('#CorreoP').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#CorreoP').css('border-color', 'lightgrey');
-
-    }
-
-    if ($('#DireccionP').val().trim() == "") {
-
-        $('#DireccionP').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#DireccionP').css('border-color', 'lightgrey');
-
-    }
-
-    if ($('#ImagenP').val().trim() == "") {
-
-        $('#ImagenP').css('border-color', 'Red');
-
-        isValid = false;
-
-    }
-
-    else {
-
-        $('#ImagenP').css('border-color', 'lightgrey');
-
-    }
-
-    return isValid;
-
-}
+            Lector.readAsDataURL(IMG.files[0]);
+        };
+
+/* Funciones de soporte */
+        
+        function Insertar_Imagen_API_Proveedor(Comando)
+        {
+            $.ajax
+            ({
+                url: 'https://api.imgur.com/3/image',
+                type: 'POST',
+                headers: 
+                {
+                    'Authorization':'Client-ID 46be03ad12c8728'                    
+                },
+                data : {image : ImagenBase64},
+                success: function (Resultado)
+                {
+                    var Proveedor_BBDD = {ID_Proveedor: $('#ID_Proveedor').val(), Nombre: $('#Nombre_Proveedor').val(), Telefono_1: $('#Telefono1_Proveedor').val(), Telefono_2: $('#Telefono2_Proveedor').val(), Correo: $('#Correo_Proveedor').val(), Direccion: $('#Direccion_Proveedor').val(),Imagen: Resultado.data.link};
+
+                    if(Comando == 'Nuevo')
+                    {                                                
+                        $.ajax
+                        ({
+
+                              url: 'http://melbws.azurewebsites.net/api/Proveedor/',
+                              type: 'POST',
+                              data: Proveedor_BBDD,
+                              success: function(Resultado)
+                              {
+                                 Resultado = JSON.parse(Resultado);
+                                 if(Resultado.Codigo == 5)
+                                 {                                    
+                                     swal.closeModal();
+                                     swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 }
+                                 else
+                                 {
+                                     var Cadena_Errores = "";
+                                     for (var I = 0; I < Resultado.Errores.length; I++) 
+                                     {
+                                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                     }
+                                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                                 }
+
+                              },
+                              error: function(Respuesta)
+                              {
+                                 swal("Error", "Ocurrio un error al insertar el proveedor", "error");
+                              },
+                        });
+                        swal.closeModal();
+                    }
+                    else
+                    {
+                        $.ajax
+                        ({
+                              url: 'http://melbws.azurewebsites.net/api/Proveedor/',
+                              type: 'PUT',
+                              data: Proveedor_BBDD,
+                              success: function(Resultado)
+                              {
+                                 Resultado = JSON.parse(Resultado);
+                                 swal.closeModal();
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                              },
+                              error: function(xhr, status, error)
+                              {
+                                 swal("Error", "Ocurrio un error al insertar el proveedor", "error");
+                              },
+                        });
+                        swal.closeModal();
+                    }
+                },                  
+                error: function (xhr, status, error) 
+                {
+                    swal.closeModal();
+                    swal
+                    ({
+                          title: "Error",
+                          text: "Ocurrio un error al subir la imagen,intentelo de nuevo",
+                          type: "error",
+                    });
+                }               
+            })
+        }

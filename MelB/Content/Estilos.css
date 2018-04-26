@@ -254,7 +254,7 @@ a.article, a.article:hover {
     padding: 10px 20px;
 }
 
-#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches,#row_instrumento_Detalle,#row_estuches_Descripcion
+#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches,#row_instrumento_Detalle,#row_estuches_Descripcion, #row_proveedor_Detalle
 {
     margin-left: 1px;
     margin-right: 1px;
@@ -297,7 +297,7 @@ th,td
     text-align: center !important; 
 }
 
-#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle, #Estuche_Detalle,#Imagen_Archivo, #Imagen_Archivo_Estuche
+#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor
 {
     display: none;
 }
@@ -498,7 +498,7 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo,#Imagen_Archivo_Estuche
+#Busqueda_Form, #Imagen_Archivo,#Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor
 {
     display: none;
 }

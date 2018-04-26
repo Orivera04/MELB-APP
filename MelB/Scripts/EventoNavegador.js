@@ -31,6 +31,8 @@ function Inicializacion_Controles()
     /* Inicialziación de los controles de los formularios */
     $('.selectpicker').selectpicker({noneResultsText: 'No se encontraron resultados'});
     $("input[name='ID_Instrumento']").TouchSpin({});
+    $("input[name='ID_Estuche']").TouchSpin({});
+    $("input[name='ID_Proveedor']").TouchSpin({});
     $("input[name='Estante']").TouchSpin({});
     $("input[name='Gaveta']").TouchSpin({});
 
@@ -45,6 +47,38 @@ function Inicializacion_Controles()
         alwaysShow: true,
         threshold: 25
     });
+
+    $('#Marca_Estuche').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 25
+    });
+
+    $('#Telefono1_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 25
+    });
+
+    $('#Telefono2_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 25
+    });
+
+    $('#Correo_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 25
+    });
+
+    $('#Direccion_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 25
+    });
+
+
 }
 
 function Inicializacion_Tablas()
@@ -237,7 +271,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none';
             document.getElementById('Estuche_Detalle').style.display = 'none';
             Formulario_Activo = 'Estuche';
-            $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
+            $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
             $('#ADD').show("drop", 50);  
 
         });
@@ -264,8 +298,8 @@ function Inicializacion_Eventos()
             if(Formulario_Activo == 'Instrumento')
             {       
                  Operacion = 'Nuevo';
-                 $('#Header_Instrumento_Texto').text('Añadir Instrumento')           
-                 Reiniciar_Controles_Instrumento()
+                 $('#Header_Instrumento_Texto').text('Añadir Instrumento');
+                 Reiniciar_Controles_Instrumento();
                  Habilitar_Deshabilitar_Instrumentos(true);
                  $('#ID_Instrumento').removeAttr('disabled');
                  $('#Instrumentos').hide(300);
@@ -277,8 +311,8 @@ function Inicializacion_Eventos()
             else if(Formulario_Activo == 'Estuche')
             {       
                  Operacion = 'Nuevo';
-                 $('#Header_Estuche_Texto').text('Añadir Estuche')           
-                 Reiniciar_Controles_Estuche()
+                 $('#Header_Estuche_Texto').text('Añadir Estuche');
+                 Reiniciar_Controles_Estuche();
                  Habilitar_Deshabilitar_Estuche(true);
                  $('#ID_Estuche').removeAttr('disabled');
                  $('#Estuches').hide(300);
@@ -286,6 +320,19 @@ function Inicializacion_Eventos()
                  $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#Imagen_Estuche').attr("src","https://i.imgur.com/0oN2F22.png");
                  Base64Imagen($('#Imagen_Estuche').attr('src'));                                 
+            }
+            else if(Formulario_Activo == 'Proveedor')
+            {       
+                 Operacion = 'Nuevo';
+                 $('#Header_Proveedor_Texto').text('Añadir Proveedor');
+                 Reiniciar_Controles_Proveedor();
+                 Habilitar_Deshabilitar_Proveedor(true);
+                 $('#ID_Proveedor').removeAttr('disabled');
+                 $('#Proveedores').hide(300);
+                 $('#Proveedor_Detalle').show(400);   
+                 $('#Actualizar_Proveedor').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
+                 $('#Imagen_Proveedor').attr("src","https://i.imgur.com/0oN2F22.png");
+                 Base64Imagen($('#Imagen_Proveedor').attr('src'));                                 
             }                
             
             $('#ADD').hide('drop',100);
@@ -315,10 +362,10 @@ function Inicializacion_Eventos()
 
             else  if(Formulario_Activo == 'Estuche')
             {   
-                if($('#Descripcion_Estuche').val() != "")
+                if($('#Descripcion_Instrumento').val() != "")
                 {
 
-                    Detallar_Datos_Estuche($('#Descripcion_Estuche').val());
+                    Detallar_Datos_Estuche($('#Descripcion_Instrumento').val());
                 }
                 else
                 {
@@ -326,6 +373,24 @@ function Inicializacion_Eventos()
                      ({
                           title: "Aviso",
                           text: "Debe introducir el identificador del estuche",
+                          type: "warning",
+                     });
+                }
+            }
+
+            else  if(Formulario_Activo == 'Proveedor')
+            {   
+                if($('#Descripcion_Instrumento').val() != "")
+                {
+
+                    Detallar_Datos_Proveedor($('#Descripcion_Instrumento').val());
+                }
+                else
+                {
+                     swal
+                     ({
+                          title: "Aviso",
+                          text: "Debe introducir el identificador del proveedor",
                           type: "warning",
                      });
                 }
@@ -340,15 +405,6 @@ function Inicializacion_Eventos()
                     e.preventDefault();
               }
         }); 
-
-        $('#Descripcion_Estuche').keypress(function (e) 
-        {             
-             if(e.which == 13)  
-              {                    
-                    $( "#Buscar_Boton" ).trigger( "click" );
-                    e.preventDefault();
-              }
-        });       
 
         $('#Actualizar').click(function(event)
         {
@@ -394,6 +450,20 @@ function Inicializacion_Eventos()
             }
         });
 
+        $('#Switch_Editar_Proveedor').change(function()
+        {
+            if( $('#Switch_Editar_Proveedor').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Proveedor(true);
+                $('#Busqueda_Form').hide();
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Proveedor(false);
+                $('#Busqueda_Form').show();
+            }
+        });
+
         $('#Cambiar_Imagen_Instrumento').click(function(event)
         {
               document.getElementById('Imagen_Archivo').click();
@@ -404,6 +474,11 @@ function Inicializacion_Eventos()
               document.getElementById('Imagen_Archivo_Estuche').click();
         });
 
+        $('#Cambiar_Imagen_Proveedor').click(function(event)
+        {
+              document.getElementById('Imagen_Archivo_Proveedor').click();
+        });
+
         $('#Actualizar_Instrumento').click(function(event)
         {              
               Insertar_Actualizar_Instrumento(Operacion);
@@ -412,6 +487,11 @@ function Inicializacion_Eventos()
         $('#Actualizar_Estuche').click(function(event)
         {              
               Insertar_Actualizar_Estuche(Operacion);
+        });
+
+        $('#Actualizar_Proveedor').click(function(event)
+        {              
+              Insertar_Actualizar_Proveedor(Operacion);
         });
 
         $('#Ubicacion_Instrumento').change(function(event)

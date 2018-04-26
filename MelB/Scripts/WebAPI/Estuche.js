@@ -21,7 +21,7 @@ function Cargar_Estuches()
                         '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                     ] ).draw( false ); 
-                    $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>');
+                    //$('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>');
                 }       
                     Cargar_Proveedores();
             }
@@ -51,7 +51,7 @@ function Cargar_Estuches()
                     {            
                       Resultado = Resultado[0]; 
                       $('#ID_Estuche').val(Resultado.ID_Estuche); 
-                      $('#Nombre_Estuche').val(Resultado.Nombre);
+                      $('#Tipo_Estuche').val(Resultado.Nombre);
                       $('#Marca_Estuche').val(Resultado.Marca);
                       $('#Material_Estuche').selectpicker('val', Resultado.Material);
                       $('#Color_Estuche').selectpicker('val', Resultado.Color);                      
@@ -80,7 +80,7 @@ function Cargar_Estuches()
 
         function Insertar_Actualizar_Estuche(Comando)
         {     
-            if($('#Marca_Estuche').val() != "" && $('#Descripcion_Estuche').val() != "")
+            if($('#Marca_Estuche').val() != "")
             {
                 var Ancho  =  document.getElementById('Imagen_Estuche').naturalWidth;
                 var Altura =  document.getElementById('Imagen_Estuche').naturalHeight;
@@ -164,8 +164,7 @@ function Cargar_Estuches()
                              swal("Error", "Ocurrio un error al borrar el Estuche", "error");
                           },
                         });
-                  } 
-                  
+                  }    
             });            
         }
     
@@ -197,7 +196,6 @@ function Cargar_Estuches()
                 $('#Color_Estuche').removeAttr('disabled');
                 $('#Marca_Estuche').removeAttr('disabled');
                 $('#Material_Estuche').removeAttr('disabled');
-                $('#Descripcion_Estuche').removeAttr('disabled');
                 $('#Estado_Estuche').removeAttr('disabled');
                 $('#Cambiar_Imagen_Estuche').removeAttr('disabled');
                 $('#Actualizar_Estuche').removeAttr('disabled');
@@ -210,7 +208,6 @@ function Cargar_Estuches()
                 $('#Color_Estuche').prop('disabled','true');
                 $('#Marca_Estuche').prop('disabled','true');
                 $('#Material_Estuche').prop('disabled','true');
-                $('#Descripcion_Estuche').prop('disabled','true');
                 $('#Estado_Estuche').prop('disabled','true');
                 $('#Cambiar_Imagen_Estuche').prop('disabled','true');
                 $('#Actualizar_Estuche').prop('disabled','true');
@@ -225,7 +222,6 @@ function Cargar_Estuches()
             $('#Color_Estuche').selectpicker('val', 'Rojo');
             $('#Marca_Estuche').val('');
             $('#Material_Estuche').selectpicker('val','Plastico');
-            $('#Descripcion_Estuche').val('');
             $('#Estado_Estuche').selectpicker('val','Excelente');
         }
 
