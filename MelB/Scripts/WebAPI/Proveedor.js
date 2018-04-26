@@ -11,15 +11,16 @@
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
                       {      
+                        var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
                         Tabla_Proveedor.row.add
                             ([
                                 Resultado[i].ID_Proveedor,
+                                Imagen,
                                 Resultado[i].Nombre,
                                 Resultado[i].Telefono_1,
                                 Resultado[i].Correo,
                                 '<button type="button" class="btn btn-success" onclick ="Detallar_Datos_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                 '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-
                             ]).draw( false );
                       }
                       Cargar_Remisiones();
@@ -51,9 +52,11 @@
                       {       
                           Resultado = Resultado[0];                  
                           $('#ID_Proveedor').val(Resultado.ID_Proveedor); 
-                          $('#Marca_Instrumento').val(Resultado.Marca);
-                          $('#Descripcion_Inst').val(Resultado.Descripcion);
-                          $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
+                          $('#Correo_Proveedor').val(Resultado.Correo);
+                          $('#Telefono1_Proveedor').val(Resultado.Telefono_1);
+                          $('#Telefono2_Proveedor').val(Resultado.Telefono_2);
+                          $('#Nombre_Proveedor').val(Resultado.Nombre);
+                          $('#Imagen_Proveedor').attr("src",Resultado.Imagen);
                           Base64Imagen(Resultado.Imagen) 
                       }
                       else
