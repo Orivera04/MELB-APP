@@ -245,14 +245,33 @@ a.article, a.article:hover {
     background-color: #f05050;
 }
 
+/*Instrumento*/
 .panel-danger>.panel-heading {
-  background: linear-gradient(to right, #fd746c, #ff9068); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #fd746c, #ff9068);
     border-color: #ebccd1;
 }
-.panel-heading {
+
+/*Proveedor*/
+.panel-danger>.panel-heading2 {
+   background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 5%, rgba(71,71,71,1) 27%, rgba(71,71,71,1) 39%, rgba(71,71,71,1) 64%, rgba(43,43,43,1) 85%, rgba(19,19,19,1) 100%);
+}
+
+/*Estuche*/
+.panel-danger>.panel-heading3 {
+  background:  linear-gradient(45deg, rgba(193,158,103,1) 0%, rgba(193,158,103,1) 9%, rgba(182,141,76,1) 47%, rgba(243,226,199,1) 78%, rgba(219,178,116,1) 89%, rgba(219,178,116,1) 100%);
+}
+
+/*Remisiones*/
+.panel-danger>.panel-heading4 {
+  background:  linear-gradient(to right, rgba(168,0,119,1) 0%, rgba(168,0,119,1) 8%, rgba(193,70,161,1) 42%, rgba(203,96,179,1) 71%, rgba(219,54,164,1) 100%);
+}
+
+/*MEDIDAS DE LOS PANEL-HEADING DE CADA PANEL*/
+.panel-heading , .panel-heading2, .panel-heading3, .panel-heading4 {
     border: none !important;
     padding: 10px 20px;
 }
+
 
 #row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches,#row_instrumento_Detalle,#row_estuches_Descripcion, #row_proveedor_Detalle
 {
@@ -260,7 +279,7 @@ a.article, a.article:hover {
     margin-right: 1px;
 }
 
-.panel-heading > i
+.panel-heading > i, .panel-heading2 > i, .panel-heading3 > i, .panel-heading4 > i
 {
     font-size: 25px !important;
     color: white;

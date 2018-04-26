@@ -241,7 +241,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Proveedor';
-            $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
+            $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
             $('#ADD').show("drop", 50);  
             $('#Busqueda_Form').hide("drop",50);
         });
@@ -289,7 +289,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Estuche';
-            $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
+            $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
             $('#ADD').show("drop", 50);  
             $('#Busqueda_Form').hide("drop",50);
         });
@@ -309,6 +309,9 @@ function Inicializacion_Eventos()
                 $('#content').css("margin-left","110px");
              }
         });
+
+    
+    /*Boton AÑADIR dependiendo del Formulario que se encuentre ACTIVO*/     
 
         $('#ADD').click(function(event)
         { 
@@ -359,6 +362,7 @@ function Inicializacion_Eventos()
             $('#Contenedor_Panel').hide(); 
         });   
 
+    /*Boton BUSCAR, busca ID en el formulario ACTIVO */
         $('#Buscar_Boton').click(function(event)
         {
             if(Formulario_Activo == 'Instrumento')
@@ -416,6 +420,9 @@ function Inicializacion_Eventos()
             }
         });
 
+
+    /*Detona el click del boton BUSCAR*/    
+
         $('#Descripcion_Instrumento').keypress(function (e) 
         {             
              if(e.which == 13)  
@@ -425,19 +432,16 @@ function Inicializacion_Eventos()
               }
         }); 
 
+
+    /*ACTUALIZA los datos de las tablas*/
+
         $('#Actualizar').click(function(event)
         {
-            swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-            Tabla_Instrumento.clear().draw();
-            Tabla_Estuche.clear().draw();
-            Tabla_Proveedor.clear().draw();
-            Tabla_Remision.clear().draw();
-            Tabla_Accesorios.clear().draw();
-            swal.showLoading();
-            Cargar_Instrumentos();
+            Actualizar();    
         });
 
-    /* Eventos : Formulario Instrumento */
+
+         /* Eventos : Formulario Instrumento */
 
         $('#Switch_Editar').change(function()
         {
@@ -458,62 +462,14 @@ function Inicializacion_Eventos()
              Insertar_Actualizar_Accesorio($('#ID_Instrumento').val(),'Nuevo',null);   
         });
 
-        $('#Switch_Editar_Estuche').change(function()
-        {
-            if( $('#Switch_Editar_Estuche').prop('checked') == true)
-            {
-                Habilitar_Deshabilitar_Estuche(true);
-                $('#Busqueda_Form').hide();
-            }
-            else
-            {
-                Habilitar_Deshabilitar_Estuche(false);
-                $('#Busqueda_Form').show();
-            }
-        });
-
-        $('#Switch_Editar_Proveedor').change(function()
-        {
-            if( $('#Switch_Editar_Proveedor').prop('checked') == true)
-            {
-                Habilitar_Deshabilitar_Proveedor(true);
-                $('#Busqueda_Form').hide();
-            }
-            else
-            {
-                Habilitar_Deshabilitar_Proveedor(false);
-                $('#Busqueda_Form').show();
-            }
-        });
-
         $('#Cambiar_Imagen_Instrumento').click(function(event)
         {
               document.getElementById('Imagen_Archivo').click();
         });
 
-        $('#Cambiar_Imagen_Estuche').click(function(event)
-        {
-              document.getElementById('Imagen_Archivo_Estuche').click();
-        });
-
-        $('#Cambiar_Imagen_Proveedor').click(function(event)
-        {
-              document.getElementById('Imagen_Archivo_Proveedor').click();
-        });
-
         $('#Actualizar_Instrumento').click(function(event)
         {              
               Insertar_Actualizar_Instrumento(Operacion);
-        });
-
-        $('#Actualizar_Estuche').click(function(event)
-        {              
-              Insertar_Actualizar_Estuche(Operacion);
-        });
-
-        $('#Actualizar_Proveedor').click(function(event)
-        {              
-              Insertar_Actualizar_Proveedor(Operacion);
         });
 
         $('#Ubicacion_Instrumento').change(function(event)
@@ -529,4 +485,70 @@ function Inicializacion_Eventos()
                 $('#Form_gaveta').hide()
             }
         }); 
+
+
+        /* Eventos : Formulario Estuche */
+
+        $('#Switch_Editar_Estuche').change(function()
+        {
+            if( $('#Switch_Editar_Estuche').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Estuche(true);
+                $('#Busqueda_Form').hide();
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Estuche(false);
+                $('#Busqueda_Form').show();
+            }
+        });
+
+        $('#Cambiar_Imagen_Estuche').click(function(event)
+        {
+              document.getElementById('Imagen_Archivo_Estuche').click();
+        });
+
+        $('#Actualizar_Estuche').click(function(event)
+        {              
+              Insertar_Actualizar_Estuche(Operacion);
+        });
+
+
+        /* Eventos : Formulario Proveedor */
+
+         $('#Switch_Editar_Proveedor').change(function()
+        {
+            if( $('#Switch_Editar_Proveedor').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Proveedor(true);
+                $('#Busqueda_Form').hide();
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Proveedor(false);
+                $('#Busqueda_Form').show();
+            }
+        });
+
+        $('#Cambiar_Imagen_Proveedor').click(function(event)
+        {
+              document.getElementById('Imagen_Archivo_Proveedor').click();
+        });   
+
+        $('#Actualizar_Proveedor').click(function(event)
+        {              
+              Insertar_Actualizar_Proveedor(Operacion);
+        });
+}
+
+function Actualizar()
+{
+    swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+    Tabla_Instrumento.clear().draw();
+    Tabla_Estuche.clear().draw();
+    Tabla_Proveedor.clear().draw();
+    Tabla_Remision.clear().draw();
+    Tabla_Accesorios.clear().draw();
+    swal.showLoading();
+    Cargar_Instrumentos();    
 }

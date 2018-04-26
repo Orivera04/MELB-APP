@@ -82,7 +82,7 @@
                         <ul class="nav navbar-nav navbar-right" id="Form_Right">                
 
                             <form class="navbar-form navbar-left" role="search">
-                                <button id="Actualizar" type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                <button id="Actualizar" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="">
                                     <i class="ion-loop" data-pack="default" data-tags="refresh"></i>                                  
                                 </button>
                                 <button id="ADD" type="button" class="btn waves-effect waves-light btn-primary btn-color">
@@ -354,8 +354,8 @@
                 <div id="Proveedores">
                     <div class="row" id="row_proveedor">                     
                        <div class="panel panel-color panel-danger">
-                            <div class="panel-heading">
-                                <i class="ion-music-note" aria-hidden="true"></i>
+                            <div class="panel-heading2">
+                                <i class="ion-person" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Proveedores de Instrumentos</h3>
                             </div>
                             <div class="panel-body">
@@ -384,8 +384,8 @@
                 <div id="Proveedor_Detalle">
                     <div class="row" id="row_proveedor_Detalle">                     
                         <div class="panel panel-color panel-danger ">
-                            <div class="panel-heading">                                        
-                                <i class="ion-music-note" aria-hidden="true"></i>
+                            <div class="panel-heading2">                                        
+                                <i class="ion-person" aria-hidden="true"></i>
                                 <h3 id="Header_Proveedor_Texto" class="TextoHeader">Descripción del Proveedor</h3>
                                 <div class="FlotarDerecha">
                                     <i class="ion-grid" data-pack="default" data-tags="menu"></i>                           
@@ -425,9 +425,9 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Telefono 1</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Telefono1_Proveedor" type="number" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <input id="Telefono1_Proveedor" type="text" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div> 
@@ -435,9 +435,9 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Telefono 2</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Telefono2_Proveedor" type="number" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <input id="Telefono2_Proveedor" type="text" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp-outline" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>       
@@ -451,9 +451,9 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Nombre</label>
                                                                 <div class="input-group m-t-10">
-                                                                    <input id="Nombre_Proveedor" type="text" class="form-control" placeholder="Nombre del Proveedor" maxlength="25" disabled>
+                                                                    <input id="Nombre_Proveedor" type="text" class="form-control" placeholder="Nombre del Proveedor" maxlength="30" disabled>
                                                                     <span class="input-group-btn">
-                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pricetag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-create" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                     </span>
                                                                 </div>
                                                         </div>
@@ -461,9 +461,9 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Dirección</label>
                                                                 <div class="input-group m-t-10">
-                                                                    <input id="Direccion_Proveedor" type="text" class="form-control" placeholder="Direccion del Proveedor" maxlength="100" disabled>
+                                                                    <input id="Direccion_Proveedor" type="text" class="form-control" placeholder="Direccion del Proveedor" maxlength="150" disabled>
                                                                     <span class="input-group-btn">
-                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pricetag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-map" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                     </span>
                                                                 </div>
                                                         </div>
@@ -471,9 +471,9 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Correo</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Correo_Proveedor" type="text" class="form-control" placeholder="Correo del Proveedor" maxlength="25" disabled>
+                                                                <input id="Correo_Proveedor" type="text" class="form-control" placeholder="Correo del Proveedor" maxlength="50" disabled>
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-at" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -499,8 +499,8 @@
                 <div id="Remisiones">
                     <div class="row" id="row_remisiones">                     
                        <div class="panel panel-color panel-danger">
-                            <div class="panel-heading">
-                                <i class="ion-music-note" aria-hidden="true"></i>
+                            <div class="panel-heading4">
+                                <i class="ion-clipboard" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Remisiones de Préstamos de Instrumentos</h3>
                             </div>
                             
@@ -531,8 +531,8 @@
                 <div id="Estuches">
                     <div class="row" id="row_estuches">                     
                        <div class="panel panel-color panel-danger">
-                            <div class="panel-heading">
-                                <i class="ion-music-note" aria-hidden="true"></i>
+                            <div class="panel-heading3">
+                                <i class="ion-nuclear" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Estuches correspondientes a Instrumentos en Inventario</h3>
                             </div>
                             <div class="panel-body">
@@ -560,8 +560,8 @@
                 <div id="Estuche_Detalle">
                     <div class="row" id="row_estuches_Descripcion">                     
                         <div class="panel panel-color panel-danger">
-                            <div class="panel-heading">                                        
-                                <i class="ion-music-note" aria-hidden="true"></i>
+                            <div class="panel-heading3">                                        
+                                <i class="ion-nuclear" aria-hidden="true"></i>
                                 <h3 id="Header_Estuche_Texto" class="TextoHeader">Descripción del Estuche</h3>
                                 <div class="FlotarDerecha">
                                     <i class="ion-grid" data-pack="default" data-tags="menu"></i>                           
@@ -655,9 +655,9 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Marca</label>
                                                                 <div class="input-group m-t-10">
-                                                                    <input id="Marca_Estuche" type="text"  class="form-control" placeholder="Marca del estuche" maxlength="25" disabled>
+                                                                    <input id="Marca_Estuche" type="text"  class="form-control" placeholder="Marca del estuche" maxlength="20" disabled>
                                                                     <span class="input-group-btn">
-                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pricetag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-flag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                     </span>
                                                                 </div>
                                                         </div>

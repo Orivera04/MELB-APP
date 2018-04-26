@@ -80,7 +80,7 @@
 
         function Insertar_Actualizar_Proveedor(Comando)
         {     
-            if($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "")
+            if($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "" && $('#Direccion_Proveedor').val() != "")
             {
                 var Ancho  =  document.getElementById('Imagen_Proveedor').naturalWidth;
                 var Altura =  document.getElementById('Imagen_Proveedor').naturalHeight;
@@ -97,6 +97,7 @@
                     }
                     swal.showLoading();
                     Insertar_Imagen_API_Proveedor(Comando);
+                    
                 }                  
                 else
                 {
@@ -147,6 +148,9 @@
                              {                                    
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 Actualizar();
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
+                                 $('#ADD').show("drop", 50);
                              }
                              else
                              {
@@ -272,6 +276,11 @@
                                  {                                    
                                      swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                     Actualizar();
+                                     $('#Proveedor_Detalle').hide(500);
+                                     $('#Proveedores').show(400);
+                                     $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
+                                     $('#ADD').show("drop", 50);
                                  }
                                  else
                                  {
@@ -303,6 +312,11 @@
                                  Resultado = JSON.parse(Resultado);
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 Actualizar();
+                                 $('#Proveedor_Detalle').hide(500);
+                                 $('#Proveedores').show(400);
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
+                                 $('#ADD').show("drop", 50);
                               },
                               error: function(xhr, status, error)
                               {
