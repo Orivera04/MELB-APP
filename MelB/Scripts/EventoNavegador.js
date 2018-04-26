@@ -324,7 +324,8 @@ function Inicializacion_Eventos()
                  $('#Instrumento_Detalle').show(400);   
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
-                 Base64Imagen($('#Imagen_Instrumento').attr('src'));                                 
+                 Base64Imagen($('#Imagen_Instrumento').attr('src'));     
+                 $('#Panel_Accesorios').hide();                            
             }
             else if(Formulario_Activo == 'Estuche')
             {       

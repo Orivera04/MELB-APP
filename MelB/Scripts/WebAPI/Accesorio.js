@@ -22,8 +22,8 @@
                                 Resultado[i].ID_Accesorio,
                                 Resultado[i].Nombre,
                                 Resultado[i].Descripcion,
-                                'd',
-                                'd'
+                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ]).draw( false );                        
                         }
                     }
@@ -34,20 +34,22 @@
             {
 
                 swal
-                    ({
-                          title: "Error listando accesorios",
-                          text: "No se pudo conectar con el servidor.",
-                          type: "error",
-                    });
-            }
+                ({
+                      title: "Error listando accesorios",
+                      text: "No se pudo conectar con el servidor.",
+                      type: "error",
+                });
+        }
 
         });
 }
 
 
-function Insertar_Accesorio(ID)
+function Insertar_Actualizar_Accesorio(ID,Comando,Accesorio)
 {
         
+  var Titulo;
+  var Error;
   swal.setDefaults
   ({
         input: 'text',
@@ -55,80 +57,152 @@ function Insertar_Accesorio(ID)
         cancelButtonText: 'Cancelar',
         showCancelButton: true,
         animation: true,
-        progressSteps: ['1', '2', '3']
+        progressSteps: ['1', '2', '3'],
+        allowOutsideClick: false
   });
 
-  var Pasos = 
-  [
-    {
-        title: 'Añadir Accesorio',
-        text: 'ID Accesorio',
-        input : 'number',
-        inputPlaceholder: 'Ingrese el identificador unico de accesorio',
-        inputAttributes: 
+  if(Comando == 'Nuevo')
+  {
+      Titulo = 'Añadiendo accesorio';
+      Error = 'Ocurrio un inconveniente al añadir al accesorio.';
+      var Pasos = 
+      [
         {
-            min: 1,
-            max: 200000,
-            step: 1
+            title: 'Añadir Accesorio',
+            text: 'ID Accesorio',
+            input : 'number',
+            inputAttributes: 
+            {
+                min: 1,
+                max: 200000,
+                step: 1
+            },        
+            inputClass: 'form-control'
         },
-        inputClass: 'form-control'
-    },
-    {
-        title: 'Añadir Accesorio',
-        text: 'Nombre del accesorio',
-        input : 'text',
-        inputPlaceholder: 'Ingrese el nombre que tendra el accesorio',
-        inputAttributes: 
         {
-            maxlength : 15
+            title: 'Añadir Accesorio',
+            text: 'Nombre del accesorio',
+            input : 'text',
+            inputAttributes: 
+            {
+                maxlength : 15
+            },
+            inputClass: 'form-control'
         },
-        inputClass: 'form-control'
-    },
-    {
-        title: 'Añadir Accesorio',
-        text: 'Descripción del accessorio',
-        input : 'textarea',
-        inputPlaceholder: 'Ingrese la descripción que tendra el accesorio',
-        inputAttributes: 
         {
-            maxlength : 50
+            title: 'Añadir Accesorio',
+            text: 'Descripción del accessorio',
+            input : 'textarea',
+            inputAttributes: 
+            {
+                maxlength : 50
+            },
+            inputClass: 'form-control'
+        }
+      ]
+  }
+  else
+  {
+      Titulo = 'Actualizando accesorio';
+      Error = 'Ocurrio un inconveniente al actualizar el accesorio.';
+      var Pasos = 
+      [
+        {
+            title: 'Actualizar Accesorio',
+            text: 'ID Accesorio',
+            input : 'number',
+            inputValue : Accesorio.ID_Accesorio,
+            inputAttributes: 
+            {
+                min: 1,
+                max: 200000,
+                step: 1
+            },        
+            inputClass: 'form-control'
         },
-        inputClass: 'form-control'
-    }
-  ]
+        {
+            title: 'Añadir Accesorio',
+            text: 'Nombre del accesorio',
+            input : 'text',
+            inputValue : Accesorio.Nombre,
+            inputAttributes: 
+            {
+                maxlength : 15
+            },
+            inputClass: 'form-control'
+        },
+        {
+            title: 'Añadir Accesorio',
+            text: 'Descripción del accessorio',
+            input : 'textarea',
+            inputValue : Accesorio.Descripcion,
+            inputAttributes: 
+            {
+                maxlength : 50
+            },
+            inputClass: 'form-control'
+        }
+      ]
+  }
 
     swal.queue(Pasos).then(function (Modal) 
     {
-        swal({title:'Añadiendo accesorio',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-        swal.showLoading();        
-        $.ajax({
+        if(Modal[1] != '' && Modal[2] != '')
+        {         
+            swal.resetDefaults();
+            swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+            swal.showLoading();        
+            $.ajax({
 
-            url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+                url: 'http://melbws.azurewebsites.net/api/Accesorio/',
 
-            type: 'POST',
+                type: 'PUT',
 
-            data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
+                data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
 
-            success: function (Resultado) 
-            {   
-                swal.closeModal();             
-                Resultado = JSON.parse(Resultado);                                                     
-                swal.closeModal();
-                swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");                                      
-            },
+                success: function (Resultado) 
+                {   
+                   Resultado = JSON.parse(Resultado);
+                   if(Resultado.Codigo == 5)
+                   {                                    
+                         swal.closeModal();
+                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                      }
+                 else
+                 {
+                     var Cadena_Errores = "";
+                     for (var I = 0; I < Resultado.Errores.length; I++) 
+                     {
+                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                     }
+                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                 }                                     
+                },
 
-            error: function (Mensaje) 
-            {
-                swal.closeModal();
-                swal
-                ({
-                      title: "Error",
-                      text: "Ocurrio un inconveniente al añadir al accesorio.",
-                      type: "error",
-                });
-            }
+                error: function (Mensaje) 
+                {
+                    swal.closeModal();
+                    swal
+                    ({
+                          title: "Error",
+                          text: Error,
+                          type: "error",
+                    });
+                }
 
-        });        
+            });
+        }
+        else
+        {
+            swal.resetDefaults();
+            swal.closeModal();
+            swal
+            ({
+                  title: "Aviso",
+                  text: "Revise que haya introducido los campos correctamente",
+                  type: "warning",
+            });
+        }        
     })
 }
 
