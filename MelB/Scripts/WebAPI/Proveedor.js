@@ -18,8 +18,8 @@
                                 Resultado[i].ID_Proveedor,
                                 Imagen,
                                 Resultado[i].Nombre,
-                                Resultado[i].Telefono_1,
-                                Resultado[i].Correo,
+                                '<a href="tel:' + Resultado[i].Telefono_1 + '">' + Resultado[i].Telefono_1 +'</a>',
+                                '<a href="mailto:' + Resultado[i].Correo + '">' + Resultado[i].Correo +'</a>',
                                 '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                 '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ]).draw( false );
@@ -56,6 +56,7 @@
                           Resultado = Resultado[0];                  
                           $('#ID_Proveedor').val(Resultado.ID_Proveedor); 
                           $('#Correo_Proveedor').val(Resultado.Correo);
+                          $('#Direccion_Proveedor').val(Resultado.Direccion);
                           $('#Telefono1_Proveedor').val(Resultado.Telefono_1);
                           $('#Telefono2_Proveedor').val(Resultado.Telefono_2);
                           $('#Nombre_Proveedor').val(Resultado.Nombre);
@@ -149,7 +150,6 @@
                              {                                    
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 Actualizar();
                                  $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
                                  $('#ADD').show("drop", 50);
                              }
@@ -197,7 +197,7 @@
         {
             if(Cond == true)
             {
-                $("#ID_Proveedor").prop("disabled", "false");
+                $("#ID_Proveedor").prop("disabled", false);
                 $('#Nombre_Proveedor').removeAttr('disabled');
                 $('#Direccion_Proveedor').removeAttr('disabled');
                 $('#Telefono1_Proveedor').removeAttr('disabled');
@@ -209,7 +209,7 @@
             }
             else
             {
-                $("#ID_Instrumento").prop("disabled", "true");
+                $("#ID_Proveedor").prop("disabled", "true");
                 $('#Nombre_Proveedor').prop('disabled','true');
                 $('#Direccion_Proveedor').prop('disabled','true');
                 $('#Telefono1_Proveedor').prop('disabled','true');

@@ -148,7 +148,7 @@ function Cargar_Estuches()
                              {                                    
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                  $('#ADD').show("drop", 50);  
                              }
                              else
@@ -164,7 +164,7 @@ function Cargar_Estuches()
                           },
                           error: function(Respuesta)
                           {
-                             swal("Error", "Ocurrio un error al borrar el Estuche", "error");
+                             swal("Error", "No es posible eliminar estuche", "error");
                           },
                         });
                   }    
@@ -223,7 +223,7 @@ function Cargar_Estuches()
         {
             if(Cond == true)
             {
-                $("#ID_Estuche").prop("disabled", "false");
+                $("#ID_Estuche").prop("disabled", false);
                 $("#Tipo_Estuche").removeAttr('disabled');
                 $('#Color_Estuche').removeAttr('disabled');
                 $('#Marca_Estuche').removeAttr('disabled');
@@ -306,7 +306,7 @@ function Cargar_Estuches()
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                      $('#Estuche_Detalle').hide(500);
                                      $('#Estuches').show(400);
-                                     $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
+                                     $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                      $('#ADD').show("drop", 50);  
                                  }
                                  else
@@ -341,7 +341,8 @@ function Cargar_Estuches()
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                  $('#Estuche_Detalle').hide(500);
                                  $('#Estuches').show(400);
-                                 $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
+                                 Actualizar();
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                  $('#ADD').show("drop", 50);
                               },
                               error: function(xhr, status, error)

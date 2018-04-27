@@ -253,17 +253,19 @@ a.article, a.article:hover {
 
 /*Proveedor*/
 .panel-danger>.panel-heading2 {
-   background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 5%, rgba(71,71,71,1) 27%, rgba(71,71,71,1) 39%, rgba(71,71,71,1) 64%, rgba(43,43,43,1) 85%, rgba(19,19,19,1) 100%);
+   background: linear-gradient(to right, #6699ff, #99ccff);
 }
 
 /*Estuche*/
 .panel-danger>.panel-heading3 {
-  background:  linear-gradient(45deg, rgba(193,158,103,1) 0%, rgba(193,158,103,1) 9%, rgba(182,141,76,1) 47%, rgba(243,226,199,1) 78%, rgba(219,178,116,1) 89%, rgba(219,178,116,1) 100%);
+   /*background: linear-gradient(to right, #00cc66 0%, #66ff66 100%);*/
+    /*background: linear-gradient(to right, #6699ff 0%, #66ff99 100%);*/
+    background: linear-gradient(to right, #04B45F, #04B45F);
 }
 
 /*Remisiones*/
 .panel-danger>.panel-heading4 {
-  background:  linear-gradient(to right, rgba(168,0,119,1) 0%, rgba(168,0,119,1) 8%, rgba(193,70,161,1) 42%, rgba(203,96,179,1) 71%, rgba(219,54,164,1) 100%);
+   background: linear-gradient(to right, #cc00ff 0%, #ff00ff 100%);
 }
 
 /*MEDIDAS DE LOS PANEL-HEADING DE CADA PANEL*/

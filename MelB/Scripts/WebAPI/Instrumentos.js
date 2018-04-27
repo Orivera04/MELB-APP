@@ -121,7 +121,7 @@ var ImagenBase64;
                     }
                     swal.showLoading();
                     Insertar_Imagen_API(Comando);
-                }                  
+                }
                 else
                 {
                     swal
@@ -289,6 +289,10 @@ var ImagenBase64;
         
         function Insertar_Imagen_API(Comando)
         {
+          if ($('#Proveedor_Instrumento').val() != null) 
+          {
+
+          
             $.ajax
             ({
                 url: 'https://api.imgur.com/3/image',
@@ -318,7 +322,6 @@ var ImagenBase64;
                                  {                                    
                                      swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                     Cargar_Instrumentos();
                                      $('#Instrumento_Detalle').hide(500);
                                      $('#Instrumentos').show(400);
                                  }
@@ -331,7 +334,7 @@ var ImagenBase64;
                                      }
                                      swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                                  }
-
+                                 Cargar_Instrumentos();
                               },
                               error: function(Respuesta)
                               {
@@ -375,6 +378,16 @@ var ImagenBase64;
                     });
                 }               
             })
+          }
+          else
+          {
+                swal
+                    ({
+                          title: "Aviso",
+                          text: "No ha seleccionado un proveedor",
+                          type: "warning",
+                    });
+          }
         }
 
         function Base64Imagen(URL) 

@@ -300,7 +300,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Estuche';
-            $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
+            $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
             $('#ADD').show("drop", 50);  
             $('#Busqueda_Form').hide("drop",50);
         });

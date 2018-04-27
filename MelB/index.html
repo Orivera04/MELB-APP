@@ -14,6 +14,10 @@
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">       
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
         <!-- Plugins CSS -->
         <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>  
@@ -199,7 +203,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Proveedor</label>
                                                             <div class="input-group m-t-10">                         
-                                                                <select data-live-search="true" name="Proveedor_Instrumento" id="Proveedor_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                <select data-live-search="true" name="Proveedor_Instrumento" id="Proveedor_Instrumento" class="selectpicker" title="Selecciona un Proveedor" data-style="btn-white" disabled>
                                                                 </select>                    
                                                             </div>
                                                         </div> 
@@ -282,7 +286,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Estuche</label>
                                                                 <div class="input-group m-t-10" disabled>                                       
-                                                                    <select data-live-search="true" id="Estuche_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <select data-live-search="true" id="Estuche_Instrumento" title="Selecciona un estuche" class="selectpicker" data-style="btn-white" disabled>
                                                                     </select>                    
                                                                 </div>
                                                         </div>        
@@ -432,9 +436,9 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Telefono 1</label>
+                                                            <label class="control-label">Telefono #1</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Telefono1_Proveedor" type="text" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <input id="Telefono1_Proveedor" type="tel" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
@@ -442,11 +446,11 @@
                                                         </div> 
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Telefono 2</label>
+                                                            <label class="control-label">Telefono #2</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Telefono2_Proveedor" type="text" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <input id="Telefono2_Proveedor" type="tel" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp-outline" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>       
@@ -478,12 +482,12 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Correo</label>
+                                                            <label for="Correo_Proveedor" class="control-label">Correo</label>
                                                             <div class="input-group m-t-10">
-                                                                <input id="Correo_Proveedor" type="text" class="form-control" placeholder="Correo del Proveedor" maxlength="50" disabled>
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-at" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
-                                                                </span>
+	                                                            <input id="Correo_Proveedor" type="email" name="email" class="form-control" placeholder="Correo del Proveedor" maxlength="50" disabled>
+    	                                                    		<span class="input-group-btn">
+                                                            		<button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-at" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                        		</span>
                                                             </div>
                                                         </div>
 
@@ -541,7 +545,7 @@
                     <div class="row" id="row_estuches">                     
                        <div class="panel panel-color panel-danger">
                             <div class="panel-heading3">
-                                <i class="ion-nuclear" aria-hidden="true"></i>
+                                <i class="ion-bag" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Estuches correspondientes a Instrumentos en Inventario</h3>
                             </div>
                             <div class="panel-body">
@@ -570,7 +574,7 @@
                     <div class="row" id="row_estuches_Descripcion">                     
                         <div class="panel panel-color panel-danger">
                             <div class="panel-heading3">                                        
-                                <i class="ion-nuclear" aria-hidden="true"></i>
+                                <i class="ion-bag" aria-hidden="true"></i>
                                 <h3 id="Header_Estuche_Texto" class="TextoHeader">Descripción del Estuche</h3>
                                 <div class="FlotarDerecha">
                                     <i class="ion-grid" data-pack="default" data-tags="menu"></i>                           
