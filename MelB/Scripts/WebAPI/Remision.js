@@ -1,5 +1,6 @@
 ﻿function Cargar_Remisiones() 
 {
+    Tabla_Remision.clear().draw();
     var Resultado
 
     $.ajax({

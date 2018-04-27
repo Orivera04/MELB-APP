@@ -1,5 +1,6 @@
 ﻿        function Cargar_Proveedores() 
         {
+            Tabla_Proveedor.clear().draw();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Proveedor',

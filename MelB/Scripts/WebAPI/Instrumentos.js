@@ -2,6 +2,7 @@ var ImagenBase64;
 /* Funciones de la API*/
         function Cargar_Instrumentos() 
         {
+            Tabla_Instrumento.clear().draw();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos',
@@ -315,6 +316,9 @@ var ImagenBase64;
                                  {                                    
                                      swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                     Cargar_Instrumentos();
+                                     $('#Instrumento_Detalle').hide(500);
+                                     $('#Instrumentos').show(400);
                                  }
                                  else
                                  {
@@ -325,7 +329,7 @@ var ImagenBase64;
                                      }
                                      swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                                  }
-                                  Cargar_Instrumentos();
+
                               },
                               error: function(Respuesta)
                               {
@@ -347,6 +351,8 @@ var ImagenBase64;
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                  Cargar_Instrumentos();
+                                 $('#Instrumento_Detalle').hide(500);
+                                 $('#Instrumentos').show(400);
                               },
                               error: function(xhr, status, error)
                               {

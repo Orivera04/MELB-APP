@@ -2,6 +2,7 @@
 /* Funciones de la API */
     function Cargar_Accesorios(ID)  
     {
+        Tabla_Accesorios.clear().draw();
         $.ajax({
 
             url: 'http://melbws.azurewebsites.net/api/Accesorio/'+ID,
