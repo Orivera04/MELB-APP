@@ -218,6 +218,7 @@ var ImagenBase64;
             if(Cond == true)
             {
                 $("#ID_Instrumento").prop("disabled", "false");
+                $("#Aula_Clase").removeAttr("disabled");
                 $("#Tipo_Instrumento").removeAttr('disabled');
                 $('#Color_Instrumento').removeAttr('disabled');
                 $('#Marca_Instrumento').removeAttr('disabled');
@@ -236,6 +237,7 @@ var ImagenBase64;
             else
             {
                 $("#ID_Instrumento").prop("disabled", "true");
+                $("#Aula_Clase").prop("disabled", "true");
                 $('#Tipo_Instrumento').prop('disabled','true');
                 $('#Color_Instrumento').prop('disabled','true');
                 $('#Marca_Instrumento').prop('disabled','true');
@@ -299,7 +301,7 @@ var ImagenBase64;
                 success: function (Resultado)
                 {
                     var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
-                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: $('#Estante_Instrumento').val()}
+                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: $('#Aula_Clase').val()}
                                                : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}                       
                     if(Comando == 'Nuevo')
                     {                                                

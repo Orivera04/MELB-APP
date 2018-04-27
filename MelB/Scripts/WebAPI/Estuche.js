@@ -22,10 +22,10 @@ function Cargar_Estuches()
                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                     ] ).draw( false );
-                    $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
                 }       
                     Cargar_Proveedores();
             }
+            Cargar_Estuches_No_Usados();
         },
         error: function (Mensaje) 
         {
@@ -169,6 +169,35 @@ function Cargar_Estuches()
                         });
                   }    
             });            
+        }
+        
+        function Cargar_Estuches_No_Usados()
+        {
+            $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Estuche?Filtro=Disponible',
+                type: 'GET',
+                success: function (Resultado) 
+                {
+                    if(Resultado.Codigo == null)
+                    {
+                        Resultado = JSON.parse(Resultado); 
+                        for (i = 0; i < Resultado.length; i++) 
+                        {   
+                            $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
+                        }       
+                    }
+                },
+                error: function (Mensaje) 
+                {
+                   swal
+                    ({
+                          title: "Error listando estuches",
+                          text: "No se pudo conectar con el servidor.",
+                          type: "error",
+                    });
+                }
+            });
         }
     
 /* Funcionalidad de formularios  */

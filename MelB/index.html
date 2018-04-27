@@ -226,12 +226,21 @@
                                                             </div>
                                                         </div>    
 
-                                                        <div class="form-group">
-                                                            <label id="Estante_Aula" class="control-label">Estante</label>
+                                                        <div class="form-group" id="Estante_Campo">
+                                                            <label class="control-label">Estante</label>
                                                             <div class="form-group">
                                                                 <input id="Estante_Instrumento" type="text" value="55" name="Estante" data-bts-min="0" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
                                                         </div>
+
+                                                        <div class="form-group" id="Campo_Aula">
+                                                            <label class="control-label">Aula</label>
+                                                            <div class="input-group m-t-10">
+                                                               <select id="Aula_Clase" class="selectpicker" data-style="btn-white"     disabled>
+                                                                   
+                                                                </select>                    
+                                                            </div>
+                                                        </div>  
                                                     </form>
                                                 </div>
                                             </div>
@@ -720,6 +729,7 @@
      <script src="Scripts/WebAPI/Remision.js"></script>
      <script src="Scripts/WebAPI/Accesorio.js"></script>
      <script src="Scripts/WebAPI/Estuche.js"></script>
+     <script src="Scripts/WebAPI/Aula.js"></script>
 
 </body>
 </html>

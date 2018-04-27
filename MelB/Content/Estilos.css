@@ -517,7 +517,7 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo,#Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor
+#Busqueda_Form, #Imagen_Archivo,#Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor,#Campo_Aula
 {
     display: none;
 }

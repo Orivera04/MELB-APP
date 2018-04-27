@@ -486,13 +486,15 @@ function Inicializacion_Eventos()
         $('#Ubicacion_Instrumento').change(function(event)
         {
             if($('#Ubicacion_Instrumento').val() == 'Bodega')
-            { 
-                $('#Estante_Aula').text('Estante')
+            {                 
+                $('#Campo_Aula').hide();
+                $('#Estante_Campo').show();
                 $('#Form_gaveta').show();
             }
             else
             {
-                $('#Estante_Aula').text('ID Aula')
+                $('#Campo_Aula').show();
+                $('#Estante_Campo').hide();
                 $('#Form_gaveta').hide()
             }
         }); 

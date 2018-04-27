@@ -25,7 +25,7 @@
                     'd'
                 ] ).draw( false );                        
             }
-            swal.closeModal();
+            Cargar_Aulas() 
         },
 
         error: function (Mensaje) 
