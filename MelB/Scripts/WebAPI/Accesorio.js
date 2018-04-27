@@ -166,7 +166,8 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
                             Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
                        }
                        swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
-                   }                                     
+                   }
+                   Cargar_Accesorios($('#ID_Instrumento').val());                                     
                   },
 
                   error: function (Mensaje) 
@@ -186,7 +187,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
             {
               $.ajax({
 
-                  url: 'http://localhost:53603/api/Accesorio/',
+                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
 
                   type: 'PUT',
 
@@ -197,18 +198,19 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
                      Resultado = JSON.parse(Resultado);
                      if(Resultado.Codigo == 5)
                      {                                    
-                           swal.closeModal();
-                           swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                        }
-                   else
-                   {
-                       var Cadena_Errores = "";
-                       for (var I = 0; I < Resultado.Errores.length; I++) 
-                       {
-                            Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
-                       }
-                       swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
-                   }                                     
+                         swal.closeModal();
+                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                     }
+	                 else
+	                 {
+                         var Cadena_Errores = "";
+                         for (var I = 0; I < Resultado.Errores.length; I++) 
+                         {
+                             Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                         }
+                         swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+	                 }  
+	                 Cargar_Accesorios($('#ID_Instrumento').val());                                   
                   },
 
                   error: function (Mensaje) 
@@ -277,6 +279,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
                                  }
                                  swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                              }
+                             Cargar_Accesorios($('#ID_Instrumento').val());
 
                           },
                           error: function(Respuesta)

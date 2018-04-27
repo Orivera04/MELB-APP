@@ -161,7 +161,7 @@
                                  }
                                  swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                              }
-
+                             Cargar_Proveedores();
                           },
                           error: function(Respuesta)
                           {
@@ -265,7 +265,6 @@
                     {                                                
                         $.ajax
                         ({
-
                               url: 'http://melbws.azurewebsites.net/api/Proveedor/',
                               type: 'POST',
                               data: Proveedor_BBDD,
@@ -276,7 +275,7 @@
                                  {                                    
                                      swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                     Actualizar();
+                                     Cargar_Proveedores();
                                      $('#Proveedor_Detalle').hide(500);
                                      $('#Proveedores').show(400);
                                      $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
@@ -312,7 +311,7 @@
                                  Resultado = JSON.parse(Resultado);
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 Actualizar();
+                                 Cargar_Proveedores();
                                  $('#Proveedor_Detalle').hide(500);
                                  $('#Proveedores').show(400);
                                  $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');

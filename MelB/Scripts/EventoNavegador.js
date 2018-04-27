@@ -83,9 +83,20 @@ function Inicializacion_Controles()
         alwaysShow: true,
         threshold: 25
     });
-
-
 }
+
+function Actualizar()
+{
+    swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+    Tabla_Instrumento.clear().draw();
+    Tabla_Estuche.clear().draw();
+    Tabla_Proveedor.clear().draw();
+    Tabla_Remision.clear().draw();
+    Tabla_Accesorios.clear().draw();
+    swal.showLoading();
+    Cargar_Instrumentos();    
+}
+
 
 function Inicializacion_Tablas()
 {
@@ -437,7 +448,7 @@ function Inicializacion_Eventos()
 
         $('#Actualizar').click(function(event)
         {
-            Actualizar();    
+             Actualizar();    
         });
 
 
@@ -541,14 +552,3 @@ function Inicializacion_Eventos()
         });
 }
 
-function Actualizar()
-{
-    swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-    Tabla_Instrumento.clear().draw();
-    Tabla_Estuche.clear().draw();
-    Tabla_Proveedor.clear().draw();
-    Tabla_Remision.clear().draw();
-    Tabla_Accesorios.clear().draw();
-    swal.showLoading();
-    Cargar_Instrumentos();    
-}

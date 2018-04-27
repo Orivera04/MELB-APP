@@ -97,7 +97,6 @@ function Cargar_Estuches()
                     }
                     swal.showLoading();
                     Insertar_Imagen_API_Estuche(Comando);
-                    Actualizar();
                 }                  
                 else
                 {
@@ -148,7 +147,6 @@ function Cargar_Estuches()
                              {                                    
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 Actualizar();
                                  $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                  $('#ADD').show("drop", 50);  
                              }
@@ -161,7 +159,7 @@ function Cargar_Estuches()
                                  }
                                  swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                              }
-
+                             Cargar_Estuches();
                           },
                           error: function(Respuesta)
                           {
@@ -276,7 +274,6 @@ function Cargar_Estuches()
                                  {                                    
                                      swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                     Actualizar();
                                      $('#Estuche_Detalle').hide(500);
                                      $('#Estuches').show(400);
                                      $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
@@ -291,7 +288,7 @@ function Cargar_Estuches()
                                      }
                                      swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                                  }
-
+                                Cargar_Estuches();
                               },
                               error: function(Respuesta)
                               {
@@ -312,17 +309,17 @@ function Cargar_Estuches()
                                  Resultado = JSON.parse(Resultado);
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 Actualizar();
                                  $('#Estuche_Detalle').hide(500);
                                  $('#Estuches').show(400);
                                  $('#ADD').html('<span class="btn-label"><i class="ion-nuclear" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
-                                 $('#ADD').show("drop", 50);  
+                                 $('#ADD').show("drop", 50);
                               },
                               error: function(xhr, status, error)
                               {
                                  swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
+                        Cargar_Estuches();
                         swal.closeModal();
                     }
                 },                  

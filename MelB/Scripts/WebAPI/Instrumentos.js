@@ -180,7 +180,7 @@ var ImagenBase64;
                                  }
                                  swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                              }
-
+                             Cargar_Instrumentos();
                           },
                           error: function(Respuesta)
                           {
@@ -325,7 +325,7 @@ var ImagenBase64;
                                      }
                                      swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                                  }
-
+                                  Cargar_Instrumentos();
                               },
                               error: function(Respuesta)
                               {
@@ -346,6 +346,7 @@ var ImagenBase64;
                                  Resultado = JSON.parse(Resultado);
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 Cargar_Instrumentos();
                               },
                               error: function(xhr, status, error)
                               {
