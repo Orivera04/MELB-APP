@@ -19,6 +19,7 @@
                         }
                     }
                 } 
+                $('.selectpicker').selectpicker('render');
                 swal.closeModal();               
             },
 

@@ -19,6 +19,8 @@
                     ([
                         Resultado[i].ID_Estuche,
                         Imagen,
+                        Resultado[i].Nombre,
+                        Resultado[i].Marca,
                         Resultado[i].Color,
                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'

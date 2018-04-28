@@ -309,7 +309,6 @@ function Inicializacion_Eventos()
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
-
             Formulario_Activo = 'Accesorio';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Accesorios');
             $('#ADD').show("drop", 50);  
@@ -332,6 +331,8 @@ function Inicializacion_Eventos()
             $('#ADD').show("drop", 50);  
             $('#Busqueda_Form').hide("drop",50);
         });
+
+     
 
     /* Eventos : uso en formularios de forma global */
 

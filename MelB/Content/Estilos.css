@@ -593,3 +593,15 @@ button:focus:not(:active)::after
 {
     padding: 30px !important;
 }
+
+#Colapsar
+{
+    cursor: pointer;
+}
+
+.label-warning ,.label-success
+
+{
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+}

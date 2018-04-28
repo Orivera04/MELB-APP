@@ -7,16 +7,11 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>       
         <title>MelB - Sistema de inventario</title>        
         <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon"/>     
-        <!--
-         Boostrap, fuentes e iconos -->
+        <!-- Boostrap, fuentes e iconos -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">       
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
-	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 
         <!-- Plugins CSS -->
         <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
@@ -49,16 +44,17 @@
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i class="glyphicon glyphicon-list-alt"></i>
-                            Inventario
+                                Inventario
                         </a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
+
+                        <ul class="collapse list-unstyled" aria-expanded="true" id="pageSubmenu">
                             <li id="estuchessubmenu"><a href="#">Estuches</a></li>
-                            <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>                                                          
+                            <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>                                                           
                         </ul>
-                        <a href ="#"  id="proveedoressubmenu">
+                        <a href ="#"  id="proveedoressubmenu" >
                             <i class="glyphicon glyphicon-bookmark"></i> Proveedores                                
                         </a>
-                        <a href="#" id="remisionessubmenu">
+                        <a href="#" id="remisionessubmenu" >
                             <i class="glyphicon glyphicon-file"></i> Remisiones
                         </a>
                     </li>                        
@@ -139,6 +135,7 @@
                                                 <th>Imagen</th>
                                                 <th>Tipo</th>
                                                 <th>Marca</th>
+                                                <th>Disponibilidad</th>
                                                 <th>Ubicación</th>
                                                 <th>Detalle</th>
                                                 <th>Eliminar</th>                                                           
@@ -535,8 +532,8 @@
                                     <table id="Remision_T" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>ID_Remision</th>
-                                                <th>Estudiante</th>
+                                                <th>Numero de remisión</th>
+                                                <th>Asignada A</th>
                                                 <th>Estado</th>
                                                 <th>Detalle</th>
                                                 <th>Eliminar</th>
@@ -698,8 +695,10 @@
                                     <table id="Estuche_T" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>ID</th>                                                
                                                 <th>Imagen</th>
+                                                <th>Tipo Estuche</th>
+                                                <th>Marca</th>
                                                 <th>Color</th>
                                                 <th>Detalle</th>
                                                 <th>Eliminar</th>
@@ -790,7 +789,7 @@
                                                 <div class="p-20">
                                                     <form>     
                                                         <div class="form-group"> 
-                                                            <label class="control-label">Tipo</label>
+                                                            <label class="control-label">Tipo Estuche</label>
                                                                 <div class="input-group m-t-10">                                                   
                                                                     <select id="Tipo_Estuche" class="selectpicker" data-style="btn-white" disabled>
                                                                         <optgroup label="Viento">
