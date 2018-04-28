@@ -5,6 +5,7 @@ var Tabla_Proveedor;
 var Tabla_Remision;
 var Tabla_Estuche;
 var Tabla_Accesorios;
+var Tabla_Desglose_Remision;
 
 $(document).ready(function ()
 {   
@@ -94,6 +95,7 @@ function Actualizar()
     Tabla_Proveedor.clear().draw();
     Tabla_Remision.clear().draw();
     Tabla_Accesorios.clear().draw();
+    Tabla_Desglose_Remision.clear().draw();
     swal.showLoading();
     Cargar_Instrumentos();    
 }
@@ -167,7 +169,26 @@ function Inicializacion_Tablas()
     });
 
 
-    Tabla_Estuche = $('#Estuche_T').DataTable
+    Tabla_Desglose_Remision = $('#Desglose_Remision_T').DataTable
+     ({
+        "language": 
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate": 
+            {        
+                "next":       "Siguiente pagina",
+                "previous":   "Pagina anterior"
+            },
+            "columnDefs": [ {"className": "dt-center", "targets": "_all"}]
+        }
+    });
+
+   Tabla_Estuche = $('#Estuche_T').DataTable
     ({
         "language": 
         {
@@ -222,6 +243,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none'; 
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
         });
        
 
@@ -235,6 +257,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none';
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Instrumento';                       
             $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Instrumento');
@@ -251,6 +274,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none';
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Proveedor';
             $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
@@ -267,6 +291,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none';
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Remision';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remisiones');
@@ -283,6 +308,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none';   
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Accesorio';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Accesorios');
@@ -299,6 +325,7 @@ function Inicializacion_Eventos()
             document.getElementById('Instrumento_Detalle').style.display = 'none';
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
 
             Formulario_Activo = 'Estuche';
             $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
@@ -367,6 +394,17 @@ function Inicializacion_Eventos()
                  $('#Actualizar_Proveedor').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#Imagen_Proveedor').attr("src","https://i.imgur.com/0oN2F22.png");
                  Base64Imagen($('#Imagen_Proveedor').attr('src'));                                 
+            }  
+            else if(Formulario_Activo == 'Remision')
+            {       
+                 Operacion = 'Nuevo';
+                 $('#Header_Remision_Texto').text('Añadir Remision');
+                 Reiniciar_Controles_Remision();
+                 Habilitar_Deshabilitar_Remision(true);
+                 $('#ID_Remision').removeAttr('disabled');
+                 $('#Remisiones').hide(300);
+                 $('#Remision_Detalle').show(400);   
+                 $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
             }                
             
             $('#ADD').hide('drop',100);
@@ -426,6 +464,24 @@ function Inicializacion_Eventos()
                      ({
                           title: "Aviso",
                           text: "Debe introducir el identificador del proveedor",
+                          type: "warning",
+                     });
+                }
+            }
+
+            else  if(Formulario_Activo == 'Remision')
+            {   
+                if($('#Descripcion_Instrumento').val() != "")
+                {
+
+                    Detallar_Datos_Remision($('#Descripcion_Instrumento').val());
+                }
+                else
+                {
+                     swal
+                     ({
+                          title: "Aviso",
+                          text: "Debe introducir el identificador de la remision",
                           type: "warning",
                      });
                 }
@@ -552,6 +608,33 @@ function Inicializacion_Eventos()
         $('#Actualizar_Proveedor').click(function(event)
         {              
               Insertar_Actualizar_Proveedor(Operacion);
+        });
+
+
+         /* Eventos : Formulario Remision */
+
+         $('#Switch_Editar_Remision').change(function()
+        {
+            if( $('#Switch_Editar_Remision').prop('checked') == true)
+            {
+                Habilitar_Deshabilitar_Remision(true);
+                $('#Busqueda_Form').hide();
+            }
+            else
+            {
+                Habilitar_Deshabilitar_Remision(false);
+                $('#Busqueda_Form').show();
+            }
+        });
+
+        $('#Actualizar_Remision').click(function(event)
+        {              
+              Insertar_Actualizar_Remision(Operacion);
+        });
+
+         $('#Añadir_Desglose_Remision').click(function(event)
+        {
+             Insertar_Desglose_Remision($('#ID_Remision').val(),'Nuevo',null);   
         });
 }
 

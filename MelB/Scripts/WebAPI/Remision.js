@@ -1,38 +1,37 @@
-﻿function Cargar_Remisiones() 
+﻿/* Funciones de la API*/
+function Cargar_Remisiones() 
 {
     Tabla_Remision.clear().draw();
-    var Resultado
-
-    $.ajax({
-
+    $.ajax
+    ({
         url: 'http://melbws.azurewebsites.net/api/Remision',
-
         type: 'GET',
-
-        success: function (result) {
-
-            Resultado = JSON.parse(result);
-            for (i = 0; i < Resultado.length; i++) 
-            {      
-                    Tabla_Remision.row.add( [
-                    Resultado[i].ID_Remision,
-                    Resultado[i].Nombre_Estudiante,
-                    Resultado[i].Fecha_Prestamo,
-                    Resultado[i].Fecha_Entrega,
-                    Resultado[i].Estado_Remision,
-                    Resultado[i].Empleado_Nombre,
-                    Resultado[i].Lista_Desglose,
-                    'd'
-                ] ).draw( false );                        
+        success: function (Resultado) 
+        {
+            if(Resultado.Codigo == null)
+            {
+                Resultado = JSON.parse(Resultado);
+                for (i = 0; i < Resultado.length; i++) 
+                {  
+                    Tabla_Remision.row.add
+                    ([
+                        Resultado[i].ID_Remision,
+                        Resultado[i].Nombre_Estudiante,
+                        Resultado[i].Estado_Remision,
+                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                        '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                    ]).draw( false );  
+                                           
+                }
+                Cargar_Aulas() 
             }
-            Cargar_Aulas() 
         },
 
         error: function (Mensaje) 
         {        
             swal
             ({
-                  title: "Error listando remisiones",
+                  title: "Error listando Remisiones",
                   text: "No se pudo conectar con el servidor.",
                   type: "error",
             });
@@ -41,555 +40,433 @@
     });
 }
 
-//Add Data Function
 
-function AddR() {
-
-    var res = validateR();
-
-    if (res == false) {
-
-        return false;
-
-    }
-
-    var empObj = {
-
-        ID_Remision: $('#IdR').val(),
-
-        ID_Estudiante: $('#IdSR').val(),
-
-        Empleado_ID: $('#IdCR').val(),
-
-        Fecha_Prestamo: $('#datetimepicker1').val(),
-
-        Fecha_Entrega: $('#datetimepicker2').val(),
-
-        ID_Estado_Remision: 1,
-
-        ID_Instrumentos: $('#IdIR').val(),
-
-        Observaciones_Iniciales: $('#ObsR').val(),
-
-    };
-
-    //var codigoIdER = document.getElementById("numberIdER").value;
-
-    //if (codigoIdER == 1) {
-    //    var empObj = {
-
-    //        ID_Remision: $('#IdR').val(),
-
-    //        ID_Estudiante: $('#IdSR').val(),
-
-    //        Empleado_ID: $('#IdCR').val(),
-
-    //        Fecha_Prestamo: $('#datetimepicker1').val(),
-
-    //        Fecha_Entrega: $('#datetimepicker2').val(),
-
-    //        ID_Estado_Remision: 1,
-
-    //        ID_Instrumentos: $('#IdIR').val(),
-
-    //        Observaciones_Iniciales: $('#ObsR').val(),
-
-    //    };
-    //} else if (codigoIdER == 2) {
-    //    var empObj = {
-
-    //        ID_Remision: $('#IdR').val(),
-
-    //        ID_Estudiante: $('#IdSR').val(),
-
-    //        Empleado_ID: $('#IdCR').val(),
-
-    //        Fecha_Prestamo: $('#datetimepicker1').val(),
-
-    //        Fecha_Entrega: $('#datetimepicker2').val(),
-
-    //        ID_Estado_Remision: 0,
-
-    //        ID_Instrumentos: $('#IdIR').val(),
-
-    //        Observaciones_Iniciales: $('#ObsR').val(),
-
-    //    };
-    //}
-
-
-    //alert(valueB + ", " + codigoE + ", " + codigoP);
-
-    $.ajax({
-
-        url: "http://melbws.azurewebsites.net/api/Remision",
-
-        data: JSON.stringify(empObj),
-
-        type: "POST",
-
-        contentType: "application/json;charset=utf-8",
-
-        dataType: "json",
-
-        success: function (result) {
-
-            loadDataR();
-
-            $('#myModalR').modal('hide');
-
-        },
-
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
-        }
-
-    });
-
-}
-
-//Function for getting the Data Based upon Employee ID
-
-function getbyIDR(EmpID) {
-    edicion = true;
-
-    var getResultado
-
-    var ubicacion = document.getElementById("numberIdER");
-
-    $('#IdR').css('border-color', 'lightgrey');
-
-    $('#IdSR').css('border-color', 'lightgrey');
-
-    $('#IdCR').css('border-color', 'lightgrey');
-
-    $('#IdIR').css('border-color', 'lightgrey');
-
-    $('#ObsR').css('border-color', 'lightgrey');
-
-    $('#ObsFR').css('border-color', 'lightgrey');
-
-    $.ajax({
-
-        url: 'http://melbws.azurewebsites.net/api/Remision/' + EmpID,
-
-        typr: 'GET',
-
-        success: function (result) {
-
-            getResultado = JSON.parse(result);
-
-            var Inst = '', ObsI = '', ObsF = '';
-
-            for (i = 0; i < getResultado.length; i++) {
-
-                getResultado[i].Lista_Desglose.forEach(function (iteracion) {
-                    if (getResultado[i].Lista_Desglose.length > 0) {                        
-                        Inst += iteracion.ID_Instrumento + ",";
-                        ObsI += iteracion.Observacion_Inicial + ",";
-                        ObsF += iteracion.Observacion_Final + ",";
-                        //html += '<td>' + iteracion.Nombre + '</td>';
-                    }
-                });
-            }          
-
-            if (getResultado[0].Estado_Remision == "Activa") {
-                var buscar = 1;
-            } else if (getResultado[0].Estado_Remision == "No Activa") {
-                var buscar = 2;
-            }
-
-            for (i = 0; i < ubicacion.length; i++) {
-                if (ubicacion[i].value == buscar) {
-                    ubicacion[i].selected = true;
+        function Cargar_Remision_Por_ID(ID) 
+        {        
+            $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Remision/'+ID,
+                type: 'GET',
+                success: function (Resultado) 
+                {            
+                      Resultado = JSON.parse(Resultado);     
+                      if(Resultado.Codigo == null)
+                      {       
+                          Resultado = Resultado[0];                  
+                          $('#ID_Remision').val(Resultado.ID_Remision); 
+                          $('#ID_Estudiante_Remision').selectpicker('val', Resultado.Nombre_Estudiante);
+                          $('#ID_Empleado_Remision').selectpicker('val', Resultado.Empleado_Nombre);
+                          $('#Fecha_Inicio_Remision').val(Resultado.Fecha_Prestamo);
+                          $('#Fecha_Entrega_Remision').val(Resultado.Fecha_Entrega);
+                          $('#Estado_Remision').selectpicker('val', Resultado.Estado_Remision);
+
+                           for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
+                            {  
+                                Tabla_Desglose_Remision.row.add
+                                ([
+                                    Resultado.Lista_Desglose[i].ID_Instrumento,
+                                    Resultado.Lista_Desglose[i].Nombre,
+                                    Resultado.Lista_Desglose[i].Observacion_Inicial,
+                                    Resultado.Lista_Desglose[i].Observacion_Final
+                                ]).draw( false );                        
+                            }   
+                      }
+                      else
+                      {
+                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
+                      }           
+                },
+                error: function (Mensaje) 
+                {
+                    swal
+                    ({
+                          title: "Error al intentar ver el detalle de la Remision",
+                          text: "No se pudo conectar con el servidor.",
+                          type: "error",
+                    });
                 }
+            });
+        }
+
+        function Insertar_Actualizar_Remision(Comando)
+        {     
+            if($('#Fecha_Inicio_Remision').val() != "" && $('#Fecha_Entrega_Remision').val() != "")
+            {
+                swal.showLoading();
+                Insertar_Remision(Comando);
             }
-
-            $('#divIdEtiR').hide();
-            $('#divIdER').show();
-
-            $('#IdR').val(getResultado[0].ID_Remision);
-            $("#IdR").prop('disabled', true);
-
-            $('#IdSR').val(getResultado[0].Nombre_Estudiante);
-            $('#IdSR').prop('disabled', true);
-
-            $('#IdCR').val(getResultado[0].Empleado_Nombre);
-            $('#IdCR').prop('disabled', true);
-
-            $('#datetimepicker1').val(getResultado[0].Fecha_Prestamo);
-            $('#datetimepicker1').prop('disabled', true);
-
-            $('#datetimepicker2').val(getResultado[0].Fecha_Entrega);
-            $('#datetimepicker2').prop('disabled', true);
-
-            $('#IdIR').val(Inst.substring(0, Inst.length - 1));
-            $('#IdIR').prop('disabled', true);
-
-            $('#ObsR').val(ObsI.substring(0, ObsI.length - 1));
-
-            $('#divObsFR').show();
-            $('#ObsFR').val(ObsF.substring(0, ObsF.length - 1));
-
-            $('#myModalR').modal('show');
-
-            $('#btnUpdateR').show();
-
-            $('#btnAddR').hide();
-
-        },
-
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
-        }
-
-    });
-
-    return false;
-
-}
-
-//function for updating employee's record
-
-function UpdateR() {
-
-    var res = validateR();
-
-    if (res == false) {
-
-        return false;
-
-    }   
-
-    var codigoIdER = document.getElementById("numberIdER").value;
-
-    if (codigoIdER == 1) {
-        var empObj = {
-
-            ID_Remision: $('#IdR').val(),
-
-            ID_Estudiante: 2,//$('#IdSR').val(),
-
-            Empleado_ID: 4,//$('#IdCR').val(),
-
-            Fecha_Prestamo: $('#datetimepicker1').val(),
-
-            Fecha_Entrega: $('#datetimepicker2').val(),
-
-            ID_Estado_Remision: 1,
-
-            ID_Instrumentos: $('#IdIR').val(),
-
-            Observaciones_Iniciales: $('#ObsR').val(),
-
-            Observaciones_Finales: $('#ObsFR').val()
-            
-        };
-    } else if (codigoIdER == 2) {
-        var empObj = {
-
-            ID_Remision: $('#IdR').val(),
-
-            ID_Estudiante: 2,//$('#IdSR').val(),
-
-            Empleado_ID: 4,//$('#IdCR').val(),
-
-            Fecha_Prestamo: $('#datetimepicker1').val(),
-
-            Fecha_Entrega: $('#datetimepicker2').val(),
-
-            ID_Estado_Remision: 0,
-
-            ID_Instrumentos: $('#IdIR').val(),
-
-            Observaciones_Iniciales: $('#ObsR').val(),
-
-            Observaciones_Finales: $('#ObsFR').val()
-            
-        };
-    }
-
-    $.ajax({
-
-        url: "http://melbws.azurewebsites.net/api/Remision",
-
-        data: JSON.stringify(empObj),
-
-        type: "PUT",
-
-        contentType: "application/json;charset=utf-8",
-
-        dataType: "json",
-
-        success: function (result) {
-
-            loadDataR();
-
-            $('#myModalR').modal('hide');
-
-            $('#IdR').val("");
-
-            $('#IdSR').val("");
-
-            $('#datetimepicker1').val("");
-
-            $('#ObsR').val("");
-
-            $('#IdCR').val("");
-
-        },
-
-        error: function (errormessage) {
-
-            alert(errormessage.responseText);
-
-        }
-
-    });
-
-}
-
-//function for deleting employee's record
-
-function DeleleR(ID) {
-
-    var ans = confirm("¿Seguro que quieres eliminar este registro?");
-
-    if (ans) {
-
-        $.ajax({
-
-            url: 'http://melbws.azurewebsites.net/api/Remision/' + ID,
-
-            type: 'DELETE',
-
-            success: function (result) {
-
-                loadDataR();
-
-            },
-
-            error: function (errormessage) {
-
-                alert(errormessage.responseText);
-
+            else
+            {
+                 swal
+                        ({
+                              title: "Aviso",
+                              text: "Algunos campos estan vacios",
+                              type: "warning",
+                        });
             }
+        };
 
-        });
+        function Eliminar_Remision(ID)
+        {
+            swal
+            ({
+                  title: "¿Estas seguro?",
+                  text: "Una vez que lo borres, no hay marcha atras",
+                  type: "question",
+                  showCancelButton: true
+            })
+            .then((willDelete) => 
+            {
+                  if (willDelete) 
+                  {
+                        swal({title:'Eliminando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+                        swal.showLoading();
+                        $.ajax
+                        ({
 
-    }
-
-}
-
-//Function for clearing the textboxes
-
-function clearTextBoxR() {
-    edicion = false;
-
-    $("#IdR").prop('disabled', false);
-    $('#IdSR').prop('disabled', false);
-    $('#IdCR').prop('disabled', false);
-    $('#datetimepicker1').prop('disabled', false);
-    $('#datetimepicker2').prop('disabled', false);
-    $('#IdIR').prop('disabled', false);
-
-    $('#IdR').val("");
-
-    $('#IdSR').val("");
-
-    $('#IdCR').val("");
-
-    $('#datetimepicker1').val("");
-
-    $('#datetimepicker2').val("");
-
-    $('#IdIR').val("");
-
-    $('#ObsR').val("");
-
-    $('#IdEtiR').val("Activa");
-    $('#IdEtiR').prop('disabled', true);
-
-    $('#divIdER').hide();
-
-    $('#divObsFR').hide();
-
-    $('#btnUpdateR').hide();
-
-    $('#btnAddR').show();
-
-    $('#IdR').css('border-color', 'lightgrey');
-
-    $('#IdSR').css('border-color', 'lightgrey');
-
-    $('#IdCR').css('border-color', 'lightgrey');
-
-    $('#datetimepicker1').css('border-color', 'lightgrey');
-
-    $('#datetimepicker2').css('border-color', 'lightgrey');
-
-    $('#IdIR').css('border-color', 'lightgrey');
-
-    $('#ObsR').css('border-color', 'lightgrey');
-
-}
-
-//Valdidation using jquery
-
-function validateR() {
-
-    var isValid = true;    
-
-    if (edicion) {
-        estado = document.getElementById("numberIdER").selectedIndex;
-        if (estado == 0) {
-            $('#numberIdER').css('border-color', 'Red');
-            isValid = false;
-        } else {
-            $('#numberIdER').css('border-color', 'lightgrey');
+                          url: 'http://melbws.azurewebsites.net/api/Remision/'+ID,
+                          type: 'DELETE',
+                          success: function(Resultado)
+                          {
+                             swal.closeModal();
+                             Resultado = JSON.parse(Resultado);
+                             if(Resultado.Codigo == 5)
+                             {                                    
+                                 swal.closeModal();
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-cube" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
+                                 $('#ADD').show("drop", 50);
+                             }
+                             else
+                             {
+                                 var Cadena_Errores = "";
+                                 for (var I = 0; I < Resultado.Errores.length; I++) 
+                                 {
+                                      Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                 }
+                                 swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                             }
+                             Cargar_Proveedores();
+                          },
+                          error: function(Respuesta)
+                          {
+                             swal("Error", "Ocurrio un error al borrar la remision", "error");
+                          },
+                        });
+                  } 
+                  
+            });            
         }
-
-        if ($('#ObsR').val().trim() == "") {
-
-            $('#ObsR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#ObsR').css('border-color', 'lightgrey');
-
-        }
-
-        if ($('#ObsFR').val().trim() == "") {
-
-            $('#ObsFR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#ObsFR').css('border-color', 'lightgrey');
-
-        }
-    } else {
-        if (isNaN($('#IdR').val()) || $('#IdR').val().trim() == "") {
-
-            $('#IdR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#IdR').css('border-color', 'lightgrey');
-
-        }
-
-        if (isNaN($('#IdSR').val()) || $('#IdSR').val().trim() == "") {
-
-            $('#IdSR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#IdSR').css('border-color', 'lightgrey');
-
-        }
-
-        if (isNaN($('#IdCR').val()) || $('#IdCR').val().trim() == "") {
-
-            $('#IdCR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#IdCR').css('border-color', 'lightgrey');
-
-        }
-
-        if ($('#datetimepicker1').val().trim() == "") {
-
-            $('#datetimepicker1').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#datetimepicker1').css('border-color', 'lightgrey');
-
-        }
-
-        if ($('#datetimepicker2').val().trim() == "") {
-
-            $('#datetimepicker2').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#datetimepicker2').css('border-color', 'lightgrey');
-
-        }
-
-        estado = document.getElementById("numberIdER").selectedIndex;
-        if (estado == 0) {
-            $('#numberIdER').css('border-color', 'Red');
-            isValid = false;
-        } else {
-            $('#numberIdER').css('border-color', 'lightgrey');
-        }
-
-        if ($('#IdIR').val().trim() == "") {
-
-            $('#IdIR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#IdIR').css('border-color', 'lightgrey');
-
-        }
-
-        if ($('#ObsR').val().trim() == "") {
-
-            $('#ObsR').css('border-color', 'Red');
-
-            isValid = false;
-
-        }
-
-        else {
-
-            $('#ObsR').css('border-color', 'lightgrey');
-
-        }
-    }
-
     
+/* Funcionalidad de formularios  */
 
-    return isValid;
+        function Detallar_Datos_Remision(ID)
+        {           
+            $('#Switch_Editar_Remision').prop('checked',false);
+            Habilitar_Deshabilitar_Remision(false);        
+            Operacion = 'Actualizar';                
+            $('#Remisiones').hide(300);
+            $('#Remision_Detalle').show(400);
+            $('#ADD').hide('drop',400);
+            $('#Busqueda_Form').show(400);
+            $('#Busqueda_Form').css('display','inline-flex');
+            $('#Contenedor_Panel').show();
+            $('#Header_Remision_Texto').text('Descripción de la Remision');
+            $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Remision');
+            Cargar_Remision_Por_ID(ID); 
+            $('.FlotarDerecha').show();
+        }
 
+        function Habilitar_Deshabilitar_Remision(Cond)
+        {
+            if(Cond == true)
+            {
+                $("#ID_Remision").prop("disabled", false);
+                $("#ID_Estudiante_Remision").prop("disabled", false);
+                $("#ID_Empleado_Remision").prop("disabled", false);
+                $("#Fecha_Entrega_Remision").prop("disabled", false);
+                $("#Fecha_Inicio_Remision").prop("disabled", false);
+                $("#Estado_Remision").prop("disabled", false);
+                $('#Actualizar_Remision').removeAttr('disabled');
+                $('.selectpicker').selectpicker('refresh');
+            }
+            else
+            {
+                $("#ID_Remision").prop("disabled", "true");
+                $("#ID_Estudiante_Remision").prop("disabled", 'true');
+                $("#ID_Empleado_Remision").prop("disabled", 'true');
+                $("#Fecha_Entrega_Remision").prop("disabled", 'true');
+                $("#Fecha_Inicio_Remision").prop("disabled", 'true');
+                $("#Estado_Remision").prop("disabled", 'true');
+                $('#Actualizar_Remision').removeAttr('disabled','true');
+                $('.selectpicker').selectpicker('refresh');
+            }
+        }
+
+        function Reiniciar_Controles_Remision()
+        {
+            $('#ID_Remision').val(1);
+            $("#ID_Empleado_Remision").selectpicker('val', '');
+            $("#ID_Estudiante_Remision").selectpicker('val', '');
+            $("input[type=date]").val("");
+            $("#Estado_Remision").selectpicker('val', 'Activa');
+
+        }
+
+/* Funciones de soporte */
+        
+        function Insertar_Remision(Comando)
+        {
+
+         var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision').val(), Empleado_ID: $('#ID_Empleado_Remision').val(), Fecha_Prestamo: $('#Fecha_Inicio_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Estado_Remision: $('#Estado_Remision').val(), ID_Instrumentos: $('#').val(), Observaciones_Iniciales: $('#').val(), Observaciones_finales: $('#').val()};
+
+                    if(Comando == 'Nuevo')
+                    {                                                
+                        $.ajax
+                        ({
+                              url: 'http://melbws.azurewebsites.net/api/Remision/',
+                              type: 'POST',
+                              data: Remision_BBDD,
+                              success: function(Resultado)
+                              {
+                                 Resultado = JSON.parse(Resultado);
+                                 if(Resultado.Codigo == 5)
+                                 {                                    
+                                     swal.closeModal();
+                                     swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                     Cargar_Remisiones();
+                                     $('#Remision_Detalle').hide(500);
+                                     $('#Remisiones').show(400);
+                                     $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
+                                     $('#ADD').show("drop", 50);
+                                 }
+                                 else
+                                 {
+                                     var Cadena_Errores = "";
+                                     for (var I = 0; I < Resultado.Errores.length; I++) 
+                                     {
+                                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                     }
+                                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                                 }
+
+                              },
+                              error: function(Respuesta)
+                              {
+                                 swal("Error", "Ocurrio un error al insertar la Remision", "error");
+                              },
+                        });
+                        swal.closeModal();
+                    }
+                    else
+                    {
+                        $.ajax
+                        ({
+                              url: 'http://melbws.azurewebsites.net/api/Remision/',
+                              type: 'PUT',
+                              data: Proveedor_BBDD,
+                              success: function(Resultado)
+                              {
+                                 Resultado = JSON.parse(Resultado);
+                                 swal.closeModal();
+                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                 Cargar_Remisiones();
+                                 $('#Remision_Detalle').hide(500);
+                                 $('#Remisiones').show(400);
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
+                                 $('#ADD').show("drop", 50);
+                              },
+                              error: function(xhr, status, error)
+                              {
+                                 swal("Error", "Ocurrio un error al insertar el proveedor", "error");
+                              },
+                        });
+                        swal.closeModal();
+                    }
+        }
+
+
+function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descripcion)
+{
+        
+  var Titulo;
+  var Error;
+  swal.setDefaults
+  ({
+        input: 'text',
+        confirmButtonText: 'Siguiente',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        animation: true,
+        progressSteps: ['1', '2', '3', '4'],
+        allowOutsideClick: false
+  });
+
+  if(Comando == 'Nuevo')
+  {
+      Titulo = 'Añadiendo un nuevo detalle';
+      Error = 'Ocurrio un inconveniente al añadir el detalle.';
+      var Pasos = 
+      [
+        {
+            title: 'Añadir Instrumento a Remision',
+            text: 'ID Instrumento',
+            input : 'number',
+            inputAttributes: 
+            {
+                min: 1,
+                max: 200000,
+                step: 1
+            },        
+            inputClass: 'form-control'
+        },
+        {
+            title: 'Añadir Instrumento a Remision',
+            text: 'Nombre del Instrumento',
+            input : 'text',
+            inputAttributes: 
+            {
+                maxlength : 15
+            },
+            inputClass: 'form-control'
+        },
+        {
+            title: 'Añadir Instrumento a Remision',
+            text: 'Observacion Inicial',
+            input : 'textarea',
+            inputAttributes: 
+            {
+                maxlength : 50
+            },
+            inputClass: 'form-control'
+        }
+      ]
+  }
+  else
+  {
+      Titulo = 'Actualizando detalle de Remision';
+      Error = 'Ocurrio un inconveniente al actualizar el detalle.';
+      var Pasos = 
+      [  
+        {
+            title: 'Actualizar Detalle Instrumento',
+            text: 'Observacion Final',
+            input : 'text',
+            inputValue : Nombre,
+            inputAttributes: 
+            {
+                maxlength : 50
+            },
+            inputClass: 'form-control'
+        }
+      ]
+  }
+
+    swal.queue(Pasos).then(function (Modal) 
+    {
+        if(Modal[1] != '' && Modal[2] != '')
+        {         
+            swal.resetDefaults();
+            swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+            swal.showLoading();   
+
+            if(Comando == 'Nuevo')
+            {                
+              $.ajax({
+
+                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+
+                  type: 'POST',
+
+                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
+
+                  success: function (Resultado) 
+                  {   
+                     Resultado = JSON.parse(Resultado);
+                     if(Resultado.Codigo == 5)
+                     {                                    
+                           swal.closeModal();
+                           swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                        }
+                   else
+                   {
+                       var Cadena_Errores = "";
+                       for (var I = 0; I < Resultado.Errores.length; I++) 
+                       {
+                            Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                       }
+                       swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                   }
+                   Cargar_Accesorios($('#ID_Instrumento').val());                                     
+                  },
+
+                  error: function (Mensaje) 
+                  {
+                      swal.closeModal();
+                      swal
+                      ({
+                            title: "Error",
+                            text: Error,
+                            type: "error",
+                      });
+                  }
+
+              });
+            }
+            else
+            {
+              $.ajax({
+
+                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+
+                  type: 'PUT',
+
+                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: ID_Accesorio,Nombre: Modal[0],Descripcion:Modal[1]},
+
+                  success: function (Resultado) 
+                  {   
+                     Resultado = JSON.parse(Resultado);
+                     if(Resultado.Codigo == 5)
+                     {                                    
+                         swal.closeModal();
+                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                     }
+                     else
+                     {
+                         var Cadena_Errores = "";
+                         for (var I = 0; I < Resultado.Errores.length; I++) 
+                         {
+                             Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                         }
+                         swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                     }  
+                     Cargar_Accesorios($('#ID_Instrumento').val());                                   
+                  },
+
+                  error: function (Mensaje) 
+                  {
+                      swal.closeModal();
+                      swal
+                      ({
+                            title: "Error",
+                            text: Error,
+                            type: "error",
+                      });
+                  }
+
+              });
+            }
+        }
+        else
+        {
+            swal.resetDefaults();
+            swal.closeModal();
+            swal
+            ({
+                  title: "Aviso",
+                  text: "Revise que haya introducido los campos correctamente",
+                  type: "warning",
+            });
+        }        
+    })
 }

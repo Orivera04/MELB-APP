@@ -1,4 +1,6 @@
-﻿        function Cargar_Proveedores() 
+﻿/* Funciones de la API*/
+
+        function Cargar_Proveedores() 
         {
             Tabla_Proveedor.clear().draw();
             $.ajax
@@ -24,7 +26,6 @@
                                 '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ]).draw( false );
                         $('#Proveedor_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>'); 
-
                       }
                       Cargar_Remisiones();
                   }                   

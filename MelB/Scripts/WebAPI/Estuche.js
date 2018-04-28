@@ -1,6 +1,7 @@
 ﻿/* Funciones de la API*/
-function Cargar_Estuches() 
-{
+
+  function Cargar_Estuches() 
+  {
     Tabla_Estuche.clear().draw();
     $.ajax
     ({
