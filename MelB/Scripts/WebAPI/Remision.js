@@ -1,4 +1,6 @@
 ﻿/* Funciones de la API*/
+var Fecha_Actual;
+
 function Cargar_Remisiones() 
 {
     Tabla_Remision.clear().draw();
@@ -21,7 +23,8 @@ function Cargar_Remisiones()
                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                     ]).draw( false );  
-                                           
+                    $('#ID_Estudiante_Remision').append('<option>'+Resultado[i].Nombre_Estudiante+'</option>'); 
+                    $('#ID_Empleado_Remision').append('<option>'+Resultado[i].Empleado_Nombre+'</option>'); 
                 }
                 Cargar_Aulas() 
             }
@@ -43,6 +46,7 @@ function Cargar_Remisiones()
 
         function Cargar_Remision_Por_ID(ID) 
         {        
+            Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Remision/'+ID,
@@ -56,10 +60,10 @@ function Cargar_Remisiones()
                           $('#ID_Remision').val(Resultado.ID_Remision); 
                           $('#ID_Estudiante_Remision').selectpicker('val', Resultado.Nombre_Estudiante);
                           $('#ID_Empleado_Remision').selectpicker('val', Resultado.Empleado_Nombre);
-                          $('#Fecha_Inicio_Remision').val(Resultado.Fecha_Prestamo);
+                          $('#Fecha_Prestamo_Remision').val(Resultado.Fecha_Prestamo);
                           $('#Fecha_Entrega_Remision').val(Resultado.Fecha_Entrega);
                           $('#Estado_Remision').selectpicker('val', Resultado.Estado_Remision);
-
+             
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {  
                                 Tabla_Desglose_Remision.row.add
@@ -90,7 +94,7 @@ function Cargar_Remisiones()
 
         function Insertar_Actualizar_Remision(Comando)
         {     
-            if($('#Fecha_Inicio_Remision').val() != "" && $('#Fecha_Entrega_Remision').val() != "")
+            if($('#ID_Estudiante_Remision').val() != "" && $('#ID_Empleado_Remision').val() != "")
             {
                 swal.showLoading();
                 Insertar_Remision(Comando);
@@ -134,7 +138,7 @@ function Cargar_Remisiones()
                              {                                    
                                  swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 $('#ADD').html('<span class="btn-label"><i class="ion-cube" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
+                                 $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
                                  $('#ADD').show("drop", 50);
                              }
                              else
@@ -146,7 +150,7 @@ function Cargar_Remisiones()
                                  }
                                  swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                              }
-                             Cargar_Proveedores();
+                             Cargar_Remisiones();
                           },
                           error: function(Respuesta)
                           {
@@ -172,7 +176,7 @@ function Cargar_Remisiones()
             $('#Busqueda_Form').css('display','inline-flex');
             $('#Contenedor_Panel').show();
             $('#Header_Remision_Texto').text('Descripción de la Remision');
-            $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Remision');
+            $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-cube" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Remision');
             Cargar_Remision_Por_ID(ID); 
             $('.FlotarDerecha').show();
         }
@@ -185,7 +189,7 @@ function Cargar_Remisiones()
                 $("#ID_Estudiante_Remision").prop("disabled", false);
                 $("#ID_Empleado_Remision").prop("disabled", false);
                 $("#Fecha_Entrega_Remision").prop("disabled", false);
-                $("#Fecha_Inicio_Remision").prop("disabled", false);
+                $("#Fecha_Prestamo_Remision").prop("disabled", false);
                 $("#Estado_Remision").prop("disabled", false);
                 $('#Actualizar_Remision').removeAttr('disabled');
                 $('.selectpicker').selectpicker('refresh');
@@ -196,7 +200,7 @@ function Cargar_Remisiones()
                 $("#ID_Estudiante_Remision").prop("disabled", 'true');
                 $("#ID_Empleado_Remision").prop("disabled", 'true');
                 $("#Fecha_Entrega_Remision").prop("disabled", 'true');
-                $("#Fecha_Inicio_Remision").prop("disabled", 'true');
+                $("#Fecha_Prestamo_Remision").prop("disabled", 'true');
                 $("#Estado_Remision").prop("disabled", 'true');
                 $('#Actualizar_Remision').removeAttr('disabled','true');
                 $('.selectpicker').selectpicker('refresh');
@@ -205,19 +209,27 @@ function Cargar_Remisiones()
 
         function Reiniciar_Controles_Remision()
         {
+            var now = new Date();
+            var Dia = ("0" + now.getDate()).slice(-2);
+            var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
+            var Hora = ("0" + now.getHours()).slice(-2);
+            var Minuto = ("0" + now.getMinutes()).slice(-2);
+            Fecha_Actual = now.getFullYear()+"-"+(Mes)+"-"+(Dia)+"T"+(Hora)+":"+(Minuto);
+             
+
             $('#ID_Remision').val(1);
             $("#ID_Empleado_Remision").selectpicker('val', '');
             $("#ID_Estudiante_Remision").selectpicker('val', '');
-            $("input[type=date]").val("");
-            $("#Estado_Remision").selectpicker('val', 'Activa');
-
+            $('#Fecha_Prestamo_Remision').val(Fecha_Actual);
+            $('#Fecha_Entrega_Remision').val(Fecha_Actual);
+            
         }
 
 /* Funciones de soporte */
         
         function Insertar_Remision(Comando)
         {
-
+        
          var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision').val(), Empleado_ID: $('#ID_Empleado_Remision').val(), Fecha_Prestamo: $('#Fecha_Inicio_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Estado_Remision: $('#Estado_Remision').val(), ID_Instrumentos: $('#').val(), Observaciones_Iniciales: $('#').val(), Observaciones_finales: $('#').val()};
 
                     if(Comando == 'Nuevo')
@@ -264,7 +276,7 @@ function Cargar_Remisiones()
                         ({
                               url: 'http://melbws.azurewebsites.net/api/Remision/',
                               type: 'PUT',
-                              data: Proveedor_BBDD,
+                              data: Remision_BBDD,
                               success: function(Resultado)
                               {
                                  Resultado = JSON.parse(Resultado);
@@ -298,7 +310,7 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
         cancelButtonText: 'Cancelar',
         showCancelButton: true,
         animation: true,
-        progressSteps: ['1', '2', '3', '4'],
+        progressSteps: ['1', '2'],
         allowOutsideClick: false
   });
 
@@ -322,16 +334,6 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
         },
         {
             title: 'Añadir Instrumento a Remision',
-            text: 'Nombre del Instrumento',
-            input : 'text',
-            inputAttributes: 
-            {
-                maxlength : 15
-            },
-            inputClass: 'form-control'
-        },
-        {
-            title: 'Añadir Instrumento a Remision',
             text: 'Observacion Inicial',
             input : 'textarea',
             inputAttributes: 
@@ -344,15 +346,15 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
   }
   else
   {
-      Titulo = 'Actualizando detalle de Remision';
-      Error = 'Ocurrio un inconveniente al actualizar el detalle.';
+      Titulo = 'Actualizando Observacion final';
+      Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
       var Pasos = 
       [  
         {
-            title: 'Actualizar Detalle Instrumento',
+            title: 'Actualizar Detalle Remision',
             text: 'Observacion Final',
             input : 'text',
-            inputValue : Nombre,
+            inputValue : Observacion_Final,
             inputAttributes: 
             {
                 maxlength : 50
@@ -364,7 +366,7 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
 
     swal.queue(Pasos).then(function (Modal) 
     {
-        if(Modal[1] != '' && Modal[2] != '')
+        if(Modal[0] != '' && Modal[1] != '')
         {         
             swal.resetDefaults();
             swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
@@ -374,12 +376,11 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
             {                
               $.ajax({
 
-                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+                  url: 'http://melbws.azurewebsites.net/api/Remision/',
 
                   type: 'POST',
 
-                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
-
+                  data: {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision').val(), Empleado_ID: $('#ID_Empleado_Remision').val(), Fecha_Prestamo: $('#Fecha_Inicio_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Estado_Remision: $('#Estado_Remision').val(), ID_Instrumentos: Modal[0], Observaciones_Iniciales: Modal[1]},
                   success: function (Resultado) 
                   {   
                      Resultado = JSON.parse(Resultado);
@@ -397,7 +398,7 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
                        }
                        swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                    }
-                   Cargar_Accesorios($('#ID_Instrumento').val());                                     
+                   Cargar_Remision_Por_ID($('#ID_Remision').val());                                     
                   },
 
                   error: function (Mensaje) 
@@ -417,11 +418,11 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
             {
               $.ajax({
 
-                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+                  url: 'http://melbws.azurewebsites.net/api/Remision/',
 
                   type: 'PUT',
-
-                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: ID_Accesorio,Nombre: Modal[0],Descripcion:Modal[1]},
+                  
+                  data: {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision').val(), Empleado_ID: $('#ID_Empleado_Remision').val(), Fecha_Prestamo: $('#Fecha_Inicio_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Estado_Remision: $('#Estado_Remision').val(), ID_Instrumentos: Modal[0], Observaciones_Iniciales: Modal[1], Observaciones_Finales:[2]},
 
                   success: function (Resultado) 
                   {   
@@ -440,7 +441,7 @@ function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descr
                          }
                          swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                      }  
-                     Cargar_Accesorios($('#ID_Instrumento').val());                                   
+                     Cargar_Remision_Por_ID($('#ID_Remision').val());                                     
                   },
 
                   error: function (Mensaje) 

@@ -404,6 +404,7 @@ function Inicializacion_Eventos()
                  $('#ID_Remision').removeAttr('disabled');
                  $('#Remisiones').hide(300);
                  $('#Remision_Detalle').show(400);   
+                 $("#Estado_Remision").prop("disabled","true");
                  $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
             }                
             
