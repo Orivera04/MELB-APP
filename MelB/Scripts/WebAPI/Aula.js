@@ -8,6 +8,7 @@
 
             success: function (Resultado) 
             {    
+                $('#Aula_Clase').html('');
                 if(Resultado.Codigo == null)
                 {            
                     Resultado = JSON.parse(Resultado);

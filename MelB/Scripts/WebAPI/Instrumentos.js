@@ -62,12 +62,7 @@ var ImagenBase64;
                           $('#Color_Instrumento').selectpicker('val', Resultado.Color);
                           $('#Marca_Instrumento').val(Resultado.Marca);
                           $('#Proveedor_Instrumento').selectpicker('val', '#'+Resultado.ID_Proveedor);
-                          Cargar_Estuches_No_Usados(Resultado.Nombre);
-                          if(Resultado.ID_Estuche != -1)
-                          {
-                             $('#Estuche_Instrumento').selectpicker({title: '#'+Resultado.ID_Estuche}).selectpicker('render');
-                             $('.selectpicker').selectpicker('refresh');
-                          }                                               
+                          Cargar_Estuches_No_Usados(Resultado.Nombre);                                                                      
                           $('#Material_Instrumento').selectpicker('val', Resultado.Material);
                           $('#Descripcion_Inst').val(Resultado.Descripcion);
                           $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
@@ -90,6 +85,15 @@ var ImagenBase64;
                           }                
                           Base64Imagen(Resultado.Imagen) 
                           Cargar_Accesorios(Resultado.ID_Instrumento);
+                          $('.selectpicker').selectpicker('refresh');
+                          if(Resultado.ID_Estuche != -1)
+                          {
+                             $('#Estuche_Instrumento').selectpicker({title: '#'+Resultado.ID_Estuche}).selectpicker('render');
+                          }
+                          else
+                          {   
+                             $('#Estuche_Instrumento').selectpicker({title:'Ninguno'}).selectpicker('render');
+                          }   
 
                       }
                       else
@@ -326,7 +330,7 @@ var ImagenBase64;
                         $.ajax
                         ({
 
-                              url: 'http://localhost:53603/api/Instrumentos/',
+                              url: 'http://melbws.azurewebsites.net/api/Instrumentos',                              
                               type: 'POST',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
@@ -361,7 +365,7 @@ var ImagenBase64;
                     {
                         $.ajax
                         ({
-                              url: 'http://localhost:53603/api/Instrumentos/',
+                              url: 'http://melbws.azurewebsites.net/api/Instrumentos',
                               type: 'PUT',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
