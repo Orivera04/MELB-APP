@@ -67,6 +67,7 @@ var ImagenBase64;
                           $('#Descripcion_Inst').val(Resultado.Descripcion);
                           $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
                           $('#Ubicacion_Instrumento').selectpicker('val', Resultado.Tipo_Ubicacion);
+                          $('#Ubicacion_Instrumento').trigger('change');
                           $('#Imagen_Instrumento').attr("src",Resultado.Imagen);
 
                           if(Resultado.Tipo_Ubicacion == "Bodega")
@@ -77,9 +78,8 @@ var ImagenBase64;
                               $('#Gaveta_Form').show(150);
                           }
                           else
-                          {
-                               $('#Label_Tipo_A_B').text('ID Aula');
-                               $('#Estante_Instrumento').val(Resultado.Numero_Aula);
+                          {                               
+                               $('#Aula_Clase').val('#'+Resultado.Numero_Aula);
                                $('#Gaveta_Form').hide(150);
 
                           }                
@@ -313,7 +313,7 @@ var ImagenBase64;
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    if($('#Estuche_Instrumento').val() != 'Ninguno')
+                    if($('#Estuche_Instrumento').val() != 'Ninguno' && $('#Estuche_Instrumento').val() != '' )
                     {
                          var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
                                                ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: parseInt($('#Aula_Clase').val().substring(1,$('#Aula_Clase').val().length))}
