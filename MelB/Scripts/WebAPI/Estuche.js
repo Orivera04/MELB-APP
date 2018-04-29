@@ -174,14 +174,16 @@
             });            
         }
         
-        function Cargar_Estuches_No_Usados()
+        function Cargar_Estuches_No_Usados(Tipo_Instrumento)
         {
             $.ajax
             ({
-                url: 'http://melbws.azurewebsites.net/api/Estuche?Filtro=Disponible',
+                url: 'http://melbws.azurewebsites.net/api/Estuche?Filtro=Disponible&Instrumento='+Tipo_Instrumento,
                 type: 'GET',
                 success: function (Resultado) 
                 {
+                    $('#Estuche_Instrumento').html('');  
+                    $('#Estuche_Instrumento').append('<option value="-1" data-subtext="Ninguno">Ninguno</option>');          
                     if(Resultado.Codigo == null)
                     {
                         Resultado = JSON.parse(Resultado); 
@@ -190,6 +192,7 @@
                             $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
                         }       
                     }
+                    $('.selectpicker').selectpicker('refresh');  
                 },
                 error: function (Mensaje) 
                 {

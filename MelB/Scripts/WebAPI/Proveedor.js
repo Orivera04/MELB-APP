@@ -12,6 +12,7 @@
                   if(Resultado.Codigo == null)
                   {
                       Resultado = JSON.parse(Resultado);
+                      $('#Proveedor_Instrumento').html('');
                       for (i = 0; i < Resultado.length; i++) 
                       {      
                         var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';

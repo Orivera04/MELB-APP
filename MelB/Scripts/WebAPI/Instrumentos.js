@@ -53,7 +53,7 @@ var ImagenBase64;
                 type: 'GET',
                 success: function (Resultado) 
                 {            
-                      Resultado = JSON.parse(Resultado);     
+                      Resultado = JSON.parse(Resultado);                                                        
                       if(Resultado.Codigo == null)
                       {       
                           Resultado = Resultado[0];                  
@@ -61,8 +61,18 @@ var ImagenBase64;
                           $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
                           $('#Color_Instrumento').selectpicker('val', Resultado.Color);
                           $('#Marca_Instrumento').val(Resultado.Marca);
-                          $('#Proveedor_Instrumento').selectpicker('val', Resultado.Proveedor);                      
-                          $('#Estuche_Instrumento').selectpicker('val', Resultado.Nombre_Estuche);
+                          $('#Proveedor_Instrumento').selectpicker('val', '#'+Resultado.ID_Proveedor);
+                          Cargar_Estuches_No_Usados(Resultado.Nombre);
+                          if(Resultado.ID_Estuche != -1)
+                          {
+                             $('#Estuche_Instrumento').selectpicker({title: '#'+Resultado.ID_Estuche}).selectpicker('render');
+                             $('.selectpicker').selectpicker('refresh');
+                          }                      
+                          else
+                          {
+                             $('#Estuche_Instrumento').val(-1);
+                             $('.selectpicker').selectpicker('refresh');
+                          }
                           $('#Material_Instrumento').selectpicker('val', Resultado.Material);
                           $('#Descripcion_Inst').val(Resultado.Descripcion);
                           $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
@@ -84,7 +94,6 @@ var ImagenBase64;
 
                           }                
                           Base64Imagen(Resultado.Imagen) 
-                          $('.selectpicker').selectpicker('refresh');
                           Cargar_Accesorios(Resultado.ID_Instrumento);    
                       }
                       else
@@ -292,9 +301,7 @@ var ImagenBase64;
         function Insertar_Imagen_API(Comando)
         {
           if ($('#Proveedor_Instrumento').val() != null) 
-          {
-
-          
+          {          
             $.ajax
             ({
                 url: 'https://api.imgur.com/3/image',
