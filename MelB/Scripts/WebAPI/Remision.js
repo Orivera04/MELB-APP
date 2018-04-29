@@ -23,9 +23,60 @@ function Cargar_Remisiones()
                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                     ]).draw( false );  
-                    $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado[i].Nombre_Estudiante+'">#'+Resultado[i].Nombre_Estudiante+'</option>'); 
-                    $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado[i].Empleado_Nombre+'">#'+Resultado[i].Empleado_Nombre+'</option>'); 
                 }
+
+                   $.ajax
+                      ({
+                          url: 'http://melbws.azurewebsites.net/api/Estudiante/',
+                          type: 'GET',
+                          success: function (Resultado_Estudiante) 
+                          {
+                              if(Resultado_Estudiante.Codigo == null)
+                              {
+                                  Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
+                                  for (i = 0; i < Resultado_Estudiante.length; i++) 
+                                  {  
+                                    $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado_Estudiante[i].(ID_Estudiante)+'">#'+Resultado_Estudiante[i].Nombre+'</option>'); 
+                                      $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado[i].Empleado_Nombre+'">#'+Resultado[i].Empleado_Nombre+'</option>'); 
+                                  }
+                              }
+                          },
+                          error: function (Mensaje) 
+                          {        
+                              swal
+                              ({
+                                    title: "Error listando Estudiantes",
+                                    text: "No se pudo conectar con el servidor.",
+                                    type: "error",
+                              });
+                          }
+                      });
+
+                    $.ajax
+                      ({
+                          url: 'http://melbws.azurewebsites.net/api/Empleados/',
+                          type: 'GET',
+                          success: function (Resultado_Empleado) 
+                          {
+                              if(Resultado_Empleado.Codigo == null)
+                              {
+                                  Resultado_Empleado = JSON.parse(Resultado_Empleado);
+                                  for (i = 0; i < Resultado_Empleado.length; i++) 
+                                  {  
+                                      $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].ID_Empleado+'">#'+Resultado_Empleado[i].Empleado_Nombre+'</option>'); 
+                                  }
+                              }
+                          },
+                          error: function (Mensaje) 
+                          {        
+                              swal
+                              ({
+                                    title: "Error listando Empleados",
+                                    text: "No se pudo conectar con el servidor.",
+                                    type: "error",
+                              });
+                          }
+                      });
                 Cargar_Aulas() 
             }
         },
