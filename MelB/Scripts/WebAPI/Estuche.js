@@ -174,22 +174,22 @@
             });            
         }
         
-        function Cargar_Estuches_No_Usados(Tipo_Instrumento)
+        function Cargar_Estuches_No_Usados(Tipo_Instrumento_D)
         {
             $.ajax
             ({
-                url: 'http://melbws.azurewebsites.net/api/Estuche?Filtro=Disponible&Instrumento='+Tipo_Instrumento,
+                url: 'http://melbws.azurewebsites.net/api/Estuche?Filtro=Disponible&Instrumento='+Tipo_Instrumento_D,
                 type: 'GET',
                 success: function (Resultado) 
                 {
                     $('#Estuche_Instrumento').html('');  
-                    $('#Estuche_Instrumento').append('<option value="-1" data-subtext="Ninguno">Ninguno</option>');          
+                    $('#Estuche_Instrumento').append('<option>Ninguno</option>');          
                     if(Resultado.Codigo == null)
                     {
                         Resultado = JSON.parse(Resultado); 
                         for (i = 0; i < Resultado.length; i++) 
                         {   
-                            $('#Estuche_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
+                            $('#Estuche_Instrumento').append('<option>#'+Resultado[i].ID_Estuche+'</option>'); 
                         }       
                     }
                     $('.selectpicker').selectpicker('refresh');  

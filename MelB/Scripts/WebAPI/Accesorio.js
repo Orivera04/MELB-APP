@@ -11,22 +11,20 @@
 
             success: function (Resultado) 
             {    
+                Resultado = JSON.parse(Resultado);    
                 if(Resultado.Codigo == null)
-                {            
-                    Resultado = JSON.parse(Resultado);
-                    if(Resultado.Codigo == null)
-                    {                 
-                        for (i = 0; i < Resultado.length; i++) 
-                        {      
-                            Tabla_Accesorios.row.add
-                            ([                        
-                                Resultado[i].ID_Accesorio,
-                                Resultado[i].Nombre,
-                                Resultado[i].Descripcion,
-                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Accesorio('+Resultado[i].ID_Instrumento+',\'Actualizar\','+Resultado[i].ID_Accesorio+',\''+Resultado[i].Nombre+'\',\''+Resultado[i].Descripcion+'\')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Accesorio('+Resultado[i].ID_Accesorio+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                            ]).draw( false );                        
-                        }
+                {                 
+                    for (i = 0; i < Resultado.length; i++) 
+                    {      
+                        Tabla_Accesorios.row.add
+                        ([                        
+                            Resultado[i].ID_Accesorio,
+                            Resultado[i].Nombre,
+                            Resultado[i].Descripcion,
+                            '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Accesorio('+Resultado[i].ID_Instrumento+',\'Actualizar\','+Resultado[i].ID_Accesorio+',\''+Resultado[i].Nombre+'\',\''+Resultado[i].Descripcion+'\')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                            '<button type="button" class="btn btn-danger" onclick ="Eliminar_Accesorio('+Resultado[i].ID_Accesorio+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                        ]).draw( false );                        
+                    
                     }
                 }                
             },

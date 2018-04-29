@@ -67,12 +67,7 @@ var ImagenBase64;
                           {
                              $('#Estuche_Instrumento').selectpicker({title: '#'+Resultado.ID_Estuche}).selectpicker('render');
                              $('.selectpicker').selectpicker('refresh');
-                          }                      
-                          else
-                          {
-                             $('#Estuche_Instrumento').val(-1);
-                             $('.selectpicker').selectpicker('refresh');
-                          }
+                          }                                               
                           $('#Material_Instrumento').selectpicker('val', Resultado.Material);
                           $('#Descripcion_Inst').val(Resultado.Descripcion);
                           $('#Estado_Instrumento').selectpicker('val', Resultado.Estado); 
@@ -94,7 +89,8 @@ var ImagenBase64;
 
                           }                
                           Base64Imagen(Resultado.Imagen) 
-                          Cargar_Accesorios(Resultado.ID_Instrumento);    
+                          Cargar_Accesorios(Resultado.ID_Instrumento);
+
                       }
                       else
                       {
@@ -313,15 +309,24 @@ var ImagenBase64;
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
+                    if($('#Estuche_Instrumento').val() != 'Ninguno')
+                    {
+                         var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
                                                ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: $('#Aula_Clase').val()}
-                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}                       
+                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()};                       
+                    }
+                    else
+                    {
+                         var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
+                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: $('#Aula_Clase').val()}
+                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()}                              
+                    }                  
                     if(Comando == 'Nuevo')
                     {                                                
                         $.ajax
                         ({
 
-                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/',
+                              url: 'http://localhost:53603/api/Instrumentos/',
                               type: 'POST',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
@@ -356,7 +361,7 @@ var ImagenBase64;
                     {
                         $.ajax
                         ({
-                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/',
+                              url: 'http://localhost:53603/api/Instrumentos/',
                               type: 'PUT',
                               data: Instrumento_BBDD,
                               success: function(Resultado)
