@@ -25,7 +25,7 @@ function Cargar_Remisiones()
                     ]).draw( false );  
                 }
 
-                   $.ajax
+                  /* $.ajax
                       ({
                           url: 'http://melbws.azurewebsites.net/api/Estudiante/',
                           type: 'GET',
@@ -50,7 +50,7 @@ function Cargar_Remisiones()
                                     type: "error",
                               });
                           }
-                      });
+                        });
 
                     $.ajax
                       ({
@@ -76,7 +76,7 @@ function Cargar_Remisiones()
                                     type: "error",
                               });
                           }
-                      });
+                      }); */
                 Cargar_Aulas() 
             }
         },
