@@ -5,7 +5,7 @@ var ImagenBase64;
             Tabla_Instrumento.clear().draw();
             $.ajax
             ({
-                url: 'http://localhost:53603/api/Instrumentos',
+                url: 'http://melbws.azurewebsites.net/api/Instrumentos',
                 type: 'GET',
                 success: function (Resultado) 
                 {
@@ -49,7 +49,7 @@ var ImagenBase64;
         {        
             $.ajax
             ({
-                url: 'http://localhost:53603/api/Instrumentos/'+ID,
+                url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
                 {            
@@ -333,7 +333,7 @@ var ImagenBase64;
                             $.ajax
                             ({
 
-                                  url: 'http://localhost:53603/api/Instrumentos',                              
+                                  url: 'http://melbws.azurewebsites.net/api/Instrumentos',                              
                                   type: 'POST',
                                   data: Instrumento_BBDD,
                                   success: function(Resultado)
@@ -366,7 +366,7 @@ var ImagenBase64;
                         {
                             $.ajax
                             ({
-                                  url: 'http://localhost:53603/api/Instrumentos',
+                                  url: 'http://melbws.azurewebsites.net/api/Instrumentos',
                                   type: 'PUT',
                                   data: Instrumento_BBDD,
                                   success: function(Resultado)
