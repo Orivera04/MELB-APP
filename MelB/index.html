@@ -172,7 +172,7 @@
                                 <div class="row">
                                     <div class="col-sm-3 ">
                                         <img id="Imagen_Instrumento" class="img-thumbnail">
-                                        <input type="file" name="Cambiar_Imagen_Instrumento" id="Imagen_Archivo" onchange="Imagen_Instrumento(event)">
+                                        <input type="file" name="Cambiar_Imagen_Instrumento" id="Imagen_Archivo" onchange="Imagen_Instrumento(event)" accept="image/x-png,image/gif,image/jpeg" >
                                         <button id="Cambiar_Imagen_Instrumento" type="button" class="btn btn-Custom" disabled>
                                            <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
                                             Cambiar imagen
@@ -243,7 +243,7 @@
                                                         <div class="form-group" id="Estante_Campo">
                                                             <label class="control-label">Estante</label>
                                                             <div class="form-group">
-                                                                <input id="Estante_Instrumento" type="text" value="20" name="Estante" data-bts-min="1" data-bts-max="2000000"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                                <input id="Estante_Instrumento" type="text" value="1" name="Estante" data-bts-min="1" data-bts-max="20"  data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
                                                         </div>
 
@@ -358,7 +358,6 @@
                                     <table id="Accesorios_T" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>ID Accesorio</th>
                                                 <th>Nombre</th>
                                                 <th>Descripcion</th>                                  
                                                 <th>Actualizar</th>
@@ -426,7 +425,7 @@
                                 <div class="row">
                                     <div class="col-sm-3 ">
                                         <img id="Imagen_Proveedor" class="img-thumbnail">
-                                        <input type="file" name="Cambiar_Imagen_Proveedor" id="Imagen_Archivo_Proveedor" onchange="Imagen_Proveedor(event)">
+                                        <input type="file" name="Cambiar_Imagen_Proveedor" id="Imagen_Archivo_Proveedor" onchange="Imagen_Proveedor(event)" accept="image/x-png,image/gif,image/jpeg" >
                                         <button id="Cambiar_Imagen_Proveedor" type="button" class="btn btn-Custom" disabled>
                                            <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
                                             Cambiar imagen

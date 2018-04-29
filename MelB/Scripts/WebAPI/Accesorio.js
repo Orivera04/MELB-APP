@@ -18,7 +18,6 @@
                     {      
                         Tabla_Accesorios.row.add
                         ([                        
-                            Resultado[i].ID_Accesorio,
                             Resultado[i].Nombre,
                             Resultado[i].Descripcion,
                             '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Accesorio('+Resultado[i].ID_Instrumento+',\'Actualizar\','+Resultado[i].ID_Accesorio+',\''+Resultado[i].Nombre+'\',\''+Resultado[i].Descripcion+'\')"><i class="ion-navicon-round" data-pack="default"></i></button>',
@@ -65,19 +64,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
       Titulo = 'Añadiendo accesorio';
       Error = 'Ocurrio un inconveniente al añadir al accesorio.';
       var Pasos = 
-      [
-        {
-            title: 'Añadir Accesorio',
-            text: 'ID Accesorio',
-            input : 'number',
-            inputAttributes: 
-            {
-                min: 1,
-                max: 200000,
-                step: 1
-            },        
-            inputClass: 'form-control'
-        },
+      [        
         {
             title: 'Añadir Accesorio',
             text: 'Nombre del accesorio',
@@ -105,23 +92,22 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
       Titulo = 'Actualizando accesorio';
       Error = 'Ocurrio un inconveniente al actualizar el accesorio.';
       var Pasos = 
-      [  
+      [          
         {
             title: 'Actualizar Accesorio',
-            text: 'Nombre del accesorio',
+            text: 'Nombre del accessorio',
             input : 'text',
-            inputValue : Nombre,
+            inputValue : Descripcion,
             inputAttributes: 
             {
                 maxlength : 15
             },
-            inputClass: 'form-control'
+            inputClass: 'form-control'            
         },
         {
             title: 'Actualizar Accesorio',
             text: 'Descripción del accessorio',
             input : 'textarea',
-            inputValue : Descripcion,
             inputAttributes: 
             {
                 maxlength : 50
@@ -147,7 +133,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
 
                   type: 'POST',
 
-                  data: {ID_Instrumento : $('#ID_Instrumento').val(),ID_Accesorio: Modal[0],Nombre: Modal[1],Descripcion:Modal[2]},
+                  data: {ID_Instrumento : $('#ID_Instrumento').val(),Nombre: Modal[0],Descripcion:Modal[1]},
 
                   success: function (Resultado) 
                   {   
