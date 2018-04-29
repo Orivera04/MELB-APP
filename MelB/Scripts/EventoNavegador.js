@@ -370,6 +370,7 @@ function Inicializacion_Eventos()
                  Base64Imagen($('#Imagen_Instrumento').attr('src'));             
                  Cargar_Estuches_No_Usados('Guitarra');  
                  $('#Estuche_Instrumento').val('Ninguno').selectpicker('render');
+                 $('#Estuche_Instrumento').selectpicker({title: 'Seleccione un estuche'}).selectpicker('render');
                  $('#Panel_Accesorios').hide();
             }
             else if(Formulario_Activo == 'Estuche')

@@ -5,7 +5,7 @@ var ImagenBase64;
             Tabla_Instrumento.clear().draw();
             $.ajax
             ({
-                url: 'http://melbws.azurewebsites.net/api/Instrumentos',
+                url: 'http://localhost:53603/api/Instrumentos',
                 type: 'GET',
                 success: function (Resultado) 
                 {
@@ -49,7 +49,7 @@ var ImagenBase64;
         {        
             $.ajax
             ({
-                url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
+                url: 'http://localhost:53603/api/Instrumentos/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
                 {            
@@ -89,10 +89,12 @@ var ImagenBase64;
                           if(Resultado.ID_Estuche != -1)
                           {
                              $('#Estuche_Instrumento').selectpicker({title: '#'+Resultado.ID_Estuche}).selectpicker('render');
+                             $('#Estuche_Instrumento').val('#'+Resultado.ID_Estuche);
                           }
                           else
                           {   
                              $('#Estuche_Instrumento').selectpicker({title:'Ninguno'}).selectpicker('render');
+                             $('#Estuche_Instrumento').val('Ninguno');
                           }   
 
                       }
@@ -180,7 +182,6 @@ var ImagenBase64;
                              Resultado = JSON.parse(Resultado);
                              if(Resultado.Codigo == 5)
                              {                                    
-                                 swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                              }
                              else
@@ -300,102 +301,110 @@ var ImagenBase64;
         
         function Insertar_Imagen_API(Comando)
         {
-          if ($('#Proveedor_Instrumento').val() != null) 
-          {          
-            $.ajax
-            ({
-                url: 'https://api.imgur.com/3/image',
-                type: 'POST',
-                headers: 
-                {
-                    'Authorization':'Client-ID 46be03ad12c8728'                    
-                },
-                data : {image : ImagenBase64},
-                success: function (Resultado)
-                {
-                    if($('#Estuche_Instrumento').val() != 'Ninguno' && $('#Estuche_Instrumento').val() != '' )
+          if ($('#Estuche_Instrumento option:selected').text() != 'Seleccione un estuche')
+          {
+             if($('#Proveedor_Instrumento option:selected').text() != 'Seleccione un proveedor') 
+             {                                           
+                $.ajax
+                ({
+                    url: 'https://api.imgur.com/3/image',
+                    type: 'POST',
+                    headers: 
                     {
-                         var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
-                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: parseInt($('#Aula_Clase').val().substring(1,$('#Aula_Clase').val().length))}
-                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento').val().substring(1,$('#Estuche_Instrumento').val().length),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()};                       
-                    }
-                    else
+                        'Authorization':'Client-ID 46be03ad12c8728'                    
+                    },
+                    data : {image : ImagenBase64},
+                    success: function (Resultado)
                     {
-                         var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
-                                               ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: parseInt($('#Aula_Clase').val().substring(1,$('#Aula_Clase').val().length)),ID_Estuche:-1}
-                                               : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val(),ID_Estuche:-1}                              
-                    }                  
-                    if(Comando == 'Nuevo')
-                    {                                                
-                        $.ajax
-                        ({
+                        if($('#Estuche_Instrumento').val() != 'Ninguno' && $('#Estuche_Instrumento').val() != '' )
+                        {
+                             var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
+                                                   ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento option:selected').text().substring(1,$('#Estuche_Instrumento option:selected').text().length),ID_Proveedor: $('#Proveedor_Instrumento option:selected').text().substring(1,$('#Proveedor_Instrumento option:selected').text().length),Tipo_Ubicacion: 0,ID_Aula: parseInt($('#Aula_Clase').val().substring(1,$('#Aula_Clase').val().length))}
+                                                   : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Estuche:$('#Estuche_Instrumento option:selected').text().substring(1,$('#Estuche_Instrumento option:selected').text().length),ID_Proveedor: $('#Proveedor_Instrumento option:selected').text().substring(1,$('#Proveedor_Instrumento option:selected').text().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val()};                       
+                        }
+                        else
+                        {
+                             var Instrumento_BBDD = ($('#Ubicacion_Instrumento').val() == 'Aula') 
+                                                   ? {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val() ,Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 0,ID_Aula: parseInt($('#Aula_Clase').val().substring(1,$('#Aula_Clase').val().length)),ID_Estuche:-1}
+                                                   : {ID_Instrumento: $('#ID_Instrumento').val(), Nombre: $('#Tipo_Instrumento').val(),Material: $('#Material_Instrumento').val(),Color: $('#Color_Instrumento').val(), Imagen: Resultado.data.link ,Marca: $('#Marca_Instrumento').val(),Descripcion: $('#Descripcion_Inst').val(),Estado: $('#Estado_Instrumento').val(),ID_Proveedor: $('#Proveedor_Instrumento').val().substring(1,$('#Proveedor_Instrumento').val().length),Tipo_Ubicacion: 1,Estante: $('#Estante_Instrumento').val(),Gaveta: $('#Gaveta_Instrumento').val(),ID_Estuche:-1}                              
+                        }                  
+                        if(Comando == 'Nuevo')
+                        {                                                
+                            $.ajax
+                            ({
 
-                              url: 'http://localhost:53603/api/Instrumentos',                              
-                              type: 'POST',
-                              data: Instrumento_BBDD,
-                              success: function(Resultado)
-                              {
-                                 Resultado = JSON.parse(Resultado);
-                                 if(Resultado.Codigo == 5)
-                                 {                                    
-                                     swal.closeModal();
+                                  url: 'http://localhost:53603/api/Instrumentos',                              
+                                  type: 'POST',
+                                  data: Instrumento_BBDD,
+                                  success: function(Resultado)
+                                  {
+                                     Resultado = JSON.parse(Resultado);
+                                     if(Resultado.Codigo == 5)
+                                     {                                                                            
+                                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                         $('#Instrumento_Detalle').hide(500);
+                                         $('#Instrumentos').show(400);
+                                         Cargar_Instrumentos();
+                                     }
+                                     else
+                                     {
+                                         var Cadena_Errores = "";
+                                         for (var I = 0; I < Resultado.Errores.length; I++) 
+                                         {
+                                              Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                         }
+                                         swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");                                        
+                                     }
+                                  },
+                                  error: function(Respuesta)
+                                  {
+                                     swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                                  },
+                            });
+                        }
+                        else
+                        {
+                            $.ajax
+                            ({
+                                  url: 'http://localhost:53603/api/Instrumentos',
+                                  type: 'PUT',
+                                  data: Instrumento_BBDD,
+                                  success: function(Resultado)
+                                  {
+                                     Resultado = JSON.parse(Resultado);
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                     Cargar_Instrumentos();
                                      $('#Instrumento_Detalle').hide(500);
                                      $('#Instrumentos').show(400);
-                                 }
-                                 else
-                                 {
-                                     var Cadena_Errores = "";
-                                     for (var I = 0; I < Resultado.Errores.length; I++) 
-                                     {
-                                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
-                                     }
-                                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
-                                 }
-                                 Cargar_Instrumentos();
-                              },
-                              error: function(Respuesta)
-                              {
-                                 swal("Error", "Ocurrio un error al insertar el instrumento", "error");
-                              },
-                        });
-                        swal.closeModal();
-                    }
-                    else
+                                  },
+                                  error: function(xhr, status, error)
+                                  {
+                                     swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                                  },
+                            });
+                        }
+                    },                  
+                    error: function (xhr, status, error) 
                     {
-                        $.ajax
-                        ({
-                              url: 'http://localhost:53603/api/Instrumentos',
-                              type: 'PUT',
-                              data: Instrumento_BBDD,
-                              success: function(Resultado)
-                              {
-                                 Resultado = JSON.parse(Resultado);
-                                 swal.closeModal();
-                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 Cargar_Instrumentos();
-                                 $('#Instrumento_Detalle').hide(500);
-                                 $('#Instrumentos').show(400);
-                              },
-                              error: function(xhr, status, error)
-                              {
-                                 swal("Error", "Ocurrio un error al insertar el instrumento", "error");
-                              },
-                        });
                         swal.closeModal();
-                    }
-                },                  
-                error: function (xhr, status, error) 
-                {
-                    swal.closeModal();
-                    swal
+                        swal
+                        ({
+                              title: "Error",
+                              text: "Ocurrio un error al subir la imagen,intentelo de nuevo",
+                              type: "error",
+                        });
+                    }               
+                })
+              }
+              else
+              {
+                  swal
                     ({
-                          title: "Error",
-                          text: "Ocurrio un error al subir la imagen,intentelo de nuevo",
-                          type: "error",
+                          title: "Aviso",
+                          text: "No ha seleccionado un estuche",
+                          type: "warning",
                     });
-                }               
-            })
+              }
           }
           else
           {
