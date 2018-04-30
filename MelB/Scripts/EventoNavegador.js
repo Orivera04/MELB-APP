@@ -535,7 +535,33 @@ function Inicializacion_Eventos()
         });
 
 
-         /* Eventos : Formulario Instrumento */
+        /* Eventos Tabla : Tabla Instrumento */
+
+        $('#Filtro_Instrumento').change(function(event)
+        {
+            var Filtro = $('#Filtro_Instrumento').val();
+            if(Filtro == 'Proveedor')
+            {
+                
+            }  
+            else if(Filtro == 'Estuche')
+            {
+
+            }   
+            else if (Filtro == 'Aula')
+            {
+
+            }   
+            else
+            {
+
+            }     
+        });  
+
+    
+
+
+        /* Eventos : Formulario Instrumento */
 
         $('#Switch_Editar').change(function()
         {
