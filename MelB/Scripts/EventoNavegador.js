@@ -87,6 +87,16 @@ function Inicializacion_Controles()
         threshold: 8
     });
 
+    $('#Remision_Fecha_Inicio').dateDropper
+    ({
+          "data-format": 'd/m/Y',          
+    });
+
+    $('#Remision_Fecha_Fin').dateDropper
+    ({
+          "data-format": 'd/m/Y',          
+    });
+
 }
 
 function Actualizar()
