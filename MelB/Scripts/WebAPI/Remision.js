@@ -32,6 +32,8 @@ function Cargar_Remisiones()
                           type: 'GET',
                           success: function (Resultado_Estudiante) 
                           {
+                              document.getElementById("ID_Estudiante_Remision").options.length = 0;
+
                               if(Resultado_Estudiante.Codigo == null)
                               {
                                   Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
@@ -39,6 +41,8 @@ function Cargar_Remisiones()
                                   {  
                                     $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado_Estudiante[i].Nombre+'">#'+Resultado_Estudiante[i].ID_Estudiante+'</option>'); 
                                   }
+
+                                  
                               }
                           },
                           error: function (Mensaje) 
@@ -58,12 +62,14 @@ function Cargar_Remisiones()
                           type: 'GET',
                           success: function (Resultado_Empleado) 
                           {
+                              document.getElementById("ID_Empleado_Remision").options.length = 0;
+
                               if(Resultado_Empleado.Codigo == null)
                               {
                                   Resultado_Empleado = JSON.parse(Resultado_Empleado);
                                   for (i = 0; i < Resultado_Empleado.length; i++) 
                                   {  
-                                    $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].ID_Empleado+'">#'+Resultado_Empleado[i].Nombre+'</option>'); 
+                                    $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].Nombre+'">#'+Resultado_Empleado[i].ID_Empleado+'</option>'); 
                                   }
                               }
                           },
@@ -113,10 +119,11 @@ function Cargar_Remisiones()
                       {       
                           Resultado = Resultado[0];                  
                           $('#ID_Remision').val(Resultado.ID_Remision); 
-                          $('#ID_Estudiante_Remision').selectpicker('val', Resultado.Nombre_Estudiante);
-                          $('#ID_Empleado_Remision').selectpicker('val', Resultado.Empleado_Nombre);
-                          $('#Fecha_Prestamo_Remision').val(Resultado.Fecha_Prestamo);
-                          $('#Fecha_Entrega_Remision').val(Resultado.Fecha_Entrega);
+                          //$('#ID_Estudiante_Remision').selectpicker('val', Resultado.Nombre_Estudiante);
+                          $('#ID_Estudiante_Remision').selectpicker('val', '#'+Resultado.Nombre_Estudiante);
+                          $('#ID_Empleado_Remision').selectpicker('val', '#' +Resultado.Empleado_Nombre);
+                          $('#Remision_Fecha_Inicio').val(Resultado.Fecha_Prestamo);
+                          $('#Remision_Fecha_Fin').val(Resultado.Fecha_Entrega);
                           $('#Estado_Remision').selectpicker('val', Resultado.Estado_Remision);
              
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
@@ -215,7 +222,7 @@ function Cargar_Remisiones()
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Remision');
             Cargar_Remision_Por_ID(ID); 
-            $('.FlotarDerecha').show();
+            $('.FlotarDerecha2').show();
         }
 
         function Habilitar_Deshabilitar_Remision(Cond)
@@ -233,7 +240,7 @@ function Cargar_Remisiones()
             }
             else
             {
-                $("#ID_Remision").prop("disabled", "true");
+                /*$("#ID_Remision").prop("disabled", "true");*/
                 $("#ID_Estudiante_Remision").prop("disabled", 'true');
                 $("#ID_Empleado_Remision").prop("disabled", 'true');
                 $("#Fecha_Entrega_Remision").prop("disabled", 'true');
@@ -246,42 +253,53 @@ function Cargar_Remisiones()
 
         function Reiniciar_Controles_Remision()
         {
+            Tabla_Desglose_Remision.clear().draw();    
             var now = new Date();
             var Dia = ("0" + now.getDate()).slice(-2);
             var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
             var Hora = ("0" + now.getHours()).slice(-2);
             var Minuto = ("0" + now.getMinutes()).slice(-2);
-            Fecha_Actual = now.getFullYear()+"-"+(Mes)+"-"+(Dia)+"T"+(Hora)+":"+(Minuto);
-             
-
+            Fecha_Actual = (Mes)+"/"+(Dia)+"/"+now.getFullYear();
+            
+            
             $('#ID_Remision').val(1);
             $("#ID_Empleado_Remision").selectpicker('val', '');
             $("#ID_Estudiante_Remision").selectpicker('val', '');
             $('#Estado_Remision').selectpicker('val', 'Activa');
             $("#Estado_Remision").prop("disabled", true);
-            $('#Fecha_Prestamo_Remision').val(Fecha_Actual);
-            $('#Fecha_Entrega_Remision').val(Fecha_Actual);
+            $('#Remision_Fecha_Inicio').val(Fecha_Actual);
+            $('#Remision_Fecha_Fin').val(Fecha_Actual);
             $('.FlotarDerecha2').show();
         }
+
 
 /* Funciones de soporte */
 
 
         function Insertar_Actualizar_Remision(Comando)
         {   
-        var Lista_Instrumentos = '';
-        var Lista_Observaciones_Iniciales = '';
-        var Lista_Observaciones_Finales = '';  
-        var Estado;
-
-            if($('#ID_Estudiante_Remision').val() != "" && $('#ID_Empleado_Remision').val() != "")
-            {
-                swal.showLoading();
+          var Lista_Instrumentos = '';
+          var Lista_Observaciones_Iniciales = '';
+          var Lista_Observaciones_Finales = '';  
+          var Estado;
+          var now = new Date();
+          var Hora = ("0" + now.getHours()).slice(-2);
+          var Minuto = ("0" + now.getMinutes()).slice(-2);
+          var Longitud = document.getElementById("Desglose_Remision_T").rows[1].cells.length;
+          
+          if($('#ID_Estudiante_Remision').val() != "" && $('#ID_Empleado_Remision').val() != "")
+          {
+            swal.showLoading();
                 
-                var Cantidad_Registros_Remisiones = (document.getElementById("Desglose_Remision_T").rows.length)-1;
+            var Cantidad_Registros_Remisiones = (document.getElementById("Desglose_Remision_T").rows.length)-1;
 
-                for (i = 1; i <= Cantidad_Registros_Remisiones; i++)
+            if (Cantidad_Registros_Remisiones >= 1 && Longitud > 1)  
+            {
+
+              for (i = 1; i <= Cantidad_Registros_Remisiones; i++)
                     {
+                      if(Comando == 'Nuevo')
+                      { 
                         if ( i == Cantidad_Registros_Remisiones)
                             {
                                 var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
@@ -298,105 +316,135 @@ function Cargar_Remisiones()
                                 var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
                                 Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial + ', ';   
                             }
-                        
-                    }
-                    
-                    if(Comando == 'Nuevo')
-                    {                      
-                        var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision option:selected').text().substring(1,$('#ID_Estudiante_Remision option:selected').text().length), Empleado_ID: $('#ID_Empleado_Remision option:selected').text().substring(1,$('#ID_Empleado_Remision option:selected').text().length), Fecha_Prestamo: $('#Fecha_Prestamo_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
-                    }   
-                    else
-                    {
-                        if ($('#Estado_Remision').val() == 'Activa')
-                        {
-                            Estado = 1;
-                        }
-                        else if ($('#Estado_Remision').val() == 'Expirada')
-                        {
-                            Estado = 1;
-                        }
+                      }
+                      else
+                      {
+                        if ( i == Cantidad_Registros_Remisiones)
+                            {
+                                var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
+                                Lista_Instrumentos =  Lista_Instrumentos + Temporal_Instrumento;
+
+                                var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
+                                Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial;
+                                
+                                var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
+                                Lista_Observaciones_Finales = Lista_Observaciones_Finales + Temporal_Observacion_Final;
+                            }
                         else
-                        {
-                            Estado = 0;
-                        }
-                        var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estado_Remision: Estado, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales, Observaciones_Finales: Lista_Observaciones_Finales};
+                            {
+                                var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
+                                Lista_Instrumentos = Lista_Instrumentos + Temporal_Instrumento + ', ';   
+
+                                var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
+                                Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial + ', ';   
+
+                                var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
+                                Lista_Observaciones_Finales = Lista_Observaciones_Finales + Temporal_Observacion_Final;
+                            } 
+                      }      
                     }
+   
+              if(Comando == 'Nuevo')
+              { 
+                var Remision_Fecha_Inicio = $('#Remision_Fecha_Inicio').val();
+                var Remision_Fecha_Fin = $('#Remision_Fecha_Inicio').val();
 
-                    if(Comando == 'Nuevo')
-                    {                                                
-                        $.ajax
-                        ({  
-                              url: 'http://melbws.azurewebsites.net/api/Remision',
-                              type: 'POST',
-                              data: Remision_BBDD,
-                              success: function(Resultado)
-                              {
-                                 Resultado = JSON.parse(Resultado);
-                                 if(Resultado.Codigo == 5)
-                                 {                                    
-                                     swal.closeModal();
-                                     swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                Fecha_Remitido = Remision_Fecha_Inicio.split("/");
+                Fecha_Finalizacion = Remision_Fecha_Fin.split("/");
 
-                                     Cargar_Remisiones();
-                                     $('#Remision_Detalle').hide(500);
-                                     $('#Remisiones').show(400);
-                                     $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
-                                     $('#ADD').show("drop", 50);
-                                 }
-                                 else
-                                 {
-                                     var Cadena_Errores = "";
-                                     for (var I = 0; I < Resultado.Errores.length; I++) 
-                                     {
-                                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
-                                     }
-                                     swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
-                                 }
+                Fecha_Inicio = Fecha_Remitido[2] + '-' + Fecha_Remitido[0] + '-' + Fecha_Remitido[1] +"T"+(Hora)+":"+(Minuto);
+                Fecha_Fin = Fecha_Finalizacion[2] + '-' + Fecha_Finalizacion[0] + '-' + Fecha_Finalizacion[1] +"T"+(Hora)+":"+(Minuto);
 
-                              },
-                              error: function(Respuesta)
-                              {
-                                 swal("Error", "Ocurrio un error al insertar la Remision", "error");
-                              },
-                        });
-                        swal.closeModal();
-                    }
-                    else
-                    {
-                        $.ajax
-                        ({
-                              url: 'http://melbws.azurewebsites.net/api/Remision',
-                              type: 'PUT',
-                              data: Remision_BBDD,
-                              success: function(Resultado)
-                              {
-                                 Resultado = JSON.parse(Resultado);
-                                 swal.closeModal();
-                                 swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                 Cargar_Remisiones();
-                                 $('#Remision_Detalle').hide(500);
-                                 $('#Remisiones').show(400);
-                                 $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
-                                 $('#ADD').show("drop", 50);
-                              },
-                              error: function(xhr, status, error)
-                              {
-                                 swal("Error", "Ocurrio un error al insertar la Remision", "error");
-                              },
-                        });
-                        swal.closeModal();
-                    }       
+                var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision option:selected').text().substring(1,$('#ID_Estudiante_Remision option:selected').text().length), Empleado_ID: $('#ID_Empleado_Remision option:selected').text().substring(1,$('#ID_Empleado_Remision option:selected').text().length), Fecha_Prestamo: Fecha_Inicio, Fecha_Entrega: Fecha_Fin, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
+
+                $.ajax
+                ({  
+                      url: 'http://melbws.azurewebsites.net/api/Remision',
+                      type: 'POST',
+                      data: Remision_BBDD,
+                      success: function(Resultado)
+                      {
+                         Resultado = JSON.parse(Resultado);
+                         if(Resultado.Codigo == 5)
+                         {                                    
+                             swal.closeModal();
+                             swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+
+                             Cargar_Remisiones();
+                             $('#Remision_Detalle').hide(500);
+                             $('#Remisiones').show(400);
+                             $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
+                             $('#ADD').show("drop", 50);
+                         }
+                         else
+                         {
+                             var Cadena_Errores = "";
+                             for (var I = 0; I < Resultado.Errores.length; I++) 
+                             {
+                                  Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                             }
+                             swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
+                         }
+
+                      },
+                      error: function(Respuesta)
+                      {
+                         swal("Error", "Ocurrio un error al insertar la Remision", "error");
+                      },
+                });
+                swal.closeModal();
+              }
+              else
+              {
+                if ($('#Estado_Remision').val() == 'Activa' || $('#Estado_Remision').val() == 'Expirada'){ Estado = 1}
+                else{Estado = 0}
+
+                var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estado_Remision: Estado, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales, Observaciones_Finales: Lista_Observaciones_Finales};
+                  
+                $.ajax
+                ({
+                      url: 'http://melbws.azurewebsites.net/api/Remision',
+                      type: 'PUT',
+                      data: Remision_BBDD,
+                      success: function(Resultado)
+                      {
+                         Resultado = JSON.parse(Resultado);
+                         swal.closeModal();
+                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                         Cargar_Remisiones();
+                         $('#Remision_Detalle').hide(500);
+                         $('#Remisiones').show(400);
+                         $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
+                         $('#ADD').show("drop", 50);
+                      },
+                      error: function(xhr, status, error)
+                      {
+                         swal("Error", "Ocurrio un error al insertar la Remision", "error");
+                      },
+                });
+                swal.closeModal();
+              }
             }
             else
             {
-                 swal
-                        ({
-                              title: "Aviso",
-                              text: "Algunos campos estan vacios",
-                              type: "warning",
-                        });
+              swal
+              ({
+                    title: "Aviso",
+                    text: "Debe registrar instrumentos",
+                    type: "warning",
+              });
             }
-        };
+          }
+          else
+          {
+            swal
+            ({
+                  title: "Aviso",
+                  text: "Algunos campos estan vacios",
+                  type: "warning",
+            });
+          }
+        }
 
  
 
