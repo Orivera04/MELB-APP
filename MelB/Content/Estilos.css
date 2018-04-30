@@ -272,6 +272,14 @@ a.article, a.article:hover {
    border-top-right-radius:  5px;
 }
 
+#Panel_Filtro_Cabezera
+{
+   background: linear-gradient(to right, #485563, #29323c);    border-top-left-radius:   5px;
+   border-top-right-radius:  5px;
+}
+
+
+
 /*MEDIDAS DE LOS PANEL-HEADING DE CADA PANEL*/
 .panel-heading , .panel-heading2, .panel-heading3, .panel-heading4 {
     border: none !important;
@@ -612,10 +620,6 @@ button:focus:not(:active)::after
 }
 
 
-.label-white {
-  background-color: rgba($white,0.7);
-  color: $dark !important;
-}
 
 .label-default 
 {
@@ -649,4 +653,21 @@ button:focus:not(:active)::after
 
 .label-inverse {
   background-color: #4c5667 !important;
+}
+
+
+.Filtro_Body
+{
+    margin-left:  20px;
+    margin-right: 20px;
+}
+
+.Filtro_Body > label
+{
+    margin-right:  15px !important;
+}
+
+#Label_ID
+{
+    margin-left: 30px;
 }
