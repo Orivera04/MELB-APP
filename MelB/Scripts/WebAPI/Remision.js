@@ -4,6 +4,7 @@ var Fecha_Actual;
 function Cargar_Remisiones() 
 {
     Tabla_Remision.clear().draw();
+    Tabla_Desglose_Remision.clear().draw();
     $.ajax
     ({
         url: 'http://melbws.azurewebsites.net/api/Remision',
@@ -301,9 +302,9 @@ function Cargar_Remisiones()
                     }
                     
                     if(Comando == 'Nuevo')
-                    {                    
-                        var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision').val(), Empleado_ID: $('#ID_Empleado_Remision').val(), Fecha_Prestamo: $('#Fecha_Prestamo_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
-                    }
+                    {                      
+                        var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision option:selected').text().substring(1,$('#ID_Estudiante_Remision option:selected').text().length), Empleado_ID: $('#ID_Empleado_Remision option:selected').text().substring(1,$('#ID_Empleado_Remision option:selected').text().length), Fecha_Prestamo: $('#Fecha_Prestamo_Remision').val(), Fecha_Entrega: $('#Fecha_Entrega_Remision').val(), ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
+                    }   
                     else
                     {
                         if ($('#Estado_Remision').val() == 'Activa')
@@ -325,7 +326,7 @@ function Cargar_Remisiones()
                     {                                                
                         $.ajax
                         ({  
-                              url: 'http://melbws.azurewebsites.net/api/Remision',
+                              url: 'http://localhost:53603/api/Remision',
                               type: 'POST',
                               data: Remision_BBDD,
                               success: function(Resultado)
@@ -335,6 +336,7 @@ function Cargar_Remisiones()
                                  {                                    
                                      swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+
                                      Cargar_Remisiones();
                                      $('#Remision_Detalle').hide(500);
                                      $('#Remisiones').show(400);
@@ -379,7 +381,7 @@ function Cargar_Remisiones()
                               },
                               error: function(xhr, status, error)
                               {
-                                 swal("Error", "Ocurrio un error al insertar el proveedor", "error");
+                                 swal("Error", "Ocurrio un error al insertar la Remision", "error");
                               },
                         });
                         swal.closeModal();
