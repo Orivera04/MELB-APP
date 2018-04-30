@@ -322,7 +322,6 @@
                                  Resultado = JSON.parse(Resultado);
                                  if(Resultado.Codigo == 5)
                                  {                                    
-                                     swal.closeModal();
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                      $('#Estuche_Detalle').hide(500);
                                      $('#Estuches').show(400);
@@ -345,7 +344,6 @@
                                  swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
-                        swal.closeModal();
                     }
                     else
                     {
@@ -356,12 +354,11 @@
                               data: Estuche_BBDD,
                               success: function(Resultado)
                               {
+                                 Cargar_Estuches();
                                  Resultado = JSON.parse(Resultado);
-                                 swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                  $('#Estuche_Detalle').hide(500);
                                  $('#Estuches').show(400);
-                                 Actualizar();
                                  $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                  $('#ADD').show("drop", 50);
                               },
@@ -370,8 +367,6 @@
                                  swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
-                        Cargar_Estuches();
-                        swal.closeModal();
                     }
                 },                  
                 error: function (xhr, status, error) 

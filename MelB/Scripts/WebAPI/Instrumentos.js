@@ -341,6 +341,7 @@ var ImagenBase64;
                                      if(Resultado.Codigo == 5)
                                      {                                                                            
                                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                                         $('#ADD').show('drop',400);
                                          $('#Instrumento_Detalle').hide(500);
                                          $('#Instrumentos').show(400);
                                          Cargar_Instrumentos();
@@ -373,6 +374,7 @@ var ImagenBase64;
                                      Resultado = JSON.parse(Resultado);
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                      Cargar_Instrumentos();
+                                     $('#ADD').show('drop',400);
                                      $('#Instrumento_Detalle').hide(500);
                                      $('#Instrumentos').show(400);
                                   },

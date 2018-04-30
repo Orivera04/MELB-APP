@@ -368,9 +368,11 @@ function Inicializacion_Eventos()
                  $('#Actualizar_Instrumento').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#Imagen_Instrumento').attr("src","https://i.imgur.com/0oN2F22.png");
                  Base64Imagen($('#Imagen_Instrumento').attr('src'));             
-                 Cargar_Estuches_No_Usados('Guitarra');  
-                 $('#Estuche_Instrumento').val('Ninguno').selectpicker('render');
+                 Cargar_Estuches_No_Usados('Guitarra');                   
                  $('#Estuche_Instrumento').selectpicker({title: 'Seleccione un estuche'}).selectpicker('render');
+                 $('#Campo_Aula').hide();
+                 $('#Estante_Campo').show();
+                 $('#Form_gaveta').show();
                  $('#Panel_Accesorios').hide();
             }
             else if(Formulario_Activo == 'Estuche')
