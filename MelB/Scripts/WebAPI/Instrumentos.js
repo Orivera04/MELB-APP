@@ -14,9 +14,8 @@ var ImagenBase64;
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
                       {      
-                              var Bodega_HTML = (Resultado[i].Tipo_Ubicacion == 'Bodega') ? '<span class="label label-warning ">Bodega</span>' : '<span class="label label-info">Aula</span>'
                               var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
-                              var Disponibilidad =  (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-warning">En Prestamo</span>'
+                              var Disponibilidad =  (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>'
                               Tabla_Instrumento.row.add
                               ([
                                       Resultado[i].ID_Instrumento,
@@ -401,17 +400,17 @@ var ImagenBase64;
                   swal
                     ({
                           title: "Aviso",
-                          text: "No ha seleccionado un estuche",
+                          text: "No ha seleccionado un proveedor",
                           type: "warning",
-                    });
+                    });     
               }
           }
           else
-          {
+          {                
                 swal
                     ({
                           title: "Aviso",
-                          text: "No ha seleccionado un proveedor",
+                          text: "No ha seleccionado un estuche",
                           type: "warning",
                     });
           }

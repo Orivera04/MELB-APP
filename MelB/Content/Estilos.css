@@ -254,17 +254,22 @@ a.article, a.article:hover {
 /*Proveedor*/
 .panel-danger>.panel-heading2 {
    background: linear-gradient(0, transparent, transparent),linear-gradient(90deg, #ff1b94, #ff6969);
+   border-top-left-radius:  3px;
+   border-top-right-radius:  3px;
 }
 
 /*Estuche*/
-.panel-danger>.panel-heading3 {
-   
+.panel-danger>.panel-heading3 {   
       background: linear-gradient(to right, #6190e8, #a7bfe8); 
+      border-top-left-radius:   3px;
+      border-top-right-radius:  3px;
 }
 
 /*Remisiones*/
 .panel-danger>.panel-heading4 {
    background: linear-gradient(to right, #cc00ff 0%, #ff00ff 100%);
+   border-top-left-radius:   5px;
+   border-top-right-radius:  5px;
 }
 
 /*MEDIDAS DE LOS PANEL-HEADING DE CADA PANEL*/
@@ -599,9 +604,49 @@ button:focus:not(:active)::after
     cursor: pointer;
 }
 
-.label-warning ,.label-success
+.label-warning ,.label-success,.label-purple,.label-inverse 
 
 {
-    font-size: 12px;
+    font-size: 14px;
     font-family: 'Roboto', sans-serif;
+}
+
+
+.label-white {
+  background-color: rgba($white,0.7);
+  color: $dark !important;
+}
+
+.label-default 
+{
+  background-color: #5fbeaa !important;
+}
+
+.label-primary {
+  background-color: #5d9cec !important;
+}
+
+.label-success {
+  background-color: #81c868 !important;
+}
+
+.label-info {
+  background-color: #34d3eb !important;
+}
+
+.label-warning {
+  background-color: #ffbd4a !important;
+}
+
+.label-danger {
+  background-color: #f05050 !important;
+}
+
+.label-purple {
+  background-color: #7266ba !important;
+}
+
+
+.label-inverse {
+  background-color: #4c5667 !important;
 }

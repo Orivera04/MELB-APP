@@ -11,9 +11,23 @@
         {
             if(Resultado.Codigo == null)
             {
-                Resultado = JSON.parse(Resultado); 
+                Resultado = JSON.parse(Resultado);
+                var Disponible; 
                 for (i = 0; i < Resultado.length; i++) 
                 {   
+                    if (Resultado[i].Disponibilidad == '1')
+                    {
+                        Disponible = '<span class="label label-purple">En Prestamo</span>';
+                    }
+                    else if(Resultado[i].Disponibilidad == '2')
+                    {
+                        Disponible = '<span class="label label-success">Asignado</span>';
+                    }
+                    else
+                    {
+                        Disponible = '<span class="label label-inverse">Sin Asignar</span>';
+                    }
+
                     var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
                     Tabla_Estuche.row.add
                     ([
@@ -21,6 +35,7 @@
                         Imagen,
                         Resultado[i].Nombre,
                         Resultado[i].Marca,
+                        Disponible,
                         Resultado[i].Color,
                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
