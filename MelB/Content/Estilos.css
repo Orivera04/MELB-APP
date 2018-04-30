@@ -671,3 +671,10 @@ button:focus:not(:active)::after
 {
     margin-left: 30px;
 }
+
+.FlotarDerecha2
+{
+    float: right;
+    color: white;
+    font-size: 28px !important;    
+}
