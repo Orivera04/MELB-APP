@@ -223,7 +223,7 @@
         {
             if(Cond == true)
             {
-                $("#ID_Proveedor").prop("disabled", false);
+                /*$("#ID_Proveedor").prop("disabled", false);*/
                 $('#Nombre_Proveedor').removeAttr('disabled');
                 $('#Direccion_Proveedor').removeAttr('disabled');
                 $('#Telefono1_Proveedor').removeAttr('disabled');

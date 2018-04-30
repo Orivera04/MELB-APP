@@ -52,9 +52,9 @@ function Cargar_Remisiones()
                           }
                         });
 
-             /*   $.ajax
+                $.ajax
                       ({
-                          url: 'http://melbws.azurewebsites.net/api/Empleados/',
+                          url: 'http://melbws.azurewebsites.net/api/Empleado/',
                           type: 'GET',
                           success: function (Resultado_Empleado) 
                           {
@@ -63,7 +63,7 @@ function Cargar_Remisiones()
                                   Resultado_Empleado = JSON.parse(Resultado_Empleado);
                                   for (i = 0; i < Resultado_Empleado.length; i++) 
                                   {  
-                                    $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].ID_Empleado+'">#'+Resultado_Empleado[i].Empleado_Nombre+'</option>'); 
+                                    $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].ID_Empleado+'">#'+Resultado_Empleado[i].Nombre+'</option>'); 
                                   }
                               }
                           },
@@ -76,10 +76,10 @@ function Cargar_Remisiones()
                                     type: "error",
                               });
                           }
-                      });  */
+                      });
 
 
-            $('#ID_Empleado_Remision').append('<option data-subtext="Erick">#2</option>'); 
+          /*  $('#ID_Empleado_Remision').append('<option data-subtext="Erick">#2</option>');  */
                 
                 Cargar_Aulas(); 
             }
@@ -261,7 +261,7 @@ function Cargar_Remisiones()
             $("#Estado_Remision").prop("disabled", true);
             $('#Fecha_Prestamo_Remision').val(Fecha_Actual);
             $('#Fecha_Entrega_Remision').val(Fecha_Actual);
-            $('.FlotarDerecha').show();
+            $('.FlotarDerecha2').show();
         }
 
 /* Funciones de soporte */
@@ -326,7 +326,7 @@ function Cargar_Remisiones()
                     {                                                
                         $.ajax
                         ({  
-                              url: 'http://localhost:53603/api/Remision',
+                              url: 'http://melbws.azurewebsites.net/api/Remision',
                               type: 'POST',
                               data: Remision_BBDD,
                               success: function(Resultado)
