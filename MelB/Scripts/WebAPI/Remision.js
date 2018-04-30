@@ -84,9 +84,6 @@ function Cargar_Remisiones()
                           }
                       });
 
-
-          /*  $('#ID_Empleado_Remision').append('<option data-subtext="Erick">#2</option>');  */
-                
                 Cargar_Aulas(); 
             }
         },
@@ -119,9 +116,8 @@ function Cargar_Remisiones()
                       {       
                           Resultado = Resultado[0];                  
                           $('#ID_Remision').val(Resultado.ID_Remision); 
-                          //$('#ID_Estudiante_Remision').selectpicker('val', Resultado.Nombre_Estudiante);
-                          $('#ID_Estudiante_Remision').selectpicker('val', '#'+Resultado.Nombre_Estudiante);
-                          $('#ID_Empleado_Remision').selectpicker('val', '#' +Resultado.Empleado_Nombre);
+                          $('#ID_Estudiante_Remision').selectpicker('val', '#'+Resultado.ID_Estudiante);
+                          $('#ID_Empleado_Remision').selectpicker('val', '#' +Resultado.Empleado_ID);
                           $('#Remision_Fecha_Inicio').val(Resultado.Fecha_Prestamo);
                           $('#Remision_Fecha_Fin').val(Resultado.Fecha_Entrega);
                           $('#Estado_Remision').selectpicker('val', Resultado.Estado_Remision);
@@ -343,11 +339,11 @@ function Cargar_Remisiones()
                             } 
                       }      
                     }
-   
+
               if(Comando == 'Nuevo')
               { 
                 var Remision_Fecha_Inicio = $('#Remision_Fecha_Inicio').val();
-                var Remision_Fecha_Fin = $('#Remision_Fecha_Inicio').val();
+                var Remision_Fecha_Fin = $('#Remision_Fecha_Fin').val();
 
                 Fecha_Remitido = Remision_Fecha_Inicio.split("/");
                 Fecha_Finalizacion = Remision_Fecha_Fin.split("/");
@@ -448,118 +444,118 @@ function Cargar_Remisiones()
 
  
 
-function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descripcion)
-{
-        
-  var Titulo;
-  var Error;
-  swal.setDefaults
-  ({
-        input: 'text',
-        confirmButtonText: 'Siguiente',
-        cancelButtonText: 'Cancelar',
-        showCancelButton: true,
-        animation: true,
-        progressSteps: ['1', '2', '3'],
-        allowOutsideClick: false
-  });
+        function Insertar_Desglose_Remision(ID,Comando,ID_Desglose_Remision,Nombre,Descripcion)
+        {
+                
+          var Titulo;
+          var Error;
+          swal.setDefaults
+          ({
+                input: 'text',
+                confirmButtonText: 'Siguiente',
+                cancelButtonText: 'Cancelar',
+                showCancelButton: true,
+                animation: true,
+                progressSteps: ['1', '2', '3'],
+                allowOutsideClick: false
+          });
 
-  if(Comando == 'Nuevo')
-  {
-      Titulo = 'Añadiendo a Remision';
-      Error = 'Ocurrio un inconveniente al añadir el detalle.';
-      var Pasos = 
-      [
-        {
-            title: 'Añadir Instrumento a Remision',
-            text: 'ID Instrumento',
-            input : 'number',
-            inputAttributes: 
-            {
-                min: 1,
-                max: 200000,
-                step: 1
-            },        
-            inputClass: 'form-control'
-        },
-        {
-            title: 'Añadir Instrumento a Remision',
-            text: 'Nombre',
-            input : 'text',
-            inputAttributes: 
-            {
-                maxlength : 15
-            },
-            inputClass: 'form-control'
-        },
-        {
-            title: 'Añadir Instrumento a Remision',
-            text: 'Observacion Inicial',
-            input : 'textarea',
-            inputAttributes: 
-            {
-                maxlength : 50
-            },
-            inputClass: 'form-control'
-        }
-      ]
-  }
-  else
-  {
-      Titulo = 'Actualizando Observacion final';
-      Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
-      var Pasos = 
-      [  
-        {
-            title: 'Actualizar Detalle Remision',
-            text: 'Observacion Final',
-            input : 'text',
-            inputValue : Observacion_Final,
-            inputAttributes: 
-            {
-                maxlength : 50
-            },
-            inputClass: 'form-control'
-        }
-      ]
-  }
+          if(Comando == 'Nuevo')
+          {
+              Titulo = 'Añadiendo a Remision';
+              Error = 'Ocurrio un inconveniente al añadir el detalle.';
+              var Pasos = 
+              [
+                {
+                    title: 'Añadir Instrumento a Remision',
+                    text: 'ID Instrumento',
+                    input : 'number',
+                    inputAttributes: 
+                    {
+                        min: 1,
+                        max: 200000,
+                        step: 1
+                    },        
+                    inputClass: 'form-control'
+                },
+                {
+                    title: 'Añadir Instrumento a Remision',
+                    text: 'Nombre',
+                    input : 'text',
+                    inputAttributes: 
+                    {
+                        maxlength : 15
+                    },
+                    inputClass: 'form-control'
+                },
+                {
+                    title: 'Añadir Instrumento a Remision',
+                    text: 'Observacion Inicial',
+                    input : 'textarea',
+                    inputAttributes: 
+                    {
+                        maxlength : 50
+                    },
+                    inputClass: 'form-control'
+                }
+              ]
+          }
+          else
+          {
+              Titulo = 'Actualizando Observacion final';
+              Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
+              var Pasos = 
+              [  
+                {
+                    title: 'Actualizar Detalle Remision',
+                    text: 'Observacion Final',
+                    input : 'text',
+                    inputValue : Observacion_Final,
+                    inputAttributes: 
+                    {
+                        maxlength : 50
+                    },
+                    inputClass: 'form-control'
+                }
+              ]
+          }
 
-    swal.queue(Pasos).then(function (Modal) 
-    {
-        if(Modal[0] != '' && Modal[1] != '' && Modal[2] != '')
-        {         
-            swal.resetDefaults();
-            swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
-            swal.showLoading();   
-
-            if(Comando == 'Nuevo')
-            {                
-                Tabla_Desglose_Remision.row.add
-                ([
-                    Modal[0],
-                    Modal[1],
-                    Modal[2],
-                    'Aun no se ha entregado el instrumento'
-                ]).draw( false );   
-                swal.closeModal();
-                swal("Exito","Se añadio el registro exitosamente", "success");
-            }
-            else
+            swal.queue(Pasos).then(function (Modal) 
             {
-             /*P E N D I E N T E*/
-            }
-            swal.closeModal();
+                if(Modal[0] != '' && Modal[1] != '' && Modal[2] != '')
+                {         
+                    swal.resetDefaults();
+                    swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+                    swal.showLoading();   
+
+                    if(Comando == 'Nuevo')
+                    {                
+                        Tabla_Desglose_Remision.row.add
+                        ([
+                            Modal[0],
+                            Modal[1],
+                            Modal[2],
+                            'Aun no se ha entregado el instrumento'
+                        ]).draw( false );   
+                        swal.closeModal();
+                        swal("Exito","Se añadio el registro exitosamente", "success");
+                    }
+                    else
+                    {
+                     /*P E N D I E N T E*/
+                    }
+                    swal.closeModal();
+                }
+                else
+                {
+                    swal.resetDefaults();
+                    swal.closeModal();
+                    swal
+                    ({
+                          title: "Aviso",
+                          text: "Revise que haya introducido los campos correctamente",
+                          type: "warning",
+                    });
+                }        
+            })
         }
-        else
-        {
-            swal.resetDefaults();
-            swal.closeModal();
-            swal
-            ({
-                  title: "Aviso",
-                  text: "Revise que haya introducido los campos correctamente",
-                  type: "warning",
-            });
-        }        
-    })
-}
