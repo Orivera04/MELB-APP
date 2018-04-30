@@ -55,18 +55,7 @@ function Inicializacion_Controles()
         alwaysShow: true,
         threshold: 25
     });
-
-    $('#Telefono1_Proveedor').maxlength
-    ({
-        alwaysShow: true,
-        threshold: 25
-    });
-
-    $('#Telefono2_Proveedor').maxlength
-    ({
-        alwaysShow: true,
-        threshold: 25
-    });
+    
 
     $('#Correo_Proveedor').maxlength
     ({
@@ -85,6 +74,19 @@ function Inicializacion_Controles()
         alwaysShow: true,
         threshold: 25
     });
+
+    $('#Telefono1_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 8
+    });
+
+    $('#Telefono2_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 8
+    });
+
 }
 
 function Actualizar()
@@ -495,6 +497,13 @@ function Inicializacion_Eventos()
             }
         });
 
+        $('input[type="number"]').keypress(function(event)
+        {
+                if (event.which != 8 && event.which != 0 && (event.which < 48 || event.which > 57)) 
+                {
+                    return false;
+                }
+        });
 
     /*Detona el click del boton BUSCAR*/    
 
@@ -599,8 +608,24 @@ function Inicializacion_Eventos()
 
         /* Eventos : Formulario Proveedor */
 
+         $('#Telefono1_Proveedor').keypress(function(event)
+         {
+                if(!isNumber(event.key) )
+                {                    
+                    event.preventDefault();
+                }                           
+         });
+
+         $('#Telefono2_Proveedor').keypress(function(event)
+         {
+                if(!isNumber(event.key) )
+                {                    
+                    event.preventDefault();
+                }                           
+         });
+
          $('#Switch_Editar_Proveedor').change(function()
-        {
+         {
             if( $('#Switch_Editar_Proveedor').prop('checked') == true)
             {
                 Habilitar_Deshabilitar_Proveedor(true);
@@ -651,3 +676,8 @@ function Inicializacion_Eventos()
         });
 }
 
+
+function isNumber(n) 
+{
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}

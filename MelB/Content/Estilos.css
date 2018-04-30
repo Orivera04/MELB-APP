@@ -604,7 +604,7 @@ button:focus:not(:active)::after
     cursor: pointer;
 }
 
-.label-warning ,.label-success,.label-purple,.label-inverse 
+.label-warning ,.label-success,.label-purple,.label-inverse ,.label-danger
 
 {
     font-size: 14px;

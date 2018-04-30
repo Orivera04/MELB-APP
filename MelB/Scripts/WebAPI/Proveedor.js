@@ -86,32 +86,56 @@
         {     
             if($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "" && $('#Direccion_Proveedor').val() != "")
             {
-                var Ancho  =  document.getElementById('Imagen_Proveedor').naturalWidth;
-                var Altura =  document.getElementById('Imagen_Proveedor').naturalHeight;
+              if($('#Telefono1_Proveedor').val().length == 8 && $('#Telefono2_Proveedor').val().length == 8 )
+              {
+                if(ValidarCorreo($('#Correo_Proveedor').val()) == true)
+                {                  
+                  var Ancho  =  document.getElementById('Imagen_Proveedor').naturalWidth;
+                  var Altura =  document.getElementById('Imagen_Proveedor').naturalHeight;
 
-                if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
-                {       
-                    if(Comando == "Nuevo")
-                    {                    
-                        swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el proveedor',type: 'info', allowOutsideClick: false});
-                    }
-                    else
-                    {
-                        swal({title:'Espere',text: 'Se esta actualizando el proveedor',type: 'info', allowOutsideClick: false});
-                    }
-                    swal.showLoading();
-                    Insertar_Imagen_API_Proveedor(Comando);
-                    
-                }                  
+                      if((Ancho <= 600 & Ancho >= 0) & (Altura <= 600 & Altura >= 0))
+                      {       
+                          if(Comando == "Nuevo")
+                          {                    
+                              swal({title:'Espere',text: 'Se esta subiendo la imagen al servidor e insertando el proveedor',type: 'info', allowOutsideClick: false});
+                          }
+                          else
+                          {
+                              swal({title:'Espere',text: 'Se esta actualizando el proveedor',type: 'info', allowOutsideClick: false});
+                          }
+                          swal.showLoading();
+                          Insertar_Imagen_API_Proveedor(Comando);
+                          
+                      }                  
+                      else
+                      {
+                          swal
+                              ({
+                                    title: "Error al subir la imagen",
+                                    text: "La imagen debe ser como maximo de  600 x 600.",
+                                    type: "error",
+                              });
+                      }
+                }
                 else
                 {
                     swal
-                        ({
-                              title: "Error al subir la imagen",
-                              text: "La imagen debe ser como maximo de  600 x 600.",
-                              type: "error",
-                        });
+                    ({
+                              title: "Aviso",
+                              text: "El formato del correo ingresado no es correcto",
+                              type: "warning",
+                    });
                 }
+              }
+              else
+              {
+                  swal
+                        ({
+                              title: "Aviso",
+                              text: "Los numeros de telefonos deben ser de 8 digitos.",
+                              type: "warning",
+                        }); 
+              }
             }
             else
             {
@@ -340,3 +364,9 @@
                 }               
             })
         }
+
+   function ValidarCorreo(Correo) 
+   {
+      var RegXP = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+      return RegXP.test( Correo );
+   }
