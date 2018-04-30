@@ -111,31 +111,37 @@
                
                 <div id="Instrumentos">
                     <div class="row" id="row_instrumento"> 
-
                          <div class="panel panel-color panel-danger">
                             <div class="panel-heading" id="Panel_Filtro_Cabezera">
                                 <i class="ion-search" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Filtros de busqueda</h3>                                        
                             </div>
                             <div class="panel-body">
-                               <div class="Filtro_Body">
-                                    <label class="control-label">Tipo de filtro</label>
-                                
-                                    <select id="Filtro_Instrumento" class="selectpicker" data-style="btn-white">
-                                        <option>Proveedor</option>
-                                        <option >Estuche</option>
-                                        <option >Aula</option>
-                                        <option >Disponible</option>
-                                    </select>
+                               <div class="row">
+                                    <div class="col-sm-4" align="center">
+                                        <label class="control-label EspacioLabel">Tipo de filtro</label>                                
+                                        <select id="Filtro_Instrumento" class="selectpicker" data-style="btn-white">
+                                            <option>Proveedor</option>
+                                            <option >Estuche</option>
+                                            <option >Aula</option>
+                                            <option >Disponible</option>
+                                        </select>
 
-                                    <label id="Label_ID" class="control-label">ID Proveedor</label>
-                                
-                                    <select id="Filtro_Instrumento" class="selectpicker" data-style="btn-white">
-                                        <option>Proveedor</option>
-                                        <option >Estuche</option>
-                                        <option >Aula</option>
-                                        <option >Disponible</option>
-                                    </select>     
+                                    </div>
+
+                                    <div class="col-sm-4" align="center">
+                                        <label id="Label_ID" class="control-label EspacioLabel">ID Proveedor</label>                                    
+                                        <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white">
+                                            <option>Proveedor</option>
+                                            <option >Estuche</option>
+                                            <option >Aula</option>
+                                            <option >Disponible</option>
+                                        </select> 
+                                    </div>
+
+                                    <div class="col-sm-4" align="center">
+                                        <button id="Filtro_Buscar_Boton" type="button" class="btn waves-effect waves-light btn-primary btn-color" style="display: inline-block;"><span class="btn-label"><i class="ion-search" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Filtrar datos</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

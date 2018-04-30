@@ -655,22 +655,11 @@ button:focus:not(:active)::after
   background-color: #4c5667 !important;
 }
 
-
-.Filtro_Body
+.EspacioLabel
 {
-    margin-left:  20px;
-    margin-right: 20px;
+    margin-right: 15px;
 }
 
-.Filtro_Body > label
-{
-    margin-right:  15px !important;
-}
-
-#Label_ID
-{
-    margin-left: 30px;
-}
 
 .FlotarDerecha2
 {
