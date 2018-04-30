@@ -43,7 +43,6 @@
                 }       
                     Cargar_Proveedores();
             }
-            Cargar_Estuches_No_Usados();
         },
         error: function (Mensaje) 
         {
