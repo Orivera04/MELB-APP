@@ -3,13 +3,16 @@ var Fecha_Actual;
 var Lista_Instrumentos = '';
 var Lista_Observaciones_Iniciales = '';
 var Lista_Observaciones_Finales = '';  
+//var Arreglo_Listado = { ID_Instrumento:'', Nombre: '', Observacion_Inicial: '', Observacion_Final: ''};
+var ID_Instrumento;
+var Nombre;
+var Observacion_Inicial;
+var Observacion_Final;
+var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', Observacion_Final:''};
 
 
-var ID_Instrumento = [];
-var Nombre = [];
-var Observacion_Inicial = [];
-var Observacion_Final = []; 
-var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [], Observacion_Final: []};
+
+
 
 
         function Cargar_Remisiones() 
@@ -122,7 +125,14 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
                 url: 'http://melbws.azurewebsites.net/api/Remision/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
-                {            
+                {
+
+                /*var ID_Instrumento = [];
+                var Nombre = [];
+                var Observacion_Inicial = [];
+                var Observacion_Final = [];*/
+
+
                       Resultado = JSON.parse(Resultado);     
                       if(Resultado.Codigo == null)
                       {       
@@ -138,10 +148,10 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
                           
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
-                              Arreglo_Listado.ID_Instrumento = Resultado.Lista_Desglose[i].ID_Instrumento;
-                              Arreglo_Listado.Nombre = Resultado.Lista_Desglose[i].Nombre;
-                              Arreglo_Listado.Observacion_Inicial = Resultado.Lista_Desglose[i].Observacion_Inicial;
-                              Arreglo_Listado.Observacion_Final = '';
+                              Arreglo_Listado[i].ID_Instrumento=(Resultado.Lista_Desglose[i].ID_Instrumento);
+                              Arreglo_Listado[i].Nombre=(Resultado.Lista_Desglose[i].Nombre);
+                              Arreglo_Listado[i].Observacion_Inicial=(Resultado.Lista_Desglose[i].Observacion_Inicial);
+                              Arreglo_Listado[i].Observacion_Final = ('');
 
                                 Tabla_Desglose_Remision.row.add
                                 ([
@@ -347,7 +357,7 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
           }  
         }
 
-        function Extaer_Datos_Desglose_Remision(Comando)
+        function Extaer_Datos_Desglose_Remision(Comando, Cantidad_Registros_Remisiones)
         {
           /*Inicializacion de Variables*/
           Lista_Instrumentos = '';
@@ -421,7 +431,7 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
 
             if (Cantidad_Registros_Remisiones >= 1 && Longitud > 1)  
             {
-              Extaer_Datos_Desglose_Remision(Comando);
+              Extaer_Datos_Desglose_Remision(Comando,Cantidad_Registros_Remisiones);
               
               if(Comando == 'Nuevo')
               { 
@@ -575,6 +585,7 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
           {
               Titulo = 'Actualizando Observacion final';
               Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
+
               var Pasos = 
               [  
                 {
@@ -606,7 +617,7 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
                             Modal[0],
                             Modal[1],
                             Modal[2],
-                            'Aun no se ha entregado el instrumento'
+                            'El instrumento no ha sido devuelto'
                         ]).draw( false );   
                         swal.closeModal();
                         swal("Exito","Se añadio el registro exitosamente", "success");
@@ -616,12 +627,13 @@ var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [],
                         Tabla_Desglose_Remision.clear().draw();
                         for (i = 0; i < Arreglo_Listado.length; i++) 
                         {
+                          Arreglo_Listado[i].Observacion_Final = Modal[0];
                           Tabla_Desglose_Remision.row.add
                           ([
-                              Arreglo_Listado.ID_Instrumento[i],
-                              Arreglo_Listado.Nombre[i],
-                              Arreglo_Listado.Observacion_Inicial[i],
-                              Arreglo_Listado.Observacion_Final[i]
+                              Arreglo_Listado[i].ID_Instrumento,
+                              Arreglo_Listado[i].Nombre,
+                              Arreglo_Listado[i].Observacion_Inicial,
+                              Modal[0]
                           ]).draw( false );   
                         }
                         swal.closeModal();
