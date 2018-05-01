@@ -584,6 +584,8 @@ var Arreglo_Listado = [];
 
             swal.queue(Pasos).then(function (Modal) 
             {
+              var Imagen;
+
                 if(Modal[0] != '' && Modal[1] != '' && Modal[2] != '')
                 {         
                     swal.resetDefaults();
@@ -592,10 +594,38 @@ var Arreglo_Listado = [];
 
                     if(Comando == 'Nuevo')
                     {  
-                        var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "https://i.imgur.com/0oN2F22.png"></img>';
+
+                        $.ajax
+                          ({
+                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+Modal[0],
+                              type: 'GET',
+                              success: function (Resultado) 
+                              {            
+                                    Resultado = JSON.parse(Resultado);                                                        
+                                    if(Resultado.Codigo == null)
+                                    {       
+                                        Resultado = Resultado[0];                  
+                                        Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
+                                    }
+                                    else
+                                    {
+                                        swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
+                                    }           
+                              },
+                              error: function (Mensaje) 
+                              {
+                                  swal
+                                  ({
+                                        title: "Error al intentar ver la Imagen del instrumento",
+                                        text: "No se pudo conectar con el servidor.",
+                                        type: "error",
+                                  });
+                              }
+                          }); 
+
                         Tabla_Desglose_Remision.row.add
                         ([
-                            Imagen,                                      //F O T O
+                            Imagen,                                //F O T O
                             Modal[0],                             //ID_Instrumento
                             Modal[1],                             //Nombre
                             Modal[2],                             //Ob. Inicial
