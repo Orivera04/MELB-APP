@@ -272,7 +272,7 @@ a.article, a.article:hover {
    border-top-right-radius:  5px;
 }
 
-#Panel_Filtro_Cabezera
+#Panel_Filtro_Cabezera,#Panel_Filtro_Cabezera_Remisiones
 {
    background: linear-gradient(to right, #485563, #29323c);    border-top-left-radius:   5px;
    border-top-right-radius:  5px;
