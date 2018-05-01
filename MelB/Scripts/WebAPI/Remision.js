@@ -4,15 +4,8 @@ var Lista_Instrumentos = '';
 var Lista_Observaciones_Iniciales = '';
 var Lista_Observaciones_Finales = '';  
 //var Arreglo_Listado = { ID_Instrumento:'', Nombre: '', Observacion_Inicial: '', Observacion_Final: ''};
-var ID_Instrumento;
-var Nombre;
-var Observacion_Inicial;
-var Observacion_Final;
-var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', Observacion_Final:''};
 
-
-
-
+var Arreglo_Listado = [];
 
 
         function Cargar_Remisiones() 
@@ -126,13 +119,6 @@ var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', 
                 type: 'GET',
                 success: function (Resultado) 
                 {
-
-                /*var ID_Instrumento = [];
-                var Nombre = [];
-                var Observacion_Inicial = [];
-                var Observacion_Final = [];*/
-
-
                       Resultado = JSON.parse(Resultado);     
                       if(Resultado.Codigo == null)
                       {       
@@ -140,7 +126,7 @@ var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', 
                           $('#ID_Remision').val(Resultado.ID_Remision); 
                           $('#ID_Estudiante_Remision').selectpicker('val', '#'+Resultado.ID_Estudiante);
                           $('#ID_Empleado_Remision').selectpicker('val', '#' +Resultado.Empleado_ID);
-                          $('#Estado_Remision').selectpicker('val', Resultado.Estado_Remision);
+                          $('#Estado_Remision').val(Resultado.Estado_Remision);
 
                           Fecha_Entrada = Cambio_Formato_Fecha(1,Resultado.Fecha_Prestamo, Resultado.Fecha_Entrega);
                           $('#Remision_Fecha_Inicio').val(Fecha_Entrada.Fecha_Inicio);
@@ -148,11 +134,7 @@ var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', 
                           
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
-                              Arreglo_Listado[i].ID_Instrumento=(Resultado.Lista_Desglose[i].ID_Instrumento);
-                              Arreglo_Listado[i].Nombre=(Resultado.Lista_Desglose[i].Nombre);
-                              Arreglo_Listado[i].Observacion_Inicial=(Resultado.Lista_Desglose[i].Observacion_Inicial);
-                              Arreglo_Listado[i].Observacion_Final = ('');
-
+                                Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: '' });
                                 Tabla_Desglose_Remision.row.add
                                 ([
                                     Resultado.Lista_Desglose[i].ID_Instrumento,
@@ -311,7 +293,7 @@ var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', 
             $('#ID_Remision').val(1);
             $("#ID_Empleado_Remision").selectpicker('val', '');
             $("#ID_Estudiante_Remision").selectpicker('val', '');
-            $('#Estado_Remision').selectpicker('val', 'Activa');
+            $('#Estado_Remision').val('Activa');
             $("#Estado_Remision").prop("disabled", true);
             $('#Remision_Fecha_Inicio').val(Fecha_Actual);
             $('#Remision_Fecha_Fin').val(Fecha_Actual);
@@ -611,32 +593,31 @@ var Arreglo_Listado = { ID_Instrumento: '', Nombre: '', Observacion_Inicial:'', 
 
                     if(Comando == 'Nuevo')
                     {                
-                        Tabla_Desglose_Remision.clear().draw();
                         Tabla_Desglose_Remision.row.add
                         ([
-                            Modal[0],
-                            Modal[1],
-                            Modal[2],
-                            'El instrumento no ha sido devuelto'
-                        ]).draw( false );   
+                                                                  //F O T O
+                            Modal[0],                             //ID_Instrumento
+                            Modal[1],                             //Nombre
+                            Modal[2],                             //Ob. Inicial
+                            'El instrumento no ha sido devuelto',  //Ob. Final
+                            '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                        ]).draw( false ); 
+
                         swal.closeModal();
                         swal("Exito","Se añadio el registro exitosamente", "success");
                     }
                     else
                     {
-                        Tabla_Desglose_Remision.clear().draw();
-                        for (i = 0; i < Arreglo_Listado.length; i++) 
-                        {
                           Arreglo_Listado[i].Observacion_Final = Modal[0];
-                          Tabla_Desglose_Remision.row.add
-                          ([
-                              Arreglo_Listado[i].ID_Instrumento,
-                              Arreglo_Listado[i].Nombre,
-                              Arreglo_Listado[i].Observacion_Inicial,
-                              Modal[0]
-                          ]).draw( false );   
-                        }
+                          
+                          Arreglo_Listado[i].ID_Instrumento,
+                          Arreglo_Listado[i].Nombre,
+                          Arreglo_Listado[i].Observacion_Inicial,
+                          Arreglo_Listado[i].Observacion_Final,
+                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                        
                         swal.closeModal();
+
                         swal("Exito","Se ha actualizado el registro exitosamente", "success");
                     }
                     swal.closeModal();

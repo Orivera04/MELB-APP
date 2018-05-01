@@ -38,6 +38,8 @@ function Inicializacion_Controles()
     $("input[name='Estante']").TouchSpin({});
     $("input[name='Gaveta']").TouchSpin({});
     $("input[name='ID_Remision']").TouchSpin({});
+    $("input[name='Estado_Remision']").TouchSpin({});
+    
 
     $('#Marca_Instrumento').maxlength
     ({

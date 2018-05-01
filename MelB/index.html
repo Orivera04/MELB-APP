@@ -552,6 +552,7 @@
                                     <table id="Remision_T" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
                                             <tr>
+                                                <th>Imagen</th>
                                                 <th>Numero de remisión</th>
                                                 <th>Asignada A</th>
                                                 <th>Estado</th>
@@ -647,10 +648,10 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Estado</label>
                                                             <div class="input-group m-t-10">
-                                                                <select id="Estado_Remision" class="selectpicker" title="Activa" data-style="btn-white" disabled>
-                                                                    <option>Activa</option>
-                                                                    <option >Cancelada</option>
-                                                                </select>                       
+                                                                <input data-large-mode="true" data-lang = "es" id="Estado_Remision" type="text"  class="form-control">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-paper-airplane" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
                                                             </div>    
                                                         </div>
                                                         
@@ -663,6 +664,17 @@
                                 </div>
                             </div>
                         </div>                                            
+
+                            <div class="row">
+                                <div class="col-sm-3 FlotarDerecha" style="padding-bottom: 2%">
+                                    <div class="input-group m-t-10" id="Busqueda_Remision_Instrumentos">
+                                        <input type="number" id="Instrumentos_Disponibles" class="form-control" placeholder="Instrumentos Disponibles" maxlength="50">
+                                        <span class="input-group-btn">
+                                            <button id="Buscar_Instrumento_Disponible" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-plus-round" data-pack="default" data-tags="magnifying glass"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
                         <div class="panel panel-color panel-danger" id="Panel_Desglose_Remision">
                                             <div class="panel-heading Accesorios">                                        
@@ -847,6 +859,16 @@
                                                             </select>                    
                                                             </div>
                                                         </div>    
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Instrumento Asociado</label>
+                                                                <div class="input-group m-t-10">
+                                                                    <input id="Instrumento_Asociado" type="text"  class="form-control" placeholder="Instrumento" maxlength="20" disabled>
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-share" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                        </div>
 
                                                     </form>
                                                 </div>
