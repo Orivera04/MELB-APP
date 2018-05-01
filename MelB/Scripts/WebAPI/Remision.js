@@ -591,10 +591,11 @@ var Arreglo_Listado = [];
                     swal.showLoading();   
 
                     if(Comando == 'Nuevo')
-                    {                
+                    {  
+                        var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "https://i.imgur.com/0oN2F22.png"></img>';
                         Tabla_Desglose_Remision.row.add
                         ([
-                                                                  //F O T O
+                            Imagen,                                      //F O T O
                             Modal[0],                             //ID_Instrumento
                             Modal[1],                             //Nombre
                             Modal[2],                             //Ob. Inicial
@@ -607,6 +608,8 @@ var Arreglo_Listado = [];
                     }
                     else
                     {
+                          var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
+
                           Arreglo_Listado[i].Observacion_Final = Modal[0];
                           
                           Arreglo_Listado[i].ID_Instrumento,
