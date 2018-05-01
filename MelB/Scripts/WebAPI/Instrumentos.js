@@ -212,6 +212,7 @@ var ImagenBase64;
                 type: 'GET',
                 success: function (Resultado) 
                 {            
+                      Tabla_Instrumento.clear().draw();
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
                       {      

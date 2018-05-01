@@ -1,6 +1,6 @@
 ﻿/* Funciones de la API*/
 
-        function Cargar_Proveedores() 
+        function Cargar_Proveedores(Bandera_Filtro) 
         {
             Tabla_Proveedor.clear().draw();
             $.ajax
@@ -10,26 +10,37 @@
                 success: function (Resultado) 
                 {
                   if(Resultado.Codigo == null)
-                  {
-                      Resultado = JSON.parse(Resultado);
-                      $('#Proveedor_Instrumento').html('');
-                      for (i = 0; i < Resultado.length; i++) 
-                      {      
-                        var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
-                        Tabla_Proveedor.row.add
-                            ([
-                                Resultado[i].ID_Proveedor,
-                                Imagen,
-                                Resultado[i].Nombre,
-                                '<a href="tel:' + Resultado[i].Telefono_1 + '">' + Resultado[i].Telefono_1 +'</a>',
-                                '<a href="mailto:' + Resultado[i].Correo + '">' + Resultado[i].Correo +'</a>',
-                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                            ]).draw( false );
-                        $('#Proveedor_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>'); 
-                      }
-                      Cargar_Remisiones();
-                  }                   
+                  {                      
+                        Resultado = JSON.parse(Resultado);
+                        if(Bandera_Filtro == null) { $('#Proveedor_Instrumento').html('');} else {$('#ID_Filtro_Instrumento').html('');}
+                        for (i = 0; i < Resultado.length; i++) 
+                        {
+                          if(Bandera_Filtro == null)
+                          {                            
+                            var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
+                            Tabla_Proveedor.row.add
+                                ([
+                                    Resultado[i].ID_Proveedor,
+                                    Imagen,
+                                    Resultado[i].Nombre,
+                                    '<a href="tel:' + Resultado[i].Telefono_1 + '">' + Resultado[i].Telefono_1 +'</a>',
+                                    '<a href="mailto:' + Resultado[i].Correo + '">' + Resultado[i].Correo +'</a>',
+                                    '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                    '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                ]).draw( false );
+                            $('#Proveedor_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>'); 
+                          }
+                          else
+                          {
+                            $('#ID_Filtro_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>'); 
+                          }
+                        }
+                      $('.selectpicker').selectpicker('refresh');                                            
+                      if(Bandera_Filtro == null)
+                      {                        
+                        Cargar_Remisiones();
+                      }                                     
+                  }                    
                 },
                 error: function (Error) 
                 {

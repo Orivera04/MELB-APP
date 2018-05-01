@@ -1,4 +1,4 @@
- function Cargar_Aulas()  
+ function Cargar_Aulas(Bandera_Filtro)  
  {        
         $.ajax({
 
@@ -8,19 +8,27 @@
 
             success: function (Resultado) 
             {    
-                $('#Aula_Clase').html('');
+                if(Bandera_Filtro == null) { $('#Aula_Clase').html('');} else { $('#ID_Filtro_Instrumento').html('');} 
                 if(Resultado.Codigo == null)
-                {            
+                {                                
                     Resultado = JSON.parse(Resultado);
                     if(Resultado.Codigo == null)
-                    {                 
+                    {                                                      
                         for (i = 0; i < Resultado.length; i++) 
-                        {      
-                            $('#Aula_Clase').append('<option data-subtext="Aula:#'+Resultado[i].Numero+' Piso:#'+Resultado[i].Piso+'">#'+Resultado[i].ID_Aula+'</option>');                 
+                        { 
+                           if(Bandera_Filtro == null)
+                           {
+                              $('#Aula_Clase').append('<option data-subtext="Aula:#'+Resultado[i].Numero+' Piso:#'+Resultado[i].Piso+'">#'+Resultado[i].ID_Aula+'</option>');                 
+                           }     
+                           else
+                           {
+                              $('#ID_Filtro_Instrumento').append('<option data-subtext="Aula:#'+Resultado[i].Numero+' Piso:#'+Resultado[i].Piso+'">#'+Resultado[i].ID_Aula+'</option>');                 
+                           }                                            
                         }
-                    }
-                } 
-                $('.selectpicker').selectpicker('render');
+                    } 
+                }
+
+                $('.selectpicker').selectpicker('refresh');   
                 swal.closeModal();               
             },
 

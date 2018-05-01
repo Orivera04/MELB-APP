@@ -1,60 +1,68 @@
 ﻿/* Funciones de la API*/
 
-  function Cargar_Estuches() 
-  {
-    Tabla_Estuche.clear().draw();
-    $.ajax
-    ({
-        url: 'http://melbws.azurewebsites.net/api/Estuche',
-        type: 'GET',
-        success: function (Resultado) 
+        function Cargar_Estuches(Bandera_Filtro) 
         {
-            if(Resultado.Codigo == null)
-            {
-                Resultado = JSON.parse(Resultado);
-                var Disponible; 
-                for (i = 0; i < Resultado.length; i++) 
-                {   
-                    if (Resultado[i].Disponibilidad == '1')
-                    {
-                        Disponible = '<span class="label label-purple">En Prestamo</span>';
-                    }
-                    else if(Resultado[i].Disponibilidad == '2')
-                    {
-                        Disponible = '<span class="label label-success">Asignado</span>';
-                    }
-                    else
-                    {
-                        Disponible = '<span class="label label-inverse">Sin Asignar</span>';
-                    }
+          $.ajax
+          ({
+              url: 'http://melbws.azurewebsites.net/api/Estuche',
+              type: 'GET',
+              success: function (Resultado) 
+              {
+                  if(Resultado.Codigo == null)
+                  {
+                      Resultado = JSON.parse(Resultado);
+                      var Disponible; 
+                      if(Bandera_Filtro != null) { $('#ID_Filtro_Instrumento').html('');} else {Tabla_Estuche.clear().draw();}
+                      for (i = 0; i < Resultado.length; i++) 
+                      {  
+                        if(Bandera_Filtro == null)
+                        { 
+                              if (Resultado[i].Disponibilidad == '1')
+                              {
+                                  Disponible = '<span class="label label-purple">En Prestamo</span>';
+                              }
+                              else if(Resultado[i].Disponibilidad == '2')
+                              {
+                                  Disponible = '<span class="label label-success">Asignado</span>';
+                              }
+                              else
+                              {
+                                  Disponible = '<span class="label label-inverse">Sin Asignar</span>';
+                              }
 
-                    var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
-                    Tabla_Estuche.row.add
-                    ([
-                        Resultado[i].ID_Estuche,
-                        Imagen,
-                        Resultado[i].Nombre,
-                        Resultado[i].Marca,
-                        Disponible,
-                        Resultado[i].Color,
-                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                        '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                    ] ).draw( false );
-                }       
-                    Cargar_Proveedores();
-            }
-        },
-        error: function (Mensaje) 
-        {
-           swal
-            ({
-                  title: "Error listando estuches",
-                  text: "No se pudo conectar con el servidor.",
-                  type: "error",
-            });
+                              var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
+                              Tabla_Estuche.row.add
+                              ([
+                                  Resultado[i].ID_Estuche,
+                                  Imagen,
+                                  Resultado[i].Nombre,
+                                  Resultado[i].Marca,
+                                  Disponible,
+                                  Resultado[i].Color,
+                                  '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                  '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                              ] ).draw( false );
+                          }
+                          else
+                          {
+                              $('#ID_Filtro_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
+                          }
+                          if(Bandera_Filtro == null){Cargar_Proveedores();}
+                      }       
+                  }
+                  $('.selectpicker').selectpicker('refresh');   
+              },
+              error: function (Mensaje) 
+              {
+                 swal
+                  ({
+                        title: "Error listando estuches",
+                        text: "No se pudo conectar con el servidor.",
+                        type: "error",
+                  });
+              }
+          });
         }
-    });
-}
 
         function Cargar_Estuches_Por_ID(ID) 
         {

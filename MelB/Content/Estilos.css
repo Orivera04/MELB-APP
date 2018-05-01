@@ -660,10 +660,16 @@ button:focus:not(:active)::after
     margin-right: 15px;
 }
 
-
 .FlotarDerecha2
 {
     float: right;
     color: white;
     font-size: 28px !important;    
+}
+
+.btn-filtro,.btn-filtro:hover ,.btn-filtro:focus, .btn-filtro:active, .btn-filtro.active, .btn-filtro.focus, .btn-filtro:active, .btn-filtro:focus, .btn-filtro:hover 
+{
+    background:#5fbeaa !important;
+    border-color : #5fbeaa !important;
+    color: white;
 }

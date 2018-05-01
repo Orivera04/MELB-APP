@@ -21,6 +21,7 @@ $(document).ready(function ()
 
     // Peticiones Ajax //
     Cargar_Instrumentos();
+    Cargar_Proveedores(1); 
 
 });
 
@@ -344,8 +345,6 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop",50);
         });
 
-     
-
     /* Eventos : uso en formularios de forma global */
 
 
@@ -542,24 +541,32 @@ function Inicializacion_Eventos()
             var Filtro = $('#Filtro_Instrumento').val();
             if(Filtro == 'Proveedor')
             {
-                
+                $('#Label_ID').text('ID Proveedor');
+                $('#Col_Select').css('visibility','visible');
+                Cargar_Proveedores(1);
             }  
             else if(Filtro == 'Estuche')
             {
-
+                $('#Label_ID').text('ID Estuche');
+                $('#Col_Select').css('visibility','visible');
+                Cargar_Estuches(1)
             }   
             else if (Filtro == 'Aula')
-            {
-
+            {            
+                $('#Label_ID').text('ID Aula');
+                $('#Col_Select').css('visibility','visible');
+                Cargar_Aulas(1);
             }   
             else
-            {
-
+            {                
+                $('#Col_Select').css('visibility','hidden');
             }     
-        });  
+        }); 
 
-    
-
+        $('#Filtro_Buscar_Boton').click(function(event)
+        {
+            Filtrar_Instrumentos($('#Filtro_Instrumento').val(),$('#ID_Filtro_Instrumento').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
+        });
 
         /* Eventos : Formulario Instrumento */
 
