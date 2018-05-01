@@ -3,8 +3,14 @@ var Fecha_Actual;
 var Lista_Instrumentos = '';
 var Lista_Observaciones_Iniciales = '';
 var Lista_Observaciones_Finales = '';  
-//var Arreglo_Listado = {ID_Instrumento: [], Nombre: [], Observacion_Inicial: [], Observacion_Final: []};
-var Arreglo_Listado = [];
+
+
+var ID_Instrumento = [];
+var Nombre = [];
+var Observacion_Inicial = [];
+var Observacion_Final = []; 
+var Arreglo_Listado = { ID_Instrumento: [], Nombre: [], Observacion_Inicial: [], Observacion_Final: []};
+
 
         function Cargar_Remisiones() 
         {
@@ -132,10 +138,10 @@ var Arreglo_Listado = [];
                           
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
-                              Arreglo_Listado.ID_Instrumento[i] = Resultado.Lista_Desglose[i].ID_Instrumento;
-                              Arreglo_Listado.Nombre[i] = Resultado.Lista_Desglose[i].Nombre;
-                              Arreglo_Listado.Observacion_Inicial[i] = Resultado.Lista_Desglose[i].Observacion_Inicial;
-                              Arreglo_Listado.Observacion_Final[i] = '';
+                              Arreglo_Listado.ID_Instrumento = Resultado.Lista_Desglose[i].ID_Instrumento;
+                              Arreglo_Listado.Nombre = Resultado.Lista_Desglose[i].Nombre;
+                              Arreglo_Listado.Observacion_Inicial = Resultado.Lista_Desglose[i].Observacion_Inicial;
+                              Arreglo_Listado.Observacion_Final = '';
 
                                 Tabla_Desglose_Remision.row.add
                                 ([
@@ -237,23 +243,32 @@ var Arreglo_Listado = [];
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
         {
+          /*TRUE SE OCUPA PARA NUEVA REMISION*/
             if(Cond == true)
             {
-                $("#ID_Remision").prop("disabled", true);
-                $("#ID_Estudiante_Remision").prop("disabled", true);
-                $("#ID_Empleado_Remision").prop("disabled", true);
-                $("#Remision_Fecha_Fin").prop("disabled", true);
-                $("#Remision_Fecha_Inicio").prop("disabled", true);
-                $("#Estado_Remision").prop("disabled", true);
-                $('#Actualizar_Remision').removeAttr('disabled');
-                $('.selectpicker').selectpicker('refresh');
                 if (Operacion == 'Nuevo') 
                 {
                     $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
+                    $("#ID_Remision").prop("disabled", false);
+                    $("#ID_Estudiante_Remision").prop("disabled", false);
+                    $("#ID_Empleado_Remision").prop("disabled", false);
+                    $("#Remision_Fecha_Fin").prop("disabled", false);
+                    $("#Remision_Fecha_Inicio").prop("disabled", true);
+                    $("#Estado_Remision").prop("disabled", false);
+                    $('#Actualizar_Remision').prop('disabled',false);
+                    $('.selectpicker').selectpicker('refresh');
                 }
                 else
                 {
-                   $('#Añadir_Desglose_Remision').html('<i class="ion-compose" data-pack="default" data-tags="menu"></i>');                  
+                    $('#Añadir_Desglose_Remision').html('<i class="ion-compose" data-pack="default" data-tags="menu"></i>');                  
+                    $("#ID_Remision").prop("disabled", true);
+                    $("#ID_Estudiante_Remision").prop("disabled", true);
+                    $("#ID_Empleado_Remision").prop("disabled", true);
+                    $("#Remision_Fecha_Fin").prop("disabled", true);
+                    $("#Remision_Fecha_Inicio").prop("disabled", true);
+                    $("#Estado_Remision").prop("disabled", true);
+                    $('#Actualizar_Remision').removeAttr('disabled');
+                    $('.selectpicker').selectpicker('refresh');
                 }
                 
                 $('.FlotarDerecha2').show();

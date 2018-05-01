@@ -708,7 +708,7 @@ function Inicializacion_Eventos()
 
          $('#Añadir_Desglose_Remision').click(function(event)
         {
-             Insertar_Actualizar_Desglose_Remision($('#ID_Remision').val(),Operacion);   
+             Insertar_Actualizar_Desglose_Remision(Operacion);   
         });
 }
 
