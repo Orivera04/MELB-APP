@@ -398,7 +398,6 @@ var Arreglo_Listado = [];
 
 /* Funciones de soporte */
 
-
         function Insertar_Actualizar_Remision(Comando)
         {   
           
