@@ -418,7 +418,7 @@ function Inicializacion_Eventos()
                  Operacion = 'Nuevo';
                  $('#Header_Remision_Texto').text('Añadir Remision');
                  Reiniciar_Controles_Remision();
-                 Habilitar_Deshabilitar_Remision(true);
+                 Habilitar_Deshabilitar_Remision(true,Operacion);
                  $('#ID_Remision').removeAttr('disabled');
                  $('#Remisiones').hide(300);
                  $('#Remision_Detalle').show(400);   
@@ -708,7 +708,7 @@ function Inicializacion_Eventos()
 
          $('#Añadir_Desglose_Remision').click(function(event)
         {
-             Insertar_Desglose_Remision($('#ID_Remision').val(),'Nuevo',null);   
+             Insertar_Actualizar_Desglose_Remision($('#ID_Remision').val(),Operacion);   
         });
 }
 
