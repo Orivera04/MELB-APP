@@ -20,9 +20,7 @@ $(document).ready(function ()
 
 
     // Peticiones Ajax //
-    Cargar_Instrumentos();
-    Cargar_Proveedores(1); 
-
+    Cargar_Instrumentos();      
 });
 
 
@@ -541,23 +539,37 @@ function Inicializacion_Eventos()
         $('#Filtro_Instrumento').change(function(event)
         {
             var Filtro = $('#Filtro_Instrumento').val();
+            $('#ID_Filtro_Instrumento').html('');
             if(Filtro == 'Proveedor')
             {
                 $('#Label_ID').text('ID Proveedor');
                 $('#Col_Select').css('visibility','visible');
-                Cargar_Proveedores(1);
+                $('#ID_Filtro_Instrumento').html();
+                ID_Proveedor.forEach(function(Elemento) 
+                {
+                    $('#ID_Filtro_Instrumento').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                });
+                $('.selectpicker').selectpicker('refresh');   
             }  
             else if(Filtro == 'Estuche')
             {
                 $('#Label_ID').text('ID Estuche');
                 $('#Col_Select').css('visibility','visible');
-                Cargar_Estuches(1)
+                ID_Estuche.forEach(function(Elemento) 
+                {
+                    $('#ID_Filtro_Instrumento').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                });
+                $('.selectpicker').selectpicker('refresh');   
             }   
             else if (Filtro == 'Aula')
             {            
                 $('#Label_ID').text('ID Aula');
                 $('#Col_Select').css('visibility','visible');
-                Cargar_Aulas(1);
+                ID_Aula.forEach(function(Elemento) 
+                {
+                    $('#ID_Filtro_Instrumento').append('<option data-subtext="Aula:#'+Elemento.Numero+' Piso:#'+Elemento.Piso+'">#'+Elemento.ID+'</option>');                                                                                                                  
+                });
+                $('.selectpicker').selectpicker('refresh');   
             }   
             else
             {                
@@ -569,6 +581,29 @@ function Inicializacion_Eventos()
         {
             Filtrar_Instrumentos($('#Filtro_Instrumento').val(),$('#ID_Filtro_Instrumento').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
         });
+
+        /* Eventos Tabla : Tabla Remisiones */
+
+        $('#Filtro_Remision').change(function(event)
+        {
+            var Filtro = $('#Filtro_Remision').val();
+            if(Filtro == 'Instrumento')
+            {
+                $('#Label_ID_Remisiones').text('ID Instrumento');
+                Cargar_Instrumentos(); 
+            }  
+            else if(Filtro == 'Estudiante')
+            {
+                $('#Label_ID_Remisiones').text('ID Estudiante');
+                Cargar_ID_Estudiantes();
+            }                    
+        }); 
+
+        $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
+        {
+            Filtrar_Instrumentos($('#Filtro_Instrumento').val(),$('#ID_Filtro_Instrumento').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
+        });
+
 
         /* Eventos : Formulario Instrumento */
 
@@ -694,9 +729,9 @@ function Inicializacion_Eventos()
         });
 
 
-         /* Eventos : Formulario Remision */
+        /* Eventos : Formulario Remision */
 
-         $('#Switch_Editar_Remision').change(function()
+        $('#Switch_Editar_Remision').change(function()
         {
             if( $('#Switch_Editar_Remision').prop('checked') == true)
             {

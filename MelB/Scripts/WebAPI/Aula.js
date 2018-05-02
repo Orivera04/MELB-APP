@@ -1,4 +1,5 @@
- function Cargar_Aulas(Bandera_Filtro)  
+ var ID_Aula = [];
+ function Cargar_Aulas()  
  {        
         $.ajax({
 
@@ -8,26 +9,22 @@
 
             success: function (Resultado) 
             {    
-                if(Bandera_Filtro == null) { $('#Aula_Clase').html('');} else { $('#ID_Filtro_Instrumento').html('');} 
+                ID_Aula = [];
+                $('#Aula_Clase').html(''); 
                 if(Resultado.Codigo == null)
                 {                                
-                    Resultado = JSON.parse(Resultado);
-                    if(Resultado.Codigo == null)
-                    {                                                      
-                        for (i = 0; i < Resultado.length; i++) 
-                        { 
-                           if(Bandera_Filtro == null)
-                           {
-                              $('#Aula_Clase').append('<option data-subtext="Aula:#'+Resultado[i].Numero+' Piso:#'+Resultado[i].Piso+'">#'+Resultado[i].ID_Aula+'</option>');                 
-                           }     
-                           else
-                           {
-                              $('#ID_Filtro_Instrumento').append('<option data-subtext="Aula:#'+Resultado[i].Numero+' Piso:#'+Resultado[i].Piso+'">#'+Resultado[i].ID_Aula+'</option>');                 
-                           }                                            
-                        }
-                    } 
+                    Resultado = JSON.parse(Resultado);                                                                        
+                    for (i = 0; i < Resultado.length; i++) 
+                    {  
+                       ID_Aula.push({ID:Resultado[i].ID_Aula , Numero:Resultado[i].Numero, Piso:Resultado[i].Piso});                                                                               
+                       $('#Aula_Clase').append('<option data-subtext="Aula:#'+Resultado[i].Numero+' Piso:#'+Resultado[i].Piso+'">#'+Resultado[i].ID_Aula+'</option>');                                                                                                     
+                    }                     
                 }
-
+                
+                ID_Proveedor.forEach(function(Elemento) 
+                {
+                    $('#ID_Filtro_Instrumento').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                });                
                 $('.selectpicker').selectpicker('refresh');   
                 swal.closeModal();               
             },

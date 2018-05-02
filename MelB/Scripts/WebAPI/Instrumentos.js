@@ -1,8 +1,9 @@
 var ImagenBase64;
+var ID_Instrumento = [];
 /* Funciones de la API*/
         function Cargar_Instrumentos() 
         {
-            Tabla_Instrumento.clear().draw();
+            Tabla_Instrumento.clear().draw();         
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos',
@@ -11,25 +12,27 @@ var ImagenBase64;
                 {
                   if(Resultado.Codigo == null)
                   {
+                      ID_Instrumento = [];
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
-                      {      
-                              var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
-                              var Disponibilidad =  (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>'
-                              Tabla_Instrumento.row.add
-                              ([
-                                      Resultado[i].ID_Instrumento,
-                                      Imagen,
-                                      Resultado[i].Nombre,
-                                      Resultado[i].Marca,
-                                      Disponibilidad,                            
-                                      Resultado[i].Tipo_Ubicacion,
-                                      '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                      '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                              ] ).draw( false );
-                      }
+                      {        
+                                ID_Instrumento.push({ID:Resultado[i].ID_Instrumento,Nombre:Resultado[i].Nombre});                                                        
+                                var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
+                                var Disponibilidad =  (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>'
+                                Tabla_Instrumento.row.add
+                                ([
+                                        Resultado[i].ID_Instrumento,
+                                        Imagen,
+                                        Resultado[i].Nombre,
+                                        Resultado[i].Marca,
+                                        Disponibilidad,                            
+                                        Resultado[i].Tipo_Ubicacion,
+                                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                        '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                ] ).draw( false );
+                      }                              
+                  }
                       Cargar_Estuches();
-                  }                   
                 },
                 error: function (Error) 
                 {

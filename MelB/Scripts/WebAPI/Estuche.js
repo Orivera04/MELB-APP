@@ -1,6 +1,7 @@
-﻿/* Funciones de la API*/
+﻿var ID_Estuche = [];
+/* Funciones de la API*/
 
-        function Cargar_Estuches(Bandera_Filtro) 
+        function Cargar_Estuches() 
         {
           $.ajax
           ({
@@ -8,49 +9,44 @@
               type: 'GET',
               success: function (Resultado) 
               {
+                  ID_Estuche = [];                                                        
                   if(Resultado.Codigo == null)
                   {
                       Resultado = JSON.parse(Resultado);
                       var Disponible; 
-                      if(Bandera_Filtro != null) { $('#ID_Filtro_Instrumento').html('');} else {Tabla_Estuche.clear().draw();}
+                      Tabla_Estuche.clear().draw();
                       for (i = 0; i < Resultado.length; i++) 
-                      {  
-                        if(Bandera_Filtro == null)
-                        { 
-                              if (Resultado[i].Disponibilidad == '1')
-                              {
-                                  Disponible = '<span class="label label-purple">En Prestamo</span>';
-                              }
-                              else if(Resultado[i].Disponibilidad == '2')
-                              {
-                                  Disponible = '<span class="label label-success">Asignado</span>';
-                              }
-                              else
-                              {
-                                  Disponible = '<span class="label label-inverse">Sin Asignar</span>';
-                              }
-
-                              var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
-                              Tabla_Estuche.row.add
-                              ([
-                                  Resultado[i].ID_Estuche,
-                                  Imagen,
-                                  Resultado[i].Nombre,
-                                  Resultado[i].Marca,
-                                  Disponible,
-                                  Resultado[i].Color,
-                                  '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                  '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                              ] ).draw( false );
+                      {           
+                          ID_Estuche.push({ID:Resultado[i].ID_Estuche,Nombre:Resultado[i].Nombre});                                                                       
+                          if (Resultado[i].Disponibilidad == '1')
+                          {
+                              Disponible = '<span class="label label-purple">En Prestamo</span>';
+                          }
+                          else if(Resultado[i].Disponibilidad == '2')
+                          {
+                              Disponible = '<span class="label label-success">Asignado</span>';
                           }
                           else
                           {
-                              $('#ID_Filtro_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Estuche+'</option>'); 
+                              Disponible = '<span class="label label-inverse">Sin Asignar</span>';
                           }
-                          if(Bandera_Filtro == null){Cargar_Proveedores();}
+
+                          var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
+                          Tabla_Estuche.row.add
+                          ([
+                              Resultado[i].ID_Estuche,
+                              Imagen,
+                              Resultado[i].Nombre,
+                              Resultado[i].Marca,
+                              Disponible,
+                              Resultado[i].Color,
+                              '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                              '<button type="button" class="btn btn-danger" onclick ="Eliminar_Estuche('+Resultado[i].ID_Estuche+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                          ] ).draw( false );                                                    
                       }       
                   }
-                  $('.selectpicker').selectpicker('refresh');   
+                  $('.selectpicker').selectpicker('refresh');
+                  Cargar_Proveedores();   
               },
               error: function (Mensaje) 
               {

@@ -55,7 +55,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
         cancelButtonText: 'Cancelar',
         showCancelButton: true,
         animation: true,
-        progressSteps: ['1', '2', '3'],
+        progressSteps: ['1', '2'],
         allowOutsideClick: false
   });
 
@@ -276,3 +276,39 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
                   
             });            
         }
+
+
+
+function Cargar_ID_Estudiantes()
+{
+  $.ajax({
+
+            url: 'http://melbws.azurewebsites.net/api/Estudiante',
+
+            type: 'GET',
+
+            success: function (Resultado) 
+            {        
+                    $('#ID_Filtro_Remisiones').html('');                                          
+                    Resultado = JSON.parse(Resultado);
+                    if(Resultado.Codigo == null)
+                    {                                                      
+                        for (i = 0; i < Resultado.length; i++) 
+                        { 
+                           $('#ID_Filtro_Remisiones').append('<option data-subtext="'+Resultado[i].Nombre+' '+Resultado[i].Apellido+'">#'+Resultado[i].ID_Estudiante+'</option>');                                        
+                        }
+                    }                 
+                $('.selectpicker').selectpicker('refresh');                                  
+            },
+            error: function (Mensaje) 
+            {
+
+                swal
+                ({
+                      title: "Error listando estudiantes",
+                      text: "No se pudo conectar con el servidor.",
+                      type: "error",
+                });
+          }
+        });
+}
