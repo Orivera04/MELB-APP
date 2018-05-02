@@ -255,7 +255,7 @@ a.article, a.article:hover {
 .panel-danger>.panel-heading2 {
    background: linear-gradient(0, transparent, transparent),linear-gradient(90deg, #ff1b94, #ff6969);
    border-top-left-radius:  3px;
-   border-top-right-radius:  3px;
+   border-top-right-radius: 3px;
 }
 
 /*Estuche*/
@@ -268,14 +268,15 @@ a.article, a.article:hover {
 /*Remisiones*/
 .panel-danger>.panel-heading4 {
    background: linear-gradient(to right, #cc00ff 0%, #ff00ff 100%);
-   border-top-left-radius:   5px;
-   border-top-right-radius:  5px;
+   border-top-left-radius:   3px;
+   border-top-right-radius:  3px;
 }
 
 #Panel_Filtro_Cabezera,#Panel_Filtro_Cabezera_Remisiones
 {
-   background: linear-gradient(to right, #485563, #29323c);    border-top-left-radius:   5px;
-   border-top-right-radius:  5px;
+   background: linear-gradient(to right, #485563, #29323c);    
+   border-top-left-radius:   3px;
+   border-top-right-radius:  3px;
 }
 
 
