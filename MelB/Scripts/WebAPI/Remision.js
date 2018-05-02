@@ -5,7 +5,11 @@ var Lista_Observaciones_Iniciales = '';
 var Lista_Observaciones_Finales = '';  
 var Arreglo_Listado = [];
 var ID_Estudiante = [];
-
+var Temporal_ID_Instrumento = 0;
+var Dropdown_ID_Instrumento = [];
+var Dropdown_Nombre_Instrumento = [];
+//var Arreglo_Instrumentos_Disponibles = [];
+       
         function Cargar_Remisiones() 
         {
             Tabla_Desglose_Remision.clear().draw();
@@ -104,7 +108,7 @@ var ID_Estudiante = [];
                 }
 
             });
-          Instrumentos_Disponibles();
+            Instrumentos_Disponibles();
         }
 
         function Cargar_Remision_Por_ID(ID) 
@@ -129,13 +133,11 @@ var ID_Estudiante = [];
                           $('#Remision_Fecha_Inicio').val(Fecha_Entrada.Fecha_Inicio);
                           $('#Remision_Fecha_Fin').val(Fecha_Entrada.Fecha_Fin);
                           
- 
-
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
 
                               var Imagen = '';
-                              Arreglo_Listado.push({Imagen: Imagen, ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: '' });  
+                              Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: '', Imagen: Imagen});  
 
                               $.ajax
                               ({
@@ -148,7 +150,8 @@ var ID_Estudiante = [];
                                         {       
                                             Resultado_Imagen = Resultado_Imagen[0];                  
                                             Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado_Imagen.Imagen+'"></img>'
-                                            Arreglo_Listado.push({Imagen: Imagen});
+                                           // Arreglo_Listado.push({Imagen: Imagen});
+                                           Arreglo_Listado[i].Imagen = Imagen;
                                         }
                                         else
                                         {
@@ -317,7 +320,8 @@ var ID_Estudiante = [];
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", false);
                     $('#Actualizar_Remision').prop('disabled',false);
-                    $('#row_Instrumento_Disponible').prop('disabled',false);
+                    $('#Añadir_Desglose_Remision').prop('disabled',false);
+                    $('#row_Instrumento_Disponible').prop('disabled','false');
                 }
                 else            //Actualizacion de una remision ACTIVA
                 {
@@ -329,6 +333,7 @@ var ID_Estudiante = [];
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", true);
                     $('#Actualizar_Remision').removeAttr('disabled');
+                    $('#Añadir_Desglose_Remision').prop('disabled',false);
                     $('#row_Instrumento_Disponible').prop('disabled',false);
                 }
                 
@@ -345,6 +350,7 @@ var ID_Estudiante = [];
                 $("#Estado_Remision").prop("disabled", true);
                 $('#Actualizar_Remision').prop('disabled',true);
                 $('.selectpicker').selectpicker('refresh');
+                $('#Añadir_Desglose_Remision').prop('disabled',true);
                 $('#Instrumentos_Disponibles').prop('disabled',true);
                 $('.FlotarDerecha2').hide();
             }
@@ -423,18 +429,18 @@ var ID_Estudiante = [];
             { 
               if ( i == Cantidad_Registros_Remisiones)
                   {
-                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
+                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
                       Lista_Instrumentos =  Lista_Instrumentos + Temporal_Instrumento;
 
-                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
+                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
                       Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial;
                   }
               else
                   {
-                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
+                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
                       Lista_Instrumentos = Lista_Instrumentos + Temporal_Instrumento + ', ';   
 
-                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
+                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
                       Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial + ', ';   
                   }
             }
@@ -442,24 +448,24 @@ var ID_Estudiante = [];
             {
               if ( i == Cantidad_Registros_Remisiones)
                   {
-                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
+                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
                       Lista_Instrumentos =  Lista_Instrumentos + Temporal_Instrumento;
 
-                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
+                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
                       Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial;
                       
-                      var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
+                      var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[4].innerHTML;
                       Lista_Observaciones_Finales = Lista_Observaciones_Finales + Temporal_Observacion_Final;
                   }
               else
                   {
-                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[0].innerHTML;
+                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
                       Lista_Instrumentos = Lista_Instrumentos + Temporal_Instrumento + ', ';   
 
-                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[2].innerHTML;
+                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
                       Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial + ', ';   
 
-                      var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
+                      var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[4].innerHTML;
                       Lista_Observaciones_Finales = Lista_Observaciones_Finales + Temporal_Observacion_Final;
                   } 
             }      
@@ -479,7 +485,10 @@ var ID_Estudiante = [];
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
                       { 
-                        $('#Instrumentos_Disponibles').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Instrumento+'</option>'); 
+                        //Arreglo_Instrumentos_Disponibles.push({Nombre: Resultado[i].Nombre, ID_Instrumento:Resultado[i].ID_Instrumento});  
+                        Dropdown_ID_Instrumento.push(Resultado[i].ID_Instrumento);
+                        Dropdown_Nombre_Instrumento.push(Resultado[i].Nombre);
+                        $('#Instrumentos_Disponibles').append('<option data-subtext="'+Dropdown_Nombre_Instrumento[i]+'">#'+Dropdown_ID_Instrumento[i]+'</option>'); 
                       }                                                        
                 },
                 error: function (Mensaje) 
@@ -521,6 +530,7 @@ var ID_Estudiante = [];
                 $.ajax
                 ({  
                       url: 'http://melbws.azurewebsites.net/api/Remision',
+                      //url: 'http://localhost:53603/api/Remision',
                       type: 'POST',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -620,7 +630,7 @@ var ID_Estudiante = [];
                 allowOutsideClick: false
           });
 
-          if(Comando == 'Nuevo' && $('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != "")
+          if((Comando == 'Nuevo') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != ""))
           {
               Titulo = 'Añadiendo a Remision';
               Error = 'Ocurrio un inconveniente al añadir el detalle.';
@@ -638,7 +648,7 @@ var ID_Estudiante = [];
                 }
               ]
           }
-          else
+          else if ((Comando == 'Actualizar') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != ""))
           {
               Titulo = 'Actualizando Observacion final';
               Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
@@ -648,7 +658,7 @@ var ID_Estudiante = [];
                 {
                     title: 'Actualizar Detalle Remision',
                     text: 'Observacion Final',
-                    input : 'text',
+                    input : 'textarea',
                     inputAttributes: 
                     {
                         maxlength : 50
@@ -656,6 +666,23 @@ var ID_Estudiante = [];
                     inputClass: 'form-control'
                 }
               ]
+          }
+          else
+          {
+
+            swal
+            ({
+                  title: "Aviso",
+                  text: "Selecciona un Instrumento",
+                  type: "warning",
+            }).then(
+                    value => {
+                      // handle confirm
+                    },
+                    dismiss => {
+                      // handle dismiss
+                    }
+                  ).catch(swal.noop)
           }
 
             swal.queue(Pasos).then(function (Modal) 
@@ -682,13 +709,13 @@ var ID_Estudiante = [];
                                     {       
                                         Resultado = Resultado[0];                  
                                         Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>'
-                                        
+                                        Temporal_ID_Instrumento = Resultado.ID_Instrumento;
                                         Tabla_Desglose_Remision.row.add
                                         ([
-                                          Resultado.Imagen,                                //F O T O
-                                          Resultado.ID_Instrumento,                             //ID_Instrumento
-                                          Resultado.Nombre,                             //Nombre
-                                          Modal[0],                             //Ob. Inicial
+                                          Imagen,                                //F O T O
+                                          Resultado.ID_Instrumento,              //ID_Instrumento
+                                          Resultado.Nombre,                      //Nombre
+                                          Modal[0],                              //Ob. Inicial
                                           'El instrumento no ha sido devuelto',  //Ob. Final
                                           '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                         ]).draw( false );
@@ -699,7 +726,28 @@ var ID_Estudiante = [];
                                     }
 
                                     swal.closeModal();
+                                    
+                                    document.getElementById("Instrumentos_Disponibles").options.length = 0;
+
+                                    //Removemos Instrumento recien añadido
+                                      var index = Dropdown_ID_Instrumento.indexOf(Temporal_ID_Instrumento);
+                                      
+                                      if (index > -1)
+                                      { 
+                                        Dropdown_ID_Instrumento.splice(index, 1);
+                                        Dropdown_Nombre_Instrumento.splice(index, 1);
+                                      }
+
+                                      for (i = 0; i < Dropdown_ID_Instrumento.length; i++) 
+                                      { 
+                                        $('#Instrumentos_Disponibles').append('<option data-subtext="'+Dropdown_Nombre_Instrumento[i]+'">#'+Dropdown_ID_Instrumento[i]+'</option>'); 
+                                      }                                                        
+                             
+                                    $('.selectpicker').selectpicker('refresh');
+                                    $('#Instrumentos_Disponibles').selectpicker('val', '');
+
                                     swal("Exito","Se añadio el registro exitosamente", "success");
+
                               },
                               error: function (Mensaje) 
                               {
@@ -724,10 +772,11 @@ var ID_Estudiante = [];
                           Arreglo_Listado[i].Observacion_Final,
                           '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         
-                        swal.closeModal();
+                          swal.closeModal();
 
-                        swal("Exito","Se ha actualizado el registro exitosamente", "success");
+                          swal("Exito","Se ha actualizado el registro exitosamente", "success");
                     }
+                    
                     swal.closeModal();
                 }
                 else
