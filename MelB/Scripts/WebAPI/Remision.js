@@ -607,7 +607,7 @@ var ID_Estudiante = [];
           }
         }
 
-        function Insertar_Actualizar_Desglose_Remision(Comando)
+         function Insertar_Actualizar_Desglose_Remision(Comando)
         {
           var Titulo;
           var Error;
@@ -620,22 +620,12 @@ var ID_Estudiante = [];
                 allowOutsideClick: false
           });
 
-          if(Comando == 'Nuevo')
+          if(Comando == 'Nuevo' && $('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != "")
           {
               Titulo = 'Añadiendo a Remision';
               Error = 'Ocurrio un inconveniente al añadir el detalle.';
               var Pasos = 
               [
-                {
-                    title: 'Añadir Instrumento a Remision',
-                    text: 'Nombre',
-                    input : 'text',
-                    inputAttributes: 
-                    {
-                        maxlength : 15
-                    },
-                    inputClass: 'form-control'
-                },
                 {
                     title: 'Añadir Instrumento a Remision',
                     text: 'Observacion Inicial',
@@ -672,7 +662,7 @@ var ID_Estudiante = [];
             {
               var Imagen;
 
-                if(Modal[0] != '' && Modal[1] != '' && Modal[2] != '')
+                if(Modal[0] != '')
                 {         
                     swal.resetDefaults();
                     swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
@@ -680,10 +670,10 @@ var ID_Estudiante = [];
 
                     if(Comando == 'Nuevo')
                     {  
-
+                      
                         $.ajax
                           ({
-                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+Modal[0],
+                              url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ $('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length),
                               type: 'GET',
                               success: function (Resultado) 
                               {            
@@ -692,41 +682,35 @@ var ID_Estudiante = [];
                                     {       
                                         Resultado = Resultado[0];                  
                                         Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>'
+                                        
+                                        Tabla_Desglose_Remision.row.add
+                                        ([
+                                          Resultado.Imagen,                                //F O T O
+                                          Resultado.ID_Instrumento,                             //ID_Instrumento
+                                          Resultado.Nombre,                             //Nombre
+                                          Modal[0],                             //Ob. Inicial
+                                          'El instrumento no ha sido devuelto',  //Ob. Final
+                                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                        ]).draw( false );
                                     }
                                     else
                                     {
                                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
                                     }
 
-
-                                    Tabla_Desglose_Remision.row.add
-                                    ([
-                                        Imagen,                                //F O T O
-                                        Modal[0],                             //ID_Instrumento
-                                        Modal[1],                             //Nombre
-                                        Modal[2],                             //Ob. Inicial
-                                        'El instrumento no ha sido devuelto',  //Ob. Final
-                                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                    ]).draw( false );
-
                                     swal.closeModal();
                                     swal("Exito","Se añadio el registro exitosamente", "success");
-
                               },
                               error: function (Mensaje) 
                               {
                                   swal
                                   ({
-                                        title: "Error al intentar ver la Imagen del instrumento",
+                                        title: "Ha ocurrido un error, intenta nuevamente",
                                         text: "No se pudo conectar con el servidor.",
                                         type: "error",
                                   });
                               }
                           }); 
-
-                         
-
-                        
                     }
                     else
                     {
