@@ -1,5 +1,4 @@
-﻿
-/* Funciones de la API */
+﻿/* Funciones de la API */
     function Cargar_Accesorios(ID)  
     {
         Tabla_Accesorios.clear().draw();
@@ -277,7 +276,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
             });            
         }
 
-
+// Mover esto a remisiones //
 
 function Cargar_ID_Estudiantes()
 {
@@ -311,4 +310,40 @@ function Cargar_ID_Estudiantes()
                 });
           }
         });
+}
+
+
+function Filtrar_Remisiones(Tipo_Filtro, ID_Filtro)
+{          
+   $.ajax
+    ({
+        url: 'http://melbws.azurewebsites.net/api/Remision?Filtro='+Tipo_Filtro+'&ID_Filtro='+ID_Filtro,
+        type: 'GET',
+        success: function (Resultado) 
+        {            
+              Tabla_Remision.clear().draw();
+              Resultado = JSON.parse(Resultado);
+              for (i = 0; i < Resultado.length; i++) 
+              {      
+                     Tabla_Remision.row.add
+                     ([
+                                Resultado[i].ID_Remision,
+                                Resultado[i].Nombre_Estudiante,
+                                Resultado[i].Estado_Remision,
+                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                     ]).draw( false );
+              }                                                        
+                                               
+        },
+        error: function (Mensaje) 
+        {
+            swal
+            ({
+                  title: "Error",
+                  text: "Ocurrio un inconveniente al filtrar los datos",
+                  type: "error",
+            });
+        }
+    });
 }

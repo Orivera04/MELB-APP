@@ -587,10 +587,15 @@ function Inicializacion_Eventos()
         $('#Filtro_Remision').change(function(event)
         {
             var Filtro = $('#Filtro_Remision').val();
+            $('#ID_Filtro_Remisiones').html('');
             if(Filtro == 'Instrumento')
             {
                 $('#Label_ID_Remisiones').text('ID Instrumento');
-                Cargar_Instrumentos(); 
+                ID_Instrumento.forEach(function(Elemento) 
+                {
+                    $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                });
+                $('.selectpicker').selectpicker('refresh');                   
             }  
             else if(Filtro == 'Estudiante')
             {
@@ -601,7 +606,7 @@ function Inicializacion_Eventos()
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-            Filtrar_Instrumentos($('#Filtro_Instrumento').val(),$('#ID_Filtro_Instrumento').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
+             Filtrar_Remisiones($('#Filtro_Remision').val(),$('#ID_Filtro_Remisiones').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
         });
 
 
