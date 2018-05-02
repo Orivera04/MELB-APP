@@ -600,7 +600,11 @@ function Inicializacion_Eventos()
             else if(Filtro == 'Estudiante')
             {
                 $('#Label_ID_Remisiones').text('ID Estudiante');
-                Cargar_ID_Estudiantes();
+                ID_Estudiante.forEach(function(Elemento) 
+                {
+                    $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                });
+                $('.selectpicker').selectpicker('refresh');
             }                    
         }); 
 

@@ -33,6 +33,10 @@ var ID_Instrumento = [];
                       }                              
                   }
                       Cargar_Estuches();
+                      ID_Instrumento.forEach(function(Elemento) 
+                      {
+                          $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                      });
                 },
                 error: function (Error) 
                 {

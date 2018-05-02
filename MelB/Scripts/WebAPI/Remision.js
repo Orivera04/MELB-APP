@@ -4,6 +4,7 @@ var Lista_Instrumentos = '';
 var Lista_Observaciones_Iniciales = '';
 var Lista_Observaciones_Finales = '';  
 var Arreglo_Listado = [];
+var ID_Estudiante = [];
 
         function Cargar_Remisiones() 
         {
@@ -38,12 +39,13 @@ var Arreglo_Listado = [];
                         success: function (Resultado_Estudiante) 
                         {
                             document.getElementById("ID_Estudiante_Remision").options.length = 0;
-
+                            ID_Estudiante = [];
                             if(Resultado_Estudiante.Codigo == null)
                             {
                                 Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
                                 for (i = 0; i < Resultado_Estudiante.length; i++) 
                                 {  
+                                  ID_Estudiante.push({ID:Resultado_Estudiante[i].ID_Estudiante,Nombre:Resultado_Estudiante[i].Nombre+' '+Resultado_Estudiante[i].Apellido});                                                        
                                   $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado_Estudiante[i].Nombre+'">#'+Resultado_Estudiante[i].ID_Estudiante+'</option>'); 
                                 }
                             }
@@ -244,6 +246,40 @@ var Arreglo_Listado = [];
                   } 
                   
             });            
+        }
+
+        function Filtrar_Remisiones(Tipo_Filtro, ID_Filtro)
+        {          
+         $.ajax
+          ({
+              url: 'http://melbws.azurewebsites.net/api/Remision?Filtro='+Tipo_Filtro+'&ID_Filtro='+ID_Filtro,
+              type: 'GET',
+              success: function (Resultado) 
+              {            
+                    Tabla_Remision.clear().draw();
+                    Resultado = JSON.parse(Resultado);
+                    for (i = 0; i < Resultado.length; i++) 
+                    {      
+                           Tabla_Remision.row.add
+                           ([
+                                      Resultado[i].ID_Remision,
+                                      Resultado[i].Nombre_Estudiante,
+                                      Resultado[i].Estado_Remision,
+                                      '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                      '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                           ]).draw( false );
+                    }                                                                                                             
+              },
+              error: function (Mensaje) 
+              {
+                  swal
+                  ({
+                        title: "Error",
+                        text: "Ocurrio un inconveniente al filtrar los datos",
+                        type: "error",
+                  });
+              }
+          });
         }
     
 /* Funcionalidad de formularios  */
