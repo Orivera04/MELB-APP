@@ -3,14 +3,10 @@ var Fecha_Actual;
 var Lista_Instrumentos = '';
 var Lista_Observaciones_Iniciales = '';
 var Lista_Observaciones_Finales = '';  
-//var Arreglo_Listado = { ID_Instrumento:'', Nombre: '', Observacion_Inicial: '', Observacion_Final: ''};
-
 var Arreglo_Listado = [];
-
 
         function Cargar_Remisiones() 
         {
-            Tabla_Remision.clear().draw();
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
@@ -20,6 +16,7 @@ var Arreglo_Listado = [];
                 {
                     if(Resultado.Codigo == null)
                     {
+                        Tabla_Remision.clear().draw();
                         Resultado = JSON.parse(Resultado);
                         for (i = 0; i < Resultado.length; i++) 
                         {  
@@ -33,64 +30,63 @@ var Arreglo_Listado = [];
                             ]).draw( false );  
                         }
 
-                        $.ajax
-                              ({
-                                  url: 'http://melbws.azurewebsites.net/api/Estudiante/',
-                                  type: 'GET',
-                                  success: function (Resultado_Estudiante) 
-                                  {
-                                      document.getElementById("ID_Estudiante_Remision").options.length = 0;
+                    /*Carga Dropdown con Estudiantes*/
+                    $.ajax
+                    ({
+                        url: 'http://melbws.azurewebsites.net/api/Estudiante/',
+                        type: 'GET',
+                        success: function (Resultado_Estudiante) 
+                        {
+                            document.getElementById("ID_Estudiante_Remision").options.length = 0;
 
-                                      if(Resultado_Estudiante.Codigo == null)
-                                      {
-                                          Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
-                                          for (i = 0; i < Resultado_Estudiante.length; i++) 
-                                          {  
-                                            $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado_Estudiante[i].Nombre+'">#'+Resultado_Estudiante[i].ID_Estudiante+'</option>'); 
-                                          }
+                            if(Resultado_Estudiante.Codigo == null)
+                            {
+                                Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
+                                for (i = 0; i < Resultado_Estudiante.length; i++) 
+                                {  
+                                  $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado_Estudiante[i].Nombre+'">#'+Resultado_Estudiante[i].ID_Estudiante+'</option>'); 
+                                }
+                            }
+                        },
+                        error: function (Mensaje) 
+                        {        
+                            swal
+                            ({
+                                  title: "Error listando Estudiantes",
+                                  text: "No se pudo conectar con el servidor.",
+                                  type: "error",
+                            });
+                        }
+                      });
 
-                                          
-                                      }
-                                  },
-                                  error: function (Mensaje) 
-                                  {        
-                                      swal
-                                      ({
-                                            title: "Error listando Estudiantes",
-                                            text: "No se pudo conectar con el servidor.",
-                                            type: "error",
-                                      });
-                                  }
-                                });
+                    /*Carga Dropdown con Empleados*/
+                    $.ajax
+                    ({
+                        url: 'http://melbws.azurewebsites.net/api/Empleado/',
+                        type: 'GET',
+                        success: function (Resultado_Empleado) 
+                        {
+                            document.getElementById("ID_Empleado_Remision").options.length = 0;
 
-                        $.ajax
-                              ({
-                                  url: 'http://melbws.azurewebsites.net/api/Empleado/',
-                                  type: 'GET',
-                                  success: function (Resultado_Empleado) 
-                                  {
-                                      document.getElementById("ID_Empleado_Remision").options.length = 0;
-
-                                      if(Resultado_Empleado.Codigo == null)
-                                      {
-                                          Resultado_Empleado = JSON.parse(Resultado_Empleado);
-                                          for (i = 0; i < Resultado_Empleado.length; i++) 
-                                          {  
-                                            $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].Nombre+'">#'+Resultado_Empleado[i].ID_Empleado+'</option>'); 
-                                          }
-                                      }
-                                  },
-                                  error: function (Mensaje) 
-                                  {        
-                                      swal
-                                      ({
-                                            title: "Error listando Empleados",
-                                            text: "No se pudo conectar con el servidor.",
-                                            type: "error",
-                                      });
-                                  }
-                              });
-
+                            if(Resultado_Empleado.Codigo == null)
+                            {
+                                Resultado_Empleado = JSON.parse(Resultado_Empleado);
+                                for (i = 0; i < Resultado_Empleado.length; i++) 
+                                {  
+                                  $('#ID_Empleado_Remision').append('<option data-subtext="'+Resultado_Empleado[i].Nombre+'">#'+Resultado_Empleado[i].ID_Empleado+'</option>'); 
+                                }
+                            }
+                        },
+                        error: function (Mensaje) 
+                        {        
+                            swal
+                            ({
+                                  title: "Error listando Empleados",
+                                  text: "No se pudo conectar con el servidor.",
+                                  type: "error",
+                            });
+                        }
+                    });
                         Cargar_Aulas(); 
                     }
                 },
@@ -106,12 +102,11 @@ var Arreglo_Listado = [];
                 }
 
             });
+          Instrumentos_Disponibles();
         }
 
         function Cargar_Remision_Por_ID(ID) 
         {
-          Arreglo_Listado = [];
-
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
@@ -132,16 +127,54 @@ var Arreglo_Listado = [];
                           $('#Remision_Fecha_Inicio').val(Fecha_Entrada.Fecha_Inicio);
                           $('#Remision_Fecha_Fin').val(Fecha_Entrada.Fecha_Fin);
                           
+ 
+
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
-                                Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: '' });
-                                Tabla_Desglose_Remision.row.add
-                                ([
-                                    Resultado.Lista_Desglose[i].ID_Instrumento,
-                                    Resultado.Lista_Desglose[i].Nombre,
-                                    Resultado.Lista_Desglose[i].Observacion_Inicial,
-                                    Resultado.Lista_Desglose[i].Observacion_Final
-                                ]).draw( false );                        
+
+                              var Imagen = '';
+                              Arreglo_Listado.push({Imagen: Imagen, ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: '' });  
+
+                              $.ajax
+                              ({
+                                  url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+Resultado.Lista_Desglose[i].ID_Instrumento,
+                                  type: 'GET',
+                                  success: function (Resultado_Imagen) 
+                                  {            
+                                        Resultado_Imagen = JSON.parse(Resultado_Imagen);                                                        
+                                        if(Resultado_Imagen.Codigo == null)
+                                        {       
+                                            Resultado_Imagen = Resultado_Imagen[0];                  
+                                            Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado_Imagen.Imagen+'"></img>'
+                                            Arreglo_Listado.push({Imagen: Imagen});
+                                        }
+                                        else
+                                        {
+                                            swal(Resultado_Imagen.Mensaje_Cabecera,Resultado_Imagen.Mensaje_Usuario, "info");
+                                        }           
+
+                                        Tabla_Desglose_Remision.row.add
+                                          ([
+                                              Arreglo_Listado[i].Imagen,
+                                              Arreglo_Listado[i].ID_Instrumento,
+                                              Arreglo_Listado[i].Nombre,
+                                              Arreglo_Listado[i].Observacion_Inicial,
+                                              Resultado.Lista_Desglose[i].Observacion_Final,
+                                              '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision("Actualizar")"><i class="ion-navicon-round" data-pack="default"></i></button>',
+
+                                          ]).draw( false );
+                                  },
+                                  error: function (Mensaje) 
+                                  {
+                                      swal
+                                      ({
+                                            title: "Error al intentar ver la Imagen del instrumento",
+                                            text: "No se pudo conectar con el servidor.",
+                                            type: "error",
+                                      });
+                                  }
+                              });                                
+
                             }   
                       }
                       else
@@ -235,10 +268,10 @@ var Arreglo_Listado = [];
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
         {
-          /*TRUE SE OCUPA PARA NUEVA REMISION*/
+            /*TRUE SE OCUPA PARA NUEVA REMISION Y HABILITACION DE EDICION*/
             if(Cond == true)
             {
-                if (Operacion == 'Nuevo') 
+                if (Operacion == 'Nuevo') //Nueva Remision
                 {
                     $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
                     $("#ID_Remision").prop("disabled", false);
@@ -248,9 +281,9 @@ var Arreglo_Listado = [];
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", false);
                     $('#Actualizar_Remision').prop('disabled',false);
-                    $('.selectpicker').selectpicker('refresh');
+                    $('#row_Instrumento_Disponible').prop('disabled',false);
                 }
-                else
+                else            //Actualizacion de una remision ACTIVA
                 {
                     $('#Añadir_Desglose_Remision').html('<i class="ion-compose" data-pack="default" data-tags="menu"></i>');                  
                     $("#ID_Remision").prop("disabled", true);
@@ -260,10 +293,11 @@ var Arreglo_Listado = [];
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", true);
                     $('#Actualizar_Remision').removeAttr('disabled');
-                    $('.selectpicker').selectpicker('refresh');
+                    $('#row_Instrumento_Disponible').prop('disabled',false);
                 }
                 
                 $('.FlotarDerecha2').show();
+                $('.selectpicker').selectpicker('refresh');
             }
             else
             {
@@ -275,6 +309,7 @@ var Arreglo_Listado = [];
                 $("#Estado_Remision").prop("disabled", true);
                 $('#Actualizar_Remision').prop('disabled',true);
                 $('.selectpicker').selectpicker('refresh');
+                $('#Instrumentos_Disponibles').prop('disabled',true);
                 $('.FlotarDerecha2').hide();
             }
         }
@@ -395,6 +430,33 @@ var Arreglo_Listado = [];
           }
         }
 
+          function Instrumentos_Disponibles()
+        { 
+          //Se carga el Dropdown con los instrumentos que estan disponibles//         
+           $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Instrumentos?Filtro=Disponible',
+                type: 'GET',
+                success: function (Resultado) 
+                {       
+                      document.getElementById("Instrumentos_Disponibles").options.length = 0;     
+                      Resultado = JSON.parse(Resultado);
+                      for (i = 0; i < Resultado.length; i++) 
+                      { 
+                        $('#Instrumentos_Disponibles').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Instrumento+'</option>'); 
+                      }                                                        
+                },
+                error: function (Mensaje) 
+                {
+                    swal
+                    ({
+                          title: "Error",
+                          text: "No se pudo listar los instrumentos",
+                          type: "error",
+                    });
+                }
+            });
+        }
 
 /* Funciones de soporte */
 
@@ -530,18 +592,6 @@ var Arreglo_Listado = [];
               [
                 {
                     title: 'Añadir Instrumento a Remision',
-                    text: 'ID Instrumento',
-                    input : 'number',
-                    inputAttributes: 
-                    {
-                        min: 1,
-                        max: 200000,
-                        step: 1
-                    },        
-                    inputClass: 'form-control'
-                },
-                {
-                    title: 'Añadir Instrumento a Remision',
                     text: 'Nombre',
                     input : 'text',
                     inputAttributes: 
@@ -605,12 +655,27 @@ var Arreglo_Listado = [];
                                     if(Resultado.Codigo == null)
                                     {       
                                         Resultado = Resultado[0];                  
-                                        Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
+                                        Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>'
                                     }
                                     else
                                     {
                                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
-                                    }           
+                                    }
+
+
+                                    Tabla_Desglose_Remision.row.add
+                                    ([
+                                        Imagen,                                //F O T O
+                                        Modal[0],                             //ID_Instrumento
+                                        Modal[1],                             //Nombre
+                                        Modal[2],                             //Ob. Inicial
+                                        'El instrumento no ha sido devuelto',  //Ob. Final
+                                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                    ]).draw( false );
+
+                                    swal.closeModal();
+                                    swal("Exito","Se añadio el registro exitosamente", "success");
+
                               },
                               error: function (Mensaje) 
                               {
@@ -623,22 +688,13 @@ var Arreglo_Listado = [];
                               }
                           }); 
 
-                        Tabla_Desglose_Remision.row.add
-                        ([
-                            Imagen,                                //F O T O
-                            Modal[0],                             //ID_Instrumento
-                            Modal[1],                             //Nombre
-                            Modal[2],                             //Ob. Inicial
-                            'El instrumento no ha sido devuelto',  //Ob. Final
-                            '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                        ]).draw( false ); 
+                         
 
-                        swal.closeModal();
-                        swal("Exito","Se añadio el registro exitosamente", "success");
+                        
                     }
                     else
                     {
-                          var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
+                          var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>';
 
                           Arreglo_Listado[i].Observacion_Final = Modal[0];
                           
