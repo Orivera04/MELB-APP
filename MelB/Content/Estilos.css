@@ -685,5 +685,14 @@ button:focus:not(:active)::after
     margin-bottom: 20px;
     background-color: #ffffff;
     box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
-   
+
+}
+
+
+.TarjetaIzquierda
+{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background: red;
+    padding: 20px;
 }
