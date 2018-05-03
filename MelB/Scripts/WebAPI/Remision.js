@@ -133,11 +133,12 @@ var Dropdown_Nombre_Instrumento = [];
                           $('#Remision_Fecha_Inicio').val(Fecha_Entrada.Fecha_Inicio);
                           $('#Remision_Fecha_Fin').val(Fecha_Entrada.Fecha_Fin);
                           
+                          Arreglo_Listado.splice(0,Arreglo_Listado.length);                             
+                          
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
 
-                              var Imagen = '';
-                              Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: '', Imagen: Imagen});  
+                              Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: Resultado.Lista_Desglose[i].Observacion_Final, Imagen: ''});  
 
                               $.ajax
                               ({
@@ -150,24 +151,34 @@ var Dropdown_Nombre_Instrumento = [];
                                         {       
                                             Resultado_Imagen = Resultado_Imagen[0];                  
                                             Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado_Imagen.Imagen+'"></img>'
-                                           // Arreglo_Listado.push({Imagen: Imagen});
-                                           Arreglo_Listado[i].Imagen = Imagen;
+                                            
+                                            for (j = 0; j < Arreglo_Listado.length; j++) 
+                                            {
+                                              if( Resultado_Imagen.ID_Instrumento == Arreglo_Listado[j].ID_Instrumento )
+                                              {
+                                                Arreglo_Listado[j].Imagen = Imagen; 
+                                                
+                                                Tabla_Desglose_Remision.row.add
+                                                ([
+                                                    Arreglo_Listado[j].Imagen,
+                                                    Arreglo_Listado[j].ID_Instrumento,
+                                                    Arreglo_Listado[j].Nombre,
+                                                    Arreglo_Listado[j].Observacion_Inicial,
+                                                    Arreglo_Listado[j].Observacion_Final,
+                                                    '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision("Actualizar")"><i class="ion-navicon-round" data-pack="default"></i></button>',
+
+                                                ]).draw( false );
+                                              }
+
+
+
+                                            }
                                         }
                                         else
                                         {
                                             swal(Resultado_Imagen.Mensaje_Cabecera,Resultado_Imagen.Mensaje_Usuario, "info");
                                         }           
 
-                                        Tabla_Desglose_Remision.row.add
-                                          ([
-                                              Arreglo_Listado[i].Imagen,
-                                              Arreglo_Listado[i].ID_Instrumento,
-                                              Arreglo_Listado[i].Nombre,
-                                              Arreglo_Listado[i].Observacion_Inicial,
-                                              Resultado.Lista_Desglose[i].Observacion_Final,
-                                              '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision("Actualizar")"><i class="ion-navicon-round" data-pack="default"></i></button>',
-
-                                          ]).draw( false );
                                   },
                                   error: function (Mensaje) 
                                   {
@@ -180,7 +191,9 @@ var Dropdown_Nombre_Instrumento = [];
                                   }
                               });                                
 
-                            }   
+                            }
+
+
                       }
                       else
                       {
@@ -321,7 +334,7 @@ var Dropdown_Nombre_Instrumento = [];
                     $("#Estado_Remision").prop("disabled", false);
                     $('#Actualizar_Remision').prop('disabled',false);
                     $('#Añadir_Desglose_Remision').prop('disabled',false);
-                    $('#row_Instrumento_Disponible').prop('disabled','false');
+                    $('.FlotarDerecha2').show();
                 }
                 else            //Actualizacion de una remision ACTIVA
                 {
@@ -333,11 +346,11 @@ var Dropdown_Nombre_Instrumento = [];
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", true);
                     $('#Actualizar_Remision').removeAttr('disabled');
-                    $('#Añadir_Desglose_Remision').prop('disabled',false);
                     $('#row_Instrumento_Disponible').prop('disabled',false);
+                    $('.FlotarDerecha2').hide();
                 }
                 
-                $('.FlotarDerecha2').show();
+                
                 $('.selectpicker').selectpicker('refresh');
             }
             else
@@ -374,6 +387,7 @@ var Dropdown_Nombre_Instrumento = [];
             $("#Estado_Remision").prop("disabled", true);
             $('#Remision_Fecha_Inicio').val(Fecha_Actual);
             $('#Remision_Fecha_Fin').val(Fecha_Actual);
+            $('#Añadir_Desglose_Remision').prop('disabled',true);
             $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
             $('.FlotarDerecha2').show();
         }
@@ -485,7 +499,6 @@ var Dropdown_Nombre_Instrumento = [];
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
                       { 
-                        //Arreglo_Instrumentos_Disponibles.push({Nombre: Resultado[i].Nombre, ID_Instrumento:Resultado[i].ID_Instrumento});  
                         Dropdown_ID_Instrumento.push(Resultado[i].ID_Instrumento);
                         Dropdown_Nombre_Instrumento.push(Resultado[i].Nombre);
                         $('#Instrumentos_Disponibles').append('<option data-subtext="'+Dropdown_Nombre_Instrumento[i]+'">#'+Dropdown_ID_Instrumento[i]+'</option>'); 
@@ -675,14 +688,7 @@ var Dropdown_Nombre_Instrumento = [];
                   title: "Aviso",
                   text: "Selecciona un Instrumento",
                   type: "warning",
-            }).then(
-                    value => {
-                      // handle confirm
-                    },
-                    dismiss => {
-                      // handle dismiss
-                    }
-                  ).catch(swal.noop)
+            }).catch(swal.noop)
           }
 
             swal.queue(Pasos).then(function (Modal) 
@@ -730,12 +736,12 @@ var Dropdown_Nombre_Instrumento = [];
                                     document.getElementById("Instrumentos_Disponibles").options.length = 0;
 
                                     //Removemos Instrumento recien añadido
-                                      var index = Dropdown_ID_Instrumento.indexOf(Temporal_ID_Instrumento);
+                                      var Indice = Dropdown_ID_Instrumento.indexOf(Temporal_ID_Instrumento);
                                       
-                                      if (index > -1)
+                                      if (Indice > -1)
                                       { 
-                                        Dropdown_ID_Instrumento.splice(index, 1);
-                                        Dropdown_Nombre_Instrumento.splice(index, 1);
+                                        Dropdown_ID_Instrumento.splice(Indice, 1);
+                                        Dropdown_Nombre_Instrumento.splice(Indice, 1);
                                       }
 
                                       for (i = 0; i < Dropdown_ID_Instrumento.length; i++) 
