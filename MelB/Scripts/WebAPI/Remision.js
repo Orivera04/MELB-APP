@@ -180,7 +180,7 @@ var Funcion_Realizar = 'Actualizar';
                                                     Arreglo_Listado[j].Nombre,
                                                     Arreglo_Listado[j].Observacion_Inicial,
                                                     Arreglo_Listado[j].Observacion_Final,
-                                                    '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Funcion_Realizar+')" ><i class="ion-compose" data-pack="default"></i></button>'
+                                                    '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\''+Funcion_Realizar+'\')" ><i class="ion-compose" data-pack="default"></i></button>'
 
                                                 ]).draw( false );
                                               }
