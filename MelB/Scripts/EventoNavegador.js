@@ -21,7 +21,6 @@ $(document).ready(function ()
 
     // Peticiones Ajax //
     Cargar_Instrumentos();      
-
 });
 
 
@@ -764,13 +763,6 @@ function Inicializacion_Eventos()
          $('#Añadir_Desglose_Remision').click(function(event)
         {
              Insertar_Actualizar_Desglose_Remision(Operacion);   
-        });
-
-        //DETECTANDO CLIC EN DESGLOSE REMISION//         
-
-        $('#Desglose_Remision_T tbody').on( 'click', 'tr', function () 
-        {
-            Fila_Seleccionada = Tabla_Desglose_Remision.row( this ).index() ;
         });
 }
 

@@ -9,7 +9,7 @@ var Temporal_ID_Instrumento = 0;
 var Dropdown_ID_Instrumento = [];
 var Dropdown_Nombre_Instrumento = [];
 var Funcion_Realizar = 'Actualizar';
-var Fila_Seleccionada = 0;
+
        
         function Cargar_Remisiones() 
         {
@@ -152,7 +152,7 @@ var Fila_Seleccionada = 0;
                            for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
                             {   
 
-                              Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: Resultado.Lista_Desglose[i].Observacion_Final, Imagen: ''});
+                              Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: Resultado.Lista_Desglose[i].Observacion_Final, Imagen: ''});  
 
                               $.ajax
                               ({
@@ -170,6 +170,7 @@ var Fila_Seleccionada = 0;
                                             {
                                               if( Resultado_Imagen.ID_Instrumento == Arreglo_Listado[j].ID_Instrumento )
                                               {
+                                                 Operacion = 'Actualizar';
                                                 Arreglo_Listado[j].Imagen = Imagen; 
                                                 
                                                 Tabla_Desglose_Remision.row.add
@@ -180,7 +181,6 @@ var Fila_Seleccionada = 0;
                                                     Arreglo_Listado[j].Observacion_Inicial,
                                                     Arreglo_Listado[j].Observacion_Final,
                                                     '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\''+Funcion_Realizar+'\')" ><i class="ion-compose" data-pack="default"></i></button>'
-                                                    //'<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Arreglo_Listado[j].Indice+',\''+Funcion_Realizar+'\')" ><i class="ion-compose" data-pack="default"></i></button>'
 
                                                 ]).draw( false );
                                               }
@@ -276,8 +276,7 @@ var Fila_Seleccionada = 0;
                         });
                   } 
                   
-            });  
-            Actualizar_Todo();          
+            });            
         }
 
         function Filtrar_Remisiones(Tipo_Filtro, ID_Filtro)
@@ -469,7 +468,27 @@ var Fila_Seleccionada = 0;
 
           for (i = 1; i <= Cantidad_Registros_Remisiones; i++)
           {
-            
+            if(Comando == 'Nuevo')
+            { 
+              if ( i == Cantidad_Registros_Remisiones)
+                  {
+                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
+                      Lista_Instrumentos =  Lista_Instrumentos + Temporal_Instrumento;
+
+                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
+                      Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial;
+                  }
+              else
+                  {
+                      var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
+                      Lista_Instrumentos = Lista_Instrumentos + Temporal_Instrumento + ', ';   
+
+                      var Temporal_Observacion_Inicial = document.getElementById("Desglose_Remision_T").rows[i].cells[3].innerHTML;
+                      Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial + ', ';   
+                  }
+            }
+            else
+            {
               if ( i == Cantidad_Registros_Remisiones)
                   {
                       var Temporal_Instrumento = document.getElementById("Desglose_Remision_T").rows[i].cells[1].innerHTML;
@@ -490,13 +509,13 @@ var Fila_Seleccionada = 0;
                       Lista_Observaciones_Iniciales = Lista_Observaciones_Iniciales + Temporal_Observacion_Inicial + ', ';   
 
                       var Temporal_Observacion_Final = document.getElementById("Desglose_Remision_T").rows[i].cells[4].innerHTML;
-                      Lista_Observaciones_Finales = Lista_Observaciones_Finales + Temporal_Observacion_Final + ', ';
+                      Lista_Observaciones_Finales = Lista_Observaciones_Finales + Temporal_Observacion_Final;
                   } 
-                  
+            }      
           }
         }
 
-        function Instrumentos_Disponibles()
+          function Instrumentos_Disponibles()
         { 
           //Se carga el Dropdown con los instrumentos que estan disponibles//         
            $.ajax
@@ -590,7 +609,8 @@ var Fila_Seleccionada = 0;
               }
               else
               {
-                Estado = 0;
+                if ($('#Estado_Remision').val() == 'Activa' || $('#Estado_Remision').val() == 'Expirada'){ Estado = 1}
+                else{Estado = 0}
 
                 var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estado_Remision: Estado, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales, Observaciones_Finales: Lista_Observaciones_Finales};
                   
@@ -670,7 +690,7 @@ var Fila_Seleccionada = 0;
                 }
               ]
           }
-          else if (Comando_Desglose == "Actualizar" && ($('#Switch_Editar_Remision').prop('checked') == true))
+          else if (Comando_Desglose == 'Actualizar' && ($('#Switch_Editar_Remision').prop('checked') == true))
           {
               Titulo = 'Actualizando Observacion final';
               Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
@@ -689,7 +709,7 @@ var Fila_Seleccionada = 0;
                 }
               ]
           }
-          else if (Comando_Desglose == "Actualizar" &&  ($('#Switch_Editar_Remision').prop('checked') == false))
+          else if (Comando_Desglose == 'Actualizar' &&  ($('#Switch_Editar_Remision').prop('checked') != false))
           {
 
             swal("Aviso","Habilita la edicion de la remision", "warning");
@@ -716,7 +736,7 @@ var Fila_Seleccionada = 0;
                     swal({title: Titulo,text: 'Espere por favor',type: 'info', allowOutsideClick: false});
                     swal.showLoading();   
 
-                    if(Comando_Desglose == 'Nuevo')
+                    if(Comando == 'Nuevo')
                     {  
                       
                         $.ajax
@@ -728,6 +748,7 @@ var Fila_Seleccionada = 0;
                                     Resultado = JSON.parse(Resultado);                                                        
                                     if(Resultado.Codigo == null)
                                     {       
+                                        Operacion = 'Actualizar';
                                         Resultado = Resultado[0];                  
                                         Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>'
                                         Temporal_ID_Instrumento = Resultado.ID_Instrumento;
@@ -738,7 +759,7 @@ var Fila_Seleccionada = 0;
                                           Resultado.Nombre,                      //Nombre
                                           Modal[0],                              //Ob. Inicial
                                           'El instrumento no ha sido devuelto',  //Ob. Final
-                                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\''+Funcion_Realizar+'\')" ><i class="ion-compose" data-pack="default"></i></button>'
+                                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Funcion_Realizar+')" ><i class="ion-compose" data-pack="default"></i></button>'
                                         ]).draw( false );
                                     }
                                     else
@@ -783,10 +804,19 @@ var Fila_Seleccionada = 0;
                     }
                     else
                     {
-                      /*AQUI LA PARTE DE ACTUALIZAR*/
-                      document.getElementById("Desglose_Remision_T").rows[Fila_Seleccionada+1].cells[4].innerHTML = Modal[0];
-                      swal.closeModal();
-                      swal("Exito","Se ha actualizado el registro exitosamente", "success");
+                          var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>';
+                          Operacion = 'Actualizar';
+                          Arreglo_Listado[i].Observacion_Final = Modal[0];
+                          
+                          Arreglo_Listado[i].ID_Instrumento,
+                          Arreglo_Listado[i].Nombre,
+                          Arreglo_Listado[i].Observacion_Inicial,
+                          Arreglo_Listado[i].Observacion_Final,
+                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Funcion_Realizar+')" ><i class="ion-compose" data-pack="default"></i></button>'
+                        
+                          swal.closeModal();
+
+                          swal("Exito","Se ha actualizado el registro exitosamente", "success");
                     }
                     
                     swal.closeModal();

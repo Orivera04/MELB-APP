@@ -694,23 +694,24 @@ button:focus:not(:active)::after
 }
 
 .DegInstrumento
-{
-    background: linear-gradient(to right, #FF4B75, #FF785D); 
+{    
+    background: linear-gradient(to right, #614385, #516395); 
 }
 
 .DegProveedores
 {
-    background: linear-gradient(0, transparent, transparent),linear-gradient(90deg, #ff1b94, #ff6969)
+       background: #5d9cec;
 }
 
 .DegRemisiones
 {
-    background: linear-gradient(to right, #cc00ff 0%, #ff00ff 100%); 
+        background: linear-gradient(to right, #614385, #516395); 
+
 }
 
 .DegAccesorios
 {
-    background: linear-gradient(to right, #614385, #516395);
+    background: linear-gradient(to right, #FF4B75, #FF785D);   
 }
 
 
