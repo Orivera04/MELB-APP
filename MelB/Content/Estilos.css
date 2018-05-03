@@ -674,3 +674,16 @@ button:focus:not(:active)::after
     border-color : #5fbeaa !important;
     color: white;
 }
+
+.Tarjeta
+{
+    padding: 20px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+   
+}
