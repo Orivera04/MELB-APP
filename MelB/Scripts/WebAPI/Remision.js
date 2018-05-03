@@ -23,13 +23,26 @@ var Dropdown_Nombre_Instrumento = [];
                     {
                         Tabla_Remision.clear().draw();
                         Resultado = JSON.parse(Resultado);
+                        var Estado;
                         for (i = 0; i < Resultado.length; i++) 
                         {  
+                            if (Resultado[i].Estado_Remision == 'Expirada')
+                            {
+                               Estado = '<span class="label label-inverse">Expirada</span>';
+                            }
+                            else if(Resultado[i].Estado_Remision == 'Activa')
+                            {
+                                Estado = '<span class="label label-purple">Activa</span>';
+                            }
+                            else
+                            {
+                                Estado = '<span class="label label-sucess">Finalizada</span>';
+                            }
                             Tabla_Remision.row.add
                             ([
                                 Resultado[i].ID_Remision,
                                 Resultado[i].Nombre_Estudiante,
-                                Resultado[i].Estado_Remision,
+                                Estado,
                                 '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                 '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ]).draw( false );  
@@ -275,16 +288,29 @@ var Dropdown_Nombre_Instrumento = [];
               {            
                     Tabla_Remision.clear().draw();
                     Resultado = JSON.parse(Resultado);
+                    var Estado;
                     for (i = 0; i < Resultado.length; i++) 
-                    {      
-                           Tabla_Remision.row.add
-                           ([
+                    {                                                        
+                          if (Resultado[i].Estado_Remision == 'Expirada')
+                          {
+                             Estado = '<span class="label label-danger">En Prestamo</span>';
+                          }
+                          else if(Resultado[i].Estado_Remision == 'Activa')
+                          {
+                              Estado = '<span class="label label-success">Activa</span>';
+                          }
+                          else
+                          {
+                              Estado = '<span class="label label-inverse">Finalizada</span>';
+                          }
+                          Tabla_Remision.row.add
+                          ([
                                       Resultado[i].ID_Remision,
                                       Resultado[i].Nombre_Estudiante,
-                                      Resultado[i].Estado_Remision,
+                                      Estado,
                                       '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                       '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                           ]).draw( false );
+                          ]).draw( false );
                     }                                                                                                             
               },
               error: function (Mensaje) 
