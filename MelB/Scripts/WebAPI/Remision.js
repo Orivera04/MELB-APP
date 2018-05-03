@@ -8,7 +8,8 @@ var ID_Estudiante = [];
 var Temporal_ID_Instrumento = 0;
 var Dropdown_ID_Instrumento = [];
 var Dropdown_Nombre_Instrumento = [];
-//var Arreglo_Instrumentos_Disponibles = [];
+var Funcion_Realizar = 'Actualizar';
+
        
         function Cargar_Remisiones() 
         {
@@ -179,7 +180,7 @@ var Dropdown_Nombre_Instrumento = [];
                                                     Arreglo_Listado[j].Nombre,
                                                     Arreglo_Listado[j].Observacion_Inicial,
                                                     Arreglo_Listado[j].Observacion_Final,
-                                                    '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick ="Insertar_Actualizar_Desglose_Remision('+Operacion+')"><i class="ion-compose" data-pack="default"></i></button>'
+                                                    '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Funcion_Realizar+')" ><i class="ion-compose" data-pack="default"></i></button>'
 
                                                 ]).draw( false );
                                               }
@@ -758,7 +759,7 @@ var Dropdown_Nombre_Instrumento = [];
                                           Resultado.Nombre,                      //Nombre
                                           Modal[0],                              //Ob. Inicial
                                           'El instrumento no ha sido devuelto',  //Ob. Final
-                                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision('+Operacion+')"><i class="ion-compose" data-pack="default"></i></button>'
+                                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Funcion_Realizar+')" ><i class="ion-compose" data-pack="default"></i></button>'
                                         ]).draw( false );
                                     }
                                     else
@@ -811,7 +812,7 @@ var Dropdown_Nombre_Instrumento = [];
                           Arreglo_Listado[i].Nombre,
                           Arreglo_Listado[i].Observacion_Inicial,
                           Arreglo_Listado[i].Observacion_Final,
-                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision('+Operacion+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision('+Funcion_Realizar+')" ><i class="ion-compose" data-pack="default"></i></button>'
                         
                           swal.closeModal();
 
