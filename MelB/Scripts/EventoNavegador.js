@@ -100,7 +100,7 @@ function Inicializacion_Controles()
 
 }
 
-function Actualizar()
+function Actualizar_Todo()
 {
     swal({title:'Refrescando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
     Tabla_Instrumento.clear().draw();
@@ -419,6 +419,7 @@ function Inicializacion_Eventos()
                  Reiniciar_Controles_Remision();
                  Habilitar_Deshabilitar_Remision(true,Operacion);
                  $('#ID_Remision').removeAttr('disabled');
+                 $('#Añadir_Desglose_Remision').removeAttr('disabled');
                  $('#Remisiones').hide(300);
                  $('#Remision_Detalle').show(400);   
                  $("#Estado_Remision").prop("disabled","true");
@@ -530,7 +531,7 @@ function Inicializacion_Eventos()
 
         $('#Actualizar').click(function(event)
         {
-             Actualizar();    
+             Actualizar_Todo();    
         });
 
 

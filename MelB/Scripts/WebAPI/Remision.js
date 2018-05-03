@@ -156,6 +156,7 @@ var Dropdown_Nombre_Instrumento = [];
                                             {
                                               if( Resultado_Imagen.ID_Instrumento == Arreglo_Listado[j].ID_Instrumento )
                                               {
+                                                 Operacion = 'Actualizar';
                                                 Arreglo_Listado[j].Imagen = Imagen; 
                                                 
                                                 Tabla_Desglose_Remision.row.add
@@ -165,7 +166,7 @@ var Dropdown_Nombre_Instrumento = [];
                                                     Arreglo_Listado[j].Nombre,
                                                     Arreglo_Listado[j].Observacion_Inicial,
                                                     Arreglo_Listado[j].Observacion_Final,
-                                                    '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision("Actualizar")"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                                    '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick ="Insertar_Actualizar_Desglose_Remision('+Operacion+')"><i class="ion-compose" data-pack="default"></i></button>'
 
                                                 ]).draw( false );
                                               }
@@ -333,7 +334,7 @@ var Dropdown_Nombre_Instrumento = [];
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", false);
                     $('#Actualizar_Remision').prop('disabled',false);
-                    $('#Añadir_Desglose_Remision').prop('disabled',false);
+                    $('#Añadir_Desglose_Remision').removeAttr('disabled');
                     $('.FlotarDerecha2').show();
                 }
                 else            //Actualizacion de una remision ACTIVA
@@ -345,8 +346,8 @@ var Dropdown_Nombre_Instrumento = [];
                     $("#Remision_Fecha_Fin").prop("disabled", true);
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", true);
+                    $('#Instrumentos_Disponibles').removeAttr('disabled');
                     $('#Actualizar_Remision').removeAttr('disabled');
-                    $('#row_Instrumento_Disponible').prop('disabled',false);
                     $('.FlotarDerecha2').hide();
                 }
                 
@@ -363,8 +364,8 @@ var Dropdown_Nombre_Instrumento = [];
                 $("#Estado_Remision").prop("disabled", true);
                 $('#Actualizar_Remision').prop('disabled',true);
                 $('.selectpicker').selectpicker('refresh');
-                $('#Añadir_Desglose_Remision').prop('disabled',true);
-                $('#Instrumentos_Disponibles').prop('disabled',true);
+                $('#Añadir_Desglose_Remision').removeAttr('disabled');
+                $('#Instrumentos_Disponibles').removeAttr('disabled');
                 $('.FlotarDerecha2').hide();
             }
         }
@@ -387,7 +388,8 @@ var Dropdown_Nombre_Instrumento = [];
             $("#Estado_Remision").prop("disabled", true);
             $('#Remision_Fecha_Inicio').val(Fecha_Actual);
             $('#Remision_Fecha_Fin').val(Fecha_Actual);
-            $('#Añadir_Desglose_Remision').prop('disabled',true);
+            $('#Instrumentos_Disponibles').removeAttr('disabled');
+            $('#Añadir_Desglose_Remision').removeAttr('disabled');
             $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
             $('.FlotarDerecha2').show();
         }
@@ -630,7 +632,7 @@ var Dropdown_Nombre_Instrumento = [];
           }
         }
 
-         function Insertar_Actualizar_Desglose_Remision(Comando)
+         function Insertar_Actualizar_Desglose_Remision(Comando_Desglose)
         {
           var Titulo;
           var Error;
@@ -643,7 +645,7 @@ var Dropdown_Nombre_Instrumento = [];
                 allowOutsideClick: false
           });
 
-          if((Comando == 'Nuevo') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != ""))
+          if((Comando_Desglose == 'Nuevo') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != ""))
           {
               Titulo = 'Añadiendo a Remision';
               Error = 'Ocurrio un inconveniente al añadir el detalle.';
@@ -661,7 +663,7 @@ var Dropdown_Nombre_Instrumento = [];
                 }
               ]
           }
-          else if ((Comando == 'Actualizar') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != ""))
+          else if (Comando_Desglose == 'Actualizar' && ($('#Switch_Editar_Remision').prop('checked') == true))
           {
               Titulo = 'Actualizando Observacion final';
               Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
@@ -679,6 +681,12 @@ var Dropdown_Nombre_Instrumento = [];
                     inputClass: 'form-control'
                 }
               ]
+          }
+          else if (Comando_Desglose == 'Actualizar' &&  ($('#Switch_Editar_Remision').prop('checked') != false))
+          {
+
+            swal("Aviso","Habilita la edicion de la remision", "warning");
+
           }
           else
           {
@@ -713,6 +721,7 @@ var Dropdown_Nombre_Instrumento = [];
                                     Resultado = JSON.parse(Resultado);                                                        
                                     if(Resultado.Codigo == null)
                                     {       
+                                        Operacion = 'Actualizar';
                                         Resultado = Resultado[0];                  
                                         Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>'
                                         Temporal_ID_Instrumento = Resultado.ID_Instrumento;
@@ -723,7 +732,7 @@ var Dropdown_Nombre_Instrumento = [];
                                           Resultado.Nombre,                      //Nombre
                                           Modal[0],                              //Ob. Inicial
                                           'El instrumento no ha sido devuelto',  //Ob. Final
-                                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision('+Operacion+')"><i class="ion-compose" data-pack="default"></i></button>'
                                         ]).draw( false );
                                     }
                                     else
@@ -769,14 +778,14 @@ var Dropdown_Nombre_Instrumento = [];
                     else
                     {
                           var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado.Imagen+'"></img>';
-
+                          Operacion = 'Actualizar';
                           Arreglo_Listado[i].Observacion_Final = Modal[0];
                           
                           Arreglo_Listado[i].ID_Instrumento,
                           Arreglo_Listado[i].Nombre,
                           Arreglo_Listado[i].Observacion_Inicial,
                           Arreglo_Listado[i].Observacion_Final,
-                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision(Actualizar)"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                          '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Desglose_Remision('+Operacion+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                         
                           swal.closeModal();
 
