@@ -1,11 +1,15 @@
-/*
-    DEMO STYLE
-*/
+
+@font-face 
+{
+    font-family: "Gotham";
+    src: url("fonts/GothamRoundedMedium.woff") format('woff');
+}
+
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
-
-body {
-    font-family: 'Poppins', sans-serif;
+body 
+{
+    font-family: 'Poppins', sans-serif; 
     background: #fafafa;
 }
 
@@ -538,7 +542,7 @@ button
 }
 
 
-@media only screen and (max-width: 766px) and (min-width: 400px) 
+@media only screen and (max-width: 768px) and (min-width: 100px) 
 {  
     #cabezera_header
     {
@@ -677,13 +681,13 @@ button:focus:not(:active)::after
 
 .Tarjeta
 {
-    padding: 20px;
     border-top-right-radius: 5px; 
     border-bottom-right-radius: 5px; 
     background-clip: padding-box;
     margin-bottom: 20px;
     background-color: #ffffff;
     box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+    height: 108px;
 
 }
 
@@ -692,12 +696,13 @@ button:focus:not(:active)::after
 {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
-    padding: 20px;
+    height: 108px;
+    padding: 0px;
 }
 
 .DegInstrumento
 {
-    background: linear-gradient(to right, #fd746c, #ff9068); 
+    background: linear-gradient(to right, #FF4B75, #FF785D); 
 }
 
 .DegProveedores
@@ -712,14 +717,57 @@ button:focus:not(:active)::after
 
 .DegAccesorios
 {
-    background: linear-gradient(to right, #614385, #516395); 
+    background: linear-gradient(to right, #614385, #516395);
 }
 
 
 .IconoDashboard
 {
-    display:block;
-    font-size: 48px;
-    text-align: center;
+    display:inline-block;
+    font-size: 48px; 
     color: white;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    line-height: 108px;  
+    padding: 0px;
+}
+
+.ValorTextoDashboard
+{
+    font-family: 'Gotham';
+    font-size: 18px;
+    text-align: center;
+    margin:0px;
+    margin-top: 30px;
+}
+
+.TipoEtiqueta
+{
+    font-family: 'Gotham';
+    font-size: 15px;
+    text-align: center;
+    margin:0px;
+    margin-top: 8px;
+    color: #6f767e;
+}
+
+.Instrumento_Label
+{
+    color:#FE865E;
+}
+
+.Proveedor_Label
+{
+    color: #FF2B8C;
+}
+
+.Remisiones_Label
+{
+    color: #D600FF;
+}
+
+.Accesorios_Label
+{
+    color: #5A518C;
 }
