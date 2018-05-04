@@ -486,6 +486,122 @@ var ID_Instrumento = [];
 
         function Graficas()
         {
+            var ContextoInstrumento = document.getElementById("GraficaInstrumentos").getContext('2d');
+            var ContextoRemision = document.getElementById("RemisionesGrafica").getContext('2d');
 
+            Chart.defaults.global.legend.display = false;
+
+            var GraficaInstrumentos = new Chart(ContextoInstrumento, 
+            {
+                type: 'pie',
+                data: 
+                {
+                    labels: ["Flauta Dulce", "Flauta Traversa", "Clarinete", "Violin", "Viola", "Cello","Guitarra"],
+                    datasets: 
+                    [{
+                        label: 'Porcentaje',
+                        data: [12, 19, 3, 5, 2, 3,15],
+                        backgroundColor: 
+                        [
+                            'rgba(214, 83, 3, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(255, 125, 173, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(52, 73, 94, 0.5)',
+                            'rgba(0, 172, 172, 0.5)'
+                        ],
+                        borderColor: 
+                        [
+                            'rgba(214, 83, 3, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 125, 173, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(52, 73, 94, 1)',
+                            'rgba(0, 172, 172, 1)'
+                        ],
+                        borderWidth: 2
+                    }],                    
+                },
+                options: 
+                {
+                   tooltips: 
+                   {
+                      mode: 'index',
+                      callbacks: 
+                      {
+                        afterLabel: function(ToolTip, Datos) 
+                        {
+                          var Suma = 0;
+                          for (var I = 0; I <= Datos.Datossets[0].Datos.length - 1; I++) 
+                          {
+                              Suma = Suma + Datos.Datossets[0].Datos[I];
+                          }
+                          var Porcentaje = Datos.Datossets[ToolTip.DatossetIndex].Datos[ToolTip.index] / Suma * 100;
+                          Porcentaje = Porcentaje.toFixed(2); 
+                          return Datos.datasets[ToolTip.datasetIndex].label + ': ' + Porcentaje + '%';
+                        }
+                      }
+                   }
+                }
+            });
+
+
+            var GraficaInstrumentos = new Chart(ContextoRemision, 
+            {
+                type: 'bar',
+                data: 
+                {
+                    labels: ["Flauta Dulce", "Flauta Traversa", "Clarinete", "Violin", "Viola", "Cello","Guitarra"],
+                    datasets: 
+                    [{
+                        label: 'Porcentaje',
+                        data: [12, 19, 3, 5, 2, 3,15],
+                        backgroundColor: 
+                        [
+                            'rgba(214, 83, 3, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(255, 125, 173, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(52, 73, 94, 0.5)',
+                            'rgba(0, 172, 172, 0.5)'
+                        ],
+                        borderColor: 
+                        [
+                            'rgba(214, 83, 3, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 125, 173, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(52, 73, 94, 1)',
+                            'rgba(0, 172, 172, 1)'
+                        ],
+                        borderWidth: 2
+                    }],                    
+                },
+                options: 
+                {
+                   tooltips: 
+                   {
+                      mode: 'index',
+                      callbacks: 
+                      {
+                        afterLabel: function(ToolTip, Datos) 
+                        {
+                          var Suma = 0;
+                          for (var I = 0; I <= Datos.Datossets[0].Datos.length - 1; I++) 
+                          {
+                              Suma = Suma + Datos.Datossets[0].Datos[I];
+                          }
+                          var Porcentaje = Datos.Datossets[ToolTip.DatossetIndex].Datos[ToolTip.index] / Suma * 100;
+                          Porcentaje = Porcentaje.toFixed(2); 
+                          return Datos.datasets[ToolTip.datasetIndex].label + ': ' + Porcentaje + '%';
+                        }
+                      }
+                   }
+                }
+            });
         
         }
