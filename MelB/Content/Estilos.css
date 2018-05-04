@@ -687,11 +687,11 @@ button:focus:not(:active)::after
 
 .TarjetaDashboard
 {
-    border-radius: 15px;
+    border-radius: 3px;
     background-clip: padding-box;
     background-color: #ffffff;
     box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
-    height: 400px;
+    height: 420px;
     margin: 0px auto;
     text-align: center;
 }
@@ -790,3 +790,46 @@ canvas
     color: #FF5570;
 }
 
+.TarjetaDashboard .header 
+{
+    padding: 15px 15px 0;
+    text-align: left;
+    font-family: 'Gotham', sans-serif;
+}
+
+.TarjetaDashboard .title {
+    margin: 0;
+    color: #333333;
+    font-weight: 300;
+    line-height: 20px;
+    font-family: 'Gotham', sans-serif;
+}
+
+.category
+{
+     font-family: 'Roboto', sans-serif;
+}
+
+.LeyendaIcono
+{
+     margin-left:9px;
+     margin-right:5px;
+}
+
+.Estadisticas
+{
+    font-family: 'Roboto', sans-serif;
+    text-align: left;
+    margin-left: 15px;
+    color: #999;
+}
+
+.Leyenda
+{
+    font-family: 'Gotham', sans-serif;
+}
+
+.Estadisticas i
+{
+    margin-right: 10px;
+}

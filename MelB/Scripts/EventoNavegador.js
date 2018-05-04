@@ -23,7 +23,7 @@ $(document).ready(function ()
     Cargar_Instrumentos();
 
     //Graficas//
-    Grafica_Instrumentos();      
+    Graficas();      
 });
 
 

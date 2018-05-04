@@ -21,7 +21,8 @@
         <link href="plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
         <link href="plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
         <link href="plugins/SweetAlert/sweetalert2.min.css" rel="stylesheet">
-        <link href="plugins/DataDrop/datedropper.css" rel="stylesheet">
+        <link href="plugins/DataDrop/datedropper.css" rel="stylesheet">            <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        
         <link href="Content/Estilos.css" rel="stylesheet" /> 
 </head>
 <body>
@@ -147,7 +148,61 @@
                     </div>
 
                     <div class="row">
-                        
+                        <div class="col-md-6">
+                            <div class="TarjetaDashboard">
+
+                                <div class="header">
+                                    <h4 class="title">Instrumentos Registrados</h4>
+                                    <p class="category">Grafica</p>
+                                </div>
+                                <div class="content">
+                                    <canvas id="GraficaInstrumentos" style="height:230px;width: 590px;"></canvas>
+                                    <div class="footer">
+                                        <div class="Leyenda">
+                                            <i class="fa fa-circle text-info LeyendaIcono"></i> Flauta Dulce
+                                            <i class="fa fa-circle text-danger LeyendaIcono"></i>Flauta Traversa
+                                            <i class="fa fa-circle text-warning LeyendaIcono"></i> Clarinete
+                                            <i class="fa fa-circle text-info LeyendaIcono"></i> Violin
+                                            <i class="fa fa-circle text-danger LeyendaIcono"></i> Viola
+                                            <i class="fa fa-circle text-warning LeyendaIcono"></i> Cello
+                                            <i class="fa fa-circle text-info LeyendaIcono"></i> Guitarra
+                                        </div>
+                                        <hr>
+                                        <div class="Estadisticas">
+                                            <i class="fa fa-area-chart"></i>Porcentaje actual de cada tipo de instrumento en el inventario
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="TarjetaDashboard">
+
+                                <div class="header">
+                                    <h4 class="title">Instrumentos En Remisiones</h4>
+                                    <p class="category">Grafica</p>
+                                </div>
+                                <div class="content">
+                                    <canvas id="RemisionesGrafica" style="height:230px;width: 590px;"></canvas>
+                                    <div class="footer">
+                                        <div class="Leyenda">
+                                            <i class="fa fa-circle text-info LeyendaIcono"></i> Flauta Dulce
+                                            <i class="fa fa-circle text-danger LeyendaIcono"></i>Flauta Traversa
+                                            <i class="fa fa-circle text-warning LeyendaIcono"></i> Clarinete
+                                            <i class="fa fa-circle text-info LeyendaIcono"></i> Violin
+                                            <i class="fa fa-circle text-danger LeyendaIcono"></i> Viola
+                                            <i class="fa fa-circle text-warning LeyendaIcono"></i> Cello
+                                            <i class="fa fa-circle text-info LeyendaIcono"></i> Guitarra
+                                        </div>
+                                        <hr>
+                                        <div class="Estadisticas">
+                                            <i class="fa fa-area-chart"></i>Tipos de instrumentos mas prestados en remisiones
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>               
                 <div id="Instrumentos">
@@ -966,8 +1021,7 @@
      <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
      <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
      <script src="plugins/DataDrop/datedropper.js" type="text/javascript"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-
+    
      <!-- Plugins Alertas -->
      <script src="plugins\SweetAlert/sweetalert2.min.js"></script>
      <!-- Cargando Boostrap y sus dependencias -->
