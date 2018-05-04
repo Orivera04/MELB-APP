@@ -514,8 +514,8 @@ var Funcion_Realizar = 'Actualizar';
             }      
           }
         }
-
-          function Instrumentos_Disponibles()
+        
+        function Instrumentos_Disponibles()
         { 
           //Se carga el Dropdown con los instrumentos que estan disponibles//         
            $.ajax

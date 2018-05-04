@@ -700,12 +700,12 @@ button:focus:not(:active)::after
 
 .DegProveedores
 {
-       background: #5d9cec;
+   background: #5d9cec;
 }
 
 .DegRemisiones
 {
-        background: linear-gradient(to right, #614385, #516395); 
+    background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);; 
 
 }
 
@@ -755,20 +755,20 @@ button:focus:not(:active)::after
 
 .Instrumento_Label
 {
-    color:#FE865E;
+    color:#7386D5;
 }
 
 .Proveedor_Label
 {
-    color: #FF2B8C;
+    color: #5D9CEC;
 }
 
 .Remisiones_Label
 {
-    color: #D600FF;
+    color: #FF7794;
 }
 
 .Accesorios_Label
 {
-    color: #5A518C;
+    color: #FF5570;
 }
