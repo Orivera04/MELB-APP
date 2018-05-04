@@ -767,7 +767,7 @@ canvas
 @font-face 
 {
     font-family: "Gotham";
-    src: url("fonts/GothamRoundedMedium.woff") format('woff');
+    src: url("../fonts/GothamRoundedMedium.woff") format('woff');
 }
 
 .Instrumento_Label
