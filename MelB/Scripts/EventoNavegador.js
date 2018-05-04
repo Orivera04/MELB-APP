@@ -767,6 +767,13 @@ function Inicializacion_Eventos()
         {
              Insertar_Actualizar_Desglose_Remision(Operacion);   
         });
+
+         //DETECTANDO CLIC EN DESGLOSE REMISION//         
+
+        $('#Desglose_Remision_T tbody').on( 'click', 'tr', function () 
+        {
+            Fila_Seleccionada = Tabla_Desglose_Remision.row( this ).index() ;
+        });
 }
 
 
