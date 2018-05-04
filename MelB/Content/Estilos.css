@@ -685,6 +685,23 @@ button:focus:not(:active)::after
 }
 
 
+.TarjetaDashboard
+{
+    border-radius: 15px;
+    background-clip: padding-box;
+    background-color: #ffffff;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
+    height: 400px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+
+canvas
+{
+   display: block;
+    margin: 0 auto;
+}
 .TarjetaIzquierda
 {
     border-top-left-radius: 15px;
@@ -772,3 +789,4 @@ button:focus:not(:active)::after
 {
     color: #FF5570;
 }
+
