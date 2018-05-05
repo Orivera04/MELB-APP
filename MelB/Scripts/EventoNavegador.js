@@ -257,6 +257,7 @@ function Inicializacion_Eventos()
             document.getElementById('Estuche_Detalle').style.display = 'none';
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
+            $('#ADD').hide();
         });
        
 

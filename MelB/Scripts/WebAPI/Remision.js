@@ -274,6 +274,7 @@ var Fila_Seleccionada = 0;
                           },
                           error: function(Respuesta)
                           {
+                             console.log(Respuesta);
                              swal("Error", "Ocurrio un error al borrar la remision", "error");
                           },
                         });
@@ -298,15 +299,15 @@ var Fila_Seleccionada = 0;
                     {                                                        
                           if (Resultado[i].Estado_Remision == 'Expirada')
                           {
-                             Estado = '<span class="label label-danger">En Prestamo</span>';
+                             Estado = '<span class="label label-inverse">Expirada</span>';
                           }
                           else if(Resultado[i].Estado_Remision == 'Activa')
                           {
-                              Estado = '<span class="label label-success">Activa</span>';
+                              Estado = '<span class="label label-purple">Activa</span>';
                           }
                           else
                           {
-                              Estado = '<span class="label label-inverse">Finalizada</span>';
+                              Estado = '<span class="label label-success">Finalizada</span>';
                           }
                           Tabla_Remision.row.add
                           ([
@@ -558,7 +559,6 @@ var Fila_Seleccionada = 0;
                 $.ajax
                 ({  
                       url: 'http://melbws.azurewebsites.net/api/Remision',
-                      //url: 'http://localhost:53603/api/Remision',
                       type: 'POST',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -566,7 +566,6 @@ var Fila_Seleccionada = 0;
                          Resultado = JSON.parse(Resultado);
                          if(Resultado.Codigo == 5)
                          {                                    
-                             swal.closeModal();
                              swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
 
                              Cargar_Remisiones();
@@ -607,7 +606,6 @@ var Fila_Seleccionada = 0;
                       success: function(Resultado)
                       {
                          Resultado = JSON.parse(Resultado);
-                         swal.closeModal();
                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                          Cargar_Remisiones();
                          $('#Remision_Detalle').hide(500);
@@ -644,7 +642,7 @@ var Fila_Seleccionada = 0;
           }
         }
 
-         function Insertar_Actualizar_Desglose_Remision(Comando_Desglose)
+        function Insertar_Actualizar_Desglose_Remision(Comando_Desglose)
         {
           var Titulo;
           var Error;
@@ -750,8 +748,6 @@ var Fila_Seleccionada = 0;
                                     {
                                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "info");
                                     }
-
-                                    swal.closeModal();
                                     
                                     document.getElementById("Instrumentos_Disponibles").options.length = 0;
 
@@ -790,11 +786,8 @@ var Fila_Seleccionada = 0;
                     {
                           /*AQUI LA PARTE DE ACTUALIZAR*/
                       document.getElementById("Desglose_Remision_T").rows[Fila_Seleccionada+1].cells[4].innerHTML = Modal[0];
-                      swal.closeModal();
                       swal("Exito","Se ha actualizado el registro exitosamente", "success");
-                    }
-                    
-                    swal.closeModal();
+                    }                   
                 }
                 else
                 {
@@ -815,7 +808,8 @@ var Fila_Seleccionada = 0;
         {
           var ContextoRemision = document.getElementById("RemisionesGrafica").getContext('2d');
           Chart.defaults.global.legend.display = false;
-          var GraficaRemision = new Chart(ContextoRemision, 
+
+          GraficaRemision = new Chart(ContextoRemision, 
             {
                 type: 'bar',
                 data: 
@@ -847,6 +841,8 @@ var Fila_Seleccionada = 0;
                         ],
                         borderWidth: 2
                     }],                    
-                }
+                },                
             });
+            GraficaRemision.options.scales.yAxes[0].ticks.beginAtZero = true;
+            GraficaRemision.update();
         }

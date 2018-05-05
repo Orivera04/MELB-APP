@@ -204,7 +204,8 @@ var ID_Instrumento = [];
                           },
                           error: function(Respuesta)
                           {
-                             swal("Error", "Ocurrio un error al borrar el instrumento", "error");
+                             console.log(Respuesta);
+                             swal("Error", "No se puede borrar el instrumento,probablemente porque existen registros que tienen asociado a este instrumento", "error");
                           },
                         });
                   } 
