@@ -49,11 +49,12 @@ var Fila_Seleccionada = 0;
                                 '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                             ]).draw( false );  
                         }
+                        $('#CantidadRemisionesDA').text(Tabla_Remision.column(0).data().length);                              
 
                     /*Carga Dropdown con Estudiantes*/
                     $.ajax
                     ({
-                        url: 'http://melbws.azurewebsites.net/api/Estudiante/',
+                        url: 'http://melbws.azurewebsites.net/api/Estudiante',
                         type: 'GET',
                         success: function (Resultado_Estudiante) 
                         {
@@ -83,7 +84,7 @@ var Fila_Seleccionada = 0;
                     /*Carga Dropdown con Empleados*/
                     $.ajax
                     ({
-                        url: 'http://melbws.azurewebsites.net/api/Empleado/',
+                        url: 'http://melbws.azurewebsites.net/api/Empleado',
                         type: 'GET',
                         success: function (Resultado_Empleado) 
                         {
@@ -124,6 +125,11 @@ var Fila_Seleccionada = 0;
 
             });
             Instrumentos_Disponibles();
+            $.get( "http://melbws.azurewebsites.net/api/Accesorio", function(Datos ) 
+            {
+                Datos = JSON.parse(Datos);
+                $('#CantidadAccesoriosDA').text(Datos.length);
+            });
         }
 
         function Cargar_Remision_Por_ID(ID) 
@@ -802,4 +808,45 @@ var Fila_Seleccionada = 0;
                     });
                 }        
             })
+        }
+
+
+        function RemisionesGrafica(Instrumento)
+        {
+          var ContextoRemision = document.getElementById("RemisionesGrafica").getContext('2d');
+          Chart.defaults.global.legend.display = false;
+          var GraficaRemision = new Chart(ContextoRemision, 
+            {
+                type: 'bar',
+                data: 
+                {
+                    labels: ["Flauta Dulce", "Flauta Traversa", "Clarinete", "Violin", "Viola", "Cello","Guitarra"],
+                    datasets: 
+                    [{
+                        label: 'Cantidad de veces prestadas',
+                        data: [Instrumento[0].Cantidad_Instrumento,Instrumento[1].Cantidad_Instrumento,Instrumento[2].Cantidad_Instrumento,Instrumento[3].Cantidad_Instrumento,Instrumento[4].Cantidad_Instrumento,Instrumento[5].Cantidad_Instrumento,Instrumento[6].Cantidad_Instrumento],
+                        backgroundColor: 
+                        [
+                            'rgba(214, 83, 3, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(255, 125, 173, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(52, 73, 94, 0.5)',
+                            'rgba(0, 172, 172, 0.5)'
+                        ],
+                        borderColor: 
+                        [
+                            'rgba(214, 83, 3, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 125, 173, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(52, 73, 94, 1)',
+                            'rgba(0, 172, 172, 1)'
+                        ],
+                        borderWidth: 2
+                    }],                    
+                }
+            });
         }

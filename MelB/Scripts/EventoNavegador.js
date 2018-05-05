@@ -20,10 +20,7 @@ $(document).ready(function ()
 
 
     // Peticiones Ajax //
-    Cargar_Instrumentos();
-
-    //Graficas//
-    Graficas();      
+    Cargar_Instrumentos();         
 });
 
 

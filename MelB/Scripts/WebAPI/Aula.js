@@ -3,7 +3,7 @@
  {        
         $.ajax({
 
-            url: 'http://melbws.azurewebsites.net/api/Aula/',
+            url: 'http://melbws.azurewebsites.net/api/Aula',
 
             type: 'GET',
 
@@ -25,8 +25,9 @@
                 {
                     $('#ID_Filtro_Instrumento').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
                 });                
-                $('.selectpicker').selectpicker('refresh');   
-                swal.closeModal();               
+                $('.selectpicker').selectpicker('refresh');
+                EstadisticasInstrumentos("1");
+                EstadisticasInstrumentos("0");      
             },
 
             error: function (Mensaje) 

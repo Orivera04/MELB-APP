@@ -31,6 +31,7 @@
                                 ]).draw( false );
                             $('#Proveedor_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>');                                                   
                         }
+                      $('#CantidadProveedoresDA').text(Tabla_Proveedor.column(0).data().length);                              
                       $('.selectpicker').selectpicker('refresh');                                            
                       Cargar_Remisiones();                                                           
                   }                    

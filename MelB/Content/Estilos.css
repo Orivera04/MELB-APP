@@ -496,6 +496,10 @@ table.dataTable tbody td
     font-size: 28px !important;    
 }
 
+.FlotarDerecha2
+{
+    padding-right: 0px;
+}
 
 button
 {
@@ -837,4 +841,39 @@ canvas
 canvas
 {
     margin-bottom: 10px;
+}
+
+.Leyenda1
+{
+    color: rgba(214, 83, 3, 0.9);
+}
+
+.Leyenda2
+{
+    color: rgba(54, 162, 235, 0.9);
+}
+
+.Leyenda3
+{
+    color: rgba(255, 206, 86, 0.9);
+}
+
+.Leyenda4
+{
+    color: rgba(255, 125, 173, 0.9);
+}
+
+.Leyenda5
+{
+    color: rgba(153, 102, 255, 0.9);
+}
+
+.Leyenda6
+{
+    color: rgba(52, 73, 94, 0.9);
+}
+
+.Leyenda7
+{
+    color: rgba(0, 172, 172, 0.9);
 }
