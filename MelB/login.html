@@ -24,7 +24,8 @@
               <div>
               		<img src="content/music.svg" class="LoginIMG"/>
               </div>
-              <form>
+
+              <form id="FormularioLogin">
                	<div class="input-group m-t-10">
                 	<input id="Usuario" name="Usuario" type="text" class="form-control" placeholder="Usuario">
                 	<span class="input-group-btn">
@@ -55,22 +56,38 @@
                     	</button>
                     </span>                    
                 </div>             
-                <input type="submit" class="fadeIn fourth" value="Iniciar Sesión">
+                <input type="submit"  value="Iniciar Sesión">
               </form>
 
+              <form id="FormularioRecuperarContraseña">
+              	<div class="form-group">
+                    <label class="control-label">Correo de recuperación</label>
+                        <div class="input-group m-t-10" id="GrupoCorreo">
+                            <input id="Correo" type="text" class="form-control" placeholder="Correo electronico">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                	<i class="ion-android-mail"></i>
+                                </button>
+                            </span>
+                        </div>
+                </div>
+                      <input type="submit" id="BotonEnviarContraseña"  value="Recuperar Contraseña">
+              </form>
               <div class="Footer">
-                <a  href="#">¿Olvidaste la contraseña?</a>
+                <a id="RecuperarContraseña"  href="#">¿Olvidaste la contraseña?</a>
               </div>
             </div>
           </div>
 
       	  <!-- Jquery -->
           <script src="plugins/jquery/jquery-3.0.0.min.js"></script>
+          <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 
 		  <!-- Plugins JS -->
 		  <script src="Scripts/bootstrap.min.js"></script>             
           <script src="plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
           <script src="plugins\SweetAlert/sweetalert2.min.js"></script>
+
 
           <!-- Scripts de la pagina -->
           <script src="Scripts/EventosLogin.js"></script>
