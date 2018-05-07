@@ -223,11 +223,9 @@ var Fila_Seleccionada = 0;
                           type: 'DELETE',
                           success: function(Resultado)
                           {
-                             swal.closeModal();
                              Resultado = JSON.parse(Resultado);
                              if(Resultado.Codigo == 5)
                              {                                    
-                                 swal.closeModal();
                                  swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                  $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
                                  $('#ADD').show("drop", 50);
@@ -240,18 +238,15 @@ var Fila_Seleccionada = 0;
                                       Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
                                  }
                                  swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
-                             }
-                             Actualizar_Todo();
+                              }
+                              Cargar_Remisiones();
                           },
                           error: function(Respuesta)
-                          {
-                             console.log(Respuesta);
-                             swal("Error", "Ocurrio un error al borrar la remision", "error");
+                          {                             
+                             swal("Error", "Ocurrio un error al borrar la remision", "error");              
                           },
-                        });
-              
-                  } 
-                  
+                          });
+                  }                   
             });            
         }
 
@@ -319,7 +314,6 @@ var Fila_Seleccionada = 0;
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID); 
             $('.FlotarDerecha').show();
-            //$('.FlotarDerecha2').show();
         }
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
@@ -513,7 +507,7 @@ var Fila_Seleccionada = 0;
           
           if($('#ID_Estudiante_Remision').val() != "" && $('#ID_Empleado_Remision').val() != "")
           {
-            swal.showLoading();
+           
                 
             var Cantidad_Registros_Remisiones = (document.getElementById("Desglose_Remision_T").rows.length)-1;
 
@@ -523,6 +517,8 @@ var Fila_Seleccionada = 0;
               
               if(Comando == 'Nuevo')
               { 
+                swal({ title: 'Espere', text: 'Se esta añadiendo la remisión', type: 'info', allowOutsideClick: false });
+                swal.showLoading();
                 Fecha_Salida = Cambio_Formato_Fecha(0);
 
                 var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision option:selected').text().substring(1,$('#ID_Estudiante_Remision option:selected').text().length), Empleado_ID: $('#ID_Empleado_Remision option:selected').text().substring(1,$('#ID_Empleado_Remision option:selected').text().length), Fecha_Prestamo: Fecha_Salida.Fecha_Inicio, Fecha_Entrega: Fecha_Salida.Fecha_Fin, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
@@ -561,14 +557,14 @@ var Fila_Seleccionada = 0;
                          swal("Error", "Ocurrio un error al insertar la Remision", "error");
                       },
                 });
-                swal.closeModal();
               }
               else
               {
                 Estado = 0;
 
                 var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estado_Remision: Estado, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales, Observaciones_Finales: Lista_Observaciones_Finales};
-                  
+                swal({ title: 'Espere', text: 'Se esta actualizando la remisión', type: 'info', allowOutsideClick: false });
+                swal.showLoading();  
                 $.ajax
                 ({
                       url: 'http://melbws.azurewebsites.net/api/Remision',
@@ -589,7 +585,6 @@ var Fila_Seleccionada = 0;
                          swal("Error", "Ocurrio un error al insertar la Remision", "error");
                       },
                 });
-                swal.closeModal();
               }
             }
             else

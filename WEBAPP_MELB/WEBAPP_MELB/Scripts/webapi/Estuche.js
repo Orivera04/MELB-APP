@@ -247,8 +247,7 @@
         {
             if(Cond == true)
             {
-                /*$("#ID_Estuche").prop("disabled", false);
-                $("#Tipo_Estuche").removeAttr('disabled');*/
+                $("#Tipo_Estuche").removeAttr('disabled');
                 $('#Color_Estuche').removeAttr('disabled');
                 $('#Marca_Estuche').removeAttr('disabled');
                 $('#Material_Estuche').removeAttr('disabled');
