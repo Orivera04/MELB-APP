@@ -221,11 +221,20 @@ label
    display: block;
    margin:0 auto;
    margin-bottom: 20px;
+   margin-top:30px;
 }
 
 #GrupoCorreo
 {
   margin-top: 5px;
   margin-bottom: 25px;
+
 }
 
+
+
+.QuitarMarginTop 
+{
+    margin-bottom: 0px !important;
+    margin-top:5px;
+}

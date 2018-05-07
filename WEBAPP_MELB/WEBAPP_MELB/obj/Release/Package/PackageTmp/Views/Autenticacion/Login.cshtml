@@ -67,7 +67,7 @@
             <form id="FormularioRecuperarContraseña">
                 <div class="form-group">
                     <label class="control-label">Correo de recuperación</label>
-                    <div class="input-group m-t-10" id="GrupoCorreo">
+                    <div class="input-group m-t-10 QuitarMarginTop">
                         <input id="Correo" type="text" class="form-control" placeholder="Correo electronico">
                         <span class="input-group-btn">
                             <button type="button" class="btn waves-effect waves-light btn-primary btn-color">
@@ -76,7 +76,21 @@
                         </span>
                     </div>
                 </div>
-                <input type="submit" id="BotonEnviarContraseña" value="Recuperar Contraseña">
+
+                <div class="form-group">
+                    <label class="control-label">Modulo</label>
+                    <div class="input-group m-t-10 QuitarMarginTop">
+                        <select id="ModuloContraseña" name="ModuloContraseña" data-width="auto" class="selectpicker" data-style="btn-white">
+                            <option>Inventario</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                <i class="ion-cube" data-pack="default" data-tags="magnifying glass"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                    <input type="submit" id="BotonEnviarContraseña" value="Recuperar Contraseña">
             </form>
             <div class="Footer">
                 <a id="RecuperarContraseña" href="#">¿Olvidaste la contraseña?</a>

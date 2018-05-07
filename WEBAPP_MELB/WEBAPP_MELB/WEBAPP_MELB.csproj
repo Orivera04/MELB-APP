@@ -158,7 +158,9 @@
     <Content Include="Content\EstilosInventario.css" />
     <Content Include="Content\EstilosLogin.css" />
     <Content Include="Content\favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\ionicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="App_Start\Content\Site.css" />
     <Content Include="ApplicationInsights.config">
@@ -220,6 +222,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\GothamRoundedMedium.woff" />
+    <Content Include="fonts\ionicons.eot" />
+    <Content Include="fonts\ionicons.ttf" />
+    <Content Include="fonts\ionicons.woff" />
     <None Include="packages.config" />
     <Content Include="Views\Autenticacion\Login.cshtml" />
     <Content Include="Views\Sistema\Inventario.cshtml" />
