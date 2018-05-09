@@ -340,7 +340,7 @@ var Fila_Seleccionada = 0;
                     $("#ID_Remision").prop("disabled", true);
                     $("#ID_Estudiante_Remision").prop("disabled", true);
                     $("#ID_Empleado_Remision").prop("disabled", true);
-                    $("#Remision_Fecha_Fin").prop("disabled", true);
+                    $("#Remision_Fecha_Fin").removeAttr('disabled');
                     $("#Remision_Fecha_Inicio").prop("disabled", true);
                     $("#Estado_Remision").prop("disabled", true);
                     $('#Instrumentos_Disponibles').removeAttr('disabled');
@@ -508,7 +508,6 @@ var Fila_Seleccionada = 0;
           if($('#ID_Estudiante_Remision').val() != "" && $('#ID_Empleado_Remision').val() != "")
           {
            
-                
             var Cantidad_Registros_Remisiones = (document.getElementById("Desglose_Remision_T").rows.length)-1;
 
             if (Cantidad_Registros_Remisiones >= 1 && Longitud > 1)  
