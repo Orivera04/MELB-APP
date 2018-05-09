@@ -79,6 +79,7 @@
                       $('#Color_Estuche').selectpicker('val', Resultado.Color);                      
                       $('#Estado_Estuche').selectpicker('val', Resultado.Estado); 
                       $('#Imagen_Estuche').attr("src",Resultado.Imagen);
+                      $('#Descripcion_Estuche').val(Resultado.Descripcion);
 
                       Base64Imagen(Resultado.Imagen) 
                       $('.selectpicker').selectpicker('refresh');   
@@ -254,6 +255,7 @@
                 $('#Estado_Estuche').removeAttr('disabled');
                 $('#Cambiar_Imagen_Estuche').removeAttr('disabled');
                 $('#Actualizar_Estuche').removeAttr('disabled');
+                $('#Descripcion_Estuche').removeAttr('disabled');
                 $('.selectpicker').selectpicker('refresh');
             }
             else
@@ -265,7 +267,8 @@
                 $('#Material_Estuche').prop('disabled','true');
                 $('#Estado_Estuche').prop('disabled','true');
                 $('#Cambiar_Imagen_Estuche').prop('disabled','true');
-                $('#Actualizar_Estuche').prop('disabled','true');
+                $('#Actualizar_Estuche').prop('disabled', 'true');
+                $('#Descripcion_Estuche').prop('disabled', 'true');
                 $('.selectpicker').selectpicker('refresh');
             }
         }
@@ -277,7 +280,8 @@
             $('#Color_Estuche').selectpicker('val', 'Rojo');
             $('#Marca_Estuche').val('');
             $('#Material_Estuche').selectpicker('val','Plastico');
-            $('#Estado_Estuche').selectpicker('val','Excelente');
+            $('#Estado_Estuche').selectpicker('val', 'Excelente');
+            $('#Descripcion_Estuche').val('');
         }
 
 
@@ -365,14 +369,14 @@
                                  $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                  $('#ADD').show("drop", 50);
                               },
-                              error: function(xhr, status, error)
+                              error: function(Error)
                               {
                                  swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
                     }
                 },                  
-                error: function (xhr, status, error) 
+                error: function (Error) 
                 {
                     swal.closeModal();
                     swal
