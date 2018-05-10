@@ -335,8 +335,7 @@ th,td
     text-align: center !important; 
 }
 
-#Estuches,#Instrumentos,#Proveedores,#Remisiones,#Accesorios,#Estuches , #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Remision_Detalle
-{
+#Estuches, #Instrumentos, #Proveedores, #Remisiones, #Accesorios, #Estuches, #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Remision_Detalle, #Aulas {
     display: none;
 }
 table.dataTable tbody td 

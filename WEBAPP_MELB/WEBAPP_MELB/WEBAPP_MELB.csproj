@@ -235,7 +235,6 @@
     <None Include="packages.config" />
     <Content Include="Views\Autenticacion\Login.cshtml" />
     <Content Include="Views\Sistema\Inventario.cshtml" />
-    <None Include="Properties\PublishProfiles\WEBAPPMELB - Web Deploy.pubxml" />
     <Content Include="Scripts\plugins\DataDrop\src\datedropper.woff" />
     <Content Include="Scripts\plugins\fonts\fontawesome-webfont.eot" />
     <Content Include="Scripts\plugins\fonts\fontawesome-webfont.ttf" />
@@ -250,6 +249,7 @@
     <Content Include="Scripts\plugins\fonts\ionicons.eot" />
     <Content Include="Scripts\plugins\fonts\ionicons.ttf" />
     <Content Include="Scripts\plugins\fonts\ionicons.woff" />
+    <None Include="Properties\PublishProfiles\WEBAPPMELB - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

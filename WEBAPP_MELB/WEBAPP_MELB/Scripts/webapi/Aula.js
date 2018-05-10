@@ -79,10 +79,10 @@ function Eliminar_Aula(ID)
                     {
                         swal.closeModal();
                         Resultado = JSON.parse(Resultado);
-                        if(Resultado.Codigo == 5)
+                        if (Resultado.Codigo == 5 || Resultado.Codigo == 0)
                         {                                    
                             swal.closeModal();
-                            swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                            swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
                         }
                         else
                         {
@@ -94,6 +94,7 @@ function Eliminar_Aula(ID)
                             swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                         }
                         Cargar_Aulas();
+                        
                     },
                     error: function(Respuesta)
                     {
