@@ -102,8 +102,7 @@ var ID_Instrumento = [];
                           {   
                              $('#Estuche_Instrumento').selectpicker({title:'Ninguno'}).selectpicker('render');
                              $('#Estuche_Instrumento').val('Ninguno');
-                          }   
-
+                          }
                       }
                       else
                       {

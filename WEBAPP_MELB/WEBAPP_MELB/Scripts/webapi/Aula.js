@@ -6,9 +6,7 @@ var Aula_Seleccionada = 0;
      Tabla_Aula.clear().draw();
         $.ajax({
 
-            //url: 'http://melbws.azurewebsites.net/api/Aula',
-            url: 'http://localhost:53603/api/Aula',
-
+            url: 'http://melbws.azurewebsites.net/api/Aula',                
             type: 'GET',
 
             success: function (Resultado) 

@@ -70,8 +70,10 @@
                 {   
                     Resultado = JSON.parse(Resultado);     
                     if(Resultado.Codigo == null)
-                    {            
+                    { 
+                       
                       Resultado = Resultado[0]; 
+                      $('#InstrumentoEstuche').show();
                       $('#ID_Estuche').val(Resultado.ID_Estuche); 
                       $('#Tipo_Estuche').val(Resultado.Nombre);
                       $('#Marca_Estuche').val(Resultado.Marca);
@@ -98,12 +100,39 @@
                           type: "error",
                     });
                 }
-            });
+                });
+
+            $.ajax
+                ({
+                    url: 'http://melbws.azurewebsites.net/api/Instrumentos?Filtro=Estuche&ID_Filtro=' + ID,
+                    type: 'GET',
+                    success: function (Instrumento) {
+                        Instrumento = JSON.parse(Instrumento);
+                        if (Instrumento.Codigo != 0)
+                        {
+                            Instrumento = Instrumento[0];
+                            $('#InstrumentoBotonEstuche').removeAttr('disabled');
+                            $('#InstrumentoBotonEstuche').attr('onclick', 'Detallar_Datos_Instrumento(' + Instrumento.ID_Instrumento+')');
+                            $('#Instrumento_Asociado').val('#'+Instrumento.ID_Instrumento);
+                        }
+                        else
+                        {
+                            $('#Instrumento_Asociado').val('Ninguno');
+                            $('#InstrumentoBotonEstuche').prop('disabled', 'true');
+                        }
+                    },
+                    error: function (Error)
+                    {
+                        $('#Instrumento_Asociado').val('Ninguno');
+                        $('#InstrumentoBotonEstuche').prop('disabled', 'true');
+                    }
+                });
+                    
         }
 
         function Insertar_Actualizar_Estuche(Comando)
-        {     
-            if($('#Marca_Estuche').val() != "")
+        {
+            if ($('#Marca_Estuche').val() != "" && $('#Descripcion_Estuche').val() != "")
             {
                 var Ancho  =  document.getElementById('Imagen_Estuche').naturalWidth;
                 var Altura =  document.getElementById('Imagen_Estuche').naturalHeight;
@@ -314,7 +343,7 @@
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    var Estuche_BBDD = {ID_Estuche: $('#ID_Estuche').val(), Nombre: $('#Tipo_Estuche').val(), Marca: $('#Marca_Estuche').val(),Material: $('#Material_Estuche').val(), Color: $('#Color_Estuche').val(), Estado: $('#Estado_Estuche').val(),Imagen: Resultado.data.link};
+                    var Estuche_BBDD = { ID_Estuche: $('#ID_Estuche').val(), Nombre: $('#Tipo_Estuche').val(), Marca: $('#Marca_Estuche').val(), Material: $('#Material_Estuche').val(), Color: $('#Color_Estuche').val(), Estado: $('#Estado_Estuche').val(), Imagen: Resultado.data.link, Descripcion: $('#Descripcion_Estuche').val() };
                                        
                     if(Comando == 'Nuevo')
                     {                                                

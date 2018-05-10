@@ -22,6 +22,7 @@ $(document).ready(function ()
 
     // Peticiones Ajax //
     Cargar_Instrumentos();         
+
 });
 
 
@@ -87,6 +88,12 @@ function Inicializacion_Controles()
     ({
         alwaysShow: true,
         threshold: 8
+    });
+
+    $('#Descripcion_Estuche').maxlength
+        ({
+            alwaysShow: true,
+            threshold: 50
     });
 
     $('#Remision_Fecha_Inicio').dateDropper
@@ -450,7 +457,7 @@ function Inicializacion_Eventos()
                  $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
                  $('#Imagen_Estuche').attr("src","https://i.imgur.com/0oN2F22.png");
                  Base64Imagen($('#Imagen_Estuche').attr('src'));   
-
+                 $('#InstrumentoEstuche').hide();
                  $('#ADD').hide('drop', 100);
                  $('#Busqueda_Form').hide(400);
                  $('#Contenedor_Panel').hide(); 
@@ -824,8 +831,20 @@ function Inicializacion_Eventos()
         });
 
         $('#Actualizar_Remision').click(function(event)
-        {              
-              Insertar_Actualizar_Remision(Operacion);
+        {     
+            var FechaRemisionFinal = new Date($('#Remision_Fecha_Fin').val());
+            if (new Date() <= FechaRemisionFinal) {
+                Insertar_Actualizar_Remision(Operacion);
+            }
+            else
+            {
+                swal
+                    ({
+                        title: "Precaución",
+                        text: "La fecha de fin de la remisión no puede ser igual o menor que la del dia de hoy",
+                        type: "warning",
+                    });
+            }
         });
 
          $('#Añadir_Desglose_Remision').click(function(event)
