@@ -287,7 +287,6 @@ C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\bin\es\Sy
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.WebPages.resources.dll
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csprojResolveAssemblyReference.cache
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csproj.CoreCompileInputs.cache
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.dll
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.pdb

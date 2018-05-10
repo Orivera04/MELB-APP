@@ -314,13 +314,13 @@ var Fila_Seleccionada = 0;
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
 
-            if ($('#Estado_Remision').val() != 'Cancelada')
+            if ($('#Estado_Remision').val() == 'Cancelada')
             {
-                $('.FlotarDerecha').show();
+                $('.FlotarDerecha').hide();
             }
             else
             {
-                $('.FlotarDerecha').hide();
+                $('.FlotarDerecha').show();
             }
             
             
