@@ -925,6 +925,15 @@
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Descripción</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Descripcion_Estuche" type="text" class="form-control" placeholder="Descripción del estuche" maxlength="50">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -973,12 +982,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group">
+                                                        <div class="form-group" id="InstrumentoEstuche">
                                                             <label class="control-label">Instrumento Asociado</label>
                                                             <div class="input-group m-t-10">
                                                                 <input id="Instrumento_Asociado" type="text" class="form-control" placeholder="Instrumento" maxlength="20" disabled>
                                                                 <span class="input-group-btn">
-                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-open" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                    <button id="InstrumentoBotonEstuche" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-open" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -994,6 +1003,33 @@
                                             </button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Aulas">
+                    <div class="row" id="row_aulas">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading5">
+                                <i class="ion-android-pin" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Aulas en Instalaciones MelB</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Aula_T" class="table table-striped table-bordered dt-responsive nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Numero</th>
+                                                <th>Piso</th>
+                                                <th>Actualizar</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Aula_TBody"></tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

@@ -70,8 +70,10 @@
                 {   
                     Resultado = JSON.parse(Resultado);     
                     if(Resultado.Codigo == null)
-                    {            
+                    { 
+                       
                       Resultado = Resultado[0]; 
+                      $('#InstrumentoEstuche').show();
                       $('#ID_Estuche').val(Resultado.ID_Estuche); 
                       $('#Tipo_Estuche').val(Resultado.Nombre);
                       $('#Marca_Estuche').val(Resultado.Marca);
@@ -79,6 +81,7 @@
                       $('#Color_Estuche').selectpicker('val', Resultado.Color);                      
                       $('#Estado_Estuche').selectpicker('val', Resultado.Estado); 
                       $('#Imagen_Estuche').attr("src",Resultado.Imagen);
+                      $('#Descripcion_Estuche').val(Resultado.Descripcion);
 
                       Base64Imagen(Resultado.Imagen) 
                       $('.selectpicker').selectpicker('refresh');   
@@ -97,12 +100,39 @@
                           type: "error",
                     });
                 }
-            });
+                });
+
+            $.ajax
+                ({
+                    url: 'http://melbws.azurewebsites.net/api/Instrumentos?Filtro=Estuche&ID_Filtro=' + ID,
+                    type: 'GET',
+                    success: function (Instrumento) {
+                        Instrumento = JSON.parse(Instrumento);
+                        if (Instrumento.Codigo != 0)
+                        {
+                            Instrumento = Instrumento[0];
+                            $('#InstrumentoBotonEstuche').removeAttr('disabled');
+                            $('#InstrumentoBotonEstuche').attr('onclick', 'Detallar_Datos_Instrumento(' + Instrumento.ID_Instrumento+')');
+                            $('#Instrumento_Asociado').val('#'+Instrumento.ID_Instrumento);
+                        }
+                        else
+                        {
+                            $('#Instrumento_Asociado').val('Ninguno');
+                            $('#InstrumentoBotonEstuche').prop('disabled', 'true');
+                        }
+                    },
+                    error: function (Error)
+                    {
+                        $('#Instrumento_Asociado').val('Ninguno');
+                        $('#InstrumentoBotonEstuche').prop('disabled', 'true');
+                    }
+                });
+                    
         }
 
         function Insertar_Actualizar_Estuche(Comando)
-        {     
-            if($('#Marca_Estuche').val() != "")
+        {
+            if ($('#Marca_Estuche').val() != "" && $('#Descripcion_Estuche').val() != "")
             {
                 var Ancho  =  document.getElementById('Imagen_Estuche').naturalWidth;
                 var Altura =  document.getElementById('Imagen_Estuche').naturalHeight;
@@ -254,6 +284,7 @@
                 $('#Estado_Estuche').removeAttr('disabled');
                 $('#Cambiar_Imagen_Estuche').removeAttr('disabled');
                 $('#Actualizar_Estuche').removeAttr('disabled');
+                $('#Descripcion_Estuche').removeAttr('disabled');
                 $('.selectpicker').selectpicker('refresh');
             }
             else
@@ -265,7 +296,8 @@
                 $('#Material_Estuche').prop('disabled','true');
                 $('#Estado_Estuche').prop('disabled','true');
                 $('#Cambiar_Imagen_Estuche').prop('disabled','true');
-                $('#Actualizar_Estuche').prop('disabled','true');
+                $('#Actualizar_Estuche').prop('disabled', 'true');
+                $('#Descripcion_Estuche').prop('disabled', 'true');
                 $('.selectpicker').selectpicker('refresh');
             }
         }
@@ -277,7 +309,8 @@
             $('#Color_Estuche').selectpicker('val', 'Rojo');
             $('#Marca_Estuche').val('');
             $('#Material_Estuche').selectpicker('val','Plastico');
-            $('#Estado_Estuche').selectpicker('val','Excelente');
+            $('#Estado_Estuche').selectpicker('val', 'Excelente');
+            $('#Descripcion_Estuche').val('');
         }
 
 
@@ -310,7 +343,7 @@
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    var Estuche_BBDD = {ID_Estuche: $('#ID_Estuche').val(), Nombre: $('#Tipo_Estuche').val(), Marca: $('#Marca_Estuche').val(),Material: $('#Material_Estuche').val(), Color: $('#Color_Estuche').val(), Estado: $('#Estado_Estuche').val(),Imagen: Resultado.data.link};
+                    var Estuche_BBDD = { ID_Estuche: $('#ID_Estuche').val(), Nombre: $('#Tipo_Estuche').val(), Marca: $('#Marca_Estuche').val(), Material: $('#Material_Estuche').val(), Color: $('#Color_Estuche').val(), Estado: $('#Estado_Estuche').val(), Imagen: Resultado.data.link, Descripcion: $('#Descripcion_Estuche').val() };
                                        
                     if(Comando == 'Nuevo')
                     {                                                
@@ -365,14 +398,14 @@
                                  $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
                                  $('#ADD').show("drop", 50);
                               },
-                              error: function(xhr, status, error)
+                              error: function(Error)
                               {
                                  swal("Error", "Ocurrio un error al insertar el Estuche", "error");
                               },
                         });
                     }
                 },                  
-                error: function (xhr, status, error) 
+                error: function (Error) 
                 {
                     swal.closeModal();
                     swal
