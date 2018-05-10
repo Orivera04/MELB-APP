@@ -26,7 +26,7 @@ var Aula_Seleccionada = 0;
                                Resultado[i].ID_Aula,
                                Resultado[i].Numero,
                                Resultado[i].Piso,
-                               '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Proceso_Insercion_Aula(\'Actualizar\',' + Resultado[i].ID_Aula + ',' + Resultado[i].Numero + ',' + Resultado[i].Piso +'\')"><i class="ion-compose" data-pack="default"></i></button>',
+                               '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Proceso_Insercion_Aula(\'Actualizar\',' + Resultado[i].ID_Aula + ',' + Resultado[i].Numero + ',' + Resultado[i].Piso+')"><i class="ion-compose" data-pack="default"></i></button>',
                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Aula(' + Resultado[i].ID_Aula + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                            ]).draw(false);  
                     }                     
@@ -121,7 +121,8 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                          Resultado = JSON.parse(Resultado);
                          if(Resultado.Codigo == 5)
                          {                                    
-                             swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                             swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                             swal("Exito", "Se ha añadido el registro exitosamente", "success");
                          }
                          else
                          {
@@ -145,13 +146,17 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {
                 $.ajax
                 ({
-                      url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        url: 'http://melbws.azurewebsites.net/api/Aula/',
                       type: 'PUT',
                       data: Aula_BBDD,
                       success: function(Resultado)
                       {
                          Resultado = JSON.parse(Resultado);
                          swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
+                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Numero;
+                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Piso;
+                         swal("Exito", "Se ha actualizado el registro exitosamente", "success");
                          Cargar_Aulas();
                       },
                       error: function(Error)
@@ -243,18 +248,10 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             if (Comando == 'Nuevo') {
 
                 Insertar_Actualizar_Aula(Comando,Modal[0],Modal[1],Modal[2]);
-
-                //swal("Exito", "Se ha añadido el registro exitosamente", "success");
             }
             else
             {
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = Modal[0];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Modal[1];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Modal[2];
-
                 Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
-
-                //swal("Exito", "Se ha actualizado el registro exitosamente", "success");
             }
         }
         else {
