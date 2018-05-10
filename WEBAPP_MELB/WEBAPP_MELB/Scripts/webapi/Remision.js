@@ -127,62 +127,111 @@ var Fila_Seleccionada = 0;
                           
                           Arreglo_Listado.splice(0,Arreglo_Listado.length);                             
                           
-                           for (i = 0; i < Resultado.Lista_Desglose.length; i++) 
-                            {   
+                           if (Resultado.Estado_Remision == 'Cancelada') {
+                               $('.FlotarDerecha').hide();
 
-                              Arreglo_Listado.push({ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: Resultado.Lista_Desglose[i].Observacion_Final, Imagen: ''});  
+                               for (i = 0; i < Resultado.Lista_Desglose.length; i++) {
 
-                              $.ajax
-                              ({
-                                  url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+Resultado.Lista_Desglose[i].ID_Instrumento,
-                                  type: 'GET',
-                                  success: function (Resultado_Imagen) 
-                                  {            
-                                        Resultado_Imagen = JSON.parse(Resultado_Imagen);                                                        
-                                        if(Resultado_Imagen.Codigo == null)
-                                        {       
-                                            Resultado_Imagen = Resultado_Imagen[0];                  
-                                            Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado_Imagen.Imagen+'"></img>'
-                                            
-                                            for (j = 0; j < Arreglo_Listado.length; j++) 
-                                            {
-                                              if( Resultado_Imagen.ID_Instrumento == Arreglo_Listado[j].ID_Instrumento )
-                                              	{
-	                                                Arreglo_Listado[j].Imagen = Imagen; 
-	                                                
-	                                                Tabla_Desglose_Remision.row.add
-	                                                ([
-	                                                    Arreglo_Listado[j].Imagen,
-	                                                    Arreglo_Listado[j].ID_Instrumento,
-	                                                    Arreglo_Listado[j].Nombre,
-	                                                    Arreglo_Listado[j].Observacion_Inicial,
-	                                                    Arreglo_Listado[j].Observacion_Final,
-	                                                    '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\''+Funcion_Realizar+'\')" ><i class="ion-compose" data-pack="default"></i></button>'
+                                   Arreglo_Listado.push({ ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: Resultado.Lista_Desglose[i].Observacion_Final, Imagen: '' });
 
-	                                                ]).draw( false );
-                                            	}
-											}
-                                        }
-                                        else
-                                        {
-                                            swal(Resultado_Imagen.Mensaje_Cabecera,Resultado_Imagen.Mensaje_Usuario, "info");
-                                        }           
+                                   $.ajax
+                                       ({
+                                           url: 'http://melbws.azurewebsites.net/api/Instrumentos/' + Resultado.Lista_Desglose[i].ID_Instrumento,
+                                           type: 'GET',
+                                           success: function (Resultado_Imagen) {
+                                               Resultado_Imagen = JSON.parse(Resultado_Imagen);
+                                               if (Resultado_Imagen.Codigo == null) {
+                                                   Resultado_Imagen = Resultado_Imagen[0];
+                                                   Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "' + Resultado_Imagen.Imagen + '"></img>'
 
-                                  },
-                                  error: function (Mensaje) 
-                                  {
-                                      swal
-                                      ({
-                                            title: "Error al intentar ver la Imagen del instrumento",
-                                            text: "No se pudo conectar con el servidor.",
-                                            type: "error",
-                                      });
-                                  }
-                              });                                
+                                                   for (j = 0; j < Arreglo_Listado.length; j++) {
+                                                       if (Resultado_Imagen.ID_Instrumento == Arreglo_Listado[j].ID_Instrumento) {
+                                                           Arreglo_Listado[j].Imagen = Imagen;
 
-                            }
+                                                           Tabla_Desglose_Remision.row.add
+                                                               ([
+                                                                   Arreglo_Listado[j].Imagen,
+                                                                   Arreglo_Listado[j].ID_Instrumento,
+                                                                   Arreglo_Listado[j].Nombre,
+                                                                   Arreglo_Listado[j].Observacion_Inicial,
+                                                                   Arreglo_Listado[j].Observacion_Final,
+                                                                   '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Mensaje()" ><i class="ion-compose" data-pack="default"></i></button>'
+
+                                                               ]).draw(false);
+                                                       }
+                                                   }
+                                               }
+                                               else {
+                                                   swal(Resultado_Imagen.Mensaje_Cabecera, Resultado_Imagen.Mensaje_Usuario, "info");
+                                               }
 
 
+
+                                           },
+                                           error: function (Mensaje) {
+                                               swal
+                                                   ({
+                                                       title: "Error al intentar ver la Imagen del instrumento",
+                                                       text: "No se pudo conectar con el servidor.",
+                                                       type: "error",
+                                                   });
+                                           }
+                                       });
+
+                               }
+                           }
+                           else {
+                               $('.FlotarDerecha').show();
+                               for (i = 0; i < Resultado.Lista_Desglose.length; i++) {
+
+                                   Arreglo_Listado.push({ ID_Instrumento: Resultado.Lista_Desglose[i].ID_Instrumento, Nombre: Resultado.Lista_Desglose[i].Nombre, Observacion_Inicial: Resultado.Lista_Desglose[i].Observacion_Inicial, Observacion_Final: Resultado.Lista_Desglose[i].Observacion_Final, Imagen: '' });
+
+                                   $.ajax
+                                       ({
+                                           url: 'http://melbws.azurewebsites.net/api/Instrumentos/' + Resultado.Lista_Desglose[i].ID_Instrumento,
+                                           type: 'GET',
+                                           success: function (Resultado_Imagen) {
+                                               Resultado_Imagen = JSON.parse(Resultado_Imagen);
+                                               if (Resultado_Imagen.Codigo == null) {
+                                                   Resultado_Imagen = Resultado_Imagen[0];
+                                                   Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "' + Resultado_Imagen.Imagen + '"></img>'
+
+                                                   for (j = 0; j < Arreglo_Listado.length; j++) {
+                                                       if (Resultado_Imagen.ID_Instrumento == Arreglo_Listado[j].ID_Instrumento) {
+                                                           Arreglo_Listado[j].Imagen = Imagen;
+
+                                                           Tabla_Desglose_Remision.row.add
+                                                               ([
+                                                                   Arreglo_Listado[j].Imagen,
+                                                                   Arreglo_Listado[j].ID_Instrumento,
+                                                                   Arreglo_Listado[j].Nombre,
+                                                                   Arreglo_Listado[j].Observacion_Inicial,
+                                                                   Arreglo_Listado[j].Observacion_Final,
+                                                                   '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\'' + Funcion_Realizar + '\')" ><i class="ion-compose" data-pack="default"></i></button>'
+
+                                                               ]).draw(false);
+                                                       }
+                                                   }
+                                               }
+                                               else {
+                                                   swal(Resultado_Imagen.Mensaje_Cabecera, Resultado_Imagen.Mensaje_Usuario, "info");
+                                               }
+
+
+
+                                           },
+                                           error: function (Mensaje) {
+                                               swal
+                                                   ({
+                                                       title: "Error al intentar ver la Imagen del instrumento",
+                                                       text: "No se pudo conectar con el servidor.",
+                                                       type: "error",
+                                                   });
+                                           }
+                                       });
+
+                               }
+                           }
                       }
                       else
                       {
@@ -314,14 +363,7 @@ var Fila_Seleccionada = 0;
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
 
-            if ($('#Estado_Remision').val() == 'Cancelada')
-            {
-                $('.FlotarDerecha').hide();
-            }
-            else
-            {
-                $('.FlotarDerecha').show();
-            }
+            
             
             
         }
@@ -505,6 +547,11 @@ var Fila_Seleccionada = 0;
                     });
                 }
             });
+        }
+
+        function Mensaje()
+        {
+            swal('Remision Finalizada', 'No se pueden realizar cambios', 'info');
         }
 
 /* Funciones de soporte */
@@ -777,7 +824,6 @@ var Fila_Seleccionada = 0;
                 }        
             })
         }
-
 
         function RemisionesGrafica(Instrumento)
         {

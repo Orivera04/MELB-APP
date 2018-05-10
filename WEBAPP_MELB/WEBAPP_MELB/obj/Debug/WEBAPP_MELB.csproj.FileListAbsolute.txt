@@ -290,3 +290,4 @@ C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\bin\es\Sy
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csproj.CoreCompileInputs.cache
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.dll
 C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.pdb
+C:\Users\yader\Documents\GitHub\MelB_Front-End\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csprojResolveAssemblyReference.cache
