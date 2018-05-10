@@ -300,7 +300,7 @@ var Fila_Seleccionada = 0;
 /* Funcionalidad de formularios  */
 
         function Detallar_Datos_Remision(ID)
-        {           
+        {   
             $('#Switch_Editar_Remision').prop('checked',false);
             Habilitar_Deshabilitar_Remision(false);        
             Operacion = 'Actualizar';                
@@ -312,8 +312,18 @@ var Fila_Seleccionada = 0;
             $('#Contenedor_Panel').show();
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
-            Cargar_Remision_Por_ID(ID); 
-            $('.FlotarDerecha').show();
+            Cargar_Remision_Por_ID(ID);
+
+            if ($('#Estado_Remision').val() != 'Cancelada')
+            {
+                $('.FlotarDerecha').show();
+            }
+            else
+            {
+                $('.FlotarDerecha').hide();
+            }
+            
+            
         }
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
