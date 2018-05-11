@@ -26,7 +26,7 @@ var Aula_Seleccionada = 0;
                                Resultado[i].ID_Aula,
                                Resultado[i].Numero,
                                Resultado[i].Piso,
-                               '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Insertar_Actualizar_Aula(\'' + Funcion_Realizar +'\')"><i class="ion-compose" data-pack="default"></i></button>',
+                               '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Proceso_Insercion_Aula(\'Actualizar\',' + Resultado[i].ID_Aula + ',' + Resultado[i].Numero + ',' + Resultado[i].Piso+')"><i class="ion-compose" data-pack="default"></i></button>',
                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Aula(' + Resultado[i].ID_Aula + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                            ]).draw(false);  
                     }                     
@@ -82,7 +82,8 @@ function Eliminar_Aula(ID)
                         if(Resultado.Codigo == 5)
                         {                                    
                             swal.closeModal();
-                            swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                            swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                            Cargar_Aulas();
                         }
                         else
                         {
@@ -93,7 +94,7 @@ function Eliminar_Aula(ID)
                             }
                             swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                         }
-                        Cargar_Aulas();
+                        
                     },
                     error: function(Respuesta)
                     {
@@ -104,17 +105,16 @@ function Eliminar_Aula(ID)
     });            
  }
 
-function Insertar_Actualizar_Aula(Comando)
+function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
 {
-    var Aula_BBDD = { ID_Estuche: parseInt(document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML), Numero: parseInt(document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML), Piso: parseInt(document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML)};
+    var Aula_BBDD = { ID_Aula: ID_Aula, Numero: Numero, Piso: Piso };
                                        
     if(Comando == 'Nuevo')
             {                                                
                 $.ajax
                 ({
 
-                        //url: 'http://melbws.azurewebsites.net/api/Aula/',
-                        url: 'http://localhost:53603/api/Aula',
+                        url: 'http://melbws.azurewebsites.net/api/Aula/',
                       type: 'POST',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -122,7 +122,8 @@ function Insertar_Actualizar_Aula(Comando)
                          Resultado = JSON.parse(Resultado);
                          if(Resultado.Codigo == 5)
                          {                                    
-                             swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                             swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                             swal("Exito", "Se ha añadido el registro exitosamente", "success");
                          }
                          else
                          {
@@ -137,32 +138,38 @@ function Insertar_Actualizar_Aula(Comando)
                       },
                       error: function(Respuesta)
                       {
-                         swal("Error", "Ocurrio un error al insertar el Estuche", "error");
+                         swal("Error", "Ocurrio un error al insertar el Aula", "error");
                       },
                 });
             }
-    else if (Comando == "Actualizar")
+    else
+        //if (Comando == "Actualizar")
             {
                 $.ajax
                 ({
-                      url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        url: 'http://melbws.azurewebsites.net/api/Aula/',
                       type: 'PUT',
                       data: Aula_BBDD,
                       success: function(Resultado)
                       {
-                         Cargar_Aulas();
                          Resultado = JSON.parse(Resultado);
-                         swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
+                         swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
+                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Numero;
+                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Piso;
+                         swal("Exito", "Se ha actualizado el registro exitosamente", "success");
+                         Cargar_Aulas();
                       },
                       error: function(Error)
                       {
-                         swal("Error", "Ocurrio un error al insertar el Estuche", "error");
+                         swal("Error", "Ocurrio un error al actualizar el Aula", "error");
                       },
+                      
                 });
             }
 }
 
-function Proceso_Insercion_Aula(Comando) {
+function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
     var Titulo;
     var Error;
     swal.setDefaults
@@ -199,7 +206,9 @@ function Proceso_Insercion_Aula(Comando) {
                 }
             ]
     }
-    else if (Comando == "Actualizar") {
+    else
+        //if (Comando == "Actualizar")
+        {
         Titulo = 'Actualizando Aula';
         Error = 'Ocurrio un inconveniente al actualizar el aula.';
 
@@ -209,34 +218,26 @@ function Proceso_Insercion_Aula(Comando) {
                     title: 'Actualizar Aula',
                     text: 'Identificador del Aula',
                     input: 'number',
-                    inputValue: (document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML),
+                    inputValue: ID_Aula,
                     inputClass: 'form-control'
                 },
                 {
                     title: 'Actualizar Aula',
                     text: 'Numero de Aula',
                     input: 'number',
-                    inputValue: (document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML),
+                    inputValue: Numero,
                     inputClass: 'form-control'
                 },
                 {
                     title: 'Actualizar Aula',
                     text: 'Piso del Aula',
                     input: 'number',
-                    inputValue: (document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML),
+                    inputValue: Piso,
                     inputClass: 'form-control'
                 }
             ]
     }
-    else {
-
-        swal
-            ({
-                title: "Aviso",
-                text: "Selecciona un Aula",
-                type: "warning",
-            }).catch(swal.noop)
-    }
+    
 
     swal.queue(Pasos).then(function (Modal) {
 
@@ -247,23 +248,11 @@ function Proceso_Insercion_Aula(Comando) {
 
             if (Comando == 'Nuevo') {
 
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = Modal[0];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Modal[1];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Modal[2];
-
-                Insertar_Actualizar_Aula(Comando);
-
-                //swal("Exito", "Se ha añadido el registro exitosamente", "success");
+                Insertar_Actualizar_Aula(Comando,Modal[0],Modal[1],Modal[2]);
             }
             else
             {
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = Modal[0];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Modal[1];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Modal[2];
-
-                Insertar_Actualizar_Aula(Comando);
-
-                //swal("Exito", "Se ha actualizado el registro exitosamente", "success");
+                Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
             }
         }
         else {
