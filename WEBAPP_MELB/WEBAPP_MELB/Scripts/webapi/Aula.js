@@ -26,11 +26,7 @@ var Aula_Seleccionada = 0;
                                Resultado[i].ID_Aula,
                                Resultado[i].Numero,
                                Resultado[i].Piso,
-<<<<<<< HEAD
-                               '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Proceso_Insercion_Aula(\'Actualizar\',' + Resultado[i].ID_Aula + ',' + Resultado[i].Numero + ',' + Resultado[i].Piso +'\')"><i class="ion-compose" data-pack="default"></i></button>',
-=======
                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Proceso_Insercion_Aula(\'Actualizar\',' + Resultado[i].ID_Aula + ',' + Resultado[i].Numero + ',' + Resultado[i].Piso+')"><i class="ion-compose" data-pack="default"></i></button>',
->>>>>>> c5fdb29fc3aa548618d20a80181ab9b7d478297e
                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Aula(' + Resultado[i].ID_Aula + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                            ]).draw(false);  
                     }                     
@@ -158,13 +154,10 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                       {
                          Resultado = JSON.parse(Resultado);
                          swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
-<<<<<<< HEAD
-=======
                          document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
                          document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Numero;
                          document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Piso;
                          swal("Exito", "Se ha actualizado el registro exitosamente", "success");
->>>>>>> c5fdb29fc3aa548618d20a80181ab9b7d478297e
                          Cargar_Aulas();
                       },
                       error: function(Error)
@@ -256,25 +249,10 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             if (Comando == 'Nuevo') {
 
                 Insertar_Actualizar_Aula(Comando,Modal[0],Modal[1],Modal[2]);
-<<<<<<< HEAD
-
-                //swal("Exito", "Se ha añadido el registro exitosamente", "success");
-            }
-            else
-            {
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = Modal[0];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Modal[1];
-                document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Modal[2];
-
-                Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
-
-                //swal("Exito", "Se ha actualizado el registro exitosamente", "success");
-=======
             }
             else
             {
                 Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
->>>>>>> c5fdb29fc3aa548618d20a80181ab9b7d478297e
             }
         }
         else {
