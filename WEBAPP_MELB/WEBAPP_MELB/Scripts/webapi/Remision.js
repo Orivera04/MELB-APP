@@ -207,7 +207,7 @@ var Fila_Seleccionada = 0;
                                                                    Arreglo_Listado[j].Nombre,
                                                                    Arreglo_Listado[j].Observacion_Inicial,
                                                                    Arreglo_Listado[j].Observacion_Final,
-                                                                   '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\'' + Funcion_Realizar + '\')" ><i class="ion-compose" data-pack="default"></i></button>'
+                                                                   '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\'' + Funcion_Realizar + '\''+',0'+')" ><i class="ion-compose" data-pack="default"></i></button>'
 
                                                                ]).draw(false);
                                                        }
@@ -362,10 +362,6 @@ var Fila_Seleccionada = 0;
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
-
-            
-            
-            
         }
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
@@ -664,7 +660,7 @@ var Fila_Seleccionada = 0;
           }
         }
 
-        function Insertar_Actualizar_Desglose_Remision(Comando_Desglose)
+        function Insertar_Actualizar_Desglose_Remision(Comando_Desglose, Opcion)
         {
           var Titulo;
           var Error;
@@ -677,7 +673,7 @@ var Fila_Seleccionada = 0;
                 allowOutsideClick: false
           });
 
-          if((Comando_Desglose == 'Nuevo') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != ""))
+          if((Comando_Desglose == 'Nuevo') && ($('#Instrumentos_Disponibles').val().substring(1,$('#Instrumentos_Disponibles').val().length) != "") && Opcion == 0)
           {
               Titulo = 'Añadiendo a Remision';
               Error = 'Ocurrio un inconveniente al añadir el detalle.';
@@ -686,7 +682,7 @@ var Fila_Seleccionada = 0;
                 {
                     title: 'Añadir Instrumento a Remision',
                     text: 'Observacion Inicial',
-                    input : 'textarea',
+                    input: 'textarea',
                     inputAttributes: 
                     {
                         maxlength : 50
@@ -695,7 +691,8 @@ var Fila_Seleccionada = 0;
                 }
               ]
           }
-           else if (Comando_Desglose == "Actualizar" && ($('#Switch_Editar_Remision').prop('checked') == true))
+            
+           else if (Comando_Desglose == "Actualizar" && ($('#Switch_Editar_Remision').prop('checked') == true) && Opcion == 0)
           {
               Titulo = 'Actualizando Observacion final';
               Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
@@ -714,7 +711,29 @@ var Fila_Seleccionada = 0;
                 }
               ]
           }
-          else if (Comando_Desglose == "Actualizar" &&  ($('#Switch_Editar_Remision').prop('checked') == false))
+
+          else if (Comando_Desglose == "Actualizar" && Opcion != 0) {
+              Titulo = 'Actualizando Observacion Inicial';
+              Error = 'Ocurrio un inconveniente al actualizar la Observacion.';
+
+              var Pasos =
+                  [
+                      {
+                          title: 'Actualizar Detalle Remision',
+                          text: 'Observacion Inicial',
+                          input: 'textarea',
+                          //inputValue: document.getElementById("Desglose_Remision_T").rows[Fila_Seleccionada + 1].cells[3].innerHTML,
+                          inputValue: Opcion,
+                          inputAttributes:
+                          {
+                              maxlength: 50
+                          },
+                          inputClass: 'form-control'
+                      }
+                  ]
+          }
+
+          else if (Comando_Desglose == "Actualizar" &&  ($('#Switch_Editar_Remision').prop('checked') == false) && Opcion == 0)
           {
 
             swal("Aviso","Habilita la edicion de la remision", "warning");
@@ -762,8 +781,8 @@ var Fila_Seleccionada = 0;
                                           Resultado.ID_Instrumento,              //ID_Instrumento
                                           Resultado.Nombre,                      //Nombre
                                           Modal[0],                              //Ob. Inicial
-                                          'El instrumento no ha sido devuelto',  //Ob. Final
-                                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\''+Funcion_Realizar+'\')" ><i class="ion-compose" data-pack="default"></i></button>'
+                                                'El instrumento no ha sido devuelto',  //Ob. Final
+                                          '<button type="button" class="btn waves-effect waves-light btn-info btn-color" onclick="Insertar_Actualizar_Desglose_Remision(\'' + Funcion_Realizar + '\'' + ',\'' + Modal[0] + '\')" ><i class="ion-compose" data-pack="default"></i></button>'
                                         ]).draw( false );
                                     }
                                     else
@@ -804,9 +823,15 @@ var Fila_Seleccionada = 0;
                               }
                           }); 
                     }
-                    else
+                    else if (Opcion != 0)
                     {
-                          /*AQUI LA PARTE DE ACTUALIZAR*/
+                        /*AQUI LA PARTE DE ACTUALIZAR OBSERVACION INICIAL*/
+                        document.getElementById("Desglose_Remision_T").rows[Fila_Seleccionada + 1].cells[3].innerHTML = Modal[0];
+                        swal("Exito", "Se ha actualizado el registro exitosamente", "success");
+                    }
+                    else 
+                    {
+                          /*AQUI LA PARTE DE ACTUALIZAR OBSERVACION FINAL*/
                       document.getElementById("Desglose_Remision_T").rows[Fila_Seleccionada+1].cells[4].innerHTML = Modal[0];
                       swal("Exito","Se ha actualizado el registro exitosamente", "success");
                     }                   
