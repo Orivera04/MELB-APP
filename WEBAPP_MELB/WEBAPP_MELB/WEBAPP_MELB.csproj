@@ -155,8 +155,8 @@
     <Content Include="App_Start\Content\bootstrap.css" />
     <Content Include="App_Start\Content\bootstrap.min.css" />
     <Content Include="Content\assets\music.svg" />
-    <Content Include="Content\EstilosInventario.css" />
-    <Content Include="Content\EstilosLogin.css" />
+    <Content Include="Content\SistemaEstilos.css" />
+    <Content Include="Content\LoginEstilos.css" />
     <Content Include="Content\favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -250,6 +250,7 @@
     <Content Include="Scripts\plugins\fonts\ionicons.ttf" />
     <Content Include="Scripts\plugins\fonts\ionicons.woff" />
     <None Include="Properties\PublishProfiles\WEBAPPMELB - Web Deploy.pubxml" />
+    <Content Include="Views\Sistema\Estudiante.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
