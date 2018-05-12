@@ -24,8 +24,8 @@ var Aula_Seleccionada = 0;
                        Tabla_Aula.row.add
                            ([
                                Resultado[i].ID_Aula,
-                               Resultado[i].Numero,
-                               Resultado[i].Piso,
+                               '#' + Resultado[i].Numero,
+                               '#' + Resultado[i].Piso,
                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Proceso_Insercion_Aula(\'Actualizar\',' + Resultado[i].ID_Aula + ',' + Resultado[i].Numero + ',' + Resultado[i].Piso+')"><i class="ion-compose" data-pack="default"></i></button>',
                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Aula(' + Resultado[i].ID_Aula + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                            ]).draw(false);  
@@ -177,8 +177,8 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                           {
                               swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
                               document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
-                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Numero;
-                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Piso;
+                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = '#' + Numero;
+                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = '#' + Piso;
                               swal("Exito", "Se ha actualizado el registro exitosamente", "success");
                           }
                           else
@@ -194,7 +194,13 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                               }
                               catch (Error)
                               {
-                                  swal("Error", "No se ha podido actualizar el Aula", "error");    
+                                  swal
+                                      ({
+                                          title: Resultado.Mensaje_Cabecera,
+                                          text: Resultado.Mensaje_Usuario,
+                                          timer:5000,
+                                          type: "error",
+                                      });
                               }
                           }
                          Cargar_Aulas();
@@ -231,7 +237,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     input: 'number',
                      inputAttributes: 
                     {
-                        min : 0
+                        min : 1
                     },
                     inputClass: 'form-control'
                 },
@@ -241,7 +247,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     input: 'number',
                     inputAttributes:
                     {
-                        min: 0
+                        min: 1
                     },
                     inputClass: 'form-control'
                 },
@@ -251,7 +257,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     input: 'number',
                     inputAttributes:
                     {
-                        min: 0
+                        min: 1
                     },
                     inputClass: 'form-control'
                 }
@@ -273,7 +279,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     inputValue: Numero,
                     inputAttributes:
                     {
-                        min: 0
+                        min: 1
                     },
                     inputClass: 'form-control'
                 },
@@ -284,7 +290,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     inputValue: Piso,
                     inputAttributes:
                     {
-                        min: 0
+                        min: 1
                     },
                     inputClass: 'form-control'
                 }
