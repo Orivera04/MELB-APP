@@ -16,16 +16,17 @@ namespace WEBAPP_MELB.Controllers
         [HttpPost]          
         public ActionResult VerificarUsuario(string Usuario, string Contraseña,string Modulo)
         {
-            int ID = Instancia.AutenticarUsuario(Usuario, Contraseña, Modulo);
-            if (ID >= 1)
+            var UsuarioBBDD = Instancia.AutenticarUsuario(Usuario, Contraseña, Modulo);
+            if (UsuarioBBDD[0] >= 1)
             {
-                Session["ID"] = ID;
+                Session["ID"] = UsuarioBBDD[0];
                 Session["Usuario"] = Usuario;
+                Session["Nombre"] = UsuarioBBDD[1];
                 Session["EstaLogeado"] = true;
 
                 return RedirectToAction(Modulo,"Sistema");
             }
-            else if (ID == 0)
+            else if (UsuarioBBDD[0] == 0)
             {
                 return RedirectToAction("Login",new {Estado = 0 });
             }

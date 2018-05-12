@@ -20,7 +20,7 @@ namespace WEBAPP_MELB.Models.Autenticacion
             Instancia_BBDD = new ConexionBBDD();
         }
 
-        public int AutenticarUsuario(string Usuario, string Contraseña, string Modulo)
+        public dynamic AutenticarUsuario(string Usuario, string Contraseña, string Modulo)
         {
             int ModuloBBDD = (Modulo == "Inventario") ? 1 : (Modulo == "Estudiante") ? 2 : 3;
             if (Instancia_BBDD.Abrir_Conexion_BBDD() == true)
@@ -30,23 +30,29 @@ namespace WEBAPP_MELB.Models.Autenticacion
                 CMD.Parameters.Add("@Modulo", SqlDbType.Int).Value = ModuloBBDD;
                 CMD.Parameters.Add("@Usuario", SqlDbType.VarChar).Value = Usuario;
                 CMD.Parameters.Add("@Contraseña", SqlDbType.VarChar).Value = Contraseña;
+
                 SqlParameter Existe = new SqlParameter("@ID", SqlDbType.Int);
                 Existe.Direction = ParameterDirection.Output;
+                SqlParameter Nombre = new SqlParameter("@Nombre", SqlDbType.VarChar,20);
+                Nombre.Direction = ParameterDirection.Output;
+
                 CMD.Parameters.Add(Existe);
+                CMD.Parameters.Add(Nombre);            
+
                 CMD.ExecuteNonQuery();
                 Instancia_BBDD.Cerrar_Conexion();
                 if (CMD.Parameters["@ID"].Value != DBNull.Value)
                 {
-                    return Convert.ToInt16(CMD.Parameters["@ID"].Value);
+                    return new dynamic[] { CMD.Parameters["@ID"].Value, CMD.Parameters["@Nombre"].Value };
                 }
                 else
                 {
-                    return 0;
+                    return new dynamic[] { 0};
                 }
             }
             else
             {
-                return -1;
+                return new dynamic[] { -1 };
             }
         }
 
