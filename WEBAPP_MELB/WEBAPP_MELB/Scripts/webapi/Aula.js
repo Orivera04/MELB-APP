@@ -73,8 +73,8 @@ function Eliminar_Aula(ID)
                 $.ajax
                 ({
 
-                        //url: 'http://melbws.azurewebsites.net/api/Aula/' + ID,
-                        url: 'http://localhost:53603/api/Aula/' + ID,
+                        url: 'http://melbws.azurewebsites.net/api/Aula/' + ID,
+                        //url: 'http://localhost:53603/api/Aula/' + ID,
                     type: 'DELETE',
                     success: function(Resultado)
                     {
@@ -124,8 +124,8 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                 $.ajax
                 ({
 
-                        //url: 'http://melbws.azurewebsites.net/api/Aula/',
-                        url: 'http://localhost:53603/api/Aula/',
+                        url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        //url: 'http://localhost:53603/api/Aula/',
                       type: 'POST',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -165,8 +165,8 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {
                 $.ajax
                 ({
-                        //url: 'http://melbws.azurewebsites.net/api/Aula/',
-                        url: 'http://localhost:53603/api/Aula/',
+                        url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        //url: 'http://localhost:53603/api/Aula/',
                       type: 'PUT',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -305,7 +305,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             }
             else
             {
-                Insertar_Actualizar_Aula(Comando, ID_Aula, Modal[1], Modal[2]);
+                Insertar_Actualizar_Aula(Comando, ID_Aula, Modal[0], Modal[1]);
             }
         }
         else {
