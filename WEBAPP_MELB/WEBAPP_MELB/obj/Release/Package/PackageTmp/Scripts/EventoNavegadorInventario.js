@@ -849,7 +849,7 @@ function Inicializacion_Eventos()
 
          $('#Añadir_Desglose_Remision').click(function(event)
         {
-             Insertar_Actualizar_Desglose_Remision(Operacion);   
+             Insertar_Actualizar_Desglose_Remision(Operacion,0);   
         });
 
          //DETECTANDO CLIC EN DESGLOSE REMISION//         

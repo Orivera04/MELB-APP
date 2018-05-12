@@ -271,7 +271,7 @@ a.article, a.article:hover {
 
 /*Aulas*/
 .panel-danger > .panel-heading5 {
-    background: linear-gradient(to right, #5D6D7E, #AEB6BF);
+    background: linear-gradient(to right, #1D8348, #28B463);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -292,8 +292,7 @@ a.article, a.article:hover {
 }
 
 
-#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas
-{
+#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas, #row_alumno_Detalle {
     margin-left: 1px;
     margin-right: 1px;
 }
