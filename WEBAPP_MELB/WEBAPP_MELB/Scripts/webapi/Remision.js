@@ -839,7 +839,6 @@ var Fila_Seleccionada = 0;
                 else
                 {
                     swal.resetDefaults();
-                    swal.closeModal();
                     swal
                     ({
                           title: "Aviso",
