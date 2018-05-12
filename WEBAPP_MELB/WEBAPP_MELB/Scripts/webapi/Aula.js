@@ -73,16 +73,26 @@ function Eliminar_Aula(ID)
                 $.ajax
                 ({
 
-                    url: 'http://melbws.azurewebsites.net/api/Aula/'+ID,
+                        //url: 'http://melbws.azurewebsites.net/api/Aula/' + ID,
+                        url: 'http://localhost:53603/api/Aula/' + ID,
                     type: 'DELETE',
                     success: function(Resultado)
                     {
                         swal.closeModal();
                         Resultado = JSON.parse(Resultado);
-                        if (Resultado.Codigo == 5 || Resultado.Codigo == 0)
+                        if (Resultado.Codigo == 5)
                         {                                    
                             swal.closeModal();
                             swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                        }
+                        else if (Resultado.Codigo == 1)
+                        {
+                            swal.closeModal();
+                            swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "error");
+                        }
+                        else if (Resultado.Codigo == -1) {
+                            swal.closeModal();
+                            swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "error");
                         }
                         else
                         {
@@ -114,7 +124,8 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                 $.ajax
                 ({
 
-                        url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        //url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        url: 'http://localhost:53603/api/Aula/',
                       type: 'POST',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -127,12 +138,19 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                          }
                          else
                          {
-                             var Cadena_Errores = "";
-                             for (var I = 0; I < Resultado.Errores.length; I++) 
+                             try
+                                {
+                                     var Cadena_Errores = "";
+                                     for (var I = 0; I < Resultado.Errores.length; I++) 
+                                     {
+                                          Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                     }
+                                     swal(Resultado.Mensaje_Cabecera, Cadena_Errores, "warning");
+                                }
+                             catch (Error)
                              {
-                                  Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
+                                 swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "error");
                              }
-                             swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");
                          }
                         Cargar_Aulas();
                       },
@@ -147,17 +165,38 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {
                 $.ajax
                 ({
-                        url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        //url: 'http://melbws.azurewebsites.net/api/Aula/',
+                        url: 'http://localhost:53603/api/Aula/',
                       type: 'PUT',
                       data: Aula_BBDD,
                       success: function(Resultado)
                       {
-                         Resultado = JSON.parse(Resultado);
-                         swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
-                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
-                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Numero;
-                         document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Piso;
-                         swal("Exito", "Se ha actualizado el registro exitosamente", "success");
+                          Resultado = JSON.parse(Resultado);
+
+                          if (Resultado.Codigo == 5)
+                          {
+                              swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
+                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
+                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = Numero;
+                              document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = Piso;
+                              swal("Exito", "Se ha actualizado el registro exitosamente", "success");
+                          }
+                          else
+                          {
+                              try
+                              {
+                                  var Cadena_Errores = "";
+                              
+                                  for (var I = 0; I < Resultado.Errores.length; I++) {
+                                      Cadena_Errores = (I + 1) + " - " + Resultado.Errores[I].Mensaje;
+                                  }
+                              swal(Resultado.Mensaje_Cabecera, Cadena_Errores, "warning");
+                              }
+                              catch (Error)
+                              {
+                                  swal("Error", "No se ha podido actualizar el Aula", "error");    
+                              }
+                          }
                          Cargar_Aulas();
                       },
                       error: function(Error)
@@ -190,18 +229,30 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     title: 'Añadir Aula',
                     text: 'Identificador del Aula',
                     input: 'number',
+                     inputAttributes: 
+                    {
+                        min : 0
+                    },
                     inputClass: 'form-control'
                 },
                 {
                     title: 'Añadir Aula',
                     text: 'Numero de Aula',
                     input: 'number',
+                    inputAttributes:
+                    {
+                        min: 0
+                    },
                     inputClass: 'form-control'
                 },
                 {
                     title: 'Añadir Aula',
                     text: 'Piso del Aula',
                     input: 'number',
+                    inputAttributes:
+                    {
+                        min: 0
+                    },
                     inputClass: 'form-control'
                 }
             ]
@@ -214,18 +265,16 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
 
         var Pasos =
             [
-                {
-                    title: 'Actualizar Aula',
-                    text: 'Identificador del Aula',
-                    input: 'number',
-                    inputValue: ID_Aula,
-                    inputClass: 'form-control'
-                },
+                
                 {
                     title: 'Actualizar Aula',
                     text: 'Numero de Aula',
                     input: 'number',
                     inputValue: Numero,
+                    inputAttributes:
+                    {
+                        min: 0
+                    },
                     inputClass: 'form-control'
                 },
                 {
@@ -233,6 +282,10 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
                     text: 'Piso del Aula',
                     input: 'number',
                     inputValue: Piso,
+                    inputAttributes:
+                    {
+                        min: 0
+                    },
                     inputClass: 'form-control'
                 }
             ]
@@ -252,7 +305,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             }
             else
             {
-                Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
+                Insertar_Actualizar_Aula(Comando, ID_Aula, Modal[1], Modal[2]);
             }
         }
         else {
