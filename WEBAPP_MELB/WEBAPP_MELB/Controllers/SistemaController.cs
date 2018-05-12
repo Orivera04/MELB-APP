@@ -19,11 +19,18 @@ namespace WEBAPP_MELB.Controllers
                 return RedirectToAction("Login","Autenticacion", new { Estado = -2 });
             }
         }
-       
-        public void MatarCookieSesion()
+
+        public ActionResult Estudiante()
         {
-            Session.Abandon();
-        }
+            if (Session["EstaLogeado"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Autenticacion", new { Estado = -2 });
+            }
+        }      
 
     }
 }
