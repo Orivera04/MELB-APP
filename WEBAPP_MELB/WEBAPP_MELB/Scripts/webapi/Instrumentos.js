@@ -17,8 +17,10 @@ var ID_Instrumento = [];
                       for (i = 0; i < Resultado.length; i++) 
                       {        
                                 ID_Instrumento.push({ID:Resultado[i].ID_Instrumento,Nombre:Resultado[i].Nombre});                                                        
-                                var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>'
-                                var Disponibilidad =  (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>'
+                                var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "' + Resultado[i].Imagen + '"></img>'
+                                if (Resultado[i].Estado != 'Extraviado') { var Disponibilidad = (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>' }
+                                else { var Disponibilidad = '<span class="label label-danger">No Disponible</span>'}
+                                
                                 Tabla_Instrumento.row.add
                                 ([
                                         Resultado[i].ID_Instrumento,
