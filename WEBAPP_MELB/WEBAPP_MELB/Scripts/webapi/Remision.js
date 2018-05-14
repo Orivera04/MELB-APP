@@ -528,9 +528,13 @@ var Fila_Seleccionada = 0;
                       Resultado = JSON.parse(Resultado);
                       for (i = 0; i < Resultado.length; i++) 
                       { 
-                        Dropdown_ID_Instrumento.push(Resultado[i].ID_Instrumento);
-                        Dropdown_Nombre_Instrumento.push(Resultado[i].Nombre);
-                        $('#Instrumentos_Disponibles').append('<option data-subtext="'+Dropdown_Nombre_Instrumento[i]+'">#'+Dropdown_ID_Instrumento[i]+'</option>'); 
+                          if (Resultado[i].Estado != 'Extraviado')
+                          {
+                                Dropdown_ID_Instrumento.push(Resultado[i].ID_Instrumento);
+                                Dropdown_Nombre_Instrumento.push(Resultado[i].Nombre);
+                                $('#Instrumentos_Disponibles').append('<option data-subtext="' + Dropdown_Nombre_Instrumento[i] + '">#' + Dropdown_ID_Instrumento[i] + '</option>'); 
+                          }
+
                       }                                                        
                 },
                 error: function (Mensaje) 

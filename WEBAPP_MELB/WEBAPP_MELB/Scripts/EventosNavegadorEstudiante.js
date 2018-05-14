@@ -144,7 +144,7 @@ function InicializacionEventos()
         document.getElementById('Alumno_Detalle').style.display = 'none';
         document.getElementById('Nota_Detalle').style.display = 'none';
         document.getElementById('Matricula_Detalle').style.display = 'none';
-        document.getElementById('Horario_Detalle').style.display = 'none';
+        document.getElementById('Horario_Detalle').style.display = 'block';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
     });
 
