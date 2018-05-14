@@ -10,6 +10,7 @@ namespace WEBAPP_MELB.Controllers
         public ActionResult Login(int Estado = 1)
         {
             ViewBag.Exito = Estado;
+            Session.Abandon();
             return View();
         }
 

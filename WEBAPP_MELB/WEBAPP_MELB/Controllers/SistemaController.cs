@@ -24,6 +24,7 @@ namespace WEBAPP_MELB.Controllers
         {
             if (Session["EstaLogeado"] != null)
             {
+
                 return View();
             }
             else

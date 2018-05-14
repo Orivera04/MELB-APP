@@ -256,10 +256,10 @@ a.article, a.article:hover {
 }
 
 /*Estuche*/
-.panel-danger>.panel-heading3 {   
-      background: linear-gradient(to right, #6190e8, #a7bfe8); 
-      border-top-left-radius:   3px;
-      border-top-right-radius:  3px;
+.panel-danger > .panel-heading3 {
+    background: linear-gradient(to right, #1fa2ff,#0095ff);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 /*Remisiones*/
@@ -276,6 +276,7 @@ a.article, a.article:hover {
     border-top-right-radius: 3px;
 }
 
+
 #Panel_Filtro_Cabezera,#Panel_Filtro_Cabezera_Remisiones
 {
    background: linear-gradient(to right, #485563, #29323c);    
@@ -283,18 +284,25 @@ a.article, a.article:hover {
    border-top-right-radius:  3px;
 }
 
-
-
+#sidebarCollapse {
+    background: #5d9cec !important;
+}
 /*MEDIDAS DE LOS PANEL-HEADING DE CADA PANEL*/
-.panel-heading , .panel-heading2, .panel-heading3, .panel-heading4, .panel-heading5 {
+.panel-heading, .panel-heading2, .panel-heading3, .panel-heading4, .panel-heading5 {
     border: none !important;
     padding: 10px 20px;
 }
 
 
-#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas, #row_alumno_Detalle {
+#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas{
     margin-left: 1px;
     margin-right: 1px;
+}
+
+.RowEstudiante
+{
+    margin-left:1px;
+    margin-right:1px;
 }
 
 .panel-heading > i, .panel-heading2 > i, .panel-heading3 > i, .panel-heading4 > i, .panel-heading5 > i
@@ -516,10 +524,13 @@ button
 {
     color: #5f5e61;
     font-size: 18px;
-    margin-left: 20px;
-    margin-top: 18px;
+    margin-left: 15px;
+    margin-top: 0px;
+    position:relative;
+    top:1.4px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
+    display:inline-block;
 }
 
 .navbar-header
@@ -544,16 +555,51 @@ button
 
 
 @media only screen and (max-width: 768px) and (min-width: 100px) 
-{  
-    #cabezera_header
+{
+    .container-fluid
+    {
+        margin-left:15px;
+    }
+    #sidebar 
     {
         display: none;
+        overflow-y: scroll;
+    }
+    #content
+    {
+        margin-left:0px;
+    }
+}
+#Row_Responsive_Notas > div > div > div > label 
+{
+    margin-top: 7px;
+}
+
+@media only screen and (max-width: 991px) and (min-width: 200px) {
+    #Curso_Res, #Curso_ResMat 
+    {
+        margin-right: 30px;
+    }
+    #Nivel_Res, #Nivel_ResMat
+    {
+        margin-right: 42px;
+    }
+    #SemestreRes, #SemestreResMat
+    {
+        margin-right: 6px;
+    }
+
+    #Row_Responsive_Notas > div, #Row_Responsive_Mat > div 
+    {
+        margin-bottom: 20px;
     }
 }
 
-.img-thumbnail
-{
+
+
+.img-thumbnail {
     width: 100%;
+    height: 300px;
 } 
 
 #Actualizar
@@ -567,19 +613,18 @@ button{
   overflow: hidden;
 }
 
-button:after 
-{
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, .5);
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%);
-  transform-origin: 50% 50%;
+button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, .5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
 }
 
 @keyframes ripple 

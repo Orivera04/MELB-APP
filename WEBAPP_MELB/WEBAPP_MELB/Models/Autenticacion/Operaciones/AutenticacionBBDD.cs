@@ -18,12 +18,13 @@ namespace WEBAPP_MELB.Models.Autenticacion
         public AutenticacionBBDD()
         {
             Instancia_BBDD = new ConexionBBDD();
+            Instancia_BBDD.Abrir_Conexion_BBDD();
         }
 
         public dynamic AutenticarUsuario(string Usuario, string Contraseña, string Modulo)
         {
             int ModuloBBDD = (Modulo == "Inventario") ? 1 : (Modulo == "Estudiante") ? 2 : 3;
-            if (Instancia_BBDD.Abrir_Conexion_BBDD() == true)
+            if (Instancia_BBDD.Conexion.State  == ConnectionState.Open)
             {
                 CMD = new SqlCommand("Autenticacion", Instancia_BBDD.Conexion);
                 CMD.CommandType = CommandType.StoredProcedure;

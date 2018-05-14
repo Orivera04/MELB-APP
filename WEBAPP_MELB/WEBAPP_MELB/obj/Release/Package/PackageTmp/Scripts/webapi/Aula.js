@@ -43,12 +43,11 @@ var Aula_Seleccionada = 0;
 
             error: function (Mensaje) 
             {
-
                 swal
                 ({
                       title: "Error listando aulas",
                       text: "No se pudo conectar con el servidor.",
-                      type: "error",
+                      type: "error"
                 });
         }
 
@@ -68,7 +67,7 @@ function Eliminar_Aula(ID)
     {
             if (willDelete) 
             {
-                swal({title:'Eliminando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
+                swal({ title: 'Eliminando', text: 'Espere por favor', type: 'info', allowOutsideClick: false});
                 swal.showLoading();
                 $.ajax
                 ({
@@ -82,16 +81,13 @@ function Eliminar_Aula(ID)
                         Resultado = JSON.parse(Resultado);
                         if (Resultado.Codigo == 5)
                         {                                    
-                            swal.closeModal();
                             swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
                         }
                         else if (Resultado.Codigo == 1)
                         {
-                            swal.closeModal();
                             swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "error");
                         }
                         else if (Resultado.Codigo == -1) {
-                            swal.closeModal();
                             swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "error");
                         }
                         else
@@ -108,6 +104,7 @@ function Eliminar_Aula(ID)
                     },
                     error: function(Respuesta)
                     {
+                        swal.closeModal();
                         swal("Error", "No es posible eliminar el aula", "error");
                     },
                 });
@@ -123,7 +120,6 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {                                                
                 $.ajax
                 ({
-
                         url: 'http://melbws.azurewebsites.net/api/Aula/',
                         //url: 'http://localhost:53603/api/Aula/',
                       type: 'POST',
@@ -134,7 +130,6 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                          if(Resultado.Codigo == 5)
                          {                                    
                              swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "success");
-                             swal("Exito", "Se ha añadido el registro exitosamente", "success");
                          }
                          else
                          {
@@ -179,7 +174,6 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                               document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[0].innerHTML = ID_Aula;
                               document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[1].innerHTML = '#' + Numero;
                               document.getElementById("Aula_T").rows[Aula_Seleccionada + 1].cells[2].innerHTML = '#' + Piso;
-                              swal("Exito", "Se ha actualizado el registro exitosamente", "success");
                           }
                           else
                           {
@@ -187,10 +181,11 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                               {
                                   var Cadena_Errores = "";
                               
-                                  for (var I = 0; I < Resultado.Errores.length; I++) {
+                                  for (var I = 0; I < Resultado.Errores.length; I++)
+                                  {
                                       Cadena_Errores = (I + 1) + " - " + Resultado.Errores[I].Mensaje;
                                   }
-                              swal(Resultado.Mensaje_Cabecera, Cadena_Errores, "warning");
+                                  swal(Resultado.Mensaje_Cabecera, Cadena_Errores, "warning");
                               }
                               catch (Error)
                               {
@@ -198,8 +193,8 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                                       ({
                                           title: Resultado.Mensaje_Cabecera,
                                           text: Resultado.Mensaje_Usuario,
-                                          timer:5000,
-                                          type: "error",
+                                          timer: 3000,
+                                          type: "error"
                                       });
                               }
                           }
@@ -306,11 +301,13 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             swal.showLoading();
 
             if (Comando == 'Nuevo') {
+                swal.closeModal();
+                Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
 
-                Insertar_Actualizar_Aula(Comando,Modal[0],Modal[1],Modal[2]);
             }
             else
             {
+                swal.closeModal();
                 Insertar_Actualizar_Aula(Comando, ID_Aula, Modal[0], Modal[1]);
             }
         }
