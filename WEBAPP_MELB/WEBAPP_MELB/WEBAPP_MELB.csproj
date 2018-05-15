@@ -193,12 +193,14 @@
     <Content Include="Scripts\plugins\ionicons\ionicons.min.css" />
     <Content Include="Scripts\plugins\jquery-ui\jquery-ui.min.js" />
     <Content Include="Scripts\plugins\jquery\jquery-3.0.0.min.js" />
+    <Content Include="Scripts\plugins\jspdf\jspdf.min.js" />
     <Content Include="Scripts\plugins\SweetAlert\sweetalert2.min.css" />
     <Content Include="Scripts\plugins\SweetAlert\sweetalert2.min.js" />
     <Content Include="Scripts\webapi\Accesorio.js" />
     <Content Include="Scripts\webapi\Aula.js" />
     <Content Include="Scripts\webapi\Estuche.js" />
     <Content Include="Scripts\webapi\Estudiante.js" />
+    <Content Include="Scripts\webapi\Horario.js" />
     <Content Include="Scripts\webapi\Inscripciones.js" />
     <Content Include="Scripts\webapi\Instrumentos.js" />
     <Content Include="Scripts\webapi\Proveedor.js" />

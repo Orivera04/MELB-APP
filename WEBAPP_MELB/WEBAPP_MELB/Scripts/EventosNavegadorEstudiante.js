@@ -21,6 +21,7 @@ $(document).ready(function (event)
 
     /* Peticiones AJAX */
     Cargar_InfoEstudiante();
+    GeneralReporte();
 
 });
 
