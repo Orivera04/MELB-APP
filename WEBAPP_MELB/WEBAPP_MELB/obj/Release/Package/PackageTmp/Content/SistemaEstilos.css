@@ -271,7 +271,7 @@ a.article, a.article:hover {
 
 /*Aulas*/
 .panel-danger > .panel-heading5 {
-    background: linear-gradient(to right, #1D8348, #28B463);
+    background: linear-gradient(to right, #50c9c3, #96deda);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -312,11 +312,11 @@ a.article, a.article:hover {
     vertical-align: middle;
 }
 
-table
-{
+table {
     font-family: 'Roboto', sans-serif;
     color: #797979;
     font-size: 14px;
+    width: 100%;
 }
 
 th {
@@ -549,9 +549,11 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno {
+#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle 
+{
     display: none;
 }
+
 
 
 @media only screen and (max-width: 768px) and (min-width: 100px) 
@@ -570,28 +572,28 @@ button
         margin-left:0px;
     }
 }
-#Row_Responsive_Notas > div > div > div > label
+#Row_Responsive_Notas > div > div > div > label 
 {
-    margin-top:7px;
+    margin-top: 7px;
 }
 
 @media only screen and (max-width: 991px) and (min-width: 200px) {
-    #Curso_Res
+    #Curso_Res, #Curso_ResMat 
     {
-        margin-right:30px;
+        margin-right: 30px;
     }
-    #Nivel_Res
+    #Nivel_Res, #Nivel_ResMat
     {
         margin-right: 42px;
     }
-    #SemestreRes
+    #SemestreRes, #SemestreResMat
     {
-        margin-right:6px;
+        margin-right: 6px;
     }
 
-    #Row_Responsive_Notas > div
+    #Row_Responsive_Notas > div, #Row_Responsive_Mat > div 
     {
-        margin-bottom:20px;
+        margin-bottom: 20px;
     }
 }
 

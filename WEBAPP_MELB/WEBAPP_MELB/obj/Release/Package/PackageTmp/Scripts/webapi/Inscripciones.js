@@ -19,7 +19,9 @@ function Cargar_Inscripciones() {
                             Resultado[I].Nombre,
                             Estado
                         ]).draw(false);
-                    $('#Curso_Alumno').append('<option>' + Resultado[I].Nombre + '</option>');                                                   
+                    $('#Curso_Alumno').append('<option>' + Resultado[I].Nombre + '</option>');
+                    $('#Curso_Alumno_Mat').append('<option>' + Resultado[I].Nombre + '</option>');
+                    $('#Curso_Alumno_Horario').append('<option>' + Resultado[I].Nombre + '</option>');
                 }                
             }          
             $('.selectpicker').selectpicker('refresh');
