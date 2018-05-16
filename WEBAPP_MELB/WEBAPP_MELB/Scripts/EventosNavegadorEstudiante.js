@@ -21,8 +21,6 @@ $(document).ready(function (event)
 
     /* Peticiones AJAX */
     Cargar_InfoEstudiante();
-    GeneralReporte();
-
 });
 
 function InicializacionControles() 
@@ -267,6 +265,20 @@ function InicializacionEventos()
         if (!isNumber(event.key)) {
             event.preventDefault();
         }
+    });
+
+    /* Eventos formulario Notas */
+
+    $('#NotasBoton').click(function (event)
+    {
+        Cargar_Notas();
+    });
+
+    /* Eventos formulario Matricula */
+
+    $('#MatriculaBoton').click(function (event)
+    {
+        CargarDatosMatricula();
     });
 
 }

@@ -15,7 +15,7 @@ function Cargar_Inscripciones() {
                     var Estado = (Resultado[I].Estado_Inscripcion== 'Activo') ? '<span class="label label-success">Activo</span>' : '<span class="label label-inverse">Inactivo</span>'
                     Tabla_Inscripciones.row.add
                         ([
-                            Resultado[I].ID_Inscripcion,
+                            '#'+Resultado[I].ID_Inscripcion,
                             Resultado[I].Nombre,
                             Estado
                         ]).draw(false);
@@ -25,7 +25,7 @@ function Cargar_Inscripciones() {
                 }                
             }          
             $('.selectpicker').selectpicker('refresh');
-            swal.closeModal();
+            Cargar_Notas();
         },
 
         error: function (Mensaje) {
@@ -41,4 +41,28 @@ function Cargar_Inscripciones() {
     });
 }
 
-   
+
+
+function asd() {
+    $.ajax({
+
+        url: 'http://localhost:53603/api/CursosxEstudiantes?ID_Estudiante=1&Operacion=1',
+        type: 'GET',
+        success: function (Resultado) {
+            Resultado = JSON.parse(Resultado);
+           
+        },
+
+        error: function (Mensaje) {
+
+            swal
+                ({
+                    title: "Error listando inscripciones del estudiante",
+                    text: "No se pudo conectar con el servidor.",
+                    type: "error",
+                });
+        }
+
+    });
+}
+

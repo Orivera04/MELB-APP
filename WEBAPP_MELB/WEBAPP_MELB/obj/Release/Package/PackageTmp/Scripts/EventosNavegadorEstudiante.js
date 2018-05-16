@@ -21,7 +21,6 @@ $(document).ready(function (event)
 
     /* Peticiones AJAX */
     Cargar_InfoEstudiante();
-
 });
 
 function InicializacionControles() 

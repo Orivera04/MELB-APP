@@ -514,6 +514,7 @@ var Fila_Seleccionada = 0;
         
         function Instrumentos_Disponibles()
         { 
+            var Contador = 0;
           //Se carga el Dropdown con los instrumentos que estan disponibles//         
            $.ajax
             ({
@@ -532,7 +533,8 @@ var Fila_Seleccionada = 0;
                           {
                                 Dropdown_ID_Instrumento.push(Resultado[i].ID_Instrumento);
                                 Dropdown_Nombre_Instrumento.push(Resultado[i].Nombre);
-                                $('#Instrumentos_Disponibles').append('<option data-subtext="' + Dropdown_Nombre_Instrumento[i] + '">#' + Dropdown_ID_Instrumento[i] + '</option>'); 
+                                $('#Instrumentos_Disponibles').append('<option data-subtext="' + Dropdown_Nombre_Instrumento[Contador] + '">#' + Dropdown_ID_Instrumento[Contador] + '</option>'); 
+                                Contador++;
                           }
 
                       }                                                        
