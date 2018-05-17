@@ -106,6 +106,16 @@ function Inicializacion_Controles()
           "data-format": 'd/m/Y',          
     });
 
+    $('#Remision_Fecha_Inicio_Filtro').dateDropper
+    ({
+            "data-format": 'd/m/Y',
+    });
+
+    $('#Remision_Fecha_Terminal_Filtro').dateDropper
+    ({
+            "data-format": 'd/m/Y',
+    });
+
 }
 
 function Actualizar_Todo()
@@ -864,6 +874,7 @@ function Inicializacion_Eventos()
             Fila_Seleccionada = Tabla_Desglose_Remision.row( this ).index() ;
         });
 
+         //DETECTANDO CLIC AULA//         
         $('#Aula_T tbody').on('click', 'tr', function () {
             Aula_Seleccionada = Tabla_Aula.row(this).index();
         });
