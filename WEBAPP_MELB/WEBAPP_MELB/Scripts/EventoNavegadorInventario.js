@@ -716,13 +716,13 @@ function Inicializacion_Eventos()
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-            if ($('#Col_Select_Remisiones').show() )
+            if ($('#Col_Select_Remisiones').show())
             {
-                Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length));
+                Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length), '', '');
             }
             else
             {
-                Filtrar_Remisiones($('#Filtro_Remision').val(), null);
+                Filtrar_Remisiones($('#Filtro_Remision').val(), '','','');
             }
         });
 
