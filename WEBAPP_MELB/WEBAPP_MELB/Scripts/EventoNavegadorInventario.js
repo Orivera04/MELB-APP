@@ -696,12 +696,34 @@ function Inicializacion_Eventos()
             {
                 $('#Col_Select_Remisiones').hide();
                 $('#Col_Fechas_Remisiones').show();
+                 //Pasar a parte de FILTRO en REMISION
+                var FechaRemisionInicial = new Date($('#Remision_Fecha_Inicio_Filtro').val());
+                var FechaRemisionFinal = new Date($('#Remision_Fecha_Terminal_Filtro').val());
+                if (FechaRemisionInicial <= FechaRemisionFinal)
+                {
+                    
+                }
+                else {
+                    swal
+                        ({
+                            title: "Precaución",
+                            text: "La fecha de fin de la remisión no puede ser igual o menor que la del dia de hoy",
+                            type: "warning",
+                        });
+                }
             }
         }); 
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-             Filtrar_Remisiones($('#Filtro_Remision').val(),$('#ID_Filtro_Remisiones').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
+            if ($('#Col_Select_Remisiones').show() )
+            {
+                Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length));
+            }
+            else
+            {
+                Filtrar_Remisiones($('#Filtro_Remision').val(), null);
+            }
         });
 
 
