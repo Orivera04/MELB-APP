@@ -664,24 +664,29 @@ function Inicializacion_Eventos()
         {
             var Filtro = $('#Filtro_Remision').val();
             $('#ID_Filtro_Remisiones').html('');
-            if(Filtro == 'Instrumento')
-            {
+            if (Filtro == 'Instrumento') {
+                $('#Col_Select_Remisiones').show();
+                $('#Col_Fechas_Remisiones').hide();
                 $('#Label_ID_Remisiones').text('ID Instrumento');
-                ID_Instrumento.forEach(function(Elemento) 
-                {
-                    $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
-                });
-                $('.selectpicker').selectpicker('refresh');                   
-            }  
-            else if(Filtro == 'Estudiante')
-            {
-                $('#Label_ID_Remisiones').text('ID Estudiante');
-                ID_Estudiante.forEach(function(Elemento) 
-                {
-                    $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                ID_Instrumento.forEach(function (Elemento) {
+                    $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
                 });
                 $('.selectpicker').selectpicker('refresh');
-            }                    
+            }
+            else if (Filtro == 'Estudiante') {
+                $('#Col_Select_Remisiones').show();
+                $('#Col_Fechas_Remisiones').hide();
+                $('#Label_ID_Remisiones').text('ID Estudiante');
+                ID_Estudiante.forEach(function (Elemento) {
+                    $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
+                });
+                $('.selectpicker').selectpicker('refresh');
+            }
+            else if (Filtro == 'Fecha')
+            {
+                $('#Col_Select_Remisiones').hide();
+                $('#Col_Fechas_Remisiones').show();
+            }
         }); 
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
