@@ -299,10 +299,9 @@ var Fila_Seleccionada = 0;
             });            
         }
 
-        function Filtrar_Remisiones(Tipo_Filtro, ID_Filtro, FechaInicial, FechaFinal)
-        {  
-
-            if (FechaInicial == '' && FechaFinal == '') {
+        function Filtrar_Remisiones(Tipo_Filtro, ID_Filtro, Fecha_Inicial, Fecha_Final)
+        {
+            if (ID_Filtro != 0) {
                 $.ajax
                     ({
                         url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&ID_Filtro=' + ID_Filtro,
@@ -343,8 +342,8 @@ var Fila_Seleccionada = 0;
             }
             else {
                 $.ajax
-                    ({
-                        url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&ID_Filtro=' + ID_Filtro + '&FechaInicial=' + FechaInicial + '&FechaFinal=' + FechaFinal,
+                    ({          
+                        url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {
                             Tabla_Remision.clear().draw();
@@ -495,6 +494,15 @@ var Fila_Seleccionada = 0;
             var Fecha_Salida = {Fecha_Inicio: Fecha_Inicio, Fecha_Fin: Fecha_Fin};
 
             return Fecha_Salida;
+          }
+          if (Opcion == 3) {
+              //VERIFICAR ESTRUCTURA ENVIADA, T HORAS Y MINUTOS
+              var Remision_Fecha_Inicio = $('#Remision_Fecha_Inicio_Filtro').val();
+              var Remision_Fecha_Fin = $('#Remision_Fecha_Terminal_Filtro').val();
+              
+              var Fecha_Salida = { Fecha_Inicio: Remision_Fecha_Inicio, Fecha_Fin: Remision_Fecha_Fin };
+
+              return Fecha_Salida;
           }
           else
           {
