@@ -343,6 +343,7 @@ var Fila_Seleccionada = 0;
             else {
                 $.ajax
                     ({          
+                        //url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {

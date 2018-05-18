@@ -702,7 +702,7 @@ function Inicializacion_Eventos()
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-            if ($('#Col_Select_Remisiones').show())
+            if ($('#Col_Select_Remisiones').is(":visible"))
             {
                 Fecha_Salida = Cambio_Formato_Fecha(3);
                 Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length), Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
