@@ -68,10 +68,8 @@ function InicializacionControles()
 
     /* Inputs : Fecha */
 
-    $('#FechaNacimiento_Estudiante').dateDropper
-    ({
-        "data-format": 'd/m/Y',
-    });   
+    $('#FechaNacimiento_Estudiante').dateDropper();  
+    $('#Matricula_Fecha').dateDropper();  
 }
 
 function InicializacionTablas()
@@ -264,6 +262,78 @@ function InicializacionEventos()
     {
         if (!isNumber(event.key)) {
             event.preventDefault();
+        }
+    });
+
+
+    /* Eventos formulario Notas */
+
+    $('#NotasBoton').click(function (event)
+    {
+        Cargar_Notas();
+    });
+
+    $('#Curso_Alumno').change(function (event)
+    {
+        var Indice = $("#Curso_Alumno option:selected").index()
+        $('#Semestre').html('');
+        $('#Año_Alumno').html('');
+
+        for (I = 0; I < ListaSemestresPorCurso[Indice].ListaAño.length; I++) {
+            $('#Año_Alumno').append('<option>' + ListaSemestresPorCurso[Indice].ListaAño[I].Cod_Año + '</option>');
+        }
+
+        for (I = 0; I < ListaSemestresPorCurso[Indice].ListaSemestre.length; I++) {
+            if (ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Año == $('#Año_Alumno').val()) {
+                $('#Semestre').append('<option>' + ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Semestre + '</option>');
+            }
+        }
+        $('.selectpicker').selectpicker('refresh');
+    });
+
+    $('#Año_Alumno').change(function (event)
+    {
+        $('#Semestre').html('');
+        var Indice = $("#Curso_Alumno option:selected").index()
+        for (I = 0; I < ListaSemestresPorCurso[Indice].ListaSemestre.length; I++)
+        {
+            if (ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Año == $('#Año_Alumno').val()) {
+                $('#Semestre').append('<option>' + ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Semestre + '</option>');
+            }
+        }
+    });
+
+    /* Eventos formulario Matricula */
+
+    $('#MatriculaBoton').click(function (event)
+    {
+        CargarDatosMatricula();
+    });
+
+    $('#Curso_Alumno_Mat').change(function (event) {
+        var Indice = $("#Curso_Alumno_Mat option:selected").index()
+        $('#SemestreMat').html('');
+        $('#Año_Alumno_Mat').html('');
+
+        for (I = 0; I < ListaSemestresPorCurso[Indice].ListaAño.length; I++) {
+            $('#Año_Alumno_Mat').append('<option>' + ListaSemestresPorCurso[Indice].ListaAño[I].Cod_Año + '</option>');
+        }
+
+        for (I = 0; I < ListaSemestresPorCurso[Indice].ListaSemestre.length; I++) {
+            if (ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Año == $('#Año_Alumno').val()) {
+                $('#SemestreMat').append('<option>' + ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Semestre + '</option>');
+            }
+        }
+        $('.selectpicker').selectpicker('refresh');
+    });
+
+    $('#Año_Alumno_Mat').change(function (event) {
+        $('#SemestreMat').html('');
+        var Indice = $("#Curso_Alumno_Mat option:selected").index()
+        for (I = 0; I < ListaSemestresPorCurso[Indice].ListaSemestre.length; I++) {
+            if (ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Año == $('#Año_Alumno_Mat').val()) {
+                $('#SemestreMat').append('<option>' + ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Semestre + '</option>');
+            }
         }
     });
 

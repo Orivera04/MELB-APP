@@ -24,8 +24,8 @@ function Cargar_Notas()
                         NotaFinal
                     ]).draw(false)           
                 }
-                CargarDatosMatricula();
             }
+            CargarDatosMatricula();
         },
 
         error: function (Mensaje) {

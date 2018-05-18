@@ -134,7 +134,7 @@
 														<div class="form-group">
 															<label class="control-label">Fecha Nacimiento</label>
 															<div class="input-group m-t-10">
-																<input id="FechaNacimiento_Estudiante" type="text" class="form-control" disabled>
+																<input id="FechaNacimiento_Estudiante" data-large-mode="true" data-lang="es" data-format="Y-m-d" type="text" class="form-control" disabled>
 																<span class="input-group-btn">
 																	<button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon ion-calendar"></i></button>
 																</span>
@@ -144,7 +144,7 @@
 														<div class="form-group">
 															<label class="control-label">Apellido del tutor</label>
 															<div class="input-group m-t-10">
-																<input id="Tutor_EstudianteApellido" type="text" class="form-control" disabled>
+																<input id="Tutor_Apellido" type="text" class="form-control" disabled>
 																<span class="input-group-btn">
 																	<button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon ion-person-stalker"></i></button>
 																</span>
@@ -320,8 +320,7 @@
 										<div class="form-inline">
 											<div class="input-group m-t-10">
 												<label class="control-label col-md-3" id="Nivel_Res" align="center">Año</label>
-												<select id="Año_Alumno" class="selectpicker" data-style="btn-white" data-width="100%">
-													<option>2018</option>
+												<select id="Año_Alumno" class="selectpicker" data-style="btn-white" data-width="100%">													
 												</select>
 											</div>
 										</div>
@@ -332,7 +331,7 @@
 											<div class="input-group m-t-10">
 												<label class="control-label col-md-3" id="SemestreRes" align="center">Semestre</label>
 												<select id="Semestre" class="selectpicker" data-style="btn-white" data-width="100%">
-													<option>1</option>
+													
 												</select>
 											</div>
 										</div>
@@ -394,7 +393,7 @@
                                             <div class="input-group m-t-10">
                                                 <label class="control-label col-md-3" id="Nivel_ResMat" align="center">Año</label>
                                                 <select id="Año_Alumno_Mat" class="selectpicker" data-style="btn-white" data-width="100%">
-                                                    <option>2018</option>
+                                                    
                                                 </select>
                                             </div>
                                         </div>
@@ -405,7 +404,6 @@
                                             <div class="input-group m-t-10">
                                                 <label class="control-label col-md-3" id="SemestreResMat" align="center">Semestre</label>
                                                 <select id="SemestreMat" class="selectpicker" data-style="btn-white" data-width="100%">
-                                                    <option>1</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -500,7 +498,7 @@
                                                             <div class="form-group">
                                                                 <label class="control-label">Fecha</label>
                                                                 <div class="input-group m-t-10">
-                                                                    <input id="Matricula_Fecha" type="text" class="form-control" readonly>
+                                                                    <input data-large-mode="true" data-lang="es" data-format="Y-m-d" id="Matricula_Fecha" type="text" class="form-control" readonly>
                                                                     <span class="input-group-btn">
                                                                         <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon ion-android-calendar"></i></button>
                                                                     </span>
@@ -609,6 +607,8 @@
 	<script src="~/Scripts/webapi/Inscripciones.js"></script>
     <script src="~/Scripts/webapi/Horario.js"></script>
     <script src="~/Scripts/webapi/Notas.js"></script>
+    <script src="~/Scripts/webapi/Matricula.js"></script>
+    <script src="~/Scripts/webapi/Pagos.js"></script>
 
 </body>
 </html>

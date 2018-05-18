@@ -11,21 +11,21 @@ function Cargar_Notas()
         {
             Resultado = JSON.parse(Resultado);
             if (Resultado.Codigo == null) {
-                for (I = 0; I < Resultado.length; I++)
-                {
-                    Tabla_Notas.row.add
-                        ([
-                            '#'+Resultado[I].Codigo_Curso,
-                            Resultado[I].Asignatura,
-                            Resultado[I].Nivel,
-                            Resultado[I].Docente,
-                            Resultado[I].IP,
-                            Resultado[I].IIP,
-                            Resultado[I].IP + Resultado[I].IIP
-                        ]).draw(false)                
+                for (I = 0; I < Resultado.length; I++) {
+                    var NotaFinal = (Resultado[I].IP + Resultado[I].IIP >= 60) ? '<span class="label label-success">' + (Resultado[I].IP + Resultado[I].IIP) + '</span> ' : ' < span class="label label-inverse" >' + (Resultado[I].IP + Resultado[I].IIP)+'</span > ';
+                Tabla_Notas.row.add
+                    ([
+                        '#' + Resultado[I].Codigo_Curso,
+                        Resultado[I].Asignatura,
+                        Resultado[I].Nivel,
+                        Resultado[I].Docente,
+                        Resultado[I].IP,
+                        Resultado[I].IIP,
+                        NotaFinal
+                    ]).draw(false)           
                 }
-                swal.closeModal();
             }
+            CargarDatosMatricula();
         },
 
         error: function (Mensaje) {
