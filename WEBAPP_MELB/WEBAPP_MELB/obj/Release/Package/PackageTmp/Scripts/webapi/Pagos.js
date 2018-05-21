@@ -20,7 +20,7 @@ function Cargar_Pagos() {
                         ]).draw(false);                  
                 }
             }
-            swal.closeModal();
+            Cargar_Horario_Estudiante(0);
         },
 
         error: function (Mensaje) {

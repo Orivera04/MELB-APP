@@ -106,6 +106,16 @@ function Inicializacion_Controles()
           "data-format": 'd/m/Y',          
     });
 
+    $('#Remision_Fecha_Inicio_Filtro').dateDropper
+    ({
+            "data-format": 'd/m/Y',
+    });
+
+    $('#Remision_Fecha_Terminal_Filtro').dateDropper
+    ({
+            "data-format": 'd/m/Y',
+    });
+
 }
 
 function Actualizar_Todo()
@@ -664,29 +674,44 @@ function Inicializacion_Eventos()
         {
             var Filtro = $('#Filtro_Remision').val();
             $('#ID_Filtro_Remisiones').html('');
-            if(Filtro == 'Instrumento')
-            {
+            if (Filtro == 'Instrumento') {
+                $('#Col_Select_Remisiones').show();
+                $('#Col_Fechas_Remisiones').hide();
                 $('#Label_ID_Remisiones').text('ID Instrumento');
-                ID_Instrumento.forEach(function(Elemento) 
-                {
-                    $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
-                });
-                $('.selectpicker').selectpicker('refresh');                   
-            }  
-            else if(Filtro == 'Estudiante')
-            {
-                $('#Label_ID_Remisiones').text('ID Estudiante');
-                ID_Estudiante.forEach(function(Elemento) 
-                {
-                    $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
+                ID_Instrumento.forEach(function (Elemento) {
+                    $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
                 });
                 $('.selectpicker').selectpicker('refresh');
-            }                    
+            }
+            else if (Filtro == 'Estudiante') {
+                $('#Col_Select_Remisiones').show();
+                $('#Col_Fechas_Remisiones').hide();
+                $('#Label_ID_Remisiones').text('ID Estudiante');
+                ID_Estudiante.forEach(function (Elemento) {
+                    $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
+                });
+                $('.selectpicker').selectpicker('refresh');
+            }
+            else if (Filtro == 'Fecha')
+            {
+                $('#Col_Select_Remisiones').hide();
+                $('#Col_Fechas_Remisiones').show();
+
+            }
         }); 
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-             Filtrar_Remisiones($('#Filtro_Remision').val(),$('#ID_Filtro_Remisiones').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
+            if ($('#Col_Select_Remisiones').is(":visible"))
+            {
+                Fecha_Salida = Cambio_Formato_Fecha(3);
+                Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length), Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
+            }
+            else
+            {
+                Fecha_Salida = Cambio_Formato_Fecha(3);
+                Filtrar_Remisiones($('#Filtro_Remision').val(),0, Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
+            }
         });
 
 
@@ -859,6 +884,7 @@ function Inicializacion_Eventos()
             Fila_Seleccionada = Tabla_Desglose_Remision.row( this ).index() ;
         });
 
+         //DETECTANDO CLIC AULA//         
         $('#Aula_T tbody').on('click', 'tr', function () {
             Aula_Seleccionada = Tabla_Aula.row(this).index();
         });

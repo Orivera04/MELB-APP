@@ -1,5 +1,6 @@
 ﻿var AnimacionSideBar = false;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var FormularioActivo = "Perfil";
 $(document).ready(function (event)
 {   
     swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false });
@@ -21,6 +22,9 @@ $(document).ready(function (event)
 
     /* Peticiones AJAX */
     Cargar_InfoEstudiante();
+
+    /* Cargar Imagenes para reportes */
+    CargarImagenes();
 });
 
 function InicializacionControles() 
@@ -31,7 +35,11 @@ function InicializacionControles()
     $("input[name='ID_Estudiante']").TouchSpin({});
 
     /* Inptus : Combobox */
-    $('.selectpicker').selectpicker({ noneResultsText: 'No se encontraron resultados' });
+    $('.selectpicker').selectpicker
+    ({
+        noneResultsText: 'No se encontraron resultados',
+        noneSelectedText: 'No hay datos'
+    });
 
     /* Inputs : Mascara de caracteres */
 
@@ -67,9 +75,10 @@ function InicializacionControles()
     });
 
     /* Inputs : Fecha */
-
-    $('#FechaNacimiento_Estudiante').dateDropper();  
-    $('#Matricula_Fecha').dateDropper();  
+    $('#FechaNacimiento_Estudiante').dateDropper(); 
+    
+    /* Tooltips */
+    $('[data-toggle="tooltip"]').tooltip();  
 }
 
 function InicializacionTablas()
@@ -150,64 +159,103 @@ function InicializacionTablas()
 
         });
 
+    Tabla_Horario = $('#Horario_T').DataTable
+        ({
+            responsive:
+                {
+                    details: true
+                },
+
+            "language":
+                {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron datos",
+                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "La busqueda no devolvio resultados",
+                    "infoFiltered": "(Se busco en _MAX_ registros )",
+                    "sSearch": "Buscar",
+                    "paginate":
+                        {
+                            "next": "Siguiente pagina",
+                            "previous": "Pagina anterior"
+                        },
+                    "columnDefs": [{ "className": "dt-center", "targets": "_all" }]
+                }
+
+        });
+
 
 }
 
-function InicializacionEventos()
-{
+function InicializacionEventos() {
     /* Eventos del menu lateral */
 
-    $('#PerfilSubMenu').click(function (event)
-    {
+    $('#PerfilSubMenu').click(function (event) {
         document.getElementById('Alumno_Detalle').style.display = 'block';
         document.getElementById('Nota_Detalle').style.display = 'none';
         document.getElementById('Matricula_Detalle').style.display = 'none';
         document.getElementById('Horario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
-
+        $('#Reporte').hide();
+        FormularioActivo = "Perfil";
     });
 
-    $('#NotasSubMenu').click(function (event)
-    {
+    $('#NotasSubMenu').click(function (event) {
         document.getElementById('Alumno_Detalle').style.display = 'none';
         document.getElementById('Nota_Detalle').style.display = 'block';
         document.getElementById('Matricula_Detalle').style.display = 'none';
         document.getElementById('Horario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        $('#Reporte').show();
+        FormularioActivo = "Notas";
     });
 
-    $('#MatriculaSubMenu').click(function (event)
-    {
+    $('#MatriculaSubMenu').click(function (event) {
         document.getElementById('Alumno_Detalle').style.display = 'none';
         document.getElementById('Nota_Detalle').style.display = 'none';
         document.getElementById('Matricula_Detalle').style.display = 'block';
         document.getElementById('Horario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        $('#Reporte').hide();
+        FormularioActivo = "Matricula";
     });
 
-    $('#HorarioSubMenu').click(function (event)
-    {
+    $('#HorarioSubMenu').click(function (event) {
         document.getElementById('Alumno_Detalle').style.display = 'none';
         document.getElementById('Nota_Detalle').style.display = 'none';
         document.getElementById('Matricula_Detalle').style.display = 'none';
         document.getElementById('Horario_Detalle').style.display = 'block';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        $('#Reporte').show();
+        FormularioActivo = "Horario";
     });
 
     /* Eventos Barra de navegación */
-    $('#sidebarCollapse').click(function (event)
-    {
+    $('#sidebarCollapse').click(function (event) {
         $('#sidebar').show();
         if (AnimacionSideBar == false) {
             $('#sidebar').css('margin-left', '-110px');
             if (EsTelefono === false) { $('#content').css('margin-left', '0px'); }
             AnimacionSideBar = true;
         }
-        else
-        {
+        else {
             if (EsTelefono == false) { $('#content').css('margin-left', '110px'); }
             $('#sidebar').css('margin-left', '0px');
             AnimacionSideBar = false;
+        }
+    });
+
+    /* Eventos de varios formularios */
+
+    $('#Reporte').click(function (event)
+    {
+        if (FormularioActivo == "Horario")
+        {
+            Cargar_Horario_Estudiante(1);
+        }
+        else if (FormularioActivo == "Notas")
+        {
+            HistorialNotas();
         }
     });
 
@@ -270,7 +318,14 @@ function InicializacionEventos()
 
     $('#NotasBoton').click(function (event)
     {
-        Cargar_Notas();
+        if (($('#Curso_Alumno').val() != "" && $('#Curso_Alumno').val() != null) && ($('#Año_Alumno').val() != "" && $('#Año_Alumno').val() != null) && ($('#Semestre').val() != "" && $('#Semestre').val() != null ))
+        {
+            Cargar_Notas();
+        }
+        else
+        {
+            swal("Aviso", "No se pudo cargar las notas porque no hay suficientes datos", "warning");
+        }
     });
 
     $('#Curso_Alumno').change(function (event)
@@ -307,7 +362,12 @@ function InicializacionEventos()
 
     $('#MatriculaBoton').click(function (event)
     {
-        CargarDatosMatricula();
+        if (($('#Curso_Alumno_Mat').val() != "" && $('#Curso_Alumno_Mat').val() != null) && ($('#Año_Alumno_Mat').val() != "" && $('#Año_Alumno_Mat').val() != null) && ($('#SemestreMat').val() != "" && $('#SemestreMat').val() != null)) {
+            CargarDatosMatricula();
+        }
+        else {
+            swal("Aviso", "No se pudo cargar los datos de la matricula porque no hay suficientes datos", "warning");
+        }
     });
 
     $('#Curso_Alumno_Mat').change(function (event) {
@@ -334,6 +394,20 @@ function InicializacionEventos()
             if (ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Año == $('#Año_Alumno_Mat').val()) {
                 $('#SemestreMat').append('<option>' + ListaSemestresPorCurso[Indice].ListaSemestre[I].Cod_Semestre + '</option>');
             }
+        }
+    });
+
+    /* Eventos de horario */
+
+    $('#GenerarHorario').click(function (event)
+    {
+        if ($('#Curso_Alumno_Horario').val() != "" && $('#Curso_Alumno_Horario').val() != null)
+        {
+            Cargar_Horario_Estudiante(0);
+        }
+        else
+        {
+            swal("Aviso", "No se pudo cargar el horario porque no hay suficientes datos", "warning");
         }
     });
 
