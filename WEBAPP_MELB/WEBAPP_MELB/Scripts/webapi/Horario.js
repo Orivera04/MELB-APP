@@ -2,18 +2,40 @@
 
 var LogoIMG64Melb;
 var LogoIMG64CasaTresMundos;
-function Cargar_Horario_Estudiante()
+function Cargar_Horario_Estudiante(Parametro)
 {
+    if (Parametro == 0) { Tabla_Horario.clear().draw();}
     $.ajax({
         url: 'http://melbws.azurewebsites.net/api/HorarioxEstudiante?ID_Estudiante=' + $('#ID_Estudiante').val() + '&Curso=' + $('#Curso_Alumno_Horario').val(),
         type: 'GET',
         success: function (Resultado) {
             Resultado = JSON.parse(Resultado);
-            if (Resultado.Codigo == null)
-            {
+            if (Resultado.Codigo == null) {
+                if (Parametro == 0) {
+                    var HorarioFormateado = GenerarFilasHorario(Resultado, Parametro);
+                    for (I = 0; I < HorarioFormateado.length; I++) {
+                        Tabla_Horario.row.add
+                            ([
+                                HorarioFormateado[I].Hora,
+                                HorarioFormateado[I].D1,
+                                HorarioFormateado[I].D2,
+                                HorarioFormateado[I].D3,
+                                HorarioFormateado[I].D4,
+                                HorarioFormateado[I].D5,
+                                HorarioFormateado[I].D6,
+                                HorarioFormateado[I].D7
+                            ]).draw(false);
+                    }
+                }
+                if (Parametro == 1) {
+                    GeneralReporte(Resultado);
+                }
                 swal.closeModal();
-                GeneralReporte(Resultado);                
-            }           
+            }
+            else
+            {
+                swal("Aviso", "No tiene clases asociadas a este curso en el ultimo semestre inscrito", "warning");
+            }
         },
 
         error: function (Mensaje) {
@@ -96,9 +118,9 @@ function GeneralReporte(Horario)
 
             Documento.setFontType("bold");
             Documento.text(1, 4.2, 'Tipo de documento : Horario de clases');
-            Documento.text(10 + 1, 4.2, 'Año : 2018');
-            Documento.text(13.6 + 2.1, 4.2, 'Semestre Academico : I');
-            Documento.text(19.5 + 3.3, 4.2, 'Curso : Guitarra');  
+            Documento.text(10 + 1, 4.2, 'Año : ' + ObtenerUltimoAño(Horario));
+            Documento.text(13.6 + 2.1, 4.2, 'Semestre Academico : ' + ObtenerUltimoSemestre(Horario));
+            Documento.text(19.5 + 3.3, 4.2, 'Curso : ' + $('#Curso_Alumno_Horario').val());  
 
             /* Footer */
             Documento.text(1, 20, 'Generado automaticamente por : MELBMOE');
@@ -106,26 +128,59 @@ function GeneralReporte(Horario)
 
         }
         });
-           $('#ContenedorHorario').attr("src", Documento.output('datauristring'));
-           //Documento.save('Horario.pdf');
+           Documento.save('Horario.pdf');
 }
 
-function GenerarFilasHorario(HorarioWS)
+function ObtenerUltimoAño(Curso)
+{
+    for (I = 0; I < ListaSemestresPorCurso.length; I++)
+    {
+        if (ListaSemestresPorCurso[I].Curso == $('#Curso_Alumno_Horario').val())
+        {
+            return ListaSemestresPorCurso[I].ListaAño[0].Cod_Año;
+        }
+    }
+}
+function ObtenerUltimoSemestre(Horario)
+{
+    for (I = 0; I < ListaSemestresPorCurso.length; I++)
+    {
+        if (ListaSemestresPorCurso[I].Curso == $('#Curso_Alumno_Horario').val())
+        {
+            return ListaSemestresPorCurso[I].ListaSemestre[0].Cod_Semestre;
+        }
+    }
+}
+
+function GenerarFilasHorario(HorarioWS,Parametro)
 {
     var HorarioEstudianteFinal = [];
     var Periodos = [];
-    var Dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
 
     for (I = 0; I < HorarioWS.length; I++)
     {
         if (Periodos.includes(HorarioWS[I].HorarioInicioFormateada) == false) {
             HorarioEstudianteFinal.push({ Hora: HorarioWS[I].HoraInicioFormateada + " : " + HorarioWS[I].HoraFinFormateada, D1: "Libre", D2: "Libre", D3: "Libre", D4: "Libre", D5: "Libre", D6: "Libre", D7: "Libre" });
             Periodos.push(HorarioWS[I].HoraInicioFormateada);
-            HorarioEstudianteFinal[HorarioEstudianteFinal.length - 1]["D" + HorarioWS[I].Dia] = HorarioWS[I].Nombre;
+            if (Parametro == null)
+            {
+                HorarioEstudianteFinal[HorarioEstudianteFinal.length - 1]["D" + HorarioWS[I].Dia] = HorarioWS[I].Nombre + "\nProfesor:" + HorarioWS[I].Docente + "\nAula : " + HorarioWS[I].Aula;
+            }
+            else
+            {
+                HorarioEstudianteFinal[HorarioEstudianteFinal.length - 1]["D" + HorarioWS[I].Dia] = HorarioWS[I].Nombre;
+            }
         }
         else
         {
-            HorarioEstudianteFinal[Periodos.indexOf(HorarioWS[I].HoraInicioFormateada)]["D" + HorarioWS[I].Dia] = HorarioWS[I].Nombre;
+            if (Parametro != null)
+            {
+                HorarioEstudianteFinal[Periodos.indexOf(HorarioWS[I].HoraInicioFormateada)]["D" + HorarioWS[I].Dia] = HorarioWS[I].Nombre;
+            }
+            else
+            {
+                HorarioEstudianteFinal[Periodos.indexOf(HorarioWS[I].HoraInicioFormateada)]["D" + HorarioWS[I].Dia] = HorarioWS[I].Nombre + "Profesor" + HorarioWS[I].Docente;
+            }
         }
     }
     return HorarioEstudianteFinal;

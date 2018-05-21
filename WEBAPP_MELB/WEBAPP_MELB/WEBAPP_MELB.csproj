@@ -154,6 +154,8 @@
   <ItemGroup>
     <Content Include="App_Start\Content\bootstrap.css" />
     <Content Include="App_Start\Content\bootstrap.min.css" />
+    <Content Include="Content\assets\LogoCasa3Mundos.jpg" />
+    <Content Include="Content\assets\LogoMelb.png" />
     <Content Include="Content\assets\music.svg" />
     <Content Include="Content\SistemaEstilos.css" />
     <Content Include="Content\LoginEstilos.css" />

@@ -11,8 +11,15 @@ namespace WEBAPP_MELB.Controllers
         public ActionResult Inventario()
         {
             if (Session["EstaLogeado"] != null)
-            {                
-                return View();
+            {
+                if (Session["Permiso"].ToString() == "Inventario")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Autenticacion", new { Estado = -3 });
+                }
             }
             else
             {
@@ -24,8 +31,14 @@ namespace WEBAPP_MELB.Controllers
         {
             if (Session["EstaLogeado"] != null)
             {
-
-                return View();
+                if (Session["Permiso"].ToString() == "Estudiante")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Autenticacion", new { Estado = -3 });
+                }
             }
             else
             {

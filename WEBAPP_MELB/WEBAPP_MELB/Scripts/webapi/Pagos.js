@@ -20,7 +20,7 @@ function Cargar_Pagos() {
                         ]).draw(false);                  
                 }
             }
-            Cargar_Horario_Estudiante();
+            Cargar_Horario_Estudiante(0);
         },
 
         error: function (Mensaje) {
