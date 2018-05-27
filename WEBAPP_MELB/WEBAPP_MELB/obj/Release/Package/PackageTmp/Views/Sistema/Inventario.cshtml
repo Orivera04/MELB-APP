@@ -43,7 +43,7 @@
                 </div>
                 <ul class="list-unstyled components">
                     <li id="menuinicio">
-                        <a href="#">
+                        <a href="javascript:void(0)">
                             <i class="glyphicon glyphicon-home"></i>
                             Inicio
                         </a>
@@ -58,13 +58,13 @@
                             <li id="estuchessubmenu"><a href="#">Estuches</a></li>
                             <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>
                         </ul>
-                        <a href="#" id="proveedoressubmenu">
+                        <a href="javascript:void(0)" id="proveedoressubmenu">
                             <i class="glyphicon glyphicon-bookmark"></i> Proveedores
                         </a>
-                        <a href="#" id="remisionessubmenu">
+                        <a href="javascript:void(0)" id="remisionessubmenu">
                             <i class="glyphicon glyphicon-file"></i> Remisiones
                         </a>
-                        <a href="#" id="aulasubmenu">
+                        <a href="javascript:void(0)" id="aulasubmenu">
                             <i class="glyphicon glyphicon-road"></i> Aulas
                         </a>
                     </li>
@@ -88,23 +88,24 @@
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right" id="Form_Right">
-
-                            <form class="navbar-form navbar-left" role="search">
-                                <button id="Actualizar" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="">
-                                    <i class="ion-loop" data-pack="default" data-tags="refresh"></i>
-                                </button>
-                                <button id="ADD" type="button" class="btn waves-effect waves-light btn-primary btn-color">
-                                    <span class="btn-label">
-                                        <i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
-                                    </span>   Añadir Instrumento
-                                </button>
-                                <div class="input-group m-t-10" id="Busqueda_Form">
-                                    <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
-                                    <span class="input-group-btn">
-                                        <button id="Buscar_Boton" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
-                                    </span>
-                                </div>
-                            </form>
+                            <li>
+                                <form class="navbar-form navbar-left" role="search">
+                                    <button id="Actualizar" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="">
+                                        <i class="ion-loop" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                    <button id="ADD" type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                        <span class="btn-label">
+                                            <i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
+                                        </span>   Añadir Instrumento
+                                    </button>
+                                    <div class="input-group m-t-10" id="Busqueda_Form">
+                                        <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
+                                        <span class="input-group-btn">
+                                            <button id="Buscar_Boton" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -219,25 +220,32 @@
                                 <h3 class="TextoHeader">Filtros de busqueda</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-4" align="center">
-                                        <label class="control-label EspacioLabel">Tipo de filtro</label>
-                                        <select id="Filtro_Instrumento" class="selectpicker" data-style="btn-white">
-                                            <option>Proveedor</option>
-                                            <option>Estuche</option>
-                                            <option>Aula</option>
-                                            <option>Disponible</option>
-                                        </select>
-
+                                <div class="row" id="Row_Responsive_Notas">
+                                    <div class="col-md-4" align="center">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label class="control-label col-md-4" id="Curso_Res" align="center">Filtro</label>
+                                                <select id="Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                    <option>Proveedor</option>
+                                                    <option>Estuche</option>
+                                                    <option>Aula</option>
+                                                    <option>Disponible</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div id="Col_Select" class="col-sm-4" align="center">
-                                        <label id="Label_ID" class="control-label EspacioLabel">ID Proveedor</label>
-                                        <select data-live-search="true" id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white"></select>
-                                    </div>
-
-                                    <div class="col-sm-4" align="center">
-                                        <button id="Filtro_Buscar_Boton" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Filtrar datos</button>
+                                    <div class="col-md-4" align="center" id="Col_Select">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label id="ID_Instrumento_ET" class="control-label col-md-4"  align="center">ID</label>
+                                                <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%">                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-md-4" align="center">
+                                        <button id="Filtro_Buscar_Boton" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
                                     </div>
                                 </div>
                             </div>
@@ -642,60 +650,51 @@
                                 <h3 class="TextoHeader">Filtros de busqueda</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-4" align="center">
-                                        <label class="control-label EspacioLabel">Tipo de filtro</label>
-                                        <select id="Filtro_Remision" class="selectpicker" data-style="btn-white">
-                                            <option>Instrumento</option>
-                                            <option>Estudiante</option>
-                                            <option>Fecha</option>
-                                        </select>
-                                    </div>
-                                    <div id="Col_Select_Remisiones" class="col-sm-4" align="center">
-                                        <label id="Label_ID_Remisiones" class="control-label EspacioLabel">ID Instrumento</label>
-                                        <select data-live-search="true" id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white"></select>
-                                    </div>
-
-                                    <div id="Col_Fechas_Remisiones" class="col-sm-6" align="center" style="display:none">
-
-                                        <div class="row" align="center">
-                                            <div class="col-lg-6" align="center">
-
-                                                <div class="col-lg-3" align="center">
-                                                    <label class="control-label EspacioLabel"> Inicio </label>
-                                                </div>
-
-                                                <div class="col-lg-9">
-                                                    <div class="input-group">
-                                                        <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="auto">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default"></i></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                <div class="row" id="Row_Responsive_Notas">
+                                    <div class="col-md-4" align="center" id="FiltroConteendor">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label class="control-label col-md-4" id="Curso_Res" align="center">Filtro</label>
+                                                <select id="Filtro_Remision" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                    <option>Instrumento</option>
+                                                    <option>Estudiante</option>
+                                                    <option>Fecha</option>
+                                                </select>
                                             </div>
-
-                                            <div class="col-lg-6" align="center">
-
-                                                <div class="col-lg-3" align="center">
-                                                    <label class="control-label EspacioLabel" align="center"> Fin </label>
-                                                </div>
-
-                                                <div class="col-lg-9">
-                                                    <div class="input-group">
-                                                        <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="auto">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default"></i></button>
-                                                        </span>
-                                                    </div>
-                                                </div>
-
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" align="center" id="ID_ContenedorRemision">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
+                                                <select id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-2" align="center">
-                                        <button id="Filtro_Buscar_Boton_Remisiones" type="button" class="btn waves-effect waves-light btn-filtro"><span class="btn-label"><i class="ion-funnel"></i></span> Filtrar datos</button>
+                                    <div class="col-md-3" align="center" id="ContenedorFechaInicio" >
+                                        <div class="FechaInput">
+                                            <div class="input-group m-t-10">
+                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%" >
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" align="center" id="ContenedorFechaFin">
+                                        <div class="FechaInput">
+                                            <div class="input-group m-t-10">
+                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%" >
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                    <div class="col-md-4" align="center" id="ContenedorBotonRemision">
+                                        <button id="Filtro_Buscar_Boton_Remisiones" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
                                     </div>
                                 </div>
                             </div>

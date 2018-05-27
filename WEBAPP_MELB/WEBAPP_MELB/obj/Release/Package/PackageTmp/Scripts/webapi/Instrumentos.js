@@ -530,7 +530,6 @@ var ID_Instrumento = [];
                   },
            });
         } 
-
         function Grafica_Estadisticas_Instrumentos(Instrumento)
         {
             var ContextoInstrumento = document.getElementById("GraficaInstrumentos").getContext('2d');

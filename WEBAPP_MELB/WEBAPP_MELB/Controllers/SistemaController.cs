@@ -12,7 +12,7 @@ namespace WEBAPP_MELB.Controllers
         {
             if (Session["EstaLogeado"] != null)
             {
-                if (Session["Permiso"].ToString() == "Inventario")
+                if (Session["Permiso"].ToString() == "2" || Session["Permiso"].ToString() == "5")
                 {
                     return View();
                 }
@@ -31,7 +31,7 @@ namespace WEBAPP_MELB.Controllers
         {
             if (Session["EstaLogeado"] != null)
             {
-                if (Session["Permiso"].ToString() == "Estudiante")
+                if (Session["Permiso"].ToString() == "1")
                 {
                     return View();
                 }

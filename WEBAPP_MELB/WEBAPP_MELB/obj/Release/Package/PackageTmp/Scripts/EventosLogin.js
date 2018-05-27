@@ -1,7 +1,12 @@
 var FormularioActivo = "Login";
-
+var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 $(document).ready(function()
 {
+    if (EsTelefono == true)
+    {       
+        $('.selectpicker').selectpicker('mobile');
+    }
+
 	InicializacionControles();
 	InicializacionEventos();
 });

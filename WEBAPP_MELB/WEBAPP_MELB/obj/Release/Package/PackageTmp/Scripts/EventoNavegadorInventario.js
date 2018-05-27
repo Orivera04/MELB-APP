@@ -7,13 +7,21 @@ var Tabla_Estuche;
 var Tabla_Accesorios;
 var Tabla_Desglose_Remision;
 var Tabla_Aula;
+var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var AnimacionSideBar = false;
 
 $(document).ready(function ()
 {   
     swal({title:'Cargando',text: 'Espere por favor',type: 'info', allowOutsideClick: false});
     swal.showLoading();
+    if (EsTelefono == true)
+    {
+        $('#content').css('margin-left', '0px');
+        $('#sidebar').css('z-index', '2000');
+        $('.selectpicker').selectpicker('mobile');
+        AnimacionSideBar = true;
+    }
 
-    
     // Construcción de los formularios de la pagina //
        Inicializacion_Eventos();
        Inicializacion_Tablas();
@@ -297,6 +305,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             $('#ADD').hide();
         });
        
@@ -313,7 +322,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
-
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Instrumento';                       
             $('#ADD').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Instrumento');
             $('#ADD').show("drop", 50);
@@ -331,7 +340,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
-
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Proveedor';
             $('#ADD').html('<span class="btn-label"><i class="ion-person" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Proveedor');
             $('#ADD').show("drop", 50);  
@@ -349,7 +358,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
-
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Remision';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remisiones');
             $('#ADD').show("drop", 50);  
@@ -367,7 +376,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
-
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Accesorio';
             $('#ADD').html('<span class="btn-label"><i class="ion-briefcase" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Accesorios');
             $('#ADD').show("drop", 50);  
@@ -385,7 +394,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
-
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Estuche';
             $('#ADD').html('<span class="btn-label"><i class="ion-bag" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Estuche');
             $('#ADD').show("drop", 50);  
@@ -403,7 +412,7 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'block';
-
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Aulas';
             $('#ADD').html('<span class="btn-label"><i class="ion-android-pin" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Aula');
             $('#ADD').show("drop", 50);  
@@ -411,18 +420,20 @@ function Inicializacion_Eventos()
         });
 
     /* Eventos : uso en formularios de forma global */
-         $('#sidebarCollapse').on('click', function () 
-         {
-             $('#sidebar').toggleClass('active');
-             if($('#sidebar').attr('class') == '')
-             {
-                $('#content').css("margin-left", "253px");
-             }
-             else
-             {
-                $('#content').css("margin-left","110px");
-             }
-        });
+    $('#sidebarCollapse').click(function (event) 
+    {
+        $('#sidebar').show();
+        if (AnimacionSideBar == false) {
+            $('#sidebar').css('margin-left', '-110px');
+            if (EsTelefono === false) { $('#content').css('margin-left', '0px'); }
+            AnimacionSideBar = true;
+        }
+        else {
+            if (EsTelefono == false) { $('#content').css('margin-left', '110px'); }
+            $('#sidebar').css('margin-left', '0px');
+            AnimacionSideBar = false;
+        }
+    });
 
     
     /*Boton AÑADIR dependiendo del Formulario que se encuentre ACTIVO*/     
@@ -665,7 +676,14 @@ function Inicializacion_Eventos()
 
         $('#Filtro_Buscar_Boton').click(function(event)
         {
-            Filtrar_Instrumentos($('#Filtro_Instrumento').val(),$('#ID_Filtro_Instrumento').val().substring(1,$('#ID_Filtro_Instrumento').val().length));
+            try
+            {
+                Filtrar_Instrumentos($('#Filtro_Instrumento').val(), $('#ID_Filtro_Instrumento').val().substring(1, $('#ID_Filtro_Instrumento').val().length));
+            }
+            catch
+            {
+                Filtrar_Instrumentos($('#Filtro_Instrumento').val(), -1);
+            }
         });
 
         /* Eventos Tabla : Tabla Remisiones */
@@ -674,35 +692,45 @@ function Inicializacion_Eventos()
         {
             var Filtro = $('#Filtro_Remision').val();
             $('#ID_Filtro_Remisiones').html('');
-            if (Filtro == 'Instrumento') {
-                $('#Col_Select_Remisiones').show();
-                $('#Col_Fechas_Remisiones').hide();
-                $('#Label_ID_Remisiones').text('ID Instrumento');
-                ID_Instrumento.forEach(function (Elemento) {
+            if (Filtro == 'Instrumento')
+            {              
+                $('#ID_ContenedorRemision').show();
+                $('#FiltroConteendor').attr('class', 'col-md-4');
+                $('#ContenedorBotonRemision').attr('class', 'col-md-4');
+                $('#ContenedorFechaFin').hide();
+                $('#ContenedorFechaInicio').hide();
+                ID_Instrumento.forEach(function (Elemento)
+                {
                     $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
                 });
                 $('.selectpicker').selectpicker('refresh');
             }
-            else if (Filtro == 'Estudiante') {
-                $('#Col_Select_Remisiones').show();
-                $('#Col_Fechas_Remisiones').hide();
-                $('#Label_ID_Remisiones').text('ID Estudiante');
-                ID_Estudiante.forEach(function (Elemento) {
+            else if (Filtro == 'Estudiante')
+            {
+                $('#ID_ContenedorRemision').show();
+                $('#FiltroConteendor').attr('class', 'col-md-4');
+                $('#ContenedorBotonRemision').attr('class', 'col-md-4');
+                $('#ContenedorFechaFin').hide();
+                $('#ContenedorFechaInicio').hide();
+                ID_Estudiante.forEach(function (Elemento)
+                {
                     $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
                 });
                 $('.selectpicker').selectpicker('refresh');
             }
             else if (Filtro == 'Fecha')
-            {
-                $('#Col_Select_Remisiones').hide();
-                $('#Col_Fechas_Remisiones').show();
-
+            {                
+                $('#ID_ContenedorRemision').hide();
+                $('#FiltroConteendor').attr('class', 'col-md-3');
+                $('#ContenedorBotonRemision').attr('class', 'col-md-3');
+                $('#ContenedorFechaFin').show();
+                $('#ContenedorFechaInicio').show();
             }
         }); 
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-            if ($('#Col_Select_Remisiones').is(":visible"))
+            if ($('#Filtro_Remision').val() != "Fecha")
             {
                 Fecha_Salida = Cambio_Formato_Fecha(3);
                 Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length), Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);

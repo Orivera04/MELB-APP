@@ -697,6 +697,8 @@ function Inicializacion_Eventos()
                 $('#ID_ContenedorRemision').show();
                 $('#FiltroConteendor').attr('class', 'col-md-4');
                 $('#ContenedorBotonRemision').attr('class', 'col-md-4');
+                $('#ContenedorFechaFin').hide();
+                $('#ContenedorFechaInicio').hide();
                 ID_Instrumento.forEach(function (Elemento)
                 {
                     $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');
@@ -708,6 +710,8 @@ function Inicializacion_Eventos()
                 $('#ID_ContenedorRemision').show();
                 $('#FiltroConteendor').attr('class', 'col-md-4');
                 $('#ContenedorBotonRemision').attr('class', 'col-md-4');
+                $('#ContenedorFechaFin').hide();
+                $('#ContenedorFechaInicio').hide();
                 ID_Estudiante.forEach(function (Elemento)
                 {
                     $('#ID_Filtro_Remisiones').append('<option data-subtext="' + Elemento.Nombre + '">#' + Elemento.ID + '</option>');

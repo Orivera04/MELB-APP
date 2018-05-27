@@ -23,7 +23,7 @@ namespace WEBAPP_MELB.Models.Autenticacion
 
         public dynamic AutenticarUsuario(string Usuario, string Contraseña, string Modulo)
         {
-            int ModuloBBDD = (Modulo == "Inventario") ? 1 : (Modulo == "Estudiante") ? 2 : 3;
+            int ModuloBBDD = (Modulo == "Estudiante") ? 2 : 1;
             if (Instancia_BBDD.Conexion.State  == ConnectionState.Open)
             {
                 CMD = new SqlCommand("Autenticacion", Instancia_BBDD.Conexion);
@@ -36,15 +36,18 @@ namespace WEBAPP_MELB.Models.Autenticacion
                 Existe.Direction = ParameterDirection.Output;
                 SqlParameter Nombre = new SqlParameter("@Nombre", SqlDbType.VarChar,20);
                 Nombre.Direction = ParameterDirection.Output;
+                SqlParameter Acceso = new SqlParameter("@Acceso", SqlDbType.VarChar, 20);
+                Acceso.Direction = ParameterDirection.Output;
 
                 CMD.Parameters.Add(Existe);
-                CMD.Parameters.Add(Nombre);            
+                CMD.Parameters.Add(Nombre);
+                CMD.Parameters.Add(Acceso);
 
                 CMD.ExecuteNonQuery();
                 Instancia_BBDD.Cerrar_Conexion();
                 if (CMD.Parameters["@ID"].Value != DBNull.Value)
                 {
-                    return new dynamic[] { CMD.Parameters["@ID"].Value, CMD.Parameters["@Nombre"].Value };
+                    return new dynamic[] { CMD.Parameters["@ID"].Value, CMD.Parameters["@Nombre"].Value,CMD.Parameters["@Acceso"].Value};
                 }
                 else
                 {

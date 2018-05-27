@@ -24,7 +24,7 @@ namespace WEBAPP_MELB.Controllers
                 Session["Usuario"] = Usuario;
                 Session["Nombre"] = UsuarioBBDD[1];
                 Session["EstaLogeado"] = true;
-                Session["Permiso"] = Modulo;
+                Session["Permiso"] = UsuarioBBDD[2];
 
                 return RedirectToAction(Modulo,"Sistema");
             }
