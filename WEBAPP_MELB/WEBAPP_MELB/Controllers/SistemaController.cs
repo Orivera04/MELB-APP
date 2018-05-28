@@ -44,7 +44,25 @@ namespace WEBAPP_MELB.Controllers
             {
                 return RedirectToAction("Login", "Autenticacion", new { Estado = -2 });
             }
-        }      
+        }
 
+        public ActionResult Profesor()
+        {
+            if (Session["EstaLogeado"] != null)
+            {
+                if (Session["Permiso"].ToString() == "5")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Autenticacion", new { Estado = -3 });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Autenticacion", new { Estado = -2 });
+            }
+        }
     }
 }

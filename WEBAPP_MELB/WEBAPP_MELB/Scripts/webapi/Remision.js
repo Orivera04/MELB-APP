@@ -1051,7 +1051,7 @@ function GenerarDocumentoRemisionNueva()
                             cellPadding: 1
                         },
                         margin: {
-                            top: 5,
+                            top: 5.5,
                             left: 1
                         },
                         addPageContent: function (Event) {
@@ -1080,7 +1080,7 @@ function GenerarDocumentoRemisionNueva()
                             Documento.text(7, 4.2, 'Estudiante: ' + $("#ID_Estudiante_Remision option:selected").attr('data-subtext'));
                             Documento.text(14 , 4.2, 'Inicia: ' + $('#Remision_Fecha_Inicio').val());
                             Documento.text(18, 4.2, 'Termina: ' + $('#Remision_Fecha_Fin').val());
-                            Documento.text(23, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);
+                            Documento.text(23, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);                       
 
 
                             /* Footer */
