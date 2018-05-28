@@ -566,7 +566,7 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle 
+#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle,#Reporte
 {
     display: none;
 }
