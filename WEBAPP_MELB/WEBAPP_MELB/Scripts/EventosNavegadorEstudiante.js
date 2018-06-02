@@ -1,6 +1,7 @@
 ﻿var AnimacionSideBar = false;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 var FormularioActivo = "Perfil";
+
 $(document).ready(function (event)
 {   
     swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false });
