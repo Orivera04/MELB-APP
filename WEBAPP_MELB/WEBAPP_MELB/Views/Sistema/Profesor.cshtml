@@ -54,9 +54,8 @@
                             <i class="glyphicon glyphicon-th-list"></i> Horario
                         </a>
                         <a href="javascript:void(0)" id="EstadisticaProfesorSubMenu">
-                            <i class="glyphicon glyphicon-stats"></i> Estadistica
+                            <i class="glyphicon glyphicon-stats"></i> Estadisticas
                         </a>
-
                     </li>
                 </ul>
             </nav>
@@ -120,7 +119,7 @@
                                                     <form>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">N° Profesor</label>
+                                                            <label class="control-label">ID Empleado</label>
                                                             <div class="form-group">
                                                                 <input id="ID_Profesor" type="text" value="@Session["ID"]" name="ID_Profesor" data-bts-min="1" data-bts-max="2000000" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
                                                             </div>
@@ -246,21 +245,31 @@
                     <div class="row RowProfesor">
                         <div class="panel panel-color panel-danger">
                             <div class="panel-heading" id="Panel_Filtro_Cabezera">
-                                <i class="icon ion-clock" aria-hidden="true"></i>
-                                <h3 class="TextoHeader">Horario</h3>
+                                <i class="ion-search" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Filtros de busqueda</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="row" id="Row_Responsive_Notas">
-                                    <div class="col-md-6" align="center">
+                                    
+                                    <div class="col-md-4" align="center">
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
-                                                <label class="control-label col-md-3" id="Curso_ResMatProfesor" align="center">Curso</label>
-                                                <select id="Curso_Profesor_Horario" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                                <label class="control-label col-md-3" id="Nivel_Res" align="center">Año</label>
+                                                <select id="Año_Alumno" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" align="center">
-                                        <button id="MatriculaBoton" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-search"></i></span>Buscar</button>
+
+                                    <div class="col-md-4" align="center">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label class="control-label col-md-3" id="SemestreRes" align="center">Semestre</label>
+                                                <select id="Semestre" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" align="center">
+                                        <button id="NotasBoton" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +304,28 @@
                 <div id="Horario_DetalleProfesor">
                     <div class="row RowProfesor">
                         <div class="panel panel-color panel-danger">
-                            <div class="panel-heading3">
+                            <div class="panel-heading" id="Panel_Filtro_Cabezera">
+                                <i class="icon ion-clock" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Horario</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" id="Row_Responsive_Notas">
+                                    <div class="col-md-6" align="center">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label class="control-label col-md-3" id="Curso_ResMat" align="center">Curso</label>
+                                                <select id="Curso_Alumno_Horario" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" align="center">
+                                        <button id="GenerarHorario" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="icon ion-archive"></i></span>General Horario</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading4">
                                 <i class="icon ion-erlenmeyer-flask" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Horario de clases</h3>
                             </div>
@@ -389,7 +419,6 @@
                                             <div class="col-md-6">
                                                 <div class="p-20">
                                                     <form>
-
                                                         <div class="form-group">
                                                             <label class="control-label">Nombre</label>
                                                             <div class="input-group m-t-10">
@@ -441,7 +470,40 @@
                 </div>
 
                 <div id="Estadistica_Profesor">
-                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="col-sm-5 TarjetaIzquierda DegInstrumento">
+                                <i class="icon ion-coffee IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Instrumento_Label" id="CantidadInstrumentosDA">0</h3>
+                                <h3 class="TipoEtiqueta">Materias impartidas</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-sm-5 TarjetaIzquierda DegProveedores">
+                                <i class="icon ion-person-stalker IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Proveedor_Label" id="CantidadProveedoresDA">0</h3>
+                                <h3 class="TipoEtiqueta">Alumnos registrados</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-sm-5 TarjetaIzquierda DegAccesorios">
+                                <i class="icon ion-university IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Accesorios_Label" id="CantidadAccesoriosDA">0</h3>
+                                <h3 class="TipoEtiqueta">Cursos Impartidos</h3>
+                            </div>
+                        </div>
+
+                    </div>
+
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="TarjetaDashboard">
