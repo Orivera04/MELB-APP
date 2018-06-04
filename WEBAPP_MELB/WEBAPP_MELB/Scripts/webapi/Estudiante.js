@@ -73,16 +73,16 @@ function ActualizarInfoEstudiante()
                     }
                 },
                 error: function (Respuesta) {
-                    swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                    swal("Error", "Ocurrio un error al actualizar los datos", "error");
                 },
             });
     }
     else
     {
         swal("Aviso", "La fecha de nacimiento debe ser menor que el dia de hoy", "warning");
-
     }
 }
+
 // Funciones de soporte //
 
 function ControlesLecturaEscritura(Cond) {

@@ -278,7 +278,7 @@ function InicializacionEventos() {
 
     $('#BotonDatosAlumno').click(function (event)
     {
-        if (ValidarCorreo($('#Correo_Estudiante').val()))
+        if (ValidarCorreo($('#Correo_Estudiante').val()) && $('#Correo_Estudiante').val() != "")
         {
             if ($('#EstudianteCedula').val() != "" && $('#EstudianteDireccion').val() != "" && $('#EstudianteTelefono1').val() != "" && $('#EstudianteTelefono2').val() != "")
             {

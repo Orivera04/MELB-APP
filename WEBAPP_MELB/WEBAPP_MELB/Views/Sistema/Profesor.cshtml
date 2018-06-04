@@ -43,9 +43,8 @@
                 </div>
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="javascript:void(0)" id="PerfilProfesorSubMenu">
-                            <i class="glyphicon glyphicon-user"></i>
-                            Mi perfil
+                        <a href="javascript:void(0)" id="EstadisticaProfesorSubMenu">
+                            <i class="glyphicon glyphicon-home"></i> Inicio
                         </a>
                         <a href="javascript:void(0)" id="CursosProfesorSubMenu">
                             <i class="glyphicon glyphicon-list-alt"></i> Cursos
@@ -53,8 +52,9 @@
                         <a href="javascript:void(0)" id="HorarioProfesorSubMenu">
                             <i class="glyphicon glyphicon-th-list"></i> Horario
                         </a>
-                        <a href="javascript:void(0)" id="EstadisticaProfesorSubMenu">
-                            <i class="glyphicon glyphicon-stats"></i> Estadisticas
+                        <a href="javascript:void(0)" id="PerfilProfesorSubMenu">
+                            <i class="glyphicon glyphicon-user"></i>
+                            Perfil
                         </a>
                     </li>
                 </ul>
@@ -108,17 +108,15 @@
                             </div>
 
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-3 ">
-                                        <img id="ImagenProfesor" class="img-thumbnail" src="https://i.imgur.com/YHELGVr.png">
+                                <div class="row">     
+                                    <div class="col-sm-3">
+                                        <img id="Imagen_Profesor" class="img-thumbnail">
                                     </div>
-
                                     <div class="col-sm-9 ">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="p-20">
                                                     <form>
-
                                                         <div class="form-group">
                                                             <label class="control-label">ID Empleado</label>
                                                             <div class="form-group">
@@ -463,41 +461,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                
-
+                                </div>                                                               
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row RowProfesor">
-                                    <div class="panel panel-color panel-danger">
-                                        <div class="panel-heading4">
-                                            <i class="icon ion-person" aria-hidden="true"></i>
-                                            <h3 class="TextoHeader">Listado de Estudiantes</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="table-responsive">
-                                                <table id="ListadoEstudiantes_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Nombre</th>
-                                                            <th>IP</th>
-                                                            <th>IIP2</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        </div>                      
                     </div>
                 </div>
 
@@ -599,5 +565,6 @@
         <script src="~/Scripts/EventosNavegadorProfesor.js"></script>
 
         <!-- Scripts Web API-->
+        <script src="~/Scripts/webapi/Empleado.js"></script>
 </body>
 </html>

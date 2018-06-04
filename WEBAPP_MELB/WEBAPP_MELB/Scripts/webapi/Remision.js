@@ -340,7 +340,6 @@ var Fila_Seleccionada = 0;
             else {
                 $.ajax
                     ({          
-                        //url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {
@@ -395,6 +394,8 @@ var Fila_Seleccionada = 0;
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
+            Formulario_Activo = "RemisionNueva";
+            $('#Reporte').show();
         }
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
@@ -632,14 +633,20 @@ var Fila_Seleccionada = 0;
                       {
                          Resultado = JSON.parse(Resultado);
                          if(Resultado.Codigo == 5)
-                         {                                    
-                             swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                             GenerarDocumentoRemisionNueva();
+                         {                   
+                             swal
+                             ({
+                                 title: Resultado.Mensaje_Cabecera,
+                                 text:  Resultado.Mensaje_Usuario,
+                                 type: "success",
+                                 confirmButtonText: "OK"
+                             });
                              Cargar_Remisiones();
                              $('#Remision_Detalle').hide(500);
                              $('#Remisiones').show(400);
                              $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
                              $('#ADD').show("drop", 50);
+                             GenerarDocumentoRemisionNueva();
                          }
                          else
                          {
@@ -1021,14 +1028,26 @@ function GenerarDocumentoRemisionNueva()
             success: function (Resultado)
             {
                 Resultado = JSON.parse(Resultado);
+
+                for (I = 0; I < Resultado[0].Lista_Desglose.length; I++)
+                {
+                    if (Resultado[0].Lista_Desglose[I].Accesorios == null)
+                    {
+                        Resultado[0].Lista_Desglose[I].Accesorios = "Ninguno";
+                    }
+                }
+
                 var Documento = new jsPDF("l", 'cm', "a4");                
                 var Columnas =
                     [
                         { title: "ID Instrumento", dataKey: "ID_Instrumento" },
                         { title: "Tipo", dataKey: "Nombre" },
                         { title: "Descripción", dataKey: "Descripcion" },
-                        { title: "Observación Inicial", dataKey: "Observacion_Inicial" },
-                        { title: "Observación Final", dataKey: "Observacion_Final"}                      
+                        { title: "Color", dataKey: "Color" },
+                        { title: "Estado", dataKey: "Estado" },
+                        { title: "Estuche", dataKey: "Estuche_Descripcion" },
+                        { title: "Accesorios", dataKey: "Accesorios" },
+                        { title: "Observación Inicial", dataKey: "Observacion_Inicial" }
                     ];
                 Documento.autoTable(Columnas, Resultado[0].Lista_Desglose,
                     {
@@ -1078,8 +1097,7 @@ function GenerarDocumentoRemisionNueva()
                             Documento.setFontType("bold");
                             Documento.text(1, 4.2, 'Numero Remisión : #' + $('#ID_Remision').val());
                             Documento.text(7, 4.2, 'Estudiante: ' + $("#ID_Estudiante_Remision option:selected").attr('data-subtext'));
-                            Documento.text(14 , 4.2, 'Inicia: ' + $('#Remision_Fecha_Inicio').val());
-                            Documento.text(18, 4.2, 'Termina: ' + $('#Remision_Fecha_Fin').val());
+                            Documento.text(16 , 4.2, 'Fecha: ' + $('#Remision_Fecha_Inicio').val());
                             Documento.text(23, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);                       
 
 
@@ -1087,7 +1105,34 @@ function GenerarDocumentoRemisionNueva()
                             Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
                             Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
                         }
-                    });                    
+                    });
+                Documento.setFont("helvetica");
+                Documento.setFontType("bold");
+                Documento.setFontSize(11);
+
+                Documento.text(1, Documento.autoTableEndPosY() + 1, 'Nota:');
+
+                Documento.setFont("helvetica");
+                Documento.setFontType("normal");
+                Documento.setFontSize(11);
+
+                Documento.text(1, Documento.autoTableEndPosY() + 1.5, 'Los instrumentos arriba detallados quedan en resguardo de la persona registrada arriba como responsable mientras permanezca activo en Música en los Barrios');
+                Documento.text(1, Documento.autoTableEndPosY() + 2, 'Queda por entedido que cualquier pérdida o daño de los instrumentos serán asumidos por la persona que firma la remisión al precio que MELB estime.');
+
+                Documento.setDrawColor(0);
+                Documento.setLineWidth(0.03);
+
+                Documento.line(4.5, 16.9, 7.5, 16.9);
+                Documento.line(16, 16.9, 19.5, 16.9);
+
+                Documento.text(4.5, 17.5, 'Recibi Conforme');
+                Documento.text(4.5, 18, 'Responsable del instrumento');
+
+                Documento.text(16, 17.5, 'Entregue conforme');
+                Documento.text(16, 18, Resultado[0].Empleado_Nombre);
+
+
+           
                 Documento.save('Remision.pdf');
             },
             error: function (Mensaje)

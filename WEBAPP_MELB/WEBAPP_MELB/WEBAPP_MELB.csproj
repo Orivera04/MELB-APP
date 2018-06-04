@@ -172,6 +172,7 @@
     <Content Include="Scripts\EventoNavegadorInventario.js" />
     <Content Include="Scripts\EventosLogin.js" />
     <Content Include="Scripts\EventosNavegadorEstudiante.js" />
+    <Content Include="Scripts\EventosNavegadorProfesor.js" />
     <Content Include="Scripts\plugins\bootstrap-maxlength\bootstrap-maxlength.min.js" />
     <Content Include="Scripts\plugins\bootstrap-select\css\bootstrap-select.min.css" />
     <Content Include="Scripts\plugins\bootstrap-select\js\bootstrap-select.min.js" />
@@ -201,6 +202,7 @@
     <Content Include="Scripts\plugins\SweetAlert\sweetalert2.min.js" />
     <Content Include="Scripts\webapi\Accesorio.js" />
     <Content Include="Scripts\webapi\Aula.js" />
+    <Content Include="Scripts\webapi\Empleado.js" />
     <Content Include="Scripts\webapi\Estuche.js" />
     <Content Include="Scripts\webapi\Estudiante.js" />
     <Content Include="Scripts\webapi\Horario.js" />

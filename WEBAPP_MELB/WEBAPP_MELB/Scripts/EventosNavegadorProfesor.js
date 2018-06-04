@@ -26,7 +26,7 @@ $(document).ready(function (event)
     swal.closeModal();
 
     /* Peticiones AJAX */
-    
+    Cargar_InfoEmpleadoProfesor();
 
     /* Cargar Imagenes para reportes */
 
@@ -34,6 +34,8 @@ $(document).ready(function (event)
 
 function InicializacionControles() 
 {
+    $('#ActualizarProfesor').hide();
+
     /* Inicialziación de los controles de los formularios */
 
     /* Inputs : Numericos */
@@ -218,6 +220,53 @@ function InicializacionEventos() {
         }
     }); 
 
+    /* Eventos Formulario Perfil */
+
+    $('#Switch_Editar_Profesor').change(function (Event)
+    {
+        if ($('#Switch_Editar_Profesor').is(':checked') === true)
+        {
+            ControlesLecturaEscrituraProfesor(true)
+            $('#ActualizarProfesor').show(300);
+        }
+        else
+        {
+            ControlesLecturaEscrituraProfesor(false);
+            $('#ActualizarProfesor').hide(300);
+        }
+    });
+
+    $('#ActualizarProfesor').click(function (Event)
+    {
+        if (ValidarCorreo($('#Correo_Profesor').val()) && $('#Correo_Profesor').val()!= "") {
+            if ($('#ProfesorCedula').val() != "" && $('#ProfesorDireccion').val() != "" && $('#ProfesorTelefono1').val() != "" && $('#ProfesorTelefono2').val() != "") {
+                if ($('#ProfesorTelefono1').val().length == 8 & $('#ProfesorTelefono2').val().length == 8) {
+                    ActualizarInfoProfesor();
+                }
+                else {
+                    swal("Aviso", "Los numeros de telefonos deben ser de 8 digitos", "warning");
+                }
+            }
+            else {
+                swal("Aviso", "Algunos campos estan vacios", "warning");
+            }
+        }
+        else {
+            swal("Aviso", "El correo ingresado no es valido", "warning");
+        }        
+    });
+
+    $('#ProfesorTelefono1').keypress(function (event) {
+        if (!isNumber(event.key)) {
+            event.preventDefault();
+        }
+    });
+
+    $('#ProfesorTelefono2').keypress(function (event) {
+        if (!isNumber(event.key)) {
+            event.preventDefault();
+        }
+    });
 }
 
 function isNumber(n) 

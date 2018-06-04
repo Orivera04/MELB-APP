@@ -458,9 +458,12 @@ function Inicializacion_Eventos()
         else if (Formulario_Activo == "Proveedor") {
             Cargar_Proveedores("", 2);
         }
-        else if (Formulario_Activo == "Remision")
-        {
+        else if (Formulario_Activo == "Remision") {
             Cargar_Remisiones(2);
+        }
+        else if (Formulario_Activo == "RemisionNueva")
+        {
+            GenerarDocumentoRemisionNueva();
         }
 
     });
@@ -933,8 +936,19 @@ function Inicializacion_Eventos()
         });
 
          $('#Añadir_Desglose_Remision').click(function(event)
-        {
-             Insertar_Actualizar_Desglose_Remision(Operacion,0);   
+         {
+             if (Tabla_Desglose_Remision.column(0).data().length < 3) {
+                 Insertar_Actualizar_Desglose_Remision(Operacion, 0);
+             }
+             else
+             {
+                 swal
+                     ({
+                         title: "Atención",
+                         text: "El maximo de instrumentos permitidos son 3",
+                         type: "warning",
+                     });
+             }
         });
 
          //DETECTANDO CLIC EN DESGLOSE REMISION//         
