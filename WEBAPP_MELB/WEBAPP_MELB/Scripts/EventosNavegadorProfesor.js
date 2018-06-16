@@ -22,6 +22,8 @@ $(document).ready(function (event)
     InicializacionEventos();
     InicializacionTablas();
     InicializacionControles(); 
+    Filtrar_Empleados('CantidadAlumnosCurso', parseInt($('#ID_Profesor').val()));
+    Filtrar_Empleados('CantidadAlumnosMaterias', parseInt($('#ID_Profesor').val()));
 
     swal.closeModal();
 

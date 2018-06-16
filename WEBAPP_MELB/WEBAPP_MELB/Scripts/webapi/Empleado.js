@@ -1,5 +1,6 @@
 ﻿/* Funciones de la API */
-
+var Cursos = [];
+Cursos.push({FlautaD: 0, FlautaT: 0, Clarinete: 0, Violin: 0, Viola: 0, Cello: 0, Guitarra: 0, Piano: 0 });
 function Cargar_InfoEmpleadoProfesor()
 {
     $.ajax({
@@ -94,4 +95,122 @@ function ControlesLecturaEscrituraProfesor(Cond) {
 function ValidarCorreo(Correo) {
     var RegXP = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return RegXP.test(Correo);
+}
+
+function Filtrar_Empleados(Tipo_Filtro, ID_Empleado) {
+    $.ajax
+        ({
+            url: 'http://melbws.azurewebsites.net/api/MateriasxProfesor?Filtro=' + Tipo_Filtro + '&ID_Empleado=' + ID_Empleado,
+            type: 'GET',
+            success: function (Resultado)
+            {
+                Resultado = JSON.parse(Resultado);
+
+                if (Tipo_Filtro == 'CantidadAlumnosCurso') {
+                    var Contando = 0;
+                    for (i = 0; i < Resultado.length; i++)
+                    {
+                        Contando = Contando + Resultado[i].Cantidad_Alumnos;
+                        try {
+                            if ((Resultado[i].Nombre).trim() == "Flauta Dulce") {
+                                Cursos[0].FlautaD = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Flauta Traversa") {
+                                Cursos[0].FlautaT = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Clarinete") {
+                                Cursos[0].Clarinete = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Violin") {
+                                Cursos[0].Violin = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Viola") {
+                                Cursos[0].Viola = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Cello") {
+                                Cursos[0].Cello = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Guitarra") {
+                                Cursos[0].Guitarra = Resultado[i].Cantidad_Alumnos;
+                            }
+                            else if ((Resultado[i].Nombre).trim() == "Piano") {
+                                Cursos[0].Piano = Resultado[i].Cantidad_Alumnos;
+                            }
+                        }
+                        catch(err)
+                        {
+
+                        }
+                    }
+                    //Tarjeta Cantidad Alumnos Registrados
+                    $('#CantidadAlumnos').text(Contando);
+
+                    //Tarjeta Cantidad Cursos Impartidos
+                    $('#CantidadCursos').text(Resultado.length);
+
+                    var ContextoCursos = document.getElementById("AlumnosCursoGrafica").getContext('2d');
+                    Chart.defaults.global.legend.display = false;
+
+                    GraficaCursosAlumnos = new Chart(ContextoCursos,
+                        {
+                            type: 'bar',
+                            data:
+                            {
+                                labels: ["Flauta Dulce", "Flauta Traversa", "Clarinete", "Violin", "Viola", "Cello", "Guitarra", "Piano"],
+                                datasets:
+                                [{
+                                    label: 'Cantidad de Alumnos por Curso',
+                                    data: [Cursos[0].FlautaD, Cursos[0].FlautaT, Cursos[0].Clarinete, Cursos[0].Violin, Cursos[0].Viola, Cursos[0].Cello, Cursos[0].Guitarra, Cursos[0].Piano],
+                                    backgroundColor:
+                                    [
+                                        'rgba(214, 83, 3, 0.5)',
+                                        'rgba(54, 162, 235, 0.5)',
+                                        'rgba(255, 206, 86, 0.5)',
+                                        'rgba(255, 125, 173, 0.5)',
+                                        'rgba(153, 102, 255, 0.5)',
+                                        'rgba(52, 73, 94, 0.5)',
+                                        'rgba(0, 172, 172, 0.5)'
+                                    ],
+                                    borderColor:
+                                    [
+                                        'rgba(214, 83, 3, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(255, 125, 173, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(52, 73, 94, 1)',
+                                        'rgba(0, 172, 172, 1)'
+                                    ],
+                                    borderWidth: 2
+                                }],
+                            },
+                        });
+                    GraficaCursosAlumnos.options.scales.yAxes[0].ticks.beginAtZero = true;
+                    GraficaCursosAlumnos.update();
+
+                }
+
+                else if (Tipo_Filtro == 'CantidadAlumnosMaterias')
+                {
+                    //Tarjeta de Materias Impartidas
+                    $('#CantidadMaterias').text(Resultado.length);
+                }
+
+            },
+            error: function (Mensaje) {
+                swal
+                    ({
+                        title: "Error",
+                        text: "Algo no esta bien",
+                        type: "error",
+                    });
+            }
+        });
+}
+
+function Grafica_Cursos()
+{
+
+
+    
 }
