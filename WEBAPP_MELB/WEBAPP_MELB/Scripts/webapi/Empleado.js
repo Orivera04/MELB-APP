@@ -208,9 +208,28 @@ function Filtrar_Empleados(Tipo_Filtro, ID_Empleado) {
         });
 }
 
-function Grafica_Cursos()
+function CargarAsignaturas()
 {
+    $.ajax({
+        url: 'http://melbws.azurewebsites.net/api/MateriasxProfesor?Filtro=CantidadAlumnosMaterias&ID_Empleado=' + $('#ID_Profesor').val(),
+        type: 'GET',
+        success: function (Resultado) {
+            Resultado = JSON.parse(Resultado);
+            Resultado = Resultado[0];
+            if (Resultado.Codigo == null) {              
+              $('.selectpicker').selectpicker('refresh');
+            }
+        },
 
+        error: function (Mensaje) {
 
-    
+            swal
+                ({
+                    title: "Error listando información del usuario",
+                    text: "No se pudo conectar con el servidor.",
+                    type: "error",
+                });
+        }
+
+    });
 }
