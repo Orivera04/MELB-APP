@@ -715,7 +715,7 @@ function Inicializacion_Eventos()
             {
                 Filtrar_Instrumentos($('#Filtro_Instrumento').val(), $('#ID_Filtro_Instrumento').val().substring(1, $('#ID_Filtro_Instrumento').val().length));
             }
-            catch
+            catch(err)
             {
                 Filtrar_Instrumentos($('#Filtro_Instrumento').val(), -1);
             }
