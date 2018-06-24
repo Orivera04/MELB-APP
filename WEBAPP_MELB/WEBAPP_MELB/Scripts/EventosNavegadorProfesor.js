@@ -29,6 +29,7 @@ $(document).ready(function (event)
     Cargar_InfoEmpleadoProfesor();
 
     /* Cargar Imagenes para reportes */
+    CargarImagenes();
 
 });
 
@@ -267,6 +268,18 @@ function InicializacionEventos() {
             event.preventDefault();
         }
     });
+
+    /* Eventos Globales*/
+
+    $('#ReporteProfesor').click(function (Event)
+    {
+        if (FormularioActivo == 'HorarioProfesor')
+        {
+            GenerarHorarioProfesor(1);
+        }
+    });
+
+
 }
 
 function isNumber(n) 

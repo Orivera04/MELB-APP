@@ -22,6 +22,7 @@ function Cargar_InfoEmpleadoProfesor()
                 $('#ProfesorCargo').val("Profesor");
                 $('#Imagen_Profesor').prop('src',Resultado.Imagen);
                 $('.selectpicker').selectpicker('refresh');
+                GenerarHorarioProfesor(0);
             }
         },
 
@@ -67,6 +68,7 @@ function ActualizarInfoProfesor()
             },
         });        
 }
+
 
 // Funciones de soporte //
 function ControlesLecturaEscrituraProfesor(Cond) {
