@@ -100,7 +100,7 @@ var LogoIMG64CasaTresMundos;
                     if (Parametro == 1) {
                         GeneralReporte(Resultado,1,true);
                     }
-                    swal.closeModal();
+                    CargarClasesDocente();                    
                 }
                 else {
                     swal("Aviso", "No tiene clases asociadas a este curso en el ultimo semestre inscrito", "warning");
