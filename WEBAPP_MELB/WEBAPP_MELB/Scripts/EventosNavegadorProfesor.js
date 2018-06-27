@@ -9,6 +9,8 @@ $(document).ready(function (event)
     swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false });
     swal.showLoading();
 
+    $('#ReporteProfesor').hide();
+
     /* Verificamos si el navegador es de un telefono */
     if (EsTelefono == true)
     {            
@@ -164,7 +166,7 @@ function InicializacionTablas()
             
         });
 
-
+    /*
     Tabla_Notas = $('#Notas_T').DataTable
         ({
             responsive:
@@ -187,7 +189,7 @@ function InicializacionTablas()
                     "columnDefs": [{ "className": "dt-center", "targets": "_all" }]
                 }
 
-        });
+        });*/
 
 }
 
@@ -202,6 +204,7 @@ function InicializacionEventos() {
         document.getElementById('Estadistica_Profesor').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "PerfilProfesor";
+        $('#ReporteProfesor').hide();
     });
 
     $('#CursosProfesorSubMenu').click(function (event) {
@@ -212,6 +215,7 @@ function InicializacionEventos() {
     	document.getElementById('Estadistica_Profesor').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "CursosProfesor";
+        $('#ReporteProfesor').hide();
     });
 
     $('#HorarioProfesorSubMenu').click(function (event) {
@@ -222,6 +226,7 @@ function InicializacionEventos() {
     	document.getElementById('Estadistica_Profesor').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "HorarioProfesor";
+        $('#ReporteProfesor').show();
     });
 
     $('#EstadisticaProfesorSubMenu').click(function (event) {
@@ -232,6 +237,7 @@ function InicializacionEventos() {
     	document.getElementById('Estadistica_Profesor').style.display = 'block';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "EstadisticaProfesor";
+        $('#ReporteProfesor').hide();
     });
 
     /* Eventos Barra de navegación */
@@ -295,6 +301,23 @@ function InicializacionEventos() {
         if (!isNumber(event.key)) {
             event.preventDefault();
         }
+    });
+
+    /* Eventos DetalleCurso */
+
+    $('#SwtichNotasPR').change(function (Event) {
+        if ($('#SwtichNotasPR').is(':checked')) {
+            $('#SubirNota').removeAttr('disabled');
+        }
+        else {
+            $('#SubirNota').prop('disabled', 'true');
+
+        }
+    });
+
+    $('#SubirNota').click(function (Event)
+    {
+        ValidarTablaNotas();
     });
 
     /* Eventos Globales*/
