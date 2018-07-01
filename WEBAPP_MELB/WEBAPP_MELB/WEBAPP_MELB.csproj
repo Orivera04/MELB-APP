@@ -175,6 +175,7 @@
     <Content Include="Scripts\EventosLogin.js" />
     <Content Include="Scripts\EventosNavegadorEstudiante.js" />
     <Content Include="Scripts\EventosNavegadorProfesor.js" />
+    <Content Include="Scripts\plugins\barcode\jquery-barcode.min.js" />
     <Content Include="Scripts\plugins\bootstrap-maxlength\bootstrap-maxlength.min.js" />
     <Content Include="Scripts\plugins\bootstrap-select\css\bootstrap-select.min.css" />
     <Content Include="Scripts\plugins\bootstrap-select\js\bootstrap-select.min.js" />

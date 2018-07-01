@@ -449,5 +449,5 @@
                     Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
                 }
             });
-        Documento.save('Proveedores.pdf');
+        window.open(Documento.output('bloburl'), '_blank');
     }

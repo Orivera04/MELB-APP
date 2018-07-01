@@ -229,7 +229,8 @@ function GeneralReporte(Horario,Parametro,BanderaProfesor) {
 
             }
         });
-    Documento.save('Horario.pdf');
+        window.open(Documento.output('bloburl'), '_blank');
+
 }
 function CargarImagenes() {
 

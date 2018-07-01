@@ -97,8 +97,11 @@
                                             <i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
                                         </span>   Añadir Instrumento
                                     </button>
-                                    <button data-toggle="tooltip" data-placement="bottom"   id="Reporte" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="General reporte en pdf">
+                                    <button data-toggle="tooltip" data-placement="bottom" id="Reporte" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="General reporte en pdf">
                                         <i class="icon ion-android-download" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                    <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="CodigoBarra" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir etiqueta de codigo de barras">
+                                        <i class="icon ion-ios-barcode" data-pack="default" data-tags="refresh"></i>
                                     </button>
                                     <div class="input-group m-t-10" id="Busqueda_Form">
                                         <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
@@ -282,6 +285,7 @@
 
                 <div id="Instrumento_Detalle">
                     <div class="row" id="row_instrumento_Detalle">
+
                         <div class="panel panel-color panel-danger ">
                             <div class="panel-heading">
                                 <i class="ion-music-note" aria-hidden="true"></i>
@@ -297,7 +301,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                          
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-3 ">
@@ -495,6 +499,7 @@
                                 </div>
                             </div>
                         </div>
+                        <canvas style="display:none;" id="BGC"></canvas>
                     </div>
                 </div>
 
@@ -1090,6 +1095,8 @@
     <script src="~/Scripts/plugins/DataDrop/datedropper.min.js" type="text/javascript"></script>
     <script src="~/Scripts/plugins/chartjs/Chart.min.js"></script>
     <script src="~/Scripts/plugins/jspdf/jspdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js"></script>
+
     <script src="~/Scripts/plugins/jspdf/jspdf.plugin.autotable.js"></script>
 
     <!-- Plugins Alertas -->

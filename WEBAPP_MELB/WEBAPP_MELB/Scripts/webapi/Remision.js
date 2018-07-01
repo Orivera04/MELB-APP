@@ -10,6 +10,7 @@ var Dropdown_ID_Instrumento = [];
 var Dropdown_Nombre_Instrumento = [];
 var Funcion_Realizar = 'Actualizar';
 var Fila_Seleccionada = 0;
+var Borrar_Remision_Bandera = true;
 
        
         function Cargar_Remisiones(Reporte) 
@@ -100,6 +101,7 @@ var Fila_Seleccionada = 0;
 
         function Cargar_Remision_Por_ID(ID) 
         {
+            Borrar_Remision_Bandera = true;
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
@@ -451,26 +453,28 @@ var Fila_Seleccionada = 0;
 
         function Reiniciar_Controles_Remision()
         {
-            Tabla_Desglose_Remision.clear().draw();    
-            var now = new Date();
-            var Dia = ("0" + now.getDate()).slice(-2);
-            var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
-            var Hora = ("0" + now.getHours()).slice(-2);
-            var Minuto = ("0" + now.getMinutes()).slice(-2);
-            Fecha_Actual = (Mes)+"/"+(Dia)+"/"+now.getFullYear();
-            
-            
-            $('#ID_Remision').val(1);
-            $("#ID_Empleado_Remision").selectpicker('val', '');
-            $("#ID_Estudiante_Remision").selectpicker('val', '');
-            $('#Estado_Remision').val('Activa');
-            $("#Estado_Remision").prop("disabled", true);
-            $('#Remision_Fecha_Inicio').val(Fecha_Actual);
-            $('#Remision_Fecha_Fin').val(Fecha_Actual);
-            $('#Instrumentos_Disponibles').removeAttr('disabled');
-            $('#Añadir_Desglose_Remision').removeAttr('disabled');
-            $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
-            $('.FlotarDerecha2').show();
+            if (Borrar_Remision_Bandera == true) {
+                Tabla_Desglose_Remision.clear().draw();
+                var now = new Date();
+                var Dia = ("0" + now.getDate()).slice(-2);
+                var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
+                var Hora = ("0" + now.getHours()).slice(-2);
+                var Minuto = ("0" + now.getMinutes()).slice(-2);
+                Fecha_Actual = (Mes) + "/" + (Dia) + "/" + now.getFullYear();
+
+
+                $('#ID_Remision').val(1);
+                $("#ID_Empleado_Remision").selectpicker('val', '');
+                $("#ID_Estudiante_Remision").selectpicker('val', '');
+                $('#Estado_Remision').val('Activa');
+                $("#Estado_Remision").prop("disabled", true);
+                $('#Remision_Fecha_Inicio').val(Fecha_Actual);
+                $('#Remision_Fecha_Fin').val(Fecha_Actual);
+                $('#Instrumentos_Disponibles').removeAttr('disabled');
+                $('#Añadir_Desglose_Remision').removeAttr('disabled');
+                $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
+                $('.FlotarDerecha2').show();
+            }
         }
 
         function Cambio_Formato_Fecha(Opcion, Fecha_Prestamo, Fecha_Entrega)
@@ -1016,7 +1020,7 @@ var Fila_Seleccionada = 0;
                         Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
                     }
                 });
-            Documento.save('Remisiones.pdf');
+            window.open(Documento.output('bloburl'), '_blank');
         }
 
 function GenerarDocumentoRemisionNueva()
@@ -1133,7 +1137,7 @@ function GenerarDocumentoRemisionNueva()
 
 
            
-                Documento.save('Remision.pdf');
+                window.open(Documento.output('bloburl'), '_blank');
             },
             error: function (Mensaje)
             {

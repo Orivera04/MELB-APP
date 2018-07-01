@@ -2,6 +2,7 @@ var ImagenBase64;
 var ID_Instrumento = [];
 var LogoIMG64Melb;
 var LogoIMG64CasaTresMundos;
+var BanderaBorrar = true;
 /* Funciones de la API*/
         function Cargar_Instrumentos(Reporte) 
         {
@@ -62,7 +63,9 @@ var LogoIMG64CasaTresMundos;
 
 
         function Cargar_Instrumentos_Por_ID(ID) 
-        {        
+        {
+            BanderaBorrar = true;
+            $('#CodigoBarra').show();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
@@ -222,6 +225,24 @@ var LogoIMG64CasaTresMundos;
             });            
         }
 
+function HTMLImagen(Fuente)
+{
+    return "<html><head><script>function step1(){\n" +
+        "setTimeout('step2()', 10);}\n" +
+        "function step2(){window.print();window.close()}\n" +
+        "</scri" + "pt></head><body onload='step1()'>\n" +
+        "<img style=\"margin-top:150px\" src='" + Fuente + "' /></body></html>";
+}
+
+function ImprimirImagen(Fuente)
+{
+    Pagelink = "about:blank";
+    var WI = window.open(Pagelink, "_new");
+    WI.document.open();
+    WI.document.write(HTMLImagen(Fuente));
+    WI.document.close();
+}
+
         function Filtrar_Instrumentos(Tipo_Filtro, ID_Filtro)
         {          
            $.ajax
@@ -326,17 +347,19 @@ var LogoIMG64CasaTresMundos;
 
         function Reiniciar_Controles_Instrumento()
         {
-            $('#ID_Instrumento').val(1);
-            $("#Tipo_Instrumento").selectpicker('val', 'Guitarra');
-            $('#Color_Instrumento').selectpicker('val', 'Rojo');
-            $('#Marca_Instrumento').val('');
-            $('#Proveedor_Instrumento').selectpicker('val','Bansbach NIC');            
-            $('#Material_Instrumento').selectpicker('val','Madera');
-            $('#Descripcion_Inst').val('');
-            $('#Estado_Instrumento').selectpicker('val','Excelente');
-            $('#Ubicacion_Instrumento').selectpicker('val','Bodega');
-            $('#Estante_Instrumento').val(1);
-            $('#Gaveta_Instrumento').val(1);
+            if (BanderaBorrar == true) {
+                $('#ID_Instrumento').val(1);
+                $("#Tipo_Instrumento").selectpicker('val', 'Guitarra');
+                $('#Color_Instrumento').selectpicker('val', 'Rojo');
+                $('#Marca_Instrumento').val('');
+                $('#Proveedor_Instrumento').selectpicker('val', 'Bansbach NIC');
+                $('#Material_Instrumento').selectpicker('val', 'Madera');
+                $('#Descripcion_Inst').val('');
+                $('#Estado_Instrumento').selectpicker('val', 'Excelente');
+                $('#Ubicacion_Instrumento').selectpicker('val', 'Bodega');
+                $('#Estante_Instrumento').val(1);
+                $('#Gaveta_Instrumento').val(1);
+            }
         }
 
 
@@ -397,7 +420,9 @@ var LogoIMG64CasaTresMundos;
                                   {
                                      Resultado = JSON.parse(Resultado);
                                      if(Resultado.Codigo == 5)
-                                     {                                                                            
+                                     {                   
+                                         $('#CodigoBarra').click();
+
                                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                          $('#ADD').show();
                                          $('#Instrumento_Detalle').hide();
@@ -412,13 +437,15 @@ var LogoIMG64CasaTresMundos;
                                               Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
                                          }
                                          swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");                                        
-                                     }
+                                      }
+
                                   },
                                   error: function(Respuesta)
                                   {
                                      swal("Error", "Ocurrio un error al insertar el instrumento", "error");
                                   },
                             });
+
                         }
                         else
                         {
@@ -674,7 +701,7 @@ function GeneralReporteInstrumento(Lista)
                 Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);               
             }
         });
-    Documento.save('Instrumentos.pdf');
+    window.open(Documento.output('bloburl'), '_blank');
 }
 
 function CargarImagenes() {

@@ -166,7 +166,7 @@ function InicializacionTablas()
             
         });
 
-    /*
+    
     Tabla_Notas = $('#Notas_T').DataTable
         ({
             responsive:
@@ -188,8 +188,7 @@ function InicializacionTablas()
                         },
                     "columnDefs": [{ "className": "dt-center", "targets": "_all" }]
                 }
-
-        });*/
+        });
 
 }
 

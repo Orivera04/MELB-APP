@@ -74,22 +74,16 @@ function ActualizarInfoProfesor()
 // Funciones de soporte //
 function ControlesLecturaEscrituraProfesor(Cond) {
     if (Cond == true) {
-        $('#ProfesorCedula').removeAttr("disabled");
-        $('#Correo_Profesor').removeAttr("disabled");
         $('#ProfesorDireccion').removeAttr("disabled");
         $('#ProfesorTelefono1').removeAttr("disabled");
         $('#ProfesorTelefono2').removeAttr("disabled");
-        $('#SexoProfesor').removeAttr("disabled");
         $('.selectpicker').selectpicker('refresh');
     }
     else
     {
-        $('#ProfesorCedula').prop('disabled', 'true');
-        $('#Correo_Profesor').prop('disabled', 'true');
         $('#ProfesorDireccion').prop('disabled', 'true');
         $('#ProfesorTelefono1').prop('disabled', 'true');
         $('#ProfesorTelefono2').prop('disabled', 'true');
-        $('#SexoProfesor').prop('disabled', 'true');
         $('.selectpicker').selectpicker('refresh');
     }
 }

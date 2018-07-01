@@ -490,5 +490,5 @@ function GeneralReporteEstuche(Lista) {
                 Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
             }
         });
-    Documento.save('Estuches.pdf');
+    window.open(Documento.output('bloburl'), '_blank');
 }
