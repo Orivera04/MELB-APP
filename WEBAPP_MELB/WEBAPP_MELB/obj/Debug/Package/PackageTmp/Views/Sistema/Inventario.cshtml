@@ -1,0 +1,1147 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>MelB - Modulo de inventario</title>
+    <link rel="Shortcut Icon" href="~/Content/favicon.ico" type="image/x-icon" />
+
+    <!-- Boostrap, fuentes e iconos -->
+    <link rel="stylesheet" href="~/Scripts/plugins/bootstrap/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="~/Scripts/plugins/ionicons/ionicons.min.css">
+    <link href="~/Scripts/plugins/fontawesome/font-awesome.css" rel="stylesheet">
+
+    <!-- Plugins CSS -->
+    <link href="~/Scripts/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Scripts/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/SweetAlert/sweetalert2.min.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/DataDrop/datedropper.min.css" rel="stylesheet">
+    <link href="~/Content/SistemaEstilos.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Contenedor Global-->
+    <div class="wrapper">
+        <!-- Contenedor SideBar-->
+        <div class="contentsidebar">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar" class="active">
+                <div class="sidebar-header">
+                    <h3>Musica en los barrios</h3>
+                    <strong>MelB</strong>
+                </div>
+                <ul class="list-unstyled components">
+                    <li id="menuinicio">
+                        <a href="javascript:void(0)">
+                            <i class="glyphicon glyphicon-home"></i>
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-list-alt"></i>
+                            Inventario
+                        </a>
+
+                        <ul class="collapse list-unstyled" aria-expanded="true" id="pageSubmenu">
+                            <li id="estuchessubmenu"><a href="javascript:void(0)">Estuches</a></li>
+                            <li id="instrumentossubmenu"><a href="javascript:void(0)">Instrumentos</a></li>
+                        </ul>
+                        <a href="javascript:void(0)" id="proveedoressubmenu">
+                            <i class="glyphicon glyphicon-bookmark"></i> Proveedores
+                        </a>
+                        <a href="javascript:void(0)" id="remisionessubmenu">
+                            <i class="glyphicon glyphicon-file"></i> Remisiones
+                        </a>
+                        <a href="javascript:void(0)" id="aulasubmenu">
+                            <i class="glyphicon glyphicon-road"></i> Aulas
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+
+        <!-- Page Content Holder - Contenedor NavBar-->
+        <div id="content">
+            <nav class="navbar navbar-default" id="cabezera_header">
+                <div class="container-fluid">
+
+                    <div class="navbar-header" id="Header_Nav">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="ion-navicon-round" data-pack="default" data-tags="menu, hamburger, slide menu"></i>
+                        </button>
+                        <h3 class="TextNavHeader">Modulo de inventario</h3>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right" id="Form_Right">
+                            <li>
+                                <form class="navbar-form navbar-left" role="search">
+                                    <button id="Actualizar" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="">
+                                        <i class="ion-loop" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                    <button id="ADD" type="button" class="btn waves-effect waves-light btn-primary btn-color">
+                                        <span class="btn-label">
+                                            <i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
+                                        </span>   Añadir Instrumento
+                                    </button>
+                                    <button data-toggle="tooltip" data-placement="bottom" id="Reporte" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="General reporte en pdf">
+                                        <i class="icon ion-android-download" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                    <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="CodigoBarra" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir etiqueta de codigo de barras">
+                                        <i class="icon ion-ios-barcode" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                    <div class="input-group m-t-10" id="Busqueda_Form">
+                                        <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
+                                        <span class="input-group-btn">
+                                            <button id="Buscar_Boton" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div>
+                <div id="Inicio">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="col-sm-5 TarjetaIzquierda DegInstrumento">
+                                <i class="ion-music-note IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Instrumento_Label" id="CantidadInstrumentosDA">0</h3>
+                                <h3 class="TipoEtiqueta">Instrumentos</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-sm-5 TarjetaIzquierda DegProveedores">
+                                <i class="ion-person IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Proveedor_Label" id="CantidadProveedoresDA">0</h3>
+                                <h3 class="TipoEtiqueta">Proveedores</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-sm-5 TarjetaIzquierda DegRemisiones">
+                                <i class="ion-clipboard IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Remisiones_Label" id="CantidadRemisionesDA">0</h3>
+                                <h3 class="TipoEtiqueta">Remisiones</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-sm-5 TarjetaIzquierda DegAccesorios">
+                                <i class="ion-cube IconoDashboard"></i>
+                            </div>
+                            <div class="col-sm-7 Tarjeta">
+                                <h3 class="ValorTextoDashboard Accesorios_Label" id="CantidadAccesoriosDA">0</h3>
+                                <h3 class="TipoEtiqueta">Accesorios</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="TarjetaDashboard">
+                                <div class="header">
+                                    <h4 class="title">Instrumentos Registrados</h4>
+                                    <p class="category">Grafica</p>
+                                </div>
+                                <div class="content">
+                                    <canvas width="590" height="230" id="GraficaInstrumentos"></canvas>
+                                    <div class="footer">
+                                        <div class="Leyenda">
+                                            <i class="fa fa-circle Leyenda1 LeyendaIcono"></i> Flauta Dulce
+                                            <i class="fa fa-circle Leyenda2 LeyendaIcono"></i>Flauta Traversa
+                                            <i class="fa fa-circle Leyenda3 LeyendaIcono"></i> Clarinete
+                                            <i class="fa fa-circle Leyenda4 LeyendaIcono"></i> Violin
+                                            <i class="fa fa-circle Leyenda5 LeyendaIcono"></i> Viola
+                                            <i class="fa fa-circle Leyenda6 LeyendaIcono"></i> Cello
+                                            <i class="fa fa-circle Leyenda7 LeyendaIcono"></i> Guitarra
+                                        </div>
+                                        <hr>
+                                        <div class="Estadisticas">
+                                            <i class="fa fa-area-chart"></i>Porcentaje actual de cada tipo de instrumento en el inventario
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="TarjetaDashboard">
+
+                                <div class="header">
+                                    <h4 class="title">Instrumentos En Remisiones</h4>
+                                    <p class="category">Grafica</p>
+                                </div>
+                                <div class="content">
+                                    <canvas id="RemisionesGrafica" style="height:230px;width: 590px;"></canvas>
+                                    <div class="footer">
+                                        <div class="Leyenda">
+                                            <i class="fa fa-circle Leyenda1 LeyendaIcono"></i> Flauta Dulce
+                                            <i class="fa fa-circle Leyenda2 LeyendaIcono"></i>Flauta Traversa
+                                            <i class="fa fa-circle Leyenda3 LeyendaIcono"></i> Clarinete
+                                            <i class="fa fa-circle Leyenda4 LeyendaIcono"></i> Violin
+                                            <i class="fa fa-circle Leyenda5 LeyendaIcono"></i> Viola
+                                            <i class="fa fa-circle Leyenda6 LeyendaIcono"></i> Cello
+                                            <i class="fa fa-circle Leyenda7 LeyendaIcono"></i> Guitarra
+                                        </div>
+                                        <hr>
+                                        <div class="Estadisticas">
+                                            <i class="fa fa-area-chart"></i>Tipos de instrumentos mas prestados en remisiones
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="Instrumentos">
+                    <div class="row" id="row_instrumento">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading" id="Panel_Filtro_Cabezera">
+                                <i class="ion-search" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Filtros de busqueda</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" id="Row_Responsive_Notas">
+                                    <div class="col-md-4" align="center">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label class="control-label col-md-4" id="Curso_Res" align="center">Filtro</label>
+                                                <select id="Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                    <option>Proveedor</option>
+                                                    <option>Estuche</option>
+                                                    <option>Aula</option>
+                                                    <option>Disponible</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" align="center" id="Col_Select">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
+                                                <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" align="center">
+                                        <button id="Filtro_Buscar_Boton" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading">
+                                <i class="ion-music-note" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Instrumentos registrados en inventario</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Instrumento_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Imagen</th>
+                                                <th>Tipo</th>
+                                                <th>Marca</th>
+                                                <th>Disponibilidad</th>
+                                                <th>Ubicación</th>
+                                                <th>Detalle</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Instrumento_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Instrumento_Detalle">
+                    <div class="row" id="row_instrumento_Detalle">
+
+                        <div class="panel panel-color panel-danger ">
+                            <div class="panel-heading">
+                                <i class="ion-music-note" aria-hidden="true"></i>
+                                <h3 id="Header_Instrumento_Texto" class="TextoHeader">Descripción del instrumento</h3>
+                                <div class="FlotarDerecha">
+                                    <i class="ion-grid" data-pack="default" data-tags="menu"></i>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar">
+                                        <label class="onoffswitch-label" for="Switch_Editar">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-3 ">
+                                        <img id="Imagen_Instrumento" class="img-thumbnail">
+                                        <input type="file" name="Cambiar_Imagen_Instrumento" id="Imagen_Archivo" onchange="Imagen_Instrumento(event)" accept="image/x-png,image/gif,image/jpeg">
+                                        <button id="Cambiar_Imagen_Instrumento" type="button" class="btn btn-Custom" disabled>
+                                            <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
+                                            Cambiar imagen
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-9 ">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Identificador</label>
+                                                            <div class="form-group">
+                                                                <input id="ID_Instrumento" type="text" value="1" name="ID_Instrumento" data-bts-min="1" data-bts-max="2000000" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Color</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Color_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Rojo</option>
+                                                                    <option>Naranja</option>
+                                                                    <option>Amarillo</option>
+                                                                    <option>Morado</option>
+                                                                    <option>Azul</option>
+                                                                    <option>Verde</option>
+                                                                    <option>Rosado</option>
+                                                                    <option>Negro</option>
+                                                                    <option>Gris</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Proveedor</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select data-live-search="true" name="Proveedor_Instrumento" id="Proveedor_Instrumento" class="selectpicker" data-style="btn-white" disabled></select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Material</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Material_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Madera</option>
+                                                                    <option>Metal</option>
+                                                                    <option>Plastico</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estado</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Estado_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Excelente</option>
+                                                                    <option>Muy bueno</option>
+                                                                    <option>Bueno</option>
+                                                                    <option>Deteriorado</option>
+                                                                    <option>Extraviado</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" id="Estante_Campo">
+                                                            <label class="control-label">Estante</label>
+                                                            <div class="form-group">
+                                                                <input id="Estante_Instrumento" type="text" value="1" name="Estante" data-bts-min="1" data-bts-max="20" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" id="Campo_Aula">
+                                                            <label class="control-label">Aula</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Aula_Clase" class="selectpicker" data-style="btn-white" disabled></select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Tipo</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Tipo_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <optgroup label="Viento">
+                                                                        <option>Flauta Dulce</option>
+                                                                        <option>Flauta Traversa</option>
+                                                                        <option>Clarinete</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Cuerda">
+                                                                        <option>Violin</option>
+                                                                        <option>Viola</option>
+                                                                        <option>Cello</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Guitarra">
+                                                                        <option>Guitarra</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Marca</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Marca_Instrumento" type="text" class="form-control" placeholder="Marca del instrumento" maxlength="25" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-pricetag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estuche</label>
+                                                            <div class="input-group m-t-10" disabled>
+                                                                <select data-live-search="true" id="Estuche_Instrumento" name="Estuche_Instrumento" title="Selecciona un estuche" class="selectpicker" data-style="btn-white" disabled></select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Descripción</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Descripcion_Inst" type="text" class="form-control" placeholder="Descripción del instrumento" maxlength="50" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Ubicación</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Ubicacion_Instrumento" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Bodega</option>
+                                                                    <option>Aula</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" id="Form_gaveta">
+                                                            <label class="control-label">Gaveta</label>
+                                                            <div class="form-group">
+                                                                <input id="Gaveta_Instrumento" type="text" value="1" name="Gaveta" data-bts-min="1" data-bts-max="20" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <button id="Actualizar_Instrumento" type="button" class="btn btn-success" disabled>
+                                                <span class="btn-label"><i class="ion-upload active" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar instrumento
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-color panel-danger" id="Panel_Accesorios">
+                            <div class="panel-heading Accesorios">
+                                <i class="ion-cube" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Accesorios del instrumento</h3>
+                                <div class="FlotarDerecha">
+                                    <a href="javascript:void(0);" id="Añadir_Accesorio">
+                                        <i class="ion-plus-round" data-pack="default" data-tags="menu"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body ExtraPadding">
+                                <div class="row">
+                                    <table id="Accesorios_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Descripcion</th>
+                                                <th>Actualizar</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Accesorios_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <canvas style="display:none;" id="BGC"></canvas>
+                    </div>
+                </div>
+
+                <div id="Proveedores">
+                    <div class="row" id="row_proveedor">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading2">
+                                <i class="ion-person" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Proveedores de Instrumentos</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Proveedor_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Imagen</th>
+                                                <th>Nombre</th>
+                                                <th>Telefono #1</th>
+                                                <th>Correo</th>
+                                                <th>Detalle</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Proveedor_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Proveedor_Detalle">
+                    <div class="row" id="row_proveedor_Detalle">
+                        <div class="panel panel-color panel-danger ">
+                            <div class="panel-heading2">
+                                <i class="ion-person" aria-hidden="true"></i>
+                                <h3 id="Header_Proveedor_Texto" class="TextoHeader">Descripción del Proveedor</h3>
+                                <div class="FlotarDerecha">
+                                    <i class="ion-grid" data-pack="default" data-tags="menu"></i>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar_Proveedor">
+                                        <label class="onoffswitch-label" for="Switch_Editar_Proveedor">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-3 ">
+                                        <img id="Imagen_Proveedor" class="img-thumbnail">
+                                        <input type="file" name="Cambiar_Imagen_Proveedor" id="Imagen_Archivo_Proveedor" onchange="Imagen_Proveedor(event)" accept="image/x-png,image/gif,image/jpeg">
+                                        <button id="Cambiar_Imagen_Proveedor" type="button" class="btn btn-Custom" disabled>
+                                            <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
+                                            Cambiar imagen
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Identificador</label>
+                                                            <div class="form-group">
+                                                                <input id="ID_Proveedor" type="text" value="1" name="ID_Proveedor" data-bts-min="1" data-bts-max="2000000" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Telefono #1</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Telefono1_Proveedor" type="text" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Telefono #2</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Telefono2_Proveedor" type="text" class="form-control" placeholder="Telefono del Proveedor" maxlength="8" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-social-whatsapp" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Tipo de contacto</label>
+                                                            <select id="Tipo_Contacto" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                                <option>Informal</option>
+                                                                <option>Empresa</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label id="LB_Tipo_P" for="Identificacion_Proveedor" class="control-label">Cedula</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Identificacion_Proveedor" type="text" class="form-control" placeholder="Identificación" maxlength="16" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon ion-person" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombre</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Nombre_Proveedor" type="text" class="form-control" placeholder="Nombre del Proveedor" maxlength="30" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-create" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Dirección</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Direccion_Proveedor" type="text" class="form-control" placeholder="Direccion del Proveedor" maxlength="150" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-map" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="Correo_Proveedor" class="control-label">Correo</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Correo_Proveedor" type="email" name="email" class="form-control" placeholder="Correo del Proveedor" maxlength="50" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-at" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="Contacto_Proveedor" class="control-label">Nombre del contacto</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Contacto_Proveedor" type="text" class="form-control" placeholder="Contacto con el proveedor" maxlength="40" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-navigate" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <button id="Actualizar_Proveedor" type="button" class="btn btn-success" disabled>
+                                                <span class="btn-label"><i class="ion-upload active" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar Proveedor
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Remisiones">
+                    <div class="row" id="row_remisiones">
+
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading" id="Panel_Filtro_Cabezera_Remisiones">
+                                <i class="ion-search" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Filtros de busqueda</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" id="Row_Responsive_Notas">
+                                    <div class="col-md-4" align="center" id="FiltroConteendor">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label class="control-label col-md-4" id="Curso_Res" align="center">Filtro</label>
+                                                <select id="Filtro_Remision" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                    <option>Instrumento</option>
+                                                    <option>Estudiante</option>
+                                                    <option>Fecha</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" align="center" id="ID_ContenedorRemision">
+                                        <div class="form-inline">
+                                            <div class="input-group m-t-10">
+                                                <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
+                                                <select id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3" align="center" id="ContenedorFechaInicio">
+                                        <div class="FechaInput">
+                                            <div class="input-group m-t-10">
+                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" align="center" id="ContenedorFechaFin">
+                                        <div class="FechaInput">
+                                            <div class="input-group m-t-10">
+                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" align="center" id="ContenedorBotonRemision">
+                                        <button id="Filtro_Buscar_Boton_Remisiones" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading4">
+                                <i class="ion-clipboard" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Remisiones de Préstamos de Instrumentos</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Remision_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Numero de remisión</th>
+                                                <th>Asignada A</th>
+                                                <th>Estado</th>
+                                                <th>Detalle</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Remision_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Remision_Detalle">
+                    <div class="row" id="row_remisiones_Descripcion">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading4">
+                                <i class="ion-clipboard" aria-hidden="true"></i>
+                                <h3 id="Header_Remision_Texto" class="TextoHeader">Descripción de Remision</h3>
+                                <div class="FlotarDerecha">
+                                    <i class="ion-grid" data-pack="default" data-tags="menu"></i>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar_Remision">
+                                        <label class="onoffswitch-label" for="Switch_Editar_Remision">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Identificador</label>
+                                                            <div class="form-group">
+                                                                <input id="ID_Remision" type="text" value="1" name="ID_Remision" data-bts-min="1" data-bts-max="2000000" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estudiante</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="ID_Estudiante_Remision" title="Seleccione un Estudiante" class="selectpicker" data-style="btn-white" disabled></select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Empleado</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="ID_Empleado_Remision" title="Seleccione un Empleado" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option data-subtext="@Session["Usuario"].ToString()">#@Session["ID"].ToString()</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Fecha de elaboración</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio" type="text" class="form-control" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Fecha Fin</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Fin" type="text" class="form-control">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estado</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input data-large-mode="true" data-lang="es" id="Estado_Remision" type="text" class="form-control">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-unlocked" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="row_Instrumento_Disponible">
+                            <div class="form-group col-sm-3 FlotarDerecha2">
+                                <div class="input-group m-t-10">
+                                    <select data-live-search="true" id="Instrumentos_Disponibles" name="Instrumentos_Disponibles" title="Instrumentos Disponibles" class="selectpicker" data-style="btn-white" data-width="auto"></select>
+                                    <span class="input-group-btn"><button id="Añadir_Desglose_Remision" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick=""><i class="ion-plus-round" data-pack="default" data-tags="magnifying glass"></i></button></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-color panel-danger" id="Panel_Desglose_Remision">
+                            <div class="panel-heading Accesorios">
+                                <i class="ion-cube" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Desglose de Remision</h3>
+                            </div>
+
+                            <div class="panel-body ExtraPadding">
+                                <div class="row">
+                                    <table id="Desglose_Remision_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Imagen</th>
+                                                <th>ID Instrumento</th>
+                                                <th>Instrumento</th>
+                                                <th>Observacion Inicial</th>
+                                                <th>Observacion Final</th>
+                                                <th>Actualizar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Desglose_Remision_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button id="Actualizar_Remision" type="button" class="btn btn-success" disabled>
+                            <span class="btn-label"><i class="ion-upload active" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision
+                        </button>
+                    </div>
+                </div>
+
+                <div id="Estuches">
+                    <div class="row" id="row_estuches">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading3">
+                                <i class="ion-bag" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Estuches correspondientes a Instrumentos en Inventario</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Estuche_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Imagen</th>
+                                                <th>Tipo Estuche</th>
+                                                <th>Marca</th>
+                                                <th>Disponibilidad</th>
+                                                <th>Color</th>
+                                                <th>Detalle</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Estuche_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Estuche_Detalle">
+                    <div class="row" id="row_estuches_Descripcion">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading3">
+                                <i class="ion-bag" aria-hidden="true"></i>
+                                <h3 id="Header_Estuche_Texto" class="TextoHeader">Descripción del Estuche</h3>
+                                <div class="FlotarDerecha">
+                                    <i class="ion-grid" data-pack="default" data-tags="menu"></i>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar_Estuche">
+                                        <label class="onoffswitch-label" for="Switch_Editar_Estuche">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-3 ">
+                                        <img id="Imagen_Estuche" class="img-thumbnail">
+                                        <input type="file" name="Cambiar_Imagen_Estuche" id="Imagen_Archivo_Estuche" onchange="Imagen_Estuche(event)">
+                                        <button id="Cambiar_Imagen_Estuche" type="button" class="btn btn-Custom" disabled>
+                                            <span class="btn-label"><i class="ion-image" data-pack="default" data-tags="photo"></i></span>
+                                            Cambiar imagen
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-9 ">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Identificador</label>
+                                                            <div class="form-group">
+                                                                <input id="ID_Estuche" type="text" value="1" name="ID_Estuche" data-bts-min="1" data-bts-max="2000000" data-bts-mousewheel="true" data-bts-button-down-class="btn waves-effect waves-light btn-primary btn-color" data-bts-button-up-class="btn waves-effect waves-light btn-primary btn-color" disabled />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Color</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Color_Estuche" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Rojo</option>
+                                                                    <option>Naranja</option>
+                                                                    <option>Amarillo</option>
+                                                                    <option>Morado</option>
+                                                                    <option>Azul</option>
+                                                                    <option>Verde</option>
+                                                                    <option>Rosado</option>
+                                                                    <option>Negro</option>
+                                                                    <option>Gris</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Material</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Material_Estuche" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Plastico</option>
+                                                                    <option>Tela</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Descripción</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Descripcion_Estuche" type="text" class="form-control" placeholder="Descripción del estuche" maxlength="50">
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-clipboard" data-pack="default"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Tipo Estuche</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Tipo_Estuche" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <optgroup label="Viento">
+                                                                        <option>Flauta Dulce</option>
+                                                                        <option>Flauta Traversa</option>
+                                                                        <option>Clarinete</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Cuerda">
+                                                                        <option>Violin</option>
+                                                                        <option>Viola</option>
+                                                                        <option>Cello</option>
+                                                                    </optgroup>
+                                                                    <optgroup label="Guitarra">
+                                                                        <option>Guitarra</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Marca</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Marca_Estuche" type="text" class="form-control" placeholder="Marca del estuche" maxlength="20" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-flag" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estado</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select id="Estado_Estuche" class="selectpicker" data-style="btn-white" disabled>
+                                                                    <option>Excelente</option>
+                                                                    <option>Muy bueno</option>
+                                                                    <option>Bueno</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group" id="InstrumentoEstuche">
+                                                            <label class="control-label">Instrumento Asociado</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Instrumento_Asociado" type="text" class="form-control" placeholder="Instrumento" maxlength="20" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button id="InstrumentoBotonEstuche" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-open" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <button id="Actualizar_Estuche" type="button" class="btn btn-success" disabled>
+                                                <span class="btn-label"><i class="ion-upload active" data-pack="default" data-tags="storage, cloud"></i></span>Actualizar estuche
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Aulas">
+                    <div class="row" id="row_aulas">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading5">
+                                <i class="ion-android-pin" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Aulas</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Aula_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Numero</th>
+                                                <th>Piso</th>
+                                                <th>Actualizar</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Aula_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/Scripts/plugins/jquery/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- Plugins Boostrap -->
+    <script src="~/Scripts/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/plugins/datatables/responsive.bootstrap.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Scripts/plugins/DataDrop/datedropper.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/plugins/chartjs/Chart.min.js"></script>
+    <script src="~/Scripts/plugins/jspdf/jspdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js"></script>
+
+    <script src="~/Scripts/plugins/jspdf/jspdf.plugin.autotable.js"></script>
+
+    <!-- Plugins Alertas -->
+    <script src="~/Scripts/plugins\SweetAlert/sweetalert2.min.js"></script>
+    <!-- Cargando Boostrap y sus dependencias -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <!-- Scripts de MeLB -->
+    <script src="~/Scripts/EventoNavegadorInventario.js"></script>
+
+    <!-- Scripts Web API-->
+    <script src="~/Scripts/webapi/Instrumentos.js"></script>
+    <script src="~/Scripts/webapi/Proveedor.js"></script>
+    <script src="~/Scripts/webapi/Remision.js"></script>
+    <script src="~/Scripts/webapi/Accesorio.js"></script>
+    <script src="~/Scripts/webapi/Estuche.js"></script>
+    <script src="~/Scripts/webapi/Aula.js"></script>
+
+</body>
+</html>
