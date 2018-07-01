@@ -72,7 +72,17 @@
                           $('#Telefono1_Proveedor').val(Resultado.Telefono_1);
                           $('#Telefono2_Proveedor').val(Resultado.Telefono_2);
                           $('#Nombre_Proveedor').val(Resultado.Nombre);
-                          $('#Imagen_Proveedor').attr("src",Resultado.Imagen);
+                          $('#Imagen_Proveedor').attr("src", Resultado.Imagen);
+                          $('#Tipo_Contacto').val(Resultado.Tipo_Proveedor);
+                          $('#Contacto_Proveedor').val(Resultado.Contacto);
+                          $('#Identificacion_Proveedor').val(Resultado.Identificacion);
+
+                          if (Resultado.Tipo_Proveedor == "Informal") {
+                              $('#LB_Tipo_P').text('Cedula');
+                          }
+                          else {
+                              $('#LB_Tipo_P').text('RUC');
+                          }
                           Base64Imagen(Resultado.Imagen) 
                       }
                       else
@@ -93,8 +103,8 @@
         }
 
         function Insertar_Actualizar_Proveedor(Comando)
-        {     
-            if($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "" && $('#Direccion_Proveedor').val() != "")
+        {
+            if ($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "" && $('#Direccion_Proveedor').val() != "" && $('#Contacto_Proveedor').val() != "" && $('#Identificacion_Proveedor').val() != "")
             {
               if($('#Telefono1_Proveedor').val().length == 8 && $('#Telefono2_Proveedor').val().length == 8 )
               {
@@ -241,6 +251,9 @@
                 $('#Correo_Proveedor').removeAttr('disabled');
                 $('#Cambiar_Imagen_Proveedor').removeAttr('disabled');
                 $('#Actualizar_Proveedor').removeAttr('disabled');
+                $('#Tipo_Contacto').removeAttr('disabled');
+                $('#Contacto_Proveedor').removeAttr('disabled');
+                $('#Identificacion_Proveedor').removeAttr('disabled');
                 $('.selectpicker').selectpicker('refresh');
             }
             else
@@ -252,7 +265,10 @@
                 $('#Telefono2_Proveedor').prop('disabled','true');
                 $('#Correo_Proveedor').prop('disabled','true');
                 $('#Cambiar_Imagen_Proveedor').prop('disabled','true');
-                $('#Actualizar_Proveedor').prop('disabled','true');
+                $('#Actualizar_Proveedor').prop('disabled', 'true');
+                $('#Tipo_Contacto').prop('disabled', 'true');
+                $('#Contacto_Proveedor').prop('disabled', 'true');
+                $('#Identificacion_Proveedor').prop('disabled', 'true');
                 $('.selectpicker').selectpicker('refresh');
             }
         }
@@ -265,6 +281,8 @@
             $('#Telefono1_Proveedor').val('');
             $('#Telefono2_Proveedor').val('');
             $('#Correo_Proveedor').val('');
+            $('#Contacto_Proveedor').val('');
+            $('#Identificacion_Proveedor').val('');
         }
 
         var Imagen_Proveedor = function(Archivo)
@@ -296,7 +314,7 @@
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    var Proveedor_BBDD = {ID_Proveedor: $('#ID_Proveedor').val(), Nombre: $('#Nombre_Proveedor').val(), Telefono_1: $('#Telefono1_Proveedor').val(), Telefono_2: $('#Telefono2_Proveedor').val(), Correo: $('#Correo_Proveedor').val(), Direccion: $('#Direccion_Proveedor').val(),Imagen: Resultado.data.link};
+                    var Proveedor_BBDD = { ID_Proveedor: $('#ID_Proveedor').val(), Nombre: $('#Nombre_Proveedor').val(), Telefono_1: $('#Telefono1_Proveedor').val(), Telefono_2: $('#Telefono2_Proveedor').val(), Correo: $('#Correo_Proveedor').val(), Direccion: $('#Direccion_Proveedor').val(), Imagen: Resultado.data.link, Tipo_Proveedor: $('#Tipo_Contacto').val(), Contacto: $('#Contacto_Proveedor').val(), Identificacion: $('#Identificacion_Proveedor').val()};
 
                     if(Comando == 'Nuevo')
                     {                                                

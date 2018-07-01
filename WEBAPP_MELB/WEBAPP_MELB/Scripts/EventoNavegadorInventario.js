@@ -105,7 +105,19 @@ function Inicializacion_Controles()
         ({
             alwaysShow: true,
             threshold: 50
-    });
+        });
+
+    $('#Contacto_Proveedor').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 40
+        });
+
+    $('#Identificacion_Proveedor').maxlength
+        ({
+            alwaysShow: true,
+            threshold: 16
+        });
 
     $('#Remision_Fecha_Inicio').dateDropper
     ({
@@ -927,6 +939,16 @@ function Inicializacion_Eventos()
               Insertar_Actualizar_Proveedor(Operacion);
         });
 
+    $('#Tipo_Contacto').change(function (Event)
+    {
+        if ($('#Tipo_Contacto').val() == "Informal") {
+            $('#LB_Tipo_P').text('Cedula');
+        }
+        else {
+            $('#LB_Tipo_P').text('RUC');
+
+        }
+    });
 
         /* Eventos : Formulario Remision */
 
