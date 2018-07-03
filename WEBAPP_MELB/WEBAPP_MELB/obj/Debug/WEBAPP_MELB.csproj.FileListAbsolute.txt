@@ -484,3 +484,4 @@ C:\Users\Certificador\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.Web
 C:\Users\Certificador\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csprojResolveAssemblyReference.cache
 C:\Users\Certificador\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.dll
 C:\Users\Certificador\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.pdb
+C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csprojResolveAssemblyReference.cache

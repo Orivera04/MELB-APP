@@ -34,6 +34,8 @@ $(document).ready(function ()
     // Carga de imagenes para los reportes //
     CargarImagenes();
 
+    $('#FooterCopyright').css('margin-top', '25px');
+
 });
 
 
@@ -326,7 +328,7 @@ function Inicializacion_Eventos()
             $('#ADD').hide();
             $('#Reporte').hide();
             $('#CodigoBarra').hide();
-
+            $('#FooterCopyright').css('margin-top', '25px');
         });
        
 
@@ -349,6 +351,7 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop", 50);
             $('#Reporte').show();
             $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
 
         });
 
@@ -370,6 +373,7 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop", 50);
             $('#Reporte').show();
             $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
 
         });
 
@@ -391,6 +395,7 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop", 50);
             $('#Reporte').show();
             $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
 
         });
 
@@ -412,6 +417,7 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop", 50); 
             $('#Reporte').show();
             $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
 
         });
 
@@ -433,6 +439,7 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop", 50);
             $('#Reporte').show();
             $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
 
         });
 
@@ -454,6 +461,7 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide("drop", 50);
             $('#Reporte').hide();
             $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
 
         });
 
@@ -585,6 +593,8 @@ function Inicializacion_Eventos()
                 $('#Busqueda_Form').hide();
                 $('#Contenedor_Panel').hide(); 
                 $('#Reporte').hide();
+                $('#FooterCopyright').css('margin-top', '50px');
+
                 Borrar_Remision_Bandera = false;
             }
             else if (Formulario_Activo == 'Aulas')
