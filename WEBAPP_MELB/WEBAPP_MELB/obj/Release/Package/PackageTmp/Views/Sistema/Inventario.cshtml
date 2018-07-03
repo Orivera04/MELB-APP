@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -38,8 +37,9 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="active">
                 <div class="sidebar-header">
-                    <h3>Musica en los barrios</h3>
-                    <strong>MelB</strong>
+                    <a data-toggle="tooltip" data-placement="bottom" data-original-title="Regresar al Login" href="@Url.Action("MatarSesion","Sistema")">
+                        <img style="width:75px;" src="~/Content/assets/Logo.png" />
+                    </a>
                 </div>
                 <ul class="list-unstyled components">
                     <li id="menuinicio">
@@ -55,8 +55,8 @@
                         </a>
 
                         <ul class="collapse list-unstyled" aria-expanded="true" id="pageSubmenu">
-                            <li id="estuchessubmenu"><a href="#">Estuches</a></li>
-                            <li id="instrumentossubmenu"><a href="#">Instrumentos</a></li>
+                            <li id="estuchessubmenu"><a href="javascript:void(0)">Estuches</a></li>
+                            <li id="instrumentossubmenu"><a href="javascript:void(0)">Instrumentos</a></li>
                         </ul>
                         <a href="javascript:void(0)" id="proveedoressubmenu">
                             <i class="glyphicon glyphicon-bookmark"></i> Proveedores
@@ -97,6 +97,12 @@
                                         <span class="btn-label">
                                             <i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i>
                                         </span>   Añadir Instrumento
+                                    </button>
+                                    <button data-toggle="tooltip" data-placement="bottom" id="Reporte" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="General reporte en pdf">
+                                        <i class="icon ion-android-download" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                    <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="CodigoBarra" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir etiqueta de codigo de barras">
+                                        <i class="icon ion-ios-barcode" data-pack="default" data-tags="refresh"></i>
                                     </button>
                                     <div class="input-group m-t-10" id="Busqueda_Form">
                                         <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
@@ -238,12 +244,11 @@
                                     <div class="col-md-4" align="center" id="Col_Select">
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
-                                                <label id="ID_Instrumento_ET" class="control-label col-md-4"  align="center">ID</label>
-                                                <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%">                                                   
-                                                </select>
+                                                <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
+                                                <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div class="col-md-4" align="center">
                                         <button id="Filtro_Buscar_Boton" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
                                     </div>
@@ -281,6 +286,7 @@
 
                 <div id="Instrumento_Detalle">
                     <div class="row" id="row_instrumento_Detalle">
+
                         <div class="panel panel-color panel-danger ">
                             <div class="panel-heading">
                                 <i class="ion-music-note" aria-hidden="true"></i>
@@ -494,6 +500,7 @@
                                 </div>
                             </div>
                         </div>
+                        <canvas style="display:none;" id="BGC"></canvas>
                     </div>
                 </div>
 
@@ -586,6 +593,24 @@
                                                                 </span>
                                                             </div>
                                                         </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Tipo de contacto</label>
+                                                            <select id="Tipo_Contacto" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                                <option>Informal</option>
+                                                                <option>Empresa</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label id="LB_Tipo_P" for="Identificacion_Proveedor" class="control-label">Cedula</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Identificacion_Proveedor" type="text" class="form-control" placeholder="Identificación" maxlength="16" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="icon ion-person" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -619,6 +644,16 @@
                                                                 <input id="Correo_Proveedor" type="email" name="email" class="form-control" placeholder="Correo del Proveedor" maxlength="50" disabled>
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-at" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="Contacto_Proveedor" class="control-label">Nombre del contacto</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input id="Contacto_Proveedor" type="text" class="form-control" placeholder="Contacto con el proveedor" maxlength="40" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-navigate" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -672,10 +707,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3" align="center" id="ContenedorFechaInicio" >
+                                    <div class="col-md-3" align="center" id="ContenedorFechaInicio">
                                         <div class="FechaInput">
                                             <div class="input-group m-t-10">
-                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%" >
+                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
                                                 </span>
@@ -685,13 +720,13 @@
                                     <div class="col-md-3" align="center" id="ContenedorFechaFin">
                                         <div class="FechaInput">
                                             <div class="input-group m-t-10">
-                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%" >
+                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
                                                 </span>
                                             </div>
-                                            </div>
                                         </div>
+                                    </div>
 
                                     <div class="col-md-4" align="center" id="ContenedorBotonRemision">
                                         <button id="Filtro_Buscar_Boton_Remisiones" type="button" class="btn waves-effect waves-light btn-filtro" style="display: inline-block;"><span class="btn-label"><i class="ion-funnel"></i></span>Filtrar datos</button>
@@ -837,7 +872,7 @@
 
                             <div class="panel-body ExtraPadding">
                                 <div class="row">
-                                    <table id="Desglose_Remision_T"class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                    <table id="Desglose_Remision_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Imagen</th>
@@ -1048,7 +1083,7 @@
                         <div class="panel panel-color panel-danger">
                             <div class="panel-heading5">
                                 <i class="ion-android-pin" aria-hidden="true"></i>
-                                <h3 class="TextoHeader">Aulas en Instalaciones MelB</h3>
+                                <h3 class="TextoHeader">Aulas</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -1069,7 +1104,9 @@
                         </div>
                     </div>
                 </div>
-
+                <footer class="footer text-right">
+                    © 2018 MelB Versiòn Beta realizada por Oscar Rivera, Reynaldo Saul y Yader Castillo.
+                </footer>
             </div>
 
         </div>
@@ -1088,6 +1125,10 @@
     <script src="~/Scripts/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
     <script src="~/Scripts/plugins/DataDrop/datedropper.min.js" type="text/javascript"></script>
     <script src="~/Scripts/plugins/chartjs/Chart.min.js"></script>
+    <script src="~/Scripts/plugins/jspdf/jspdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js"></script>
+
+    <script src="~/Scripts/plugins/jspdf/jspdf.plugin.autotable.js"></script>
 
     <!-- Plugins Alertas -->
     <script src="~/Scripts/plugins\SweetAlert/sweetalert2.min.js"></script>

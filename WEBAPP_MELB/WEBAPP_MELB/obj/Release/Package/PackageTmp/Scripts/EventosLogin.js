@@ -77,6 +77,7 @@ function InicializacionEventos()
                             }
                         },
                         error: function (Error) {
+                            console.log(Error);
                             swal
                                 ({
                                     title: "Error",

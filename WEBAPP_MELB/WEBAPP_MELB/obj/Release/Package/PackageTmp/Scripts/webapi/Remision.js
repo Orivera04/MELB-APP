@@ -10,77 +10,73 @@ var Dropdown_ID_Instrumento = [];
 var Dropdown_Nombre_Instrumento = [];
 var Funcion_Realizar = 'Actualizar';
 var Fila_Seleccionada = 0;
+var Borrar_Remision_Bandera = true;
 
        
-        function Cargar_Remisiones() 
+        function Cargar_Remisiones(Reporte) 
         {
-            Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Remision',
                 type: 'GET',
-                success: function (Resultado) 
-                {
-                    if(Resultado.Codigo == null)
-                    {
-                        Tabla_Remision.clear().draw();
-                        Resultado = JSON.parse(Resultado);
-                        var Estado;
-                        for (i = 0; i < Resultado.length; i++) 
-                        {  
-                            if (Resultado[i].Estado_Remision == 'Expirada')
-                            {
-                               Estado = '<span class="label label-inverse">Expirada</span>';
-                            }
-                            else if(Resultado[i].Estado_Remision == 'Activa')
-                            {
-                                Estado = '<span class="label label-purple">Activa</span>';
-                            }
-                            else
-                            {
-                                Estado = '<span class="label label-success">Finalizada</span>';
-                            }
-                            Tabla_Remision.row.add
-                            ([
-                                Resultado[i].ID_Remision,
-                                Resultado[i].Nombre_Estudiante,
-                                Estado,
-                                '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision('+Resultado[i].ID_Remision+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision('+Resultado[i].ID_Remision+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                            ]).draw( false );  
-                        }
-                        $('#CantidadRemisionesDA').text(Tabla_Remision.column(0).data().length);                              
-
-                    /*Carga Dropdown con Estudiantes*/
-                    $.ajax
-                    ({
-                        url: 'http://melbws.azurewebsites.net/api/Estudiante',
-                        type: 'GET',
-                        success: function (Resultado_Estudiante) 
-                        {
-                            document.getElementById("ID_Estudiante_Remision").options.length = 0;
-                            ID_Estudiante = [];
-                            if(Resultado_Estudiante.Codigo == null)
-                            {
-                                Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
-                                for (i = 0; i < Resultado_Estudiante.length; i++) 
-                                {  
-                                  ID_Estudiante.push({ID:Resultado_Estudiante[i].ID_Estudiante,Nombre:Resultado_Estudiante[i].Nombre+' '+Resultado_Estudiante[i].Apellido});                                                        
-                                  $('#ID_Estudiante_Remision').append('<option data-subtext="'+Resultado_Estudiante[i].Nombre+'">#'+Resultado_Estudiante[i].ID_Estudiante+'</option>'); 
+                    success: function (Resultado) {
+                        if (Reporte == null) {
+                            if (Resultado.Codigo == null) {
+                                Tabla_Remision.clear().draw();
+                                Resultado = JSON.parse(Resultado);
+                                var Estado;
+                                for (i = 0; i < Resultado.length; i++) {
+                                    if (Resultado[i].Estado_Remision == 'Expirada') {
+                                        Estado = '<span class="label label-inverse">Expirada</span>';
+                                    }
+                                    else if (Resultado[i].Estado_Remision == 'Activa') {
+                                        Estado = '<span class="label label-purple">Activa</span>';
+                                    }
+                                    else {
+                                        Estado = '<span class="label label-success">Finalizada</span>';
+                                    }
+                                    Tabla_Remision.row.add
+                                        ([
+                                            Resultado[i].ID_Remision,
+                                            Resultado[i].Nombre_Estudiante,
+                                            Estado,
+                                            '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                            '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                        ]).draw(false);
                                 }
+                                $('#CantidadRemisionesDA').text(Tabla_Remision.column(0).data().length);
+
+                                /*Carga Dropdown con Estudiantes*/
+                                $.ajax
+                                    ({
+                                        url: 'http://melbws.azurewebsites.net/api/Estudiante',
+                                        type: 'GET',
+                                        success: function (Resultado_Estudiante) {
+                                            document.getElementById("ID_Estudiante_Remision").options.length = 0;
+                                            ID_Estudiante = [];
+                                            if (Resultado_Estudiante.Codigo == null) {
+                                                Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
+                                                for (i = 0; i < Resultado_Estudiante.length; i++) {
+                                                    ID_Estudiante.push({ ID: Resultado_Estudiante[i].ID_Estudiante, Nombre: Resultado_Estudiante[i].Nombre + ' ' + Resultado_Estudiante[i].Apellido });
+                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
+                                                }
+                                            }
+                                        },
+                                        error: function (Mensaje) {
+                                            swal
+                                                ({
+                                                    title: "Error listando Estudiantes",
+                                                    text: "No se pudo conectar con el servidor.",
+                                                    type: "error",
+                                                });
+                                        }
+                                    });
+                                Cargar_Aulas();
                             }
-                        },
-                        error: function (Mensaje) 
-                        {        
-                            swal
-                            ({
-                                  title: "Error listando Estudiantes",
-                                  text: "No se pudo conectar con el servidor.",
-                                  type: "error",
-                            });
-                        }
-                      });                    
-                        Cargar_Aulas(); 
+                    }
+                    else
+                    {
+                            GeneralReporteRemisiones(JSON.parse(Resultado));
                     }
                 },
 
@@ -105,6 +101,7 @@ var Fila_Seleccionada = 0;
 
         function Cargar_Remision_Por_ID(ID) 
         {
+            Borrar_Remision_Bandera = true;
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
@@ -114,7 +111,9 @@ var Fila_Seleccionada = 0;
                 {
                       Resultado = JSON.parse(Resultado);     
                       if(Resultado.Codigo == null)
-                      {       
+                      {
+                          $('#Reporte').hide();
+                          FormularioActivo = "RemisionDetalleLectura";
                           Resultado = Resultado[0];                  
                           $('#ID_Remision').val(Resultado.ID_Remision); 
                           $('#ID_Estudiante_Remision').selectpicker('val', '#'+Resultado.ID_Estudiante);
@@ -343,7 +342,6 @@ var Fila_Seleccionada = 0;
             else {
                 $.ajax
                     ({          
-                        //url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {
@@ -389,15 +387,17 @@ var Fila_Seleccionada = 0;
             $('#Switch_Editar_Remision').prop('checked',false);
             Habilitar_Deshabilitar_Remision(false);        
             Operacion = 'Actualizar';                
-            $('#Remisiones').hide(300);
-            $('#Remision_Detalle').show(400);
-            $('#ADD').hide('drop',400);
-            $('#Busqueda_Form').show(400);
+            $('#Remisiones').hide();
+            $('#Remision_Detalle').show(200);
+            $('#ADD').hide();
+            $('#Busqueda_Form').show();
             $('#Busqueda_Form').css('display','inline-flex');
             $('#Contenedor_Panel').show();
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
+            Formulario_Activo = "RemisionNueva";
+            $('#Reporte').show();
         }
 
         function Habilitar_Deshabilitar_Remision(Cond,Operacion)
@@ -453,26 +453,28 @@ var Fila_Seleccionada = 0;
 
         function Reiniciar_Controles_Remision()
         {
-            Tabla_Desglose_Remision.clear().draw();    
-            var now = new Date();
-            var Dia = ("0" + now.getDate()).slice(-2);
-            var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
-            var Hora = ("0" + now.getHours()).slice(-2);
-            var Minuto = ("0" + now.getMinutes()).slice(-2);
-            Fecha_Actual = (Mes)+"/"+(Dia)+"/"+now.getFullYear();
-            
-            
-            $('#ID_Remision').val(1);
-            $("#ID_Empleado_Remision").selectpicker('val', '');
-            $("#ID_Estudiante_Remision").selectpicker('val', '');
-            $('#Estado_Remision').val('Activa');
-            $("#Estado_Remision").prop("disabled", true);
-            $('#Remision_Fecha_Inicio').val(Fecha_Actual);
-            $('#Remision_Fecha_Fin').val(Fecha_Actual);
-            $('#Instrumentos_Disponibles').removeAttr('disabled');
-            $('#Añadir_Desglose_Remision').removeAttr('disabled');
-            $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
-            $('.FlotarDerecha2').show();
+            if (Borrar_Remision_Bandera == true) {
+                Tabla_Desglose_Remision.clear().draw();
+                var now = new Date();
+                var Dia = ("0" + now.getDate()).slice(-2);
+                var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
+                var Hora = ("0" + now.getHours()).slice(-2);
+                var Minuto = ("0" + now.getMinutes()).slice(-2);
+                Fecha_Actual = (Mes) + "/" + (Dia) + "/" + now.getFullYear();
+
+
+                $('#ID_Remision').val(1);
+                $("#ID_Empleado_Remision").selectpicker('val', '');
+                $("#ID_Estudiante_Remision").selectpicker('val', '');
+                $('#Estado_Remision').val('Activa');
+                $("#Estado_Remision").prop("disabled", true);
+                $('#Remision_Fecha_Inicio').val(Fecha_Actual);
+                $('#Remision_Fecha_Fin').val(Fecha_Actual);
+                $('#Instrumentos_Disponibles').removeAttr('disabled');
+                $('#Añadir_Desglose_Remision').removeAttr('disabled');
+                $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
+                $('.FlotarDerecha2').show();
+            }
         }
 
         function Cambio_Formato_Fecha(Opcion, Fecha_Prestamo, Fecha_Entrega)
@@ -635,14 +637,20 @@ var Fila_Seleccionada = 0;
                       {
                          Resultado = JSON.parse(Resultado);
                          if(Resultado.Codigo == 5)
-                         {                                    
-                             swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-
+                         {                   
+                             swal
+                             ({
+                                 title: Resultado.Mensaje_Cabecera,
+                                 text:  Resultado.Mensaje_Usuario,
+                                 type: "success",
+                                 confirmButtonText: "OK"
+                             });
                              Cargar_Remisiones();
                              $('#Remision_Detalle').hide(500);
                              $('#Remisiones').show(400);
                              $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
                              $('#ADD').show("drop", 50);
+                             GenerarDocumentoRemisionNueva();
                          }
                          else
                          {
@@ -942,3 +950,204 @@ var Fila_Seleccionada = 0;
             GraficaRemision.options.scales.yAxes[0].ticks.beginAtZero = true;
             GraficaRemision.update();
         }
+
+        function GeneralReporteRemisiones(Lista) 
+        {
+            var Documento = new jsPDF("l", 'cm', "a4");
+            var Columnas =
+                [
+                    { title: "Numero de remisión", dataKey: "ID_Remision" },
+                    { title: "ID Estudiante", dataKey: "ID_Estudiante" },
+                    { title: "Asignada A", dataKey: "Nombre_Estudiante" },
+                    { title: "Fecha del prestamo", dataKey: "Fecha_Prestamo" },
+                    { title: "Fecha de entrega", dataKey: "Fecha_Entrega" },
+                    { title: "Estado", dataKey: "Estado_Remision" },                
+                    { title: "Realizada por", dataKey: "Empleado_Nombre"}
+                ];
+
+
+            Documento.autoTable(Columnas, Lista,
+                {
+                    theme: 'grid',
+                    bodyStyles: {
+                        lineColor: [221, 221, 221]
+                    },
+                    headerStyles: {
+                        lineWidth: 0,
+                        fillColor: [22, 12, 40],
+                        textColor: [255, 255, 255],
+                        cellPadding: 0.3,
+                    },
+                    styles: {
+                        overflow: 'linebreak',
+                        lineWidth: 0.03,
+                        halign: 'center',
+                        cellPadding: 0.07,
+                        fillcolor: [199, 0, 57],
+                        cellPadding: 1
+                    },
+                    margin: {
+                        top: 5,
+                        left: 1
+                    },
+                    addPageContent: function (Event) {
+                        /* Encabezado parte izquierda*/
+                        Documento.setFont("helvetica");
+                        Documento.setFontType("bold");
+                        Documento.setFontSize(11);
+                        Documento.text(1, 0.9, 'Música en los barrios - MeLB');
+
+                        Documento.setFontType("normal");
+                        Documento.text(1, 1.5, 'Linda vista norte, de la Estación II de Policía 1 1/2c. abajo,');
+                        Documento.text(1, 2, 'contiguo al parque.  Managua – Nicaragua.')
+                        Documento.text(1, 2.5, 'Tel. 2254-6043');
+                        Documento.text(1, 3, 'Correo electrónico: melbnicaragua@gmail.com');
+
+                        /* Encabezado parte derecha */
+
+                        Documento.addImage(LogoIMG64CasaTresMundos, 'png', 24.5, 0.2, 3, 3);
+                        Documento.addImage(LogoIMG64Melb, 'jpg', 21.6, 0.25, 3, 3);
+
+
+                        /* Cuerpo */
+
+                        Documento.setFontType("bold");
+                        Documento.text(1, 4.2, 'Tipo de documento : Reporte');
+                        Documento.text(10 + 1, 4.2, 'Tipo de reporte: Remisiones');
+
+                        /* Footer */
+                        Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
+                        Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
+                    }
+                });
+            window.open(Documento.output('bloburl'), '_blank');
+        }
+
+function GenerarDocumentoRemisionNueva()
+{
+    $.ajax
+        ({
+            url: 'http://melbws.azurewebsites.net/api/Remision/' + $('#ID_Remision').val(),
+            type: 'GET',
+            success: function (Resultado)
+            {
+                Resultado = JSON.parse(Resultado);
+
+                for (I = 0; I < Resultado[0].Lista_Desglose.length; I++)
+                {
+                    if (Resultado[0].Lista_Desglose[I].Accesorios == null)
+                    {
+                        Resultado[0].Lista_Desglose[I].Accesorios = "Ninguno";
+                    }
+                }
+
+                var Documento = new jsPDF("l", 'cm', "a4");                
+                var Columnas =
+                    [
+                        { title: "ID Instrumento", dataKey: "ID_Instrumento" },
+                        { title: "Tipo", dataKey: "Nombre" },
+                        { title: "Descripción", dataKey: "Descripcion" },
+                        { title: "Color", dataKey: "Color" },
+                        { title: "Estado", dataKey: "Estado" },
+                        { title: "Estuche", dataKey: "Estuche_Descripcion" },
+                        { title: "Accesorios", dataKey: "Accesorios" },
+                        { title: "Observación Inicial", dataKey: "Observacion_Inicial" }
+                    ];
+                Documento.autoTable(Columnas, Resultado[0].Lista_Desglose,
+                    {
+                        theme: 'grid',
+                        bodyStyles: {
+                            lineColor: [221, 221, 221]
+                        },
+                        headerStyles: {
+                            lineWidth: 0,
+                            fillColor: [22, 12, 40],
+                            textColor: [255, 255, 255],
+                            cellPadding: 0.3,
+                        },
+                        styles: {
+                            overflow: 'linebreak',
+                            lineWidth: 0.03,
+                            halign: 'center',
+                            cellPadding: 0.07,
+                            fillcolor: [199, 0, 57],
+                            cellPadding: 1
+                        },
+                        margin: {
+                            top: 5.5,
+                            left: 1
+                        },
+                        addPageContent: function (Event) {
+                            /* Encabezado parte izquierda*/
+                            Documento.setFont("helvetica");
+                            Documento.setFontType("bold");
+                            Documento.setFontSize(11);
+                            Documento.text(1, 0.9, 'Música en los barrios - MeLB');
+
+                            Documento.setFontType("normal");
+                            Documento.text(1, 1.5, 'Linda vista norte, de la Estación II de Policía 1 1/2c. abajo,');
+                            Documento.text(1, 2, 'contiguo al parque.  Managua – Nicaragua.')
+                            Documento.text(1, 2.5, 'Tel. 2254-6043');
+                            Documento.text(1, 3, 'Correo electrónico: melbnicaragua@gmail.com');
+
+                            /* Encabezado parte derecha */
+
+                            Documento.addImage(LogoIMG64CasaTresMundos, 'png', 24.5, 0.2, 3, 3);
+                            Documento.addImage(LogoIMG64Melb, 'jpg', 21.6, 0.25, 3, 3);
+
+
+                            /* Cuerpo */
+
+                            Documento.setFontType("bold");
+                            Documento.text(1, 4.2, 'Numero Remisión : #' + $('#ID_Remision').val());
+                            Documento.text(7, 4.2, 'Estudiante: ' + $("#ID_Estudiante_Remision option:selected").attr('data-subtext'));
+                            Documento.text(16 , 4.2, 'Fecha: ' + $('#Remision_Fecha_Inicio').val());
+                            Documento.text(23, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);                       
+
+
+                            /* Footer */
+                            Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
+                            Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
+                        }
+                    });
+                Documento.setFont("helvetica");
+                Documento.setFontType("bold");
+                Documento.setFontSize(11);
+
+                Documento.text(1, Documento.autoTableEndPosY() + 1, 'Nota:');
+
+                Documento.setFont("helvetica");
+                Documento.setFontType("normal");
+                Documento.setFontSize(11);
+
+                Documento.text(1, Documento.autoTableEndPosY() + 1.5, 'Los instrumentos arriba detallados quedan en resguardo de la persona registrada arriba como responsable mientras permanezca activo en Música en los Barrios');
+                Documento.text(1, Documento.autoTableEndPosY() + 2, 'Queda por entedido que cualquier pérdida o daño de los instrumentos serán asumidos por la persona que firma la remisión al precio que MELB estime.');
+
+                Documento.setDrawColor(0);
+                Documento.setLineWidth(0.03);
+
+                Documento.line(4.5, 16.9, 7.5, 16.9);
+                Documento.line(16, 16.9, 19.5, 16.9);
+
+                Documento.text(4.5, 17.5, 'Recibi Conforme');
+                Documento.text(4.5, 18, 'Responsable del instrumento');
+
+                Documento.text(16, 17.5, 'Entregue conforme');
+                Documento.text(16, 18, Resultado[0].Empleado_Nombre);
+
+
+           
+                window.open(Documento.output('bloburl'), '_blank');
+            },
+            error: function (Mensaje)
+            {
+                swal
+                    ({
+                        title: "Error generando documento de la remisión",
+                        text: "No se pudo conectar con el servidor.",
+                        type: "error",
+                    });
+            }
+
+        });
+}

@@ -287,7 +287,6 @@ C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\bin\es\Syst
 C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.WebPages.resources.dll
 C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csprojResolveAssemblyReference.cache
 C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csproj.CoreCompileInputs.cache
 C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.csproj.CopyComplete
 C:\Users\river\Documents\GitHub\WEB-APP-MELB\WEBAPP_MELB\WEBAPP_MELB\obj\Debug\WEBAPP_MELB.dll

@@ -14,6 +14,14 @@ p {
     color: #999;
 }
 
+.footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    text-align: left !important;
+    padding: 20px 30px;
+    
+    font-size: 13px;
+}
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
@@ -299,15 +307,15 @@ a.article, a.article:hover {
 }
 
 
-#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas{
+#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas, #Profesor_Detalle{
     margin-left: 1px;
     margin-right: 1px;
 }
 
-.RowEstudiante
+.RowEstudiante, .RowProfesor
 {
-    margin-left:1px;
-    margin-right:1px;
+    margin-left: 1px !important;
+    margin-right: 1px  !important;
 }
 
 .panel-heading > i, .panel-heading2 > i, .panel-heading3 > i, .panel-heading4 > i, .panel-heading5 > i
@@ -347,9 +355,10 @@ th,td
     text-align: center !important; 
 }
 
-#Estuches, #Instrumentos, #Proveedores, #Remisiones, #Accesorios, #Estuches, #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Remision_Detalle, #Aulas, #ContenedorFechaInicio, #ContenedorFechaFin{
+#Estuches, #Instrumentos, #Proveedores, #Remisiones, #Accesorios, #Estuches, #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Remision_Detalle, #Aulas, #ContenedorFechaInicio, #ContenedorFechaFin, #Profesor_Detalle, #Cursos_Profesor, #Horario_DetalleProfesor, #Curso_DetalleProfesor{
     display: none;
 }
+
 table.dataTable tbody td 
 {
   vertical-align: middle;
@@ -566,7 +575,7 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle 
+#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle,#Reporte
 {
     display: none;
 }

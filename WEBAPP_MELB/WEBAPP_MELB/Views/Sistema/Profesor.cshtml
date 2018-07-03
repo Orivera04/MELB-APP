@@ -38,8 +38,9 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="active">
                 <div class="sidebar-header">
-                    <h3>Musica en los barrios</h3>
-                    <strong>MelB</strong>
+                    <a data-toggle="tooltip" data-placement="bottom" data-original-title="Regresar al Login" href="@Url.Action("MatarSesion","Sistema")">
+                        <img style="width:75px;" src="~/Content/assets/Logo.png" />
+                    </a>
                 </div>
                 <ul class="list-unstyled components">
                     <li>
@@ -395,11 +396,11 @@
                         <div class="panel panel-color panel-danger" ">
                             <div class="panel-heading Accesorios">
                                 <i class="icon ion-university" aria-hidden="true"></i>
-                                <h3 class="TextoHeader">Alumnos Inscritos</h3>                                
+                                <h3 class="TextoHeader">Alumnos Inscritos</h3>
                             </div>
 
                             <div class="panel-body ExtraPadding">
-                                <div class="row" >
+                                <div class="row">
                                     <table id="Notas_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                                         <thead>
                                             <tr>
@@ -491,7 +492,9 @@
                         </div>
                     </div>
                 </div>
-
+                <footer class="footer text-right">
+                    © 2018 MelB Versiòn Beta realizada por Oscar Rivera, Reynaldo Saul y Yader Castillo.
+                </footer>
             </div>
         </div>
 

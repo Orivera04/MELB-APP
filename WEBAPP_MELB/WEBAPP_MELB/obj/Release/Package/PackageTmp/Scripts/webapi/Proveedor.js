@@ -1,40 +1,45 @@
 ﻿var ID_Proveedor = [];
 /* Funciones de la API*/
 
-        function Cargar_Proveedores(Bandera_Filtro) 
+        function Cargar_Proveedores(Bandera_Filtro,Reporte) 
         {
-            Tabla_Proveedor.clear().draw();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Proveedor',
                 type: 'GET',
                 success: function (Resultado) 
                 {
-                  if(Resultado.Codigo == null)
-                  {           
-                        ID_Proveedor = [];           
-                        Resultado = JSON.parse(Resultado);
-                        $('#Proveedor_Instrumento').html('');
-                        for (i = 0; i < Resultado.length; i++) 
-                        {    
-                            ID_Proveedor.push({ID:Resultado[i].ID_Proveedor,Nombre:Resultado[i].Nombre});                                                                                                          
-                            var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "'+Resultado[i].Imagen+'"></img>';
-                            Tabla_Proveedor.row.add
-                                ([
-                                    Resultado[i].ID_Proveedor,
-                                    Imagen,
-                                    Resultado[i].Nombre,
-                                    '<a href="tel:' + Resultado[i].Telefono_1 + '">' + Resultado[i].Telefono_1 +'</a>',
-                                    '<a href="mailto:' + Resultado[i].Correo + '">' + Resultado[i].Correo +'</a>',
-                                    '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                    '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor('+Resultado[i].ID_Proveedor+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                                ]).draw( false );
-                            $('#Proveedor_Instrumento').append('<option data-subtext="'+Resultado[i].Nombre+'">#'+Resultado[i].ID_Proveedor+'</option>');                                                   
+                    if (Reporte == null) {
+                        if (Resultado.Codigo == null) {
+                            $('#Reporte').hide();
+                            Tabla_Proveedor.clear().draw();
+                            ID_Proveedor = [];
+                            Resultado = JSON.parse(Resultado);
+                            $('#Proveedor_Instrumento').html('');
+                            for (i = 0; i < Resultado.length; i++) {
+                                ID_Proveedor.push({ ID: Resultado[i].ID_Proveedor, Nombre: Resultado[i].Nombre });
+                                var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "' + Resultado[i].Imagen + '"></img>';
+                                Tabla_Proveedor.row.add
+                                    ([
+                                        Resultado[i].ID_Proveedor,
+                                        Imagen,
+                                        Resultado[i].Nombre,
+                                        '<a href="tel:' + Resultado[i].Telefono_1 + '">' + Resultado[i].Telefono_1 + '</a>',
+                                        '<a href="mailto:' + Resultado[i].Correo + '">' + Resultado[i].Correo + '</a>',
+                                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Proveedor(' + Resultado[i].ID_Proveedor + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                        '<button type="button" class="btn btn-danger" onclick ="Eliminar_Proveedor(' + Resultado[i].ID_Proveedor + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                    ]).draw(false);
+                                $('#Proveedor_Instrumento').append('<option data-subtext="' + Resultado[i].Nombre + '">#' + Resultado[i].ID_Proveedor + '</option>');
+                            }
+                            $('#CantidadProveedoresDA').text(Tabla_Proveedor.column(0).data().length);
+                            $('.selectpicker').selectpicker('refresh');
+                            if (Reporte == null) { Cargar_Remisiones(); }
                         }
-                      $('#CantidadProveedoresDA').text(Tabla_Proveedor.column(0).data().length);                              
-                      $('.selectpicker').selectpicker('refresh');                                            
-                      Cargar_Remisiones();                                                           
-                  }                    
+                    }
+                    else
+                    {
+                        GeneralReporteProveedor(JSON.parse(Resultado));
+                    }
                 },
                 error: function (Error) 
                 {
@@ -67,7 +72,17 @@
                           $('#Telefono1_Proveedor').val(Resultado.Telefono_1);
                           $('#Telefono2_Proveedor').val(Resultado.Telefono_2);
                           $('#Nombre_Proveedor').val(Resultado.Nombre);
-                          $('#Imagen_Proveedor').attr("src",Resultado.Imagen);
+                          $('#Imagen_Proveedor').attr("src", Resultado.Imagen);
+                          $('#Tipo_Contacto').val(Resultado.Tipo_Proveedor);
+                          $('#Contacto_Proveedor').val(Resultado.Contacto);
+                          $('#Identificacion_Proveedor').val(Resultado.Identificacion);
+
+                          if (Resultado.Tipo_Proveedor == "Informal") {
+                              $('#LB_Tipo_P').text('Cedula');
+                          }
+                          else {
+                              $('#LB_Tipo_P').text('RUC');
+                          }
                           Base64Imagen(Resultado.Imagen) 
                       }
                       else
@@ -88,8 +103,8 @@
         }
 
         function Insertar_Actualizar_Proveedor(Comando)
-        {     
-            if($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "" && $('#Direccion_Proveedor').val() != "")
+        {
+            if ($('#Telefono1_Proveedor').val() != "" && $('#Nombre_Proveedor').val() != "" && $('#Correo_Proveedor').val() != "" && $('#Direccion_Proveedor').val() != "" && $('#Contacto_Proveedor').val() != "" && $('#Identificacion_Proveedor').val() != "")
             {
               if($('#Telefono1_Proveedor').val().length == 8 && $('#Telefono2_Proveedor').val().length == 8 )
               {
@@ -212,10 +227,10 @@
             $('#Switch_Editar_Proveedor').prop('checked',false);
             Habilitar_Deshabilitar_Proveedor(false);        
             Operacion = 'Actualizar';                
-            $('#Proveedores').hide(300);
-            $('#Proveedor_Detalle').show(400);
-            $('#ADD').hide('drop',400);
-            $('#Busqueda_Form').show(400);
+            $('#Proveedores').hide();
+            $('#Proveedor_Detalle').show(200);
+            $('#ADD').hide();
+            $('#Busqueda_Form').show();
             $('#Busqueda_Form').css('display','inline-flex');
             $('#Contenedor_Panel').show();
             $('#Header_Proveedor_Texto').text('Descripción del proveedor');
@@ -236,6 +251,9 @@
                 $('#Correo_Proveedor').removeAttr('disabled');
                 $('#Cambiar_Imagen_Proveedor').removeAttr('disabled');
                 $('#Actualizar_Proveedor').removeAttr('disabled');
+                $('#Tipo_Contacto').removeAttr('disabled');
+                $('#Contacto_Proveedor').removeAttr('disabled');
+                $('#Identificacion_Proveedor').removeAttr('disabled');
                 $('.selectpicker').selectpicker('refresh');
             }
             else
@@ -247,7 +265,10 @@
                 $('#Telefono2_Proveedor').prop('disabled','true');
                 $('#Correo_Proveedor').prop('disabled','true');
                 $('#Cambiar_Imagen_Proveedor').prop('disabled','true');
-                $('#Actualizar_Proveedor').prop('disabled','true');
+                $('#Actualizar_Proveedor').prop('disabled', 'true');
+                $('#Tipo_Contacto').prop('disabled', 'true');
+                $('#Contacto_Proveedor').prop('disabled', 'true');
+                $('#Identificacion_Proveedor').prop('disabled', 'true');
                 $('.selectpicker').selectpicker('refresh');
             }
         }
@@ -260,6 +281,8 @@
             $('#Telefono1_Proveedor').val('');
             $('#Telefono2_Proveedor').val('');
             $('#Correo_Proveedor').val('');
+            $('#Contacto_Proveedor').val('');
+            $('#Identificacion_Proveedor').val('');
         }
 
         var Imagen_Proveedor = function(Archivo)
@@ -291,7 +314,7 @@
                 data : {image : ImagenBase64},
                 success: function (Resultado)
                 {
-                    var Proveedor_BBDD = {ID_Proveedor: $('#ID_Proveedor').val(), Nombre: $('#Nombre_Proveedor').val(), Telefono_1: $('#Telefono1_Proveedor').val(), Telefono_2: $('#Telefono2_Proveedor').val(), Correo: $('#Correo_Proveedor').val(), Direccion: $('#Direccion_Proveedor').val(),Imagen: Resultado.data.link};
+                    var Proveedor_BBDD = { ID_Proveedor: $('#ID_Proveedor').val(), Nombre: $('#Nombre_Proveedor').val(), Telefono_1: $('#Telefono1_Proveedor').val(), Telefono_2: $('#Telefono2_Proveedor').val(), Correo: $('#Correo_Proveedor').val(), Direccion: $('#Direccion_Proveedor').val(), Imagen: Resultado.data.link, Tipo_Proveedor: $('#Tipo_Contacto').val(), Contacto: $('#Contacto_Proveedor').val(), Identificacion: $('#Identificacion_Proveedor').val()};
 
                     if(Comando == 'Nuevo')
                     {                                                
@@ -375,3 +398,74 @@
       var RegXP = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
       return RegXP.test( Correo );
    }
+
+    function GeneralReporteProveedor(Lista) 
+    {
+        var Documento = new jsPDF("l", 'cm', "a4");
+        var Columnas =
+            [
+                { title: "ID Proveedor", dataKey: "ID_Proveedor" },
+                { title: "Nombre", dataKey: "Nombre" },
+                { title: "Telefono #1", dataKey: "Telefono_1" },
+                { title: "Telefono #2", dataKey: "Telefono_2" },
+                { title: "Correo", dataKey: "Correo" },
+                { title: "Dirección", dataKey: "Direccion" }             
+            ];
+
+
+        Documento.autoTable(Columnas, Lista,
+            {
+                theme: 'grid',
+                bodyStyles: {
+                    lineColor: [221, 221, 221]
+                },
+                headerStyles: {
+                    lineWidth: 0,
+                    fillColor: [22, 12, 40],
+                    textColor: [255, 255, 255],
+                    cellPadding: 0.3,
+                },
+                styles: {
+                    overflow: 'linebreak',
+                    lineWidth: 0.03,
+                    halign: 'center',
+                    cellPadding: 0.07,
+                    fillcolor: [199, 0, 57],
+                    cellPadding: 1
+                },
+                margin: {
+                    top: 5,
+                    left: 1
+                },
+                addPageContent: function (Event) {
+                    /* Encabezado parte izquierda*/
+                    Documento.setFont("helvetica");
+                    Documento.setFontType("bold");
+                    Documento.setFontSize(11);
+                    Documento.text(1, 0.9, 'Música en los barrios - MeLB');
+
+                    Documento.setFontType("normal");
+                    Documento.text(1, 1.5, 'Linda vista norte, de la Estación II de Policía 1 1/2c. abajo,');
+                    Documento.text(1, 2, 'contiguo al parque.  Managua – Nicaragua.')
+                    Documento.text(1, 2.5, 'Tel. 2254-6043');
+                    Documento.text(1, 3, 'Correo electrónico: melbnicaragua@gmail.com');
+
+                    /* Encabezado parte derecha */
+
+                    Documento.addImage(LogoIMG64CasaTresMundos, 'png', 24.5, 0.2, 3, 3);
+                    Documento.addImage(LogoIMG64Melb, 'jpg', 21.6, 0.25, 3, 3);
+
+
+                    /* Cuerpo */
+
+                    Documento.setFontType("bold");
+                    Documento.text(1, 4.2, 'Tipo de documento : Reporte');
+                    Documento.text(10 + 1, 4.2, 'Tipo de reporte: Proveedores');
+
+                    /* Footer */
+                    Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
+                    Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
+                }
+            });
+        window.open(Documento.output('bloburl'), '_blank');
+    }

@@ -50,7 +50,7 @@ namespace WEBAPP_MELB.Controllers
         {
             if (Session["EstaLogeado"] != null)
             {
-                if (Session["Permiso"].ToString() == "5")
+                if (Session["Permiso"].ToString() == "3")
                 {
                     return View();
                 }
@@ -63,6 +63,11 @@ namespace WEBAPP_MELB.Controllers
             {
                 return RedirectToAction("Login", "Autenticacion", new { Estado = -2 });
             }
+        }
+
+        public ActionResult MatarSesion()
+        {
+            return RedirectToAction("Login", "Autenticacion", new { Estado = 1 });
         }
     }
 }

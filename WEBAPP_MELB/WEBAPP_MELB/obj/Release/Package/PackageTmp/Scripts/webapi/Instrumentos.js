@@ -1,9 +1,12 @@
 var ImagenBase64;
 var ID_Instrumento = [];
+var LogoIMG64Melb;
+var LogoIMG64CasaTresMundos;
+var BanderaBorrar = true;
 /* Funciones de la API*/
-        function Cargar_Instrumentos() 
+        function Cargar_Instrumentos(Reporte) 
         {
-            Tabla_Instrumento.clear().draw();         
+            if (Reporte == null) { Tabla_Instrumento.clear().draw(); }        
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos',
@@ -12,30 +15,35 @@ var ID_Instrumento = [];
                 {
                   if(Resultado.Codigo == null)
                   {
-                      ID_Instrumento = [];
-                      Resultado = JSON.parse(Resultado);
-                      for (i = 0; i < Resultado.length; i++) 
-                      {        
-                                ID_Instrumento.push({ID:Resultado[i].ID_Instrumento,Nombre:Resultado[i].Nombre});                                                        
-                                var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "' + Resultado[i].Imagen + '"></img>'
-                                if (Resultado[i].Estado != 'Extraviado') { var Disponibilidad = (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>' }
-                                else { var Disponibilidad = '<span class="label label-danger">No Disponible</span>'}
-                                
-                                Tabla_Instrumento.row.add
-                                ([
-                                        Resultado[i].ID_Instrumento,
-                                        Imagen,
-                                        Resultado[i].Nombre,
-                                        Resultado[i].Marca,
-                                        Disponibilidad,                            
-                                        Resultado[i].Tipo_Ubicacion,
-                                        '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
-                                        '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento('+Resultado[i].ID_Instrumento+')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
-                                ] ).draw( false );
+                      if (Reporte == null) {
+                          ID_Instrumento = [];
+                          Resultado = JSON.parse(Resultado);
+                          for (i = 0; i < Resultado.length; i++) {
+                              ID_Instrumento.push({ ID: Resultado[i].ID_Instrumento, Nombre: Resultado[i].Nombre });
+                              var Imagen = '<img style = "border-radius:3px;" width = "65" height = "65" src= "' + Resultado[i].Imagen + '"></img>'
+                              if (Resultado[i].Estado != 'Extraviado') { var Disponibilidad = (Resultado[i].Disponible == 'Disponible') ? '<span class="label label-success">Disponible</span>' : '<span class="label label-purple">En Prestamo</span>' }
+                              else { var Disponibilidad = '<span class="label label-danger">No Disponible</span>' }
+
+                              Tabla_Instrumento.row.add
+                                  ([
+                                      Resultado[i].ID_Instrumento,
+                                      Imagen,
+                                      Resultado[i].Nombre,
+                                      Resultado[i].Marca,
+                                      Disponibilidad,
+                                      Resultado[i].Tipo_Ubicacion,
+                                      '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Instrumento(' + Resultado[i].ID_Instrumento + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
+                                      '<button type="button" class="btn btn-danger" onclick ="Eliminar_Instrumento(' + Resultado[i].ID_Instrumento + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
+                                  ]).draw(false);
+                          }
+                          $('#CantidadInstrumentosDA').text(Tabla_Instrumento.column(0).data().length);
                       }
-                      $('#CantidadInstrumentosDA').text(Tabla_Instrumento.column(0).data().length);                              
+                      else
+                      {
+                          GeneralReporteInstrumento(JSON.parse(Resultado));
+                      }
                   }
-                  Cargar_Estuches();
+                   if (Reporte == null) { Cargar_Estuches(); }
                   ID_Instrumento.forEach(function(Elemento) 
                   {
                       $('#ID_Filtro_Remisiones').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
@@ -55,7 +63,9 @@ var ID_Instrumento = [];
 
 
         function Cargar_Instrumentos_Por_ID(ID) 
-        {        
+        {
+            BanderaBorrar = true;
+            $('#CodigoBarra').show();
             $.ajax
             ({
                 url: 'http://melbws.azurewebsites.net/api/Instrumentos/'+ID,
@@ -65,7 +75,8 @@ var ID_Instrumento = [];
                       Resultado = JSON.parse(Resultado);                                                        
                       if(Resultado.Codigo == null)
                       {       
-                          Resultado = Resultado[0];                  
+                          Resultado = Resultado[0];      
+                          $('#Reporte').hide();
                           $('#ID_Instrumento').val(Resultado.ID_Instrumento); 
                           $('#Tipo_Instrumento').selectpicker('val', Resultado.Nombre);
                           $('#Color_Instrumento').selectpicker('val', Resultado.Color);
@@ -214,6 +225,24 @@ var ID_Instrumento = [];
             });            
         }
 
+function HTMLImagen(Fuente)
+{
+    return "<html><head><script>function step1(){\n" +
+        "setTimeout('step2()', 10);}\n" +
+        "function step2(){window.print();window.close()}\n" +
+        "</scri" + "pt></head><body onload='step1()'>\n" +
+        "<img style=\"margin-top:150px\" src='" + Fuente + "' /></body></html>";
+}
+
+function ImprimirImagen(Fuente)
+{
+    Pagelink = "about:blank";
+    var WI = window.open(Pagelink, "_new");
+    WI.document.open();
+    WI.document.write(HTMLImagen(Fuente));
+    WI.document.close();
+}
+
         function Filtrar_Instrumentos(Tipo_Filtro, ID_Filtro)
         {          
            $.ajax
@@ -261,10 +290,10 @@ var ID_Instrumento = [];
             $('#Switch_Editar').prop('checked',false);
             Habilitar_Deshabilitar_Instrumentos(false);        
             Operacion = 'Actualizar';                
-            $('#Instrumentos').hide(300);
-            $('#Instrumento_Detalle').show(400);
-            $('#ADD').hide('drop',400);
-            $('#Busqueda_Form').show(400);
+            $('#Instrumentos').hide();
+            $('#Instrumento_Detalle').show(200);
+            $('#ADD').hide();
+            $('#Busqueda_Form').show();
             $('#Busqueda_Form').css('display','inline-flex');
             $('#Contenedor_Panel').show();
             $('#Header_Instrumento_Texto').text('Descripción del instrumento');
@@ -318,17 +347,19 @@ var ID_Instrumento = [];
 
         function Reiniciar_Controles_Instrumento()
         {
-            $('#ID_Instrumento').val(1);
-            $("#Tipo_Instrumento").selectpicker('val', 'Guitarra');
-            $('#Color_Instrumento').selectpicker('val', 'Rojo');
-            $('#Marca_Instrumento').val('');
-            $('#Proveedor_Instrumento').selectpicker('val','Bansbach NIC');            
-            $('#Material_Instrumento').selectpicker('val','Madera');
-            $('#Descripcion_Inst').val('');
-            $('#Estado_Instrumento').selectpicker('val','Excelente');
-            $('#Ubicacion_Instrumento').selectpicker('val','Bodega');
-            $('#Estante_Instrumento').val(1);
-            $('#Gaveta_Instrumento').val(1);
+            if (BanderaBorrar == true) {
+                $('#ID_Instrumento').val(1);
+                $("#Tipo_Instrumento").selectpicker('val', 'Guitarra');
+                $('#Color_Instrumento').selectpicker('val', 'Rojo');
+                $('#Marca_Instrumento').val('');
+                $('#Proveedor_Instrumento').selectpicker('val', 'Bansbach NIC');
+                $('#Material_Instrumento').selectpicker('val', 'Madera');
+                $('#Descripcion_Inst').val('');
+                $('#Estado_Instrumento').selectpicker('val', 'Excelente');
+                $('#Ubicacion_Instrumento').selectpicker('val', 'Bodega');
+                $('#Estante_Instrumento').val(1);
+                $('#Gaveta_Instrumento').val(1);
+            }
         }
 
 
@@ -389,11 +420,13 @@ var ID_Instrumento = [];
                                   {
                                      Resultado = JSON.parse(Resultado);
                                      if(Resultado.Codigo == 5)
-                                     {                                                                            
+                                     {                   
+                                         $('#CodigoBarra').click();
+
                                          swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
-                                         $('#ADD').show('drop',400);
-                                         $('#Instrumento_Detalle').hide(500);
-                                         $('#Instrumentos').show(400);
+                                         $('#ADD').show();
+                                         $('#Instrumento_Detalle').hide();
+                                         $('#Instrumentos').show(200);
                                          Cargar_Instrumentos();
                                      }
                                      else
@@ -404,13 +437,15 @@ var ID_Instrumento = [];
                                               Cadena_Errores = (I+1) +" - "+ Resultado.Errores[I].Mensaje;
                                          }
                                          swal(Resultado.Mensaje_Cabecera,Cadena_Errores, "warning");                                        
-                                     }
+                                      }
+
                                   },
                                   error: function(Respuesta)
                                   {
                                      swal("Error", "Ocurrio un error al insertar el instrumento", "error");
                                   },
                             });
+
                         }
                         else
                         {
@@ -424,9 +459,9 @@ var ID_Instrumento = [];
                                      Resultado = JSON.parse(Resultado);
                                      swal(Resultado.Mensaje_Cabecera,Resultado.Mensaje_Usuario, "success");
                                      Cargar_Instrumentos();
-                                     $('#ADD').show('drop',400);
-                                     $('#Instrumento_Detalle').hide(500);
-                                     $('#Instrumentos').show(400);
+                                     $('#ADD').show();
+                                     $('#Instrumento_Detalle').hide();
+                                     $('#Instrumentos').show(200);
                                   },
                                   error: function(xhr, status, error)
                                   {
@@ -591,6 +626,110 @@ var ID_Instrumento = [];
                    }
                 }
             });            
-        }
+}
 
-        
+
+function GeneralReporteInstrumento(Lista)
+{
+    var Documento = new jsPDF("l", 'cm', "a4");
+    var Columnas =
+        [
+            { title: "ID Instrumento", dataKey: "ID_Instrumento" },
+            { title: "Tipo", dataKey: "Nombre" },
+            { title: "Material", dataKey: "Material"},
+            { title: "Descripcion", dataKey:"Descripcion"},
+            { title: "Color", dataKey: "Color" },
+            { title: "Marca", dataKey: "Marca" },
+            { title: "Estado", dataKey: "Estado" },
+            { title: "Proveedor", dataKey: "Proveedor" },
+            { title: "Ubicacion", dataKey:"Tipo_Ubicacion"},
+            { title: "Disponible", dataKey: "Disponible" }
+        ];
+
+
+    Documento.autoTable(Columnas, Lista,
+        {
+            theme: 'grid',
+            bodyStyles: {
+                lineColor: [221, 221, 221]
+            },
+            headerStyles: {
+                lineWidth: 0,
+                fillColor: [22, 12, 40],
+                textColor: [255, 255, 255],
+                cellPadding: 0.3,
+            },
+            styles: {
+                overflow: 'linebreak',
+                lineWidth: 0.03,
+                halign: 'center',
+                cellPadding: 0.07,
+                fillcolor: [199, 0, 57],
+                cellPadding: 1
+            },
+            margin: {
+                top: 5,
+                left: 1
+            },
+            addPageContent: function (Event) {
+                /* Encabezado parte izquierda*/
+                Documento.setFont("helvetica");
+                Documento.setFontType("bold");
+                Documento.setFontSize(11);
+                Documento.text(1, 0.9, 'Música en los barrios - MeLB');
+
+                Documento.setFontType("normal");
+                Documento.text(1, 1.5, 'Linda vista norte, de la Estación II de Policía 1 1/2c. abajo,');
+                Documento.text(1, 2, 'contiguo al parque.  Managua – Nicaragua.')
+                Documento.text(1, 2.5, 'Tel. 2254-6043');
+                Documento.text(1, 3, 'Correo electrónico: melbnicaragua@gmail.com');
+
+                /* Encabezado parte derecha */
+
+                Documento.addImage(LogoIMG64CasaTresMundos, 'png', 24.5, 0.2, 3, 3);
+                Documento.addImage(LogoIMG64Melb, 'jpg', 21.6, 0.25, 3, 3);
+
+
+                /* Cuerpo */
+
+                Documento.setFontType("bold");
+                Documento.text(1, 4.2, 'Tipo de documento : Reporte');
+                Documento.text(10 + 1, 4.2, 'Tipo de reporte: Instrumentos');
+
+                /* Footer */
+                Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
+                Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);               
+            }
+        });
+    window.open(Documento.output('bloburl'), '_blank');
+}
+
+function CargarImagenes() {
+
+    var LogoMelb = new Image(1, 1);
+    var LogoCasa = new Image(1, 1);
+
+    LogoMelb.src = '/Content/assets/LogoMelb.png';
+    LogoCasa.src = '/Content/assets/LogoCasa3Mundos.jpg';
+
+    LogoMelb.onload = function () {
+        var C1 = document.createElement('canvas');
+        C1.height = LogoMelb.naturalHeight;
+        C1.width = LogoMelb.naturalWidth;
+        var Contexto = C1.getContext('2d');
+
+        Contexto.drawImage(LogoMelb, 0, 0, C1.width, C1.height, 0, 0, C1.width, C1.height);
+        LogoIMG64Melb = C1.toDataURL();
+    };
+
+    LogoCasa.onload = function () {
+        var C2 = document.createElement('canvas');
+        C2.height = LogoCasa.naturalHeight;
+        C2.width = LogoCasa.naturalWidth;
+        var Contexto = C2.getContext('2d');
+
+        Contexto.drawImage(LogoCasa, 0, 0, C2.width, C2.height, 0, 0, C2.width, C2.height);
+        LogoIMG64CasaTresMundos = C2.toDataURL();
+    }
+
+}

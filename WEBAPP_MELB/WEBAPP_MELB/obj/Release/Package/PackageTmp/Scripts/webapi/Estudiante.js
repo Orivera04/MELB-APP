@@ -73,37 +73,29 @@ function ActualizarInfoEstudiante()
                     }
                 },
                 error: function (Respuesta) {
-                    swal("Error", "Ocurrio un error al insertar el instrumento", "error");
+                    swal("Error", "Ocurrio un error al actualizar los datos", "error");
                 },
             });
     }
     else
     {
         swal("Aviso", "La fecha de nacimiento debe ser menor que el dia de hoy", "warning");
-
     }
 }
+
 // Funciones de soporte //
 
 function ControlesLecturaEscritura(Cond) {
     if (Cond == true) {
-        $('#Correo_Estudiante').removeAttr("disabled");
-        $('#EstudianteCedula').removeAttr("disabled");
         $('#EstudianteTelefono1').removeAttr("disabled");
         $('#EstudianteTelefono2').removeAttr("disabled");
         $('#EstudianteDireccion').removeAttr("disabled");
-        $('#SexoEstudiante').removeAttr("disabled");
-        $('#FechaNacimiento_Estudiante').removeAttr("disabled");
         $('.selectpicker').selectpicker('refresh');
     }
     else {
-        $('#Correo_Estudiante').prop('disabled', 'true');
-        $('#EstudianteCedula').prop('disabled', 'true');
         $('#EstudianteTelefono1').prop('disabled', 'true');
         $('#EstudianteTelefono2').prop('disabled', 'true');
         $('#EstudianteDireccion').prop('disabled', 'true');
-        $('#SexoEstudiante').prop('disabled', 'true');
-        $('#FechaNacimiento_Estudiante').prop('disabled', 'true');
         $('.selectpicker').selectpicker('refresh');
 
     }
