@@ -142,7 +142,7 @@ function Filtrar_Empleados(Tipo_Filtro, ID_Empleado) {
                     $('#CantidadAlumnos').text(Contando);
 
                     //Tarjeta Cantidad Cursos Impartidos
-                    $('#CantidadCursos').text(Resultado.length);
+                    $('#CantidadCursos').text($('#CursosProfesor_T tr').length);
 
                     var ContextoCursos = document.getElementById("AlumnosCursoGrafica").getContext('2d');
                     Chart.defaults.global.legend.display = false;
