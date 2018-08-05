@@ -245,7 +245,7 @@
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
                                                 <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
-                                                <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                                <select data-live-search="true" id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -344,7 +344,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Proveedor</label>
+                                                            <label class="control-label"> ID Proveedor</label>
                                                             <div class="input-group m-t-10">
                                                                 <select data-live-search="true" name="Proveedor_Instrumento" id="Proveedor_Instrumento" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
@@ -382,7 +382,7 @@
                                                         </div>
 
                                                         <div class="form-group" id="Campo_Aula">
-                                                            <label class="control-label">Aula</label>
+                                                            <label class="control-label">ID Aula</label>
                                                             <div class="input-group m-t-10">
                                                                 <select id="Aula_Clase" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
@@ -426,7 +426,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Estuche</label>
+                                                            <label class="control-label">ID Estuche</label>
                                                             <div class="input-group m-t-10" disabled>
                                                                 <select data-live-search="true" id="Estuche_Instrumento" name="Estuche_Instrumento" title="Selecciona un estuche" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
@@ -702,7 +702,7 @@
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
                                                 <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
-                                                <select id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                                <select data-live-search="true" id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -710,7 +710,7 @@
                                     <div class="col-md-3" align="center" id="ContenedorFechaInicio">
                                         <div class="FechaInput">
                                             <div class="input-group m-t-10">
-                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%">
+                                                <input data-toggle="tooltip" data-placement="bottom" data-original-title="Fecha de inicio"  data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
                                                 </span>
@@ -720,7 +720,7 @@
                                     <div class="col-md-3" align="center" id="ContenedorFechaFin">
                                         <div class="FechaInput">
                                             <div class="input-group m-t-10">
-                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%">
+                                                <input data-large-mode="true" data-toggle="tooltip" data-placement="bottom" data-original-title="Fecha de Fin" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
                                                 </span>
@@ -749,6 +749,8 @@
                                                 <th>Numero de remisión</th>
                                                 <th>Asignada A</th>
                                                 <th>Estado</th>
+                                                <th>Fecha De Elaboración</th>
+                                                <th>Fecha De Culminación</th>
                                                 <th>Detalle</th>
                                                 <th>Eliminar</th>
                                             </tr>
@@ -820,7 +822,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Fecha de elaboración</label>
                                                             <div class="input-group m-t-10">
-                                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio" type="text" class="form-control" disabled>
+                                                                <input data-large-mode="true" data-format="d/m/Y" data-lang="es" id="Remision_Fecha_Inicio" type="text" class="form-control" disabled>
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>

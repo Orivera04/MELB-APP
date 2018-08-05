@@ -329,6 +329,7 @@ function Inicializacion_Eventos()
             $('#Reporte').hide();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '25px');
+            $('#Busqueda_Form').hide();
         });
        
 
@@ -352,7 +353,7 @@ function Inicializacion_Eventos()
             $('#Reporte').show();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '0px');
-
+            $('#Busqueda_Form').hide();
         });
 
         $('#proveedoressubmenu').click(function (event) {
@@ -374,7 +375,7 @@ function Inicializacion_Eventos()
             $('#Reporte').show();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '0px');
-
+            $('#Busqueda_Form').hide();
         });
 
         $('#remisionessubmenu').click(function (event) {
@@ -396,7 +397,7 @@ function Inicializacion_Eventos()
             $('#Reporte').show();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '0px');
-
+            $('#Busqueda_Form').hide();
         });
 
         $('#accesoriossubmenu').click(function (event) {
@@ -418,7 +419,7 @@ function Inicializacion_Eventos()
             $('#Reporte').show();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '0px');
-
+            $('#Busqueda_Form').hide();
         });
 
         $('#estuchessubmenu').click(function (event) {
@@ -440,7 +441,7 @@ function Inicializacion_Eventos()
             $('#Reporte').show();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '0px');
-
+            $('#Busqueda_Form').hide();
         });
 
         $('#aulasubmenu').click(function (event) {
@@ -462,7 +463,7 @@ function Inicializacion_Eventos()
             $('#Reporte').hide();
             $('#CodigoBarra').hide();
             $('#FooterCopyright').css('margin-top', '0px');
-
+            $('#Busqueda_Form').hide();
         });
 
     /* Eventos : uso en formularios de forma global */
@@ -595,7 +596,9 @@ function Inicializacion_Eventos()
                 $('#Reporte').hide();
                 $('#FooterCopyright').css('margin-top', '50px');
 
-                Borrar_Remision_Bandera = false;
+                Borrar_Remision_Bandera = false;                
+
+                
             }
             else if (Formulario_Activo == 'Aulas')
             {
@@ -820,8 +823,19 @@ function Inicializacion_Eventos()
             }
             else
             {
-                Fecha_Salida = Cambio_Formato_Fecha(3);
-                Filtrar_Remisiones($('#Filtro_Remision').val(),0, Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
+                if (new Date($('#Remision_Fecha_Inicio_Filtro').val()) <= new Date($('#Remision_Fecha_Terminal_Filtro').val())) {
+                    Fecha_Salida = Cambio_Formato_Fecha(3);
+                    Filtrar_Remisiones($('#Filtro_Remision').val(), 0, Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
+                }
+                else
+                {
+                    swal
+                        ({
+                            title: "Fechas incorrectas",
+                            text: "La fecha final no puede ser menor que la inicial.",
+                            type: "warning",
+                        });
+                }
             }
         });
 

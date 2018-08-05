@@ -40,6 +40,8 @@ var Borrar_Remision_Bandera = true;
                                             Resultado[i].ID_Remision,
                                             Resultado[i].Nombre_Estudiante,
                                             Estado,
+                                            Resultado[i].Fecha_Inicio_Formateada,
+                                            Resultado[i].Fecha_Fin_Formateada,
                                             '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                             '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                                         ]).draw(false);
@@ -105,7 +107,7 @@ var Borrar_Remision_Bandera = true;
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
-                url: 'http://melbws.azurewebsites.net/api/Remision/'+ID,
+                url: 'http://localhost:53603/api/Remision/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
                 {
@@ -325,6 +327,8 @@ var Borrar_Remision_Bandera = true;
                                         Resultado[i].ID_Remision,
                                         Resultado[i].Nombre_Estudiante,
                                         Estado,
+                                        Resultado[i].Fecha_Inicio_Formateada,
+                                        Resultado[i].Fecha_Fin_Formateada,
                                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                                     ]).draw(false);
@@ -343,7 +347,7 @@ var Borrar_Remision_Bandera = true;
             else {
                 $.ajax
                     ({          
-                        url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
+                        url: 'http://localhost:53603/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {
                             Tabla_Remision.clear().draw();
@@ -631,7 +635,7 @@ var Borrar_Remision_Bandera = true;
 
                 $.ajax
                 ({  
-                      url: 'http://melbws.azurewebsites.net/api/Remision',
+                      url: 'http://localhost:53603/api/Remision',
                       type: 'POST',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -679,7 +683,7 @@ var Borrar_Remision_Bandera = true;
                 swal.showLoading();  
                 $.ajax
                 ({
-                      url: 'http://melbws.azurewebsites.net/api/Remision',
+                        url: 'http://localhost:53603/api/Remision',
                       type: 'PUT',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -914,7 +918,8 @@ var Borrar_Remision_Bandera = true;
           var ContextoRemision = document.getElementById("RemisionesGrafica").getContext('2d');
           Chart.defaults.global.legend.display = false;
 
-          GraficaRemision = new Chart(ContextoRemision, 
+          if (GraficaRemision != null) { GraficaRemision.destroy(); }
+          var GraficaRemision = new Chart(ContextoRemision, 
             {
                 type: 'bar',
                 data: 

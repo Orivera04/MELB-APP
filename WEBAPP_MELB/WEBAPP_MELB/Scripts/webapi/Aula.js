@@ -1,7 +1,7 @@
 var ID_Aula = [];
 var Aula_Seleccionada = 0;
 
- function Cargar_Aulas()  
+ function Cargar_Aulas(BanderaGrafica)  
  {        
      Tabla_Aula.clear().draw();
         $.ajax({
@@ -35,10 +35,13 @@ var Aula_Seleccionada = 0;
                 ID_Proveedor.forEach(function(Elemento) 
                 {
                     $('#ID_Filtro_Instrumento').append('<option data-subtext="'+ Elemento.Nombre+'">#'+Elemento.ID+'</option>');                                                   
-                });                
+                });                 
                 $('.selectpicker').selectpicker('refresh');
-                EstadisticasInstrumentos("1");
-                EstadisticasInstrumentos("0");      
+                if (BanderaGrafica == null)
+                {                
+                     EstadisticasInstrumentos("1");
+                     EstadisticasInstrumentos("0");
+                }
             },
 
             error: function (Mensaje) 
@@ -104,7 +107,6 @@ function Eliminar_Aula(ID)
                     },
                     error: function(Respuesta)
                     {
-                        swal.closeModal();
                         swal("Error", "No es posible eliminar el aula", "error");
                     },
                 });
@@ -120,8 +122,7 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {                                                
                 $.ajax
                 ({
-                        url: 'http://melbws.azurewebsites.net/api/Aula/',
-                        //url: 'http://localhost:53603/api/Aula/',
+                      url: 'http://melbws.azurewebsites.net/api/Aula/',
                       type: 'POST',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -147,7 +148,7 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                                  swal(Resultado.Mensaje_Cabecera, Resultado.Mensaje_Usuario, "error");
                              }
                          }
-                        Cargar_Aulas();
+                        Cargar_Aulas(3);
                       },
                       error: function(Respuesta)
                       {
@@ -155,13 +156,11 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                       },
                 });
             }
-    else
-        //if (Comando == "Actualizar")
+    else        
             {
                 $.ajax
                 ({
-                        url: 'http://melbws.azurewebsites.net/api/Aula/',
-                        //url: 'http://localhost:53603/api/Aula/',
+                      url: 'http://localhost:53603/api/Aula/',
                       type: 'PUT',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -192,13 +191,12 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
                                   swal
                                       ({
                                           title: Resultado.Mensaje_Cabecera,
-                                          text: Resultado.Mensaje_Usuario,
-                                          timer: 3000,
+                                          text: Resultado.Mensaje_Usuario                                          ,
                                           type: "error"
                                       });
                               }
                           }
-                         Cargar_Aulas();
+                         Cargar_Aulas(3);
                       },
                       error: function(Error)
                       {
@@ -259,7 +257,6 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             ]
     }
     else
-        //if (Comando == "Actualizar")
         {
         Titulo = 'Actualizando Aula';
         Error = 'Ocurrio un inconveniente al actualizar el aula.';
@@ -301,19 +298,16 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
             swal.showLoading();
 
             if (Comando == 'Nuevo') {
-                swal.closeModal();
                 Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
 
             }
             else
             {
-                swal.closeModal();
                 Insertar_Actualizar_Aula(Comando, ID_Aula, Modal[0], Modal[1]);
             }
         }
         else {
             swal.resetDefaults();
-            swal.closeModal();
             swal
                 ({
                     title: "Aviso",

@@ -570,7 +570,7 @@ function ImprimirImagen(Fuente)
             var ContextoInstrumento = document.getElementById("GraficaInstrumentos").getContext('2d');
 
             Chart.defaults.global.legend.display = false;
-
+            if (GraficaInstrumentos != null) { GraficaInstrumentos.destroy(); }
             var GraficaInstrumentos = new Chart(ContextoInstrumento, 
             {
                 type: 'pie',
@@ -637,7 +637,6 @@ function GeneralReporteInstrumento(Lista)
             { title: "ID Instrumento", dataKey: "ID_Instrumento" },
             { title: "Tipo", dataKey: "Nombre" },
             { title: "Material", dataKey: "Material"},
-            { title: "Descripcion", dataKey:"Descripcion"},
             { title: "Color", dataKey: "Color" },
             { title: "Marca", dataKey: "Marca" },
             { title: "Estado", dataKey: "Estado" },
