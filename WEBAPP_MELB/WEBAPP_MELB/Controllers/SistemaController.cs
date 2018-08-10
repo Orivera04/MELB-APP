@@ -65,6 +65,25 @@ namespace WEBAPP_MELB.Controllers
             }
         }
 
+        public ActionResult Administrador()
+        {
+            if (Session["EstaLogeado"] != null)
+            {
+                if (Session["Permiso"].ToString() == "4")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Autenticacion", new { Estado = -3 });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Autenticacion", new { Estado = -2 });
+            }
+        }
+
         public ActionResult MatarSesion()
         {
             return RedirectToAction("Login", "Autenticacion", new { Estado = 1 });
