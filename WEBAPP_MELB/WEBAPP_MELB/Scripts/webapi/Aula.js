@@ -19,7 +19,7 @@ var Aula_Seleccionada = 0;
                     for (i = 0; i < Resultado.length; i++) 
                     {  
                        ID_Aula.push({ID:Resultado[i].ID_Aula , Numero:Resultado[i].Numero, Piso:Resultado[i].Piso});                                                                               
-                       $('#Aula_Clase').append('<option data-subtext="Aula:#' + Resultado[i].Numero + ' Piso:#' + Resultado[i].Piso + '">#' + Resultado[i].ID_Aula + '</option>');                                                                                                     
+                       $('#Aula_Clase').append('<option data-subtext="Numero:' + Resultado[i].Numero + ' Piso:' + Resultado[i].Piso + '">#' + Resultado[i].ID_Aula + '</option>');                                                                                                     
 
                        Tabla_Aula.row.add
                            ([

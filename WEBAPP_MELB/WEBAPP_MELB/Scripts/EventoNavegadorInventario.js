@@ -34,6 +34,9 @@ $(document).ready(function ()
     // Carga de imagenes para los reportes //
     CargarImagenes();
 
+    $('#Remision_Fecha_Fin').val($('#Remision_Fecha_Inicio_Filtro').val());
+
+
     $('#FooterCopyright').css('margin-top', '25px');
 
 });
@@ -121,15 +124,9 @@ function Inicializacion_Controles()
             threshold: 16
         });
 
-    $('#Remision_Fecha_Inicio').dateDropper
-    ({
-          "data-format": 'd/m/Y',          
-    });
+    $('#Remision_Fecha_Inicio').dateDropper({"data-format": 'd/m/Y',});
 
-    $('#Remision_Fecha_Fin').dateDropper
-    ({
-          "data-format": 'd/m/Y',          
-    });
+    $('#Remision_Fecha_Fin').dateDropper();
 
     $('#Remision_Fecha_Inicio_Filtro').dateDropper
     ({
@@ -156,6 +153,17 @@ function Actualizar_Todo()
     Tabla_Desglose_Remision.clear().draw();
     Tabla_Aula.clear().draw();
     swal.showLoading();
+
+    $('#Filtro_Instrumento').val("Proveedor");
+    $('#ID_Filtro_Instrumento').html("");
+    $('#Col_Select').css("visibility","visible");
+
+    $('#Filtro_Remision').val("Instrumento");
+    $('#ID_Filtro_Remisiones').html("");
+    $('#ContenedorFechaInicio').hide();
+    $('#ContenedorFechaFin').hide();
+    $('#ID_ContenedorRemision').show();
+
     Cargar_Instrumentos();    
 }
 
@@ -595,7 +603,7 @@ function Inicializacion_Eventos()
                 $('#Contenedor_Panel').hide(); 
                 $('#Reporte').hide();
                 $('#FooterCopyright').css('margin-top', '50px');
-
+               
                 Borrar_Remision_Bandera = false;                
 
                 
@@ -750,7 +758,7 @@ function Inicializacion_Eventos()
                 $('#Col_Select').css('visibility','visible');
                 ID_Aula.forEach(function(Elemento) 
                 {
-                    $('#ID_Filtro_Instrumento').append('<option data-subtext="Aula:#'+Elemento.Numero+' Piso:#'+Elemento.Piso+'">#'+Elemento.ID+'</option>');                                                                                                                  
+                    $('#ID_Filtro_Instrumento').append('<option data-subtext="Numero:'+Elemento.Numero+' Piso:'+Elemento.Piso+'">#'+Elemento.ID+'</option>');                                                                                                                  
                 });
                 $('.selectpicker').selectpicker('refresh');   
             }   
@@ -804,7 +812,7 @@ function Inicializacion_Eventos()
                 });
                 $('.selectpicker').selectpicker('refresh');
             }
-            else if (Filtro == 'Fecha')
+            else if (Filtro == 'Fecha de elaboración' | Filtro == "Fecha de culminación")
             {                
                 $('#ID_ContenedorRemision').hide();
                 $('#FiltroConteendor').attr('class', 'col-md-3');
@@ -816,14 +824,14 @@ function Inicializacion_Eventos()
 
         $('#Filtro_Buscar_Boton_Remisiones').click(function(event)
         {
-            if ($('#Filtro_Remision').val() != "Fecha")
+            if ($('#Filtro_Remision').val() != "Fecha de elaboración" && $('#Filtro_Remision').val() != "Fecha de culminación")
             {
                 Fecha_Salida = Cambio_Formato_Fecha(3);
                 Filtrar_Remisiones($('#Filtro_Remision').val(), $('#ID_Filtro_Remisiones').val().substring(1, $('#ID_Filtro_Instrumento').val().length), Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
             }
             else
             {
-                if (new Date($('#Remision_Fecha_Inicio_Filtro').val()) <= new Date($('#Remision_Fecha_Terminal_Filtro').val())) {
+                if (new Date($('#Remision_Fecha_Inicio_Filtro').val().split('/')[2] + '/' + $('#Remision_Fecha_Inicio_Filtro').val().split('/')[1] + '/' + $('#Remision_Fecha_Inicio_Filtro').val().split('/')[0]) <= new Date($('#Remision_Fecha_Terminal_Filtro').val().split('/')[2] + '/' + $('#Remision_Fecha_Terminal_Filtro').val().split('/')[1] + '/' + $('#Remision_Fecha_Terminal_Filtro').val().split('/')[0])) {
                     Fecha_Salida = Cambio_Formato_Fecha(3);
                     Filtrar_Remisiones($('#Filtro_Remision').val(), 0, Fecha_Salida.Fecha_Inicio, Fecha_Salida.Fecha_Fin);
                 }

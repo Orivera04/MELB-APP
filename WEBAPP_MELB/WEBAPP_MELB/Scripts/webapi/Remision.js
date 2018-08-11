@@ -60,7 +60,7 @@ var Borrar_Remision_Bandera = true;
                                                 Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
                                                 for (i = 0; i < Resultado_Estudiante.length; i++) {
                                                     ID_Estudiante.push({ ID: Resultado_Estudiante[i].ID_Estudiante, Nombre: Resultado_Estudiante[i].Nombre + ' ' + Resultado_Estudiante[i].Apellido });
-                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
+                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre +" "+ Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
                                                 }
                                             }
                                         },
@@ -368,6 +368,8 @@ var Borrar_Remision_Bandera = true;
                                         Resultado[i].ID_Remision,
                                         Resultado[i].Nombre_Estudiante,
                                         Estado,
+                                        Resultado[i].Fecha_Inicio_Formateada,
+                                        Resultado[i].Fecha_Fin_Formateada,
                                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                                     ]).draw(false);
