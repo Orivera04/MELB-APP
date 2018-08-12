@@ -11,6 +11,7 @@ var Dropdown_Nombre_Instrumento = [];
 var Funcion_Realizar = 'Actualizar';
 var Fila_Seleccionada = 0;
 var Borrar_Remision_Bandera = true;
+var Ultimo_ID;
 
        
         function Cargar_Remisiones(Reporte) 
@@ -25,6 +26,7 @@ var Borrar_Remision_Bandera = true;
                                 Tabla_Remision.clear().draw();
                                 Resultado = JSON.parse(Resultado);
                                 var Estado;
+                                Ultimo_ID = Resultado[Resultado.length - 1].ID_Remision + 1;
                                 for (i = 0; i < Resultado.length; i++) {
                                     if (Resultado[i].Estado_Remision == 'Expirada') {
                                         Estado = '<span class="label label-inverse">Expirada</span>';
@@ -123,9 +125,8 @@ var Borrar_Remision_Bandera = true;
                           $('#ID_Empleado_Remision').selectpicker('val', '#' +Resultado.Empleado_ID);
                           $('#Estado_Remision').val(Resultado.Estado_Remision);
 
-                          Fecha_Entrada = Cambio_Formato_Fecha(1,Resultado.Fecha_Prestamo, Resultado.Fecha_Entrega);
-                          $('#Remision_Fecha_Inicio').val(Fecha_Entrada.Fecha_Inicio);
-                          $('#Remision_Fecha_Fin').val(Fecha_Entrada.Fecha_Fin);
+                          $('#Remision_Fecha_Inicio').val(Resultado.Fecha_Inicio_Formateada);
+                          $('#Remision_Fecha_Fin').val(Resultado.Fecha_Fin_Formateada);
                           
                           Arreglo_Listado.splice(0,Arreglo_Listado.length);                             
                           
@@ -345,6 +346,12 @@ var Borrar_Remision_Bandera = true;
                     });
             }
             else {
+                Fecha_Inicial = Fecha_Inicial.split('/');
+                Fecha_Inicial = Fecha_Inicial[1] + '/' + Fecha_Inicial[0] + '/' + Fecha_Inicial[2];
+
+                Fecha_Final = Fecha_Final.split('/');
+                Fecha_Final = Fecha_Final[1] + '/' + Fecha_Final[0] + '/' + Fecha_Final[2];
+
                 $.ajax
                     ({          
                         url: 'http://localhost:53603/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
@@ -403,7 +410,6 @@ var Borrar_Remision_Bandera = true;
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
-            Formulario_Activo = "RemisionNueva";
             $('#Reporte').show();
         }
 
@@ -414,8 +420,8 @@ var Borrar_Remision_Bandera = true;
             {
                 if (Operacion == 'Nuevo') //Nueva Remision
                 {
+                    $('#ID_Remision').prop('disabled', 'true')
                     $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
-                    $("#ID_Remision").prop("disabled", false);
                     $("#ID_Estudiante_Remision").prop("disabled", false);
                     $("#ID_Empleado_Remision").prop("disabled", false);
                     $("#Remision_Fecha_Fin").prop("disabled", false);
@@ -427,8 +433,8 @@ var Borrar_Remision_Bandera = true;
                 }
                 else            //Actualizacion de una remision ACTIVA
                 {
+                    $('#ID_Remision').prop('disabled', 'true')
                     $('#Añadir_Desglose_Remision').html('<i class="ion-compose" data-pack="default" data-tags="menu"></i>');                  
-                    $("#ID_Remision").prop("disabled", true);
                     $("#ID_Estudiante_Remision").prop("disabled", true);
                     $("#ID_Empleado_Remision").prop("disabled", true);
                     $("#Remision_Fecha_Fin").removeAttr('disabled');
@@ -461,22 +467,12 @@ var Borrar_Remision_Bandera = true;
         function Reiniciar_Controles_Remision()
         {
             if (Borrar_Remision_Bandera == true) {
-                Tabla_Desglose_Remision.clear().draw();
-                var now = new Date();
-                var Dia = ("0" + now.getDate()).slice(-2);
-                var Mes = ("0" + (now.getMonth() + 1)).slice(-2);
-                var Hora = ("0" + now.getHours()).slice(-2);
-                var Minuto = ("0" + now.getMinutes()).slice(-2);
-                Fecha_Actual = (Mes) + "/" + (Dia) + "/" + now.getFullYear();
-
-
+                Tabla_Desglose_Remision.clear().draw();            
                 $('#ID_Remision').val(1);
                 $("#ID_Empleado_Remision").selectpicker('val', '');
                 $("#ID_Estudiante_Remision").selectpicker('val', '');
                 $('#Estado_Remision').val('Activa');
-                $("#Estado_Remision").prop("disabled", true);
-                $('#Remision_Fecha_Inicio').val(Fecha_Actual);
-                $('#Remision_Fecha_Fin').val(Fecha_Actual);
+                $("#Estado_Remision").prop("disabled", true);             
                 $('#Instrumentos_Disponibles').removeAttr('disabled');
                 $('#Añadir_Desglose_Remision').removeAttr('disabled');
                 $('#Añadir_Desglose_Remision').html('<i class="ion-plus-round" data-pack="default" data-tags="menu"></i>');
@@ -630,10 +626,15 @@ var Borrar_Remision_Bandera = true;
               if(Comando == 'Nuevo')
               { 
                 swal({ title: 'Espere', text: 'Se esta añadiendo la remisión', type: 'info', allowOutsideClick: false });
-                swal.showLoading();
-                Fecha_Salida = Cambio_Formato_Fecha(0);
+                swal.showLoading();                
 
-                var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision option:selected').text().substring(1,$('#ID_Estudiante_Remision option:selected').text().length), Empleado_ID: $('#ID_Empleado_Remision option:selected').text().substring(1,$('#ID_Empleado_Remision option:selected').text().length), Fecha_Prestamo: Fecha_Salida.Fecha_Inicio, Fecha_Entrega: Fecha_Salida.Fecha_Fin, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
+                  var F_Prestamo = ($('#Remision_Fecha_Inicio').val()).split('/');
+                  F_Prestamo = F_Prestamo[1] + '/' + F_Prestamo[0] + '/' + F_Prestamo[2];
+
+                  var F_Entrega = ($('#Remision_Fecha_Fin').val()).split('/');
+                  F_Entrega = F_Entrega[1] + '/' + F_Entrega[0] + '/' + F_Entrega[2];
+
+                  var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estudiante: $('#ID_Estudiante_Remision option:selected').text().substring(1, $('#ID_Estudiante_Remision option:selected').text().length), Empleado_ID: $('#ID_Empleado_Remision option:selected').text().substring(1, $('#ID_Empleado_Remision option:selected').text().length), Fecha_Prestamo: F_Prestamo , Fecha_Entrega: F_Entrega , ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales};
 
                 $.ajax
                 ({  
@@ -680,12 +681,16 @@ var Borrar_Remision_Bandera = true;
               {
                 Estado = 0;
 
-                var Remision_BBDD = {ID_Remision: $('#ID_Remision').val(), ID_Estado_Remision: Estado, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales, Observaciones_Finales: Lista_Observaciones_Finales};
+                var F_Entrega = ($('#Remision_Fecha_Fin').val()).split('/');
+                F_Entrega = F_Entrega[1] + '/' + F_Entrega[0] + '/' + F_Entrega[2];
+
+
+                var Remision_BBDD = {Fecha_Prestamo: F_Entrega,ID_Remision: $('#ID_Remision').val(), ID_Estado_Remision: Estado, ID_Instrumentos: Lista_Instrumentos, Observaciones_Iniciales: Lista_Observaciones_Iniciales, Observaciones_Finales: Lista_Observaciones_Finales};
                 swal({ title: 'Espere', text: 'Se esta actualizando la remisión', type: 'info', allowOutsideClick: false });
                 swal.showLoading();  
                 $.ajax
                 ({
-                        url: 'http://localhost:53603/api/Remision',
+                      url: 'http://localhost:53603/api/Remision',
                       type: 'PUT',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -697,6 +702,8 @@ var Borrar_Remision_Bandera = true;
                          $('#Remisiones').show(400);
                          $('#ADD').html('<span class="btn-label"><i class="ion-clipboard" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir Remision');
                          $('#ADD').show("drop", 50);
+                          FormularioActivo = "Remision";
+                          Borrar_Remision_Bandera = true;
                       },
                       error: function(xhr, status, error)
                       {
@@ -913,6 +920,8 @@ var Borrar_Remision_Bandera = true;
                     });
                 }        
             })
+            FormularioActivo = "Remision";
+            Borrar_Remision_Bandera = true;
         }
 
         function RemisionesGrafica(Instrumento)
@@ -1109,8 +1118,8 @@ function GenerarDocumentoRemisionNueva()
                             Documento.setFontType("bold");
                             Documento.text(1, 4.2, 'Numero Remisión : #' + $('#ID_Remision').val());
                             Documento.text(7, 4.2, 'Estudiante: ' + $("#ID_Estudiante_Remision option:selected").attr('data-subtext'));
-                            Documento.text(16 , 4.2, 'Fecha: ' + $('#Remision_Fecha_Inicio').val());
-                            Documento.text(23, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);                       
+                            Documento.text(15.5 , 4.2, 'Fecha: ' + $('#Remision_Fecha_Inicio').val());
+                            Documento.text(19.9, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);                       
 
 
                             /* Footer */

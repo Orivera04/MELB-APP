@@ -287,6 +287,7 @@
                 $('#Cambiar_Imagen_Estuche').removeAttr('disabled');
                 $('#Actualizar_Estuche').removeAttr('disabled');
                 $('#Descripcion_Estuche').removeAttr('disabled');
+                $("#ID_Estuche").prop("disabled", "true");
                 $('.selectpicker').selectpicker('refresh');
             }
             else
@@ -306,7 +307,8 @@
 
         function Reiniciar_Controles_Estuche()
         {
-            $('#ID_Estuche').val(1);
+            $("#ID_Estuche").prop("disabled", "true");
+            $("#ID_Estuche").val(Tabla_Estuche.column(0).data().length + 1);
             $("#Tipo_Estuche").selectpicker('val', 'Guitarra');
             $('#Color_Estuche').selectpicker('val', 'Rojo');
             $('#Marca_Estuche').val('');

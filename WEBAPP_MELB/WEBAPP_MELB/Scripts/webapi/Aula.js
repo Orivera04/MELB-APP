@@ -1,5 +1,6 @@
 var ID_Aula = [];
 var Aula_Seleccionada = 0;
+var Ultimo_IDAula;
 
  function Cargar_Aulas(BanderaGrafica)  
  {        
@@ -14,8 +15,9 @@ var Aula_Seleccionada = 0;
                 ID_Aula = [];
                 $('#Aula_Clase').html(''); 
                 if(Resultado.Codigo == null)
-                {                                
-                    Resultado = JSON.parse(Resultado);                                                                        
+                {                               
+                    Resultado = JSON.parse(Resultado);
+                    Ultimo_IDAula = Resultado[Resultado.length - 1].ID_Aula + 1;
                     for (i = 0; i < Resultado.length; i++) 
                     {  
                        ID_Aula.push({ID:Resultado[i].ID_Aula , Numero:Resultado[i].Numero, Piso:Resultado[i].Piso});                                                                               
@@ -75,8 +77,7 @@ function Eliminar_Aula(ID)
                 $.ajax
                 ({
 
-                        url: 'http://melbws.azurewebsites.net/api/Aula/' + ID,
-                        //url: 'http://localhost:53603/api/Aula/' + ID,
+                    url: 'http://melbws.azurewebsites.net/api/Aula/' + ID,                      
                     type: 'DELETE',
                     success: function(Resultado)
                     {
@@ -122,7 +123,7 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {                                                
                 $.ajax
                 ({
-                      url: 'http://melbws.azurewebsites.net/api/Aula/',
+                      url: 'http://localhost:53603/api/Aula/',
                       type: 'POST',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -223,17 +224,7 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
         Titulo = 'Añadiendo Aula';
         Error = 'Ocurrio un inconveniente al añadir el Aula.';
         var Pasos =
-            [
-                {
-                    title: 'Añadir Aula',
-                    text: 'Identificador del Aula',
-                    input: 'number',
-                     inputAttributes: 
-                    {
-                        min : 1
-                    },
-                    inputClass: 'form-control'
-                },
+            [              
                 {
                     title: 'Añadir Aula',
                     text: 'Numero de Aula',
@@ -292,13 +283,13 @@ function Proceso_Insercion_Aula(Comando,ID_Aula,Numero,Piso) {
 
     swal.queue(Pasos).then(function (Modal) {
 
-        if (Modal[0] != '' && Modal[1] != '' && Modal[2] != '')  {
+        if (Modal[0] != '' && Modal[1] != '')  {
             swal.resetDefaults();
             swal({ title: Titulo, text: 'Espere por favor', type: 'info', allowOutsideClick: false });
             swal.showLoading();
 
             if (Comando == 'Nuevo') {
-                Insertar_Actualizar_Aula(Comando, Modal[0], Modal[1], Modal[2]);
+                Insertar_Actualizar_Aula(Comando, Ultimo_IDAula, Modal[0], Modal[1]);
 
             }
             else

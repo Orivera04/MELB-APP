@@ -500,7 +500,9 @@ function ImprimirImagen(Fuente)
                           text: "No ha seleccionado un estuche",
                           type: "warning",
                     });
-          }
+            }
+            BanderaBorrar = true;
+
         }
 
         function Base64Imagen(URL) 

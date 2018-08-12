@@ -34,8 +34,7 @@ $(document).ready(function ()
     // Carga de imagenes para los reportes //
     CargarImagenes();
 
-    $('#Remision_Fecha_Fin').val($('#Remision_Fecha_Inicio_Filtro').val());
-
+   
 
     $('#FooterCopyright').css('margin-top', '25px');
 
@@ -124,9 +123,15 @@ function Inicializacion_Controles()
             threshold: 16
         });
 
-    $('#Remision_Fecha_Inicio').dateDropper({"data-format": 'd/m/Y',});
+    $('#Remision_Fecha_Inicio').dateDropper
+    ({
+            "data-format": 'd/m/Y',
+    });
 
-    $('#Remision_Fecha_Fin').dateDropper();
+    $('#Remision_Fecha_Fin').dateDropper
+    ({
+        "data-format": 'd/m/Y',
+    });
 
     $('#Remision_Fecha_Inicio_Filtro').dateDropper
     ({
@@ -551,7 +556,8 @@ function Inicializacion_Eventos()
                  $('#Header_Estuche_Texto').text('Añadir Estuche');
                  Reiniciar_Controles_Estuche();
                  Habilitar_Deshabilitar_Estuche(true);
-                 $('#ID_Estuche').removeAttr('disabled');
+                 $("#ID_Estuche").prop("disabled", "true");
+                 $('#ID_Estuche').val(ID_Estuche[ID_Estuche.length - 1].ID + 1);
                  $('#Estuches').hide();
                  $('#Estuche_Detalle').show();   
                  $('#Actualizar_Estuche').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
@@ -566,16 +572,16 @@ function Inicializacion_Eventos()
             }
             else if(Formulario_Activo == 'Proveedor')
             {       
-                 Operacion = 'Nuevo';
-                 $('#Header_Proveedor_Texto').text('Añadir Proveedor');
-                 Reiniciar_Controles_Proveedor();
-                 Habilitar_Deshabilitar_Proveedor(true);
-                 $('#ID_Proveedor').removeAttr('disabled');
-                 $('#Proveedores').hide();
-                 $('#Proveedor_Detalle').show();   
-                 $('#Actualizar_Proveedor').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
-                 $('#Imagen_Proveedor').attr("src","https://i.imgur.com/0oN2F22.png");
-                 Base64Imagen($('#Imagen_Proveedor').attr('src'));       
+                Operacion = 'Nuevo';
+                $('#Header_Proveedor_Texto').text('Añadir Proveedor');
+                Reiniciar_Controles_Proveedor();
+                Habilitar_Deshabilitar_Proveedor(true);
+                $('#Proveedores').hide();
+                $('#Proveedor_Detalle').show();   
+                $('#ID_Proveedor').val(ID_Proveedor[ID_Proveedor.length - 1].ID + 1);
+                $('#Actualizar_Proveedor').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
+                $('#Imagen_Proveedor').attr("src","https://i.imgur.com/0oN2F22.png");
+                Base64Imagen($('#Imagen_Proveedor').attr('src'));       
 
                  $('#ADD').hide();
                  $('#Busqueda_Form').hide();
@@ -585,13 +591,12 @@ function Inicializacion_Eventos()
             }  
             else if(Formulario_Activo == 'Remision')
             {       
-                 Operacion = 'Nuevo';
+                Operacion = 'Nuevo';
                 $('#Header_Remision_Texto').text('Añadir Remision');
                 if (BanderaBorrar == true) {
                     Reiniciar_Controles_Remision();
                     Habilitar_Deshabilitar_Remision(true, Operacion);
                 }
-                 $('#ID_Remision').removeAttr('disabled');
                  $('#Añadir_Desglose_Remision').removeAttr('disabled');
                  $('#Remisiones').hide();
                  $('#Remision_Detalle').show();   
@@ -603,7 +608,16 @@ function Inicializacion_Eventos()
                 $('#Contenedor_Panel').hide(); 
                 $('#Reporte').hide();
                 $('#FooterCopyright').css('margin-top', '50px');
-               
+                var Fecha_FinalNW = new Date();
+                FechaCadena = ('0' + Fecha_FinalNW .getDate()).slice(-2) + '/'
+                    + ('0' + (Fecha_FinalNW .getMonth() + 1)).slice(-2) + '/'
+                    + Fecha_FinalNW .getFullYear();
+
+                $('#Remision_Fecha_Inicio').val(FechaCadena);
+                $('#Remision_Fecha_Fin').val(FechaCadena);
+
+                $('#ID_Remision').val(Ultimo_ID);
+                
                 Borrar_Remision_Bandera = false;                
 
                 
@@ -984,24 +998,38 @@ function Inicializacion_Eventos()
 
         /* Eventos : Formulario Remision */
 
-        $('#Switch_Editar_Remision').change(function()
-        {
-            if( $('#Switch_Editar_Remision').prop('checked') == true)
-            {
+    $('#Switch_Editar_Remision').change(function (Event) {
+        if ($('#Estado_Remision').val() != "Finalizada") {
+            if ($('#Switch_Editar_Remision').prop('checked') == true) {
                 Habilitar_Deshabilitar_Remision(true);
                 $('#Busqueda_Form').hide();
+                var Fecha_FinalNW = new Date();
+                FechaCadena = ('0' + Fecha_FinalNW.getDate()).slice(-2) + '/'
+                    + ('0' + (Fecha_FinalNW.getMonth() + 1)).slice(-2) + '/'
+                    + Fecha_FinalNW.getFullYear();
+
+                $('#Remision_Fecha_Fin').val(FechaCadena);
             }
-            else
-            {
+            else {
                 Habilitar_Deshabilitar_Remision(false);
                 $('#Busqueda_Form').show();
             }
+        }
+        else {
+            swal
+                ({
+                    title: "Atención",
+                    text: "No se puede editar esta remisión dado que ya ha sido finalizada",
+                    type: "warning",
+                });
+            document.getElementById("Switch_Editar_Remision").checked = false;
+        };           
         });
 
         $('#Actualizar_Remision').click(function(event)
         {     
-            var FechaRemisionFinal = new Date($('#Remision_Fecha_Fin').val());
-            if (new Date() <= FechaRemisionFinal) {
+            var FechaRemisionFinal = new Date($('#Remision_Fecha_Fin').val().split('/')[2] + '/' + $('#Remision_Fecha_Fin').val().split('/')[1] + '/' + $('#Remision_Fecha_Fin').val().split('/')[0]);
+            if (FechaRemisionFinal >= new Date().setHours(0, 0, 0, 0) ) {
                 Insertar_Actualizar_Remision(Operacion);
             }
             else
@@ -1009,7 +1037,7 @@ function Inicializacion_Eventos()
                 swal
                     ({
                         title: "Precaución",
-                        text: "La fecha de fin de la remisión no puede ser igual o menor que la del dia de hoy",
+                        text: "La fecha de fin de la remisión no puede ser menor que la del dia de hoy",
                         type: "warning",
                     });
             }
