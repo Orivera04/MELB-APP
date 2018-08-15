@@ -44,6 +44,7 @@ var Ultimo_IDAula;
                      EstadisticasInstrumentos("1");
                      EstadisticasInstrumentos("0");
                 }
+                CargarEmpleados();
             },
 
             error: function (Mensaje) 

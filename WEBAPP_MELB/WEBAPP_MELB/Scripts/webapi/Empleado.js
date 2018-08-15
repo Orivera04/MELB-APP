@@ -1,6 +1,6 @@
 ﻿/* Funciones de la API */
 var Cursos = [];
-Cursos.push({FlautaD: 0, FlautaT: 0, Clarinete: 0, Violin: 0, Viola: 0, Cello: 0, Guitarra: 0, Piano: 0 });
+Cursos.push({ FlautaD: 0, FlautaT: 0, Clarinete: 0, Violin: 0, Viola: 0, Cello: 0, Guitarra: 0, Piano: 0 });
 function Cargar_InfoEmpleadoProfesor()
 {
     $.ajax({
@@ -21,7 +21,7 @@ function Cargar_InfoEmpleadoProfesor()
                 $('#ProfesorTelefono2').val(Resultado.Telefono_2);
                 $('#SexoProfesor').val(Resultado.Sexo);
                 $('#ProfesorCargo').val("Profesor");
-                $('#Imagen_Profesor').prop('src',Resultado.Imagen);
+                $('#Imagen_Profesor').prop('src', Resultado.Imagen);
                 $('.selectpicker').selectpicker('refresh');
                 GenerarHorarioProfesor(0);
             }

@@ -37,9 +37,10 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="active">
                 <div class="sidebar-header">
-                    <a data-toggle="tooltip" data-placement="bottom" data-original-title="Regresar al Login" href="@Url.Action("MatarSesion","Sistema")">
+                    <a  href="javascript:void(0)">
                         <img style="width:75px;" src="~/Content/assets/Logo.png" />
                     </a>
+                    
                 </div>
                 <ul class="list-unstyled components">
                     <li id="menuinicio">
@@ -59,13 +60,16 @@
                             <li id="instrumentossubmenu"><a href="javascript:void(0)">Instrumentos</a></li>
                         </ul>
                         <a href="javascript:void(0)" id="proveedoressubmenu">
-                            <i class="glyphicon glyphicon-bookmark"></i> Proveedores
+                            <i class="glyphicon glyphicon-inbox"></i> Proveedores
                         </a>
                         <a href="javascript:void(0)" id="remisionessubmenu">
                             <i class="glyphicon glyphicon-file"></i> Remisiones
                         </a>
+                        <a href="javascript:void(0)" id="listanegrasubmenu">
+                            <i class="glyphicon glyphicon-pushpin"></i> Lista Negra
+                        </a>
                         <a href="javascript:void(0)" id="aulasubmenu">
-                            <i class="glyphicon glyphicon-road"></i> Aulas
+                            <i class="glyphicon glyphicon-education"></i> Aulas
                         </a>
                     </li>
                 </ul>
@@ -104,12 +108,17 @@
                                     <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="CodigoBarra" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir etiqueta de codigo de barras">
                                         <i class="icon ion-ios-barcode" data-pack="default" data-tags="refresh"></i>
                                     </button>
+                                    <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="ReporteHistoricoRemision" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir Reporte">
+                                        <i class="ion-clipboard" data-pack="default" data-tags="refresh"></i>
+                                    </button>
                                     <div class="input-group m-t-10" id="Busqueda_Form">
                                         <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
                                         <span class="input-group-btn">
                                             <button id="Buscar_Boton" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
                                         </span>
-                                    </div>
+                                    </div>  
+                                    
+                                    <img id="Perfil" src="@Session["Imagen"].ToString()" class="ImagenPerfil">                                    
                                 </form>
                             </li>
                         </ul>
@@ -117,6 +126,13 @@
                 </div>
             </nav>
 
+            <div id="MenuEmergente" class="MenuContextual">
+                <div class="TrianguloContextual">
+                </div>
+                <ul>
+                    <li class="LIMenu"><span class="icon ion-power CerrarS"></span><a href="@Url.Action("MatarSesion","Sistema")">Cerrar Sesiòn</a></li>
+                </ul>
+            </div>
 
             <div>
                 <div id="Inicio">
@@ -693,6 +709,7 @@
                                                 <select  id="Filtro_Remision" class="selectpicker" data-style="btn-white" data-width="100%">
                                                     <option>Instrumento</option>
                                                     <option>Estudiante</option>
+                                                    <option>Empleado</option>
                                                     <option>Fecha de elaboración</option>
                                                     <option>Fecha de culminación</option>
                                                 </select>
@@ -752,6 +769,7 @@
                                                 <th>Estado</th>
                                                 <th>Fecha De Elaboración</th>
                                                 <th>Fecha De Culminación</th>
+                                                <th>Elaborada por</th>
                                                 <th>Detalle</th>
                                                 <th>Eliminar</th>
                                             </tr>
@@ -1084,7 +1102,7 @@
                     <div class="row" id="row_aulas">
                         <div class="panel panel-color panel-danger">
                             <div class="panel-heading5">
-                                <i class="ion-android-pin" aria-hidden="true"></i>
+                                <i class="icon ion-flag" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Aulas</h3>
                             </div>
                             <div class="panel-body">

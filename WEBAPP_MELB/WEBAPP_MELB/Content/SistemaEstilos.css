@@ -212,7 +212,63 @@ a.article, a.article:hover {
     color: #fff !important;
 }
 
+.ImagenPerfil {
+    width: 42px;
+    height: auto;
+    border-radius: 25px;
+    border: 2px solid #dedede;
+    cursor:pointer;
+}
 
+.MenuContextual {
+    position: absolute;
+    background-color: white;
+    padding: 10px 0;
+    box-shadow: 0 1px 15px rgba(0,0,0,.2);
+    color: #3c3c3c;
+    border-radius: 10px;
+    z-index: 10;
+    top: 100px;
+    right:10px;
+    width: 150px;
+    display: none;
+    height:50px;
+}
+
+
+ul 
+{
+    list-style: none;
+    padding:0px;
+}
+
+.LIMenu 
+{
+    list-style: none;
+    padding: 0px;
+    font-family:'Gotham';
+    cursor:pointer;
+}
+
+
+.CerrarS {
+    margin-left: 15px;
+    margin-right: 10px;
+    font-size: 15px;
+    color:red;
+    margin-top:5px;
+}
+
+.TrianguloContextual {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 77px;
+    top: -13px;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 13px solid white;
+}
 
 /* ---------------------------------------------------
     CONTENT STYLE
@@ -561,7 +617,7 @@ button
 
 .navbar-header
 {
-    margin-top: 3px;
+    margin-top: 5px;
 }
 
 #ADD
@@ -575,12 +631,16 @@ button
 }
 
 
-#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle,#Reporte
+#Busqueda_Form, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Campo_Aula, #BotonDatosAlumno, #Nota_Detalle, #Matricula_Detalle, #Horario_Detalle
 {
     display: none;
 }
 
-
+#Reporte 
+{
+    display: none;
+    margin-right:20px;
+}
 
 @media only screen and (max-width: 768px) and (min-width: 100px) 
 {
