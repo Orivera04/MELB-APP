@@ -4,11 +4,130 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>@Page.Title</title>
-        @RenderSection("head", required: false)
-    </head>
-    <body>
-        @RenderBody()
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>MelB - Modulo Administrador</title>
+    <link rel="Shortcut Icon" href="~/Content/favicon.ico" type="image/x-icon" />
+
+    <!-- Boostrap, fuentes e iconos -->
+    <link rel="stylesheet" href="~/Scripts/plugins/bootstrap/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="~/Scripts/plugins/ionicons/ionicons.min.css">
+    <link href="~/Scripts/plugins/fontawesome/font-awesome.css" rel="stylesheet">
+
+    <!-- Plugins CSS -->
+    <link href="~/Scripts/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/Scripts/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/SweetAlert/sweetalert2.min.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/DataDrop/datedropper.min.css" rel="stylesheet">
+    <link href="~/Content/SistemaEstilos.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Contenedor SideBar-->
+        <div class="contentsidebar">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar" class="active">
+                <div class="sidebar-header">
+                    <a data-toggle="tooltip" data-placement="bottom" data-original-title="Regresar al Login" href="@Url.Action("MatarSesion","Sistema")">
+                        <img style="width:75px;" src="~/Content/assets/Logo.png" />
+                    </a>
+                </div>
+                <ul class="list-unstyled components">
+                    <li id="menuinicio">
+                        <a href="javascript:void(0)">
+                            <i class="glyphicon glyphicon-home"></i>
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" id="PerfilSubMenu">
+                            <i class="glyphicon glyphicon-user"></i> Mi perfil
+                        </a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-list-alt"></i> Usuarios
+                        </a>
+                        <ul class="collapse list-unstyled" aria-expanded="true" id="pageSubmenu">
+                            <li id="estudiantessubmenu"><a href="javascript:void(0)">Estudiantes</a></li>
+                            <li id="profesoressubmenu"><a href="javascript:void(0)">Profesores</a></li>
+                            <li id="administradoressubmenu"><a href="javascript:void(0)">Administradores</a></li>
+                        </ul>
+                        <a href="javascript:void(0)" id="proveedoressubmenu">
+                            <i class="glyphicon glyphicon-inbox"></i> Academico
+                        </a>
+                        <a href="javascript:void(0)" id="remisionessubmenu">
+                            <i class="glyphicon glyphicon-file"></i> Inventario
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Page Content Holder - Contenedor NavBar-->
+        <div id="content">
+            <nav class="navbar navbar-default" id="cabezera_header">
+                <div class="container-fluid">
+
+                    <div class="navbar-header" id="Header_Nav">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="ion-navicon-round" data-pack="default" data-tags="menu, hamburger, slide menu"></i>
+                        </button>
+                        <h3 class="TextNavHeader">Modulo Administrativo</h3>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right" id="Form_Right">
+                            <li>
+                                <form class="navbar-form navbar-left" role="search">
+                                    <button data-toggle="tooltip" data-placement="bottom" title="General reporte en pdf" id="Reporte" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="">
+                                        <i class="icon ion-android-download" data-pack="default" data-tags="refresh"></i>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div>
+                <footer class="footer text-right">
+                    © 2018 MelB Versiòn Beta realizada por Oscar Rivera, Reynaldo Oporta y Yader Castillo.
+                </footer>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/Scripts/plugins/jquery/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- Plugins Boostrap -->
+    <script src="~/Scripts/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/plugins/datatables/responsive.bootstrap.min.js"></script>
+
+    <script src="~/Scripts/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="~/Scripts/plugins/DataDrop/datedropper.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/plugins/jspdf/jspdf.min.js"></script>
+    <script src="~/Scripts/plugins/jspdf/jspdf.plugin.autotable.js"></script>
+
+    <!-- Plugins Alertas -->
+    <script src="~/Scripts/plugins\SweetAlert/sweetalert2.min.js"></script>
+    <!-- Cargando Boostrap y sus dependencias -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <!-- Scripts de MeLB -->
+    <script src="~/Scripts/EventosNavegadorAdministrador.js"></script>
+
+</body>
 </html>
