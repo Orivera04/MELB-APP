@@ -7,6 +7,7 @@ var Tabla_Estuche;
 var Tabla_Accesorios;
 var Tabla_Desglose_Remision;
 var Tabla_Aula;
+var Tabla_ListaNegra;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 var AnimacionSideBar = false;
 var BanderaCerrar = false;
@@ -119,10 +120,16 @@ function Inicializacion_Controles()
         });
 
     $('#Identificacion_Proveedor').maxlength
-        ({
-            alwaysShow: true,
-            threshold: 16
-        });
+    ({
+        alwaysShow: true,
+        threshold: 16
+    });
+
+    $('#Motivo_Ingreso').maxlength
+    ({
+        alwaysShow: true,
+        threshold: 100
+    });
 
     $('#Remision_Fecha_Inicio').dateDropper
     ({
@@ -144,7 +151,14 @@ function Inicializacion_Controles()
             "data-format": 'd/m/Y',
     });
 
+    $('#Fecha_Ingreso_Lista').dateDropper
+    ({
+            "data-format": 'd/m/Y',
+    });
+
     /* Tooltips */
+
+
     $('[data-toggle="tooltip"]').tooltip();  
 }
 
@@ -300,7 +314,6 @@ function Inicializacion_Tablas()
        });
 
 
-    /* Tablas de Instrumento */
 
     Tabla_Accesorios = $('#Accesorios_T').DataTable
     ({
@@ -320,6 +333,25 @@ function Inicializacion_Tablas()
             "columnDefs": [ {"className": "dt-center", "targets": "_all"}]        
         }
     });
+
+    Tabla_ListaNegra = $('#Lista_T').DataTable
+        ({
+            "language":
+            {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se encontraron datos",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "La busqueda no devolvio resultados",
+                "infoFiltered": "(Se busco en _MAX_ registros )",
+                "sSearch": "Buscar",
+                "paginate":
+                {
+                    "next": "Siguiente pagina",
+                    "previous": "Pagina anterior"
+                },
+                "columnDefs": [{ "className": "dt-center", "targets": "_all" }]
+            }
+        });
 }
 
 
@@ -338,6 +370,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             $('#ReporteHistoricoRemision').hide();
             $('#ADD').hide();
@@ -360,6 +394,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Instrumento';               
             $('#ReporteHistoricoRemision').hide();
@@ -383,6 +419,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Proveedor';
             $('#ReporteHistoricoRemision').hide();
@@ -406,6 +444,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Remision';
             $('#ReporteHistoricoRemision').hide();
@@ -429,6 +469,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Accesorio';
             $('#ReporteHistoricoRemision').hide();
@@ -452,6 +494,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Estuche';
             $('#ReporteHistoricoRemision').hide();
@@ -475,6 +519,8 @@ function Inicializacion_Eventos()
             document.getElementById('Proveedor_Detalle').style.display = 'none';
             document.getElementById('Remision_Detalle').style.display = 'none';
             document.getElementById('Aulas').style.display = 'block';
+            document.getElementById('ListaNegra').style.display = 'none';
+            document.getElementById('Lista_Detalle').style.display = 'none';
             if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
             Formulario_Activo = 'Aulas';
             $('#ReporteHistoricoRemision').hide();
@@ -487,6 +533,30 @@ function Inicializacion_Eventos()
             $('#Busqueda_Form').hide();
         });
 
+        $('#listanegrasubmenu').click(function (event) {
+            document.getElementById('Inicio').style.display = 'none';
+            document.getElementById('Instrumentos').style.display = 'none';
+            document.getElementById('Proveedores').style.display = 'none';
+            document.getElementById('Remisiones').style.display = 'none';
+            document.getElementById('Estuches').style.display = 'none';
+            document.getElementById('Instrumento_Detalle').style.display = 'none';
+            document.getElementById('Estuche_Detalle').style.display = 'none';
+            document.getElementById('Proveedor_Detalle').style.display = 'none';
+            document.getElementById('Remision_Detalle').style.display = 'none';
+            document.getElementById('Aulas').style.display = 'none';
+            document.getElementById('ListaNegra').style.display = 'block';
+            document.getElementById('Lista_Detalle').style.display = 'none';
+            if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+            Formulario_Activo = 'ListaNegra';
+            $('#ReporteHistoricoRemision').hide();
+            $('#ADD').html('<span class="btn-label"><i class="icon ion-edit" data-pack="default" data-tags="add, include, new, invite, +"></i></span>   Añadir estudiante');
+            $('#ADD').show("drop", 50);
+            $('#Busqueda_Form').hide("drop", 50);
+            $('#Reporte').hide();
+            $('#CodigoBarra').hide();
+            $('#FooterCopyright').css('margin-top', '0px');
+            $('#Busqueda_Form').hide();
+        });
     /* Eventos : uso en formularios de forma global */
     $('#sidebarCollapse').click(function (event) 
     {
@@ -653,6 +723,20 @@ function Inicializacion_Eventos()
                 Operacion = 'Nuevo';
                 $('#Header_Remision_Texto').text('Añadir Aula');
                 Proceso_Insercion_Aula(Operacion);
+            }
+            else if (Formulario_Activo == "ListaNegra")
+            {
+                Operacion = 'Nuevo';
+                $('#Header_Lista_Texto').text('Añadir Estudiante');
+                //Reiniciar_Controles_Proveedor();
+                //Habilitar_Deshabilitar_Proveedor(true);                
+                $('#ListaNegra').hide();
+                $('#Lista_Detalle').show();                
+                $('#Actualizar_Lista').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');              
+                $('#ADD').hide();
+                $('#Busqueda_Form').hide();
+                $('#Contenedor_Panel').hide();
+                $('#Reporte').hide();
             }
         });   
 
@@ -1113,6 +1197,13 @@ function Inicializacion_Eventos()
          //DETECTANDO CLIC AULA//         
         $('#Aula_T tbody').on('click', 'tr', function () {
             Aula_Seleccionada = Tabla_Aula.row(this).index();
+        });
+
+        /* Eventos Lista Negra */
+
+        $('#Actualizar_Lista').click(function (Event)
+        {
+
         });
 
        

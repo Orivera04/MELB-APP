@@ -64,7 +64,8 @@ var ID_Empleado = [];
                                                 Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
                                                 for (i = 0; i < Resultado_Estudiante.length; i++) {
                                                     ID_Estudiante.push({ ID: Resultado_Estudiante[i].ID_Estudiante, Nombre: Resultado_Estudiante[i].Nombre + ' ' + Resultado_Estudiante[i].Apellido });
-                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre +" "+ Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
+                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre + " " + Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
+                                                    $('#ID_Estudiante_Lista').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre + " " + Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
                                                 }
                                             }
                                         },
@@ -77,7 +78,7 @@ var ID_Empleado = [];
                                                 });
                                         }
                                     });
-                                Cargar_Aulas();
+                                Cargar_ListaNegra();                                
                             }
                     }
                     else
@@ -111,7 +112,7 @@ var ID_Empleado = [];
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
-                url: 'http://localhost:53603/api/Remision/'+ID,
+                    url: 'https://melbws.azurewebsites.net:53603/api/Remision/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
                 {
@@ -309,7 +310,7 @@ var ID_Empleado = [];
             if (ID_Filtro != 0) {
                 $.ajax
                     ({
-                        url: 'http://localhost:53603/api/Remision?Filtro=' + Tipo_Filtro + '&ID_Filtro=' + ID_Filtro,
+                        url: 'https://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&ID_Filtro=' + ID_Filtro,
                         type: 'GET',
                         success: function (Resultado) {
                             Tabla_Remision.clear().draw();
@@ -357,7 +358,7 @@ var ID_Empleado = [];
 
                 $.ajax
                     ({          
-                        url: 'http://localhost:53603/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
+                        url: 'https://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {
                             Tabla_Remision.clear().draw();
@@ -625,7 +626,7 @@ var ID_Empleado = [];
                         {
                             ID_Empleado.push({ ID: Resultado[I].ID_Empleado, Nombre: Resultado[I].Nombre +" "+ Resultado[I].Apellido});
                         }
-                    },
+                      },
                     error: function (Mensaje) {
                         swal
                             ({
@@ -667,7 +668,7 @@ var ID_Empleado = [];
 
                 $.ajax
                 ({  
-                      url: 'http://localhost:53603/api/Remision',
+                      url: 'https://melbws.azurewebsites.net:53603/api/Remision',
                       type: 'POST',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -719,7 +720,7 @@ var ID_Empleado = [];
                 swal.showLoading();  
                 $.ajax
                 ({
-                      url: 'http://localhost:53603/api/Remision',
+                      url: 'https://melbws.azurewebsites.net:53603/api/Remision',
                       type: 'PUT',
                       data: Remision_BBDD,
                       success: function(Resultado)

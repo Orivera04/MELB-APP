@@ -345,6 +345,16 @@ ul
     border-top-right-radius: 3px;
 }
 
+/*ListaNegra*/
+.panel-danger > .panel-heading6 {
+    background: linear-gradient(to right, #536976, #292e49);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+
+
+
 
 #Panel_Filtro_Cabezera,#Panel_Filtro_Cabezera_Remisiones
 {
@@ -357,13 +367,13 @@ ul
     background: #5d9cec !important;
 }
 /*MEDIDAS DE LOS PANEL-HEADING DE CADA PANEL*/
-.panel-heading, .panel-heading2, .panel-heading3, .panel-heading4, .panel-heading5 {
+.panel-heading, .panel-heading2, .panel-heading3, .panel-heading4, .panel-heading5, .panel-heading6 {
     border: none !important;
     padding: 10px 20px;
 }
 
 
-#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas, #Profesor_Detalle{
+#row_instrumento, #row_proveedor, #row_remisiones, #row_accesorios, #row_estuches, #row_instrumento_Detalle, #row_estuches_Descripcion, #row_proveedor_Detalle, #row_remisiones_Descripcion, #row_Instrumento_Disponible, #row_aulas, #Profesor_Detalle, #ListaNegraRow {
     margin-left: 1px;
     margin-right: 1px;
 }
@@ -374,8 +384,7 @@ ul
     margin-right: 1px  !important;
 }
 
-.panel-heading > i, .panel-heading2 > i, .panel-heading3 > i, .panel-heading4 > i, .panel-heading5 > i
-{
+.panel-heading > i, .panel-heading2 > i, .panel-heading3 > i, .panel-heading4 > i, .panel-heading5 > i, .panel-heading6 > i {
     font-size: 25px !important;
     color: white;
     vertical-align: middle;
@@ -411,7 +420,7 @@ th,td
     text-align: center !important; 
 }
 
-#Estuches, #Instrumentos, #Proveedores, #Remisiones, #Accesorios, #Estuches, #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Remision_Detalle, #Aulas, #ContenedorFechaInicio, #ContenedorFechaFin, #Profesor_Detalle, #Cursos_Profesor, #Horario_DetalleProfesor, #Curso_DetalleProfesor{
+#Estuches, #ListaNegra, #Instrumentos, #Proveedores, #Remisiones, #Accesorios, #Estuches, #Instrumento_Detalle, #Estuche_Detalle, #Proveedor_Detalle, #Imagen_Archivo, #Imagen_Archivo_Estuche, #Imagen_Archivo_Proveedor, #Remision_Detalle, #Aulas, #ContenedorFechaInicio, #ContenedorFechaFin, #Profesor_Detalle, #Cursos_Profesor, #Horario_DetalleProfesor, #Curso_DetalleProfesor, #Lista_Detalle {
     display: none;
 }
 
