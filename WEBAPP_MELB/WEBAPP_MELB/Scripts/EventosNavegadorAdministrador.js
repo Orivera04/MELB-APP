@@ -1,10 +1,10 @@
 ﻿var BanderaCerrar = false;
 var AnimacionSideBar = false;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-var FormularioActivo;
+var FormularioActivo = "Inicio";
 
 $(document).ready(function (event) {
-    swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false, timer: 3000 });
+    swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false });
     swal.showLoading();
 
     /* Verificamos si el navegador es de un telefono */
@@ -18,7 +18,9 @@ $(document).ready(function (event) {
     // Construcción de los formularios de la pagina //
     InicializacionEventos();
     //InicializacionTablas();
-    //InicializacionControles();
+    InicializacionControles();
+
+    swal.closeModal();
 
     /* Peticiones AJAX */
     //Cargar_InfoAdministrador();
@@ -33,6 +35,11 @@ function InicializacionEventos() {
     $('#menuinicio').click(function (event) {
         document.getElementById('Inicio').style.display = 'block';
         document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Inicio";
     });
@@ -40,9 +47,74 @@ function InicializacionEventos() {
     $('#PerfilSubMenu').click(function (event) {
         document.getElementById('Inicio').style.display = 'none';
         document.getElementById('Administrador_Detalle').style.display = 'block';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Administrador_Detalle";
-    });   
+    });
+
+    $('#estudiantessubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'block';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'none';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        FormularioActivo = "Estudiantes";
+    });
+
+    $('#profesoressubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'block';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'none';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        FormularioActivo = "Profesores";
+    });
+
+    $('#administradoressubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'block';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'none';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        FormularioActivo = "Administradores";
+    });
+
+    $('#matriculassubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'block';
+        document.getElementById('Pagos').style.display = 'none';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        FormularioActivo = "Matriculas";
+    });
+
+    $('#pagossubmenu').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'block';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        FormularioActivo = "Pagos";
+    });
 
     /* Eventos Barra de navegación */
     $('#sidebarCollapse').click(function (event) {
@@ -59,6 +131,19 @@ function InicializacionEventos() {
         }
     });
 
+    /*Evento para editar informacion del administrador*/
+    $('#Switch_Editar_Administrador').change(function () {
+        if ($('#Switch_Editar_Administrador').prop('checked') == true) {
+            //ControlesLecturaEscritura(true);
+            $('#BotonDatosAdministrador').show(200);
+        }
+        else {
+            //ControlesLecturaEscritura(false);
+            $('#BotonDatosAdministrador').hide(200);
+        }
+    });
+
+    /*Eventos para cerrar sesion*/
     $('#Perfil').click(function (event) {
         $('#MenuEmergente').show(200);
         BanderaCerrar = true;
@@ -72,6 +157,10 @@ function InicializacionEventos() {
     $('#MenuEmergente').mouseleave(function (Event) {
         $('#MenuEmergente').hide(200);
     });
+}
+
+function InicializacionControles() {
+    $('#BotonDatosAdministrador').hide();
 }
 
 function isNumber(n) {
