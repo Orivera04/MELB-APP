@@ -1,6 +1,7 @@
-﻿var AnimacionSideBar = false;
+﻿var BanderaCerrar = false;
+var AnimacionSideBar = false;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-var FormularioActivo = "Perfil";
+var FormularioActivo;
 
 $(document).ready(function (event) {
     swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false, timer: 3000 });
@@ -15,7 +16,7 @@ $(document).ready(function (event) {
     }
 
     // Construcción de los formularios de la pagina //
-    //InicializacionEventos();
+    InicializacionEventos();
     //InicializacionTablas();
     //InicializacionControles();
 
@@ -27,47 +28,21 @@ $(document).ready(function (event) {
 });
 
 function InicializacionEventos() {
+
     /* Eventos del menu lateral */
+    $('#menuinicio').click(function (event) {
+        document.getElementById('Inicio').style.display = 'block';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+        FormularioActivo = "Inicio";
+    });
 
     $('#PerfilSubMenu').click(function (event) {
-        document.getElementById('Alumno_Detalle').style.display = 'block';
-        document.getElementById('Nota_Detalle').style.display = 'none';
-        document.getElementById('Matricula_Detalle').style.display = 'none';
-        document.getElementById('Horario_Detalle').style.display = 'none';
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'block';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
-        $('#Reporte').hide();
-        FormularioActivo = "Perfil";
-    });
-
-    $('#NotasSubMenu').click(function (event) {
-        document.getElementById('Alumno_Detalle').style.display = 'none';
-        document.getElementById('Nota_Detalle').style.display = 'block';
-        document.getElementById('Matricula_Detalle').style.display = 'none';
-        document.getElementById('Horario_Detalle').style.display = 'none';
-        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
-        $('#Reporte').show();
-        FormularioActivo = "Notas";
-    });
-
-    $('#MatriculaSubMenu').click(function (event) {
-        document.getElementById('Alumno_Detalle').style.display = 'none';
-        document.getElementById('Nota_Detalle').style.display = 'none';
-        document.getElementById('Matricula_Detalle').style.display = 'block';
-        document.getElementById('Horario_Detalle').style.display = 'none';
-        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
-        $('#Reporte').hide();
-        FormularioActivo = "Matricula";
-    });
-
-    $('#HorarioSubMenu').click(function (event) {
-        document.getElementById('Alumno_Detalle').style.display = 'none';
-        document.getElementById('Nota_Detalle').style.display = 'none';
-        document.getElementById('Matricula_Detalle').style.display = 'none';
-        document.getElementById('Horario_Detalle').style.display = 'block';
-        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
-        $('#Reporte').show();
-        FormularioActivo = "Horario";
-    });
+        FormularioActivo = "Administrador_Detalle";
+    });   
 
     /* Eventos Barra de navegación */
     $('#sidebarCollapse').click(function (event) {
@@ -82,6 +57,20 @@ function InicializacionEventos() {
             $('#sidebar').css('margin-left', '0px');
             AnimacionSideBar = false;
         }
+    });
+
+    $('#Perfil').click(function (event) {
+        $('#MenuEmergente').show(200);
+        BanderaCerrar = true;
+        TimeOut = setTimeout(function () { if (BanderaCerrar == true) { $('#MenuEmergente').hide(200); } }, 6000);
+    });
+
+    $('#MenuEmergente').mouseenter(function (event) {
+        BanderaCerrar = false;
+    });
+
+    $('#MenuEmergente').mouseleave(function (Event) {
+        $('#MenuEmergente').hide(200);
     });
 }
 
