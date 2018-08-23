@@ -29,7 +29,7 @@ a, a:hover, a:focus {
 }
 
 .navbar {
-    width: 100%
+    width: 100%;
     padding: 20px;
     background: #fff;
     border: none;
@@ -1060,4 +1060,18 @@ canvas
 {
     color: rgba(0, 172, 172, 0.9);
 }
+
+
+/*============================================*/
+/*||                                        ||*/
+/*||          MODULO ADMINISTRADOR          ||*/
+/*||                                        ||*/
+/*============================================*/
+
+#Administrador_Detalle, #Estudiantes, #Profesores, #Administradores, #Matriculas, #Pagos
+{
+    display: none;
+}
+
+
 
