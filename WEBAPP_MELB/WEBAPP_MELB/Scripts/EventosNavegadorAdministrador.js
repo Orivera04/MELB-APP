@@ -2,6 +2,11 @@
 var AnimacionSideBar = false;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 var FormularioActivo = "Inicio";
+var Tabla_EstudiantesR;
+var Tabla_ProfesoresR;
+var Tabla_AdministradoresA;
+var Tabla_Matriculas;
+var Tabla_Pagos;
 
 $(document).ready(function (event) {
     swal({ title: 'Cargando', text: 'Espere por favor', type: 'info', allowOutsideClick: false });
@@ -17,7 +22,7 @@ $(document).ready(function (event) {
 
     // Construcción de los formularios de la pagina //
     InicializacionEventos();
-    //InicializacionTablas();
+    InicializacionTablas();
     InicializacionControles();
 
     swal.closeModal();
@@ -161,6 +166,126 @@ function InicializacionEventos() {
 
 function InicializacionControles() {
     $('#BotonDatosAdministrador').hide();
+}
+
+function InicializacionTablas() {
+
+    /* Inicialización de las tablas de Usuarios*/
+    Tabla_EstudiantesR = $('#Estudiantes_T').DataTable
+    ({
+        "language":
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate":
+            {
+                "next": "Siguiente pagina",
+                "previous": "Pagina anterior"
+            },
+            "columnDefs": [{ "className": "dt-center", "targets": "_all" }],
+            "responsive": true,
+            "search": {
+                "caseInsensitive": false
+            }
+        }
+    });
+
+    Tabla_ProfesoresR = $('#Profesor_T').DataTable
+    ({
+        "language":
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate":
+            {
+                "next": "Siguiente pagina",
+                "previous": "Pagina anterior"
+            },
+            "columnDefs": [{ "className": "dt-center", "targets": "_all" }],
+            "responsive": true,
+            "search": {
+                "caseInsensitive": false
+            }
+        }
+    });
+
+    Tabla_AdministradoresA = $('#Administrador_T').DataTable
+    ({
+        "language":
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate":
+            {
+                "next": "Siguiente pagina",
+                "previous": "Pagina anterior"
+            },
+            "columnDefs": [{ "className": "dt-center", "targets": "_all" }],
+            "responsive": true,
+            "search": {
+                "caseInsensitive": false
+            }
+        }
+    });
+
+    /* Inicialización de las tablas de Academico*/
+    Tabla_Matriculas = $('#Matriculas_T').DataTable
+    ({
+        "language":
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate":
+            {
+                "next": "Siguiente pagina",
+                "previous": "Pagina anterior"
+            },
+            "columnDefs": [{ "className": "dt-center", "targets": "_all" }],
+            "responsive": true,
+            "search": {
+                "caseInsensitive": false
+            }
+        }
+    });
+
+    Tabla_Pagos = $('#Pagos_T').DataTable
+    ({
+        "language":
+        {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron datos",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "La busqueda no devolvio resultados",
+            "infoFiltered": "(Se busco en _MAX_ registros )",
+            "sSearch": "Buscar",
+            "paginate":
+            {
+                "next": "Siguiente pagina",
+                "previous": "Pagina anterior"
+            },
+            "columnDefs": [{ "className": "dt-center", "targets": "_all" }],
+            "responsive": true,
+            "search": {
+                "caseInsensitive": false
+            }
+        }
+    });
 }
 
 function isNumber(n) {
