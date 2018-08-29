@@ -2,6 +2,7 @@
 var AnimacionSideBar = false;
 var EsTelefono = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 var FormularioActivo = "Inicio";
+var Operacion;
 var Tabla_EstudiantesR;
 var Tabla_ProfesoresR;
 var Tabla_AdministradoresA;
@@ -34,6 +35,19 @@ $(document).ready(function (event) {
     //CargarImagenes();
 });
 
+function ActualizarTodo() {
+    swal({ title: 'Refrescando', text: 'Espere por favor', type: 'info', allowOutsideClick: false, timer: '3000'});
+    Tabla_Instrumento.clear().draw();
+    Tabla_Estuche.clear().draw();
+    Tabla_Proveedor.clear().draw();
+    Tabla_Remision.clear().draw();
+    Tabla_Accesorios.clear().draw();
+    Tabla_Desglose_Remision.clear().draw();
+    Tabla_Aula.clear().draw();
+    swal.showLoading();
+    swal.closeModal();
+}
+
 function InicializacionEventos() {
 
     /* Eventos del menu lateral */
@@ -45,8 +59,10 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'none';
         document.getElementById('Matriculas').style.display = 'none';
         document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Inicio";
+        $('#AddA').hide();
     });
 
     $('#PerfilSubMenu').click(function (event) {
@@ -57,8 +73,10 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'none';
         document.getElementById('Matriculas').style.display = 'none';
         document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Administrador_Detalle";
+        $('#AddA').hide();
     });
 
     $('#estudiantessubmenu').click(function (event) {
@@ -69,8 +87,11 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'none';
         document.getElementById('Matriculas').style.display = 'none';
         document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Estudiantes";
+        $('#AddA').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Añadir Usuario');
+        $('#AddA').show("drop", 50);
     });
 
     $('#profesoressubmenu').click(function (event) {
@@ -81,8 +102,11 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'none';
         document.getElementById('Matriculas').style.display = 'none';
         document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Profesores";
+        $('#AddA').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Añadir Usuario');
+        $('#AddA').show("drop", 50);
     });
 
     $('#administradoressubmenu').click(function (event) {
@@ -93,8 +117,11 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'block';
         document.getElementById('Matriculas').style.display = 'none';
         document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Administradores";
+        $('#AddA').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Añadir Usuario');
+        $('#AddA').show("drop", 50);
     });
 
     $('#matriculassubmenu').click(function (event) {
@@ -105,8 +132,11 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'none';
         document.getElementById('Matriculas').style.display = 'block';
         document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Matriculas";
+        $('#AddA').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Añadir Matricula');
+        $('#AddA').show("drop", 50);
     });
 
     $('#pagossubmenu').click(function (event) {
@@ -117,9 +147,26 @@ function InicializacionEventos() {
         document.getElementById('Administradores').style.display = 'none';
         document.getElementById('Matriculas').style.display = 'none';
         document.getElementById('Pagos').style.display = 'block';
+        document.getElementById('Usuario_Detalle').style.display = 'none';
         if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
         FormularioActivo = "Pagos";
+        $('#AddA').html('<span class="btn-label"><i class="ion-music-note" data-pack="default" data-tags="add, include, new, invite, +"></i></span> Añadir Pago');
+        $('#AddA').show("drop", 50);
     });
+
+
+    $('#AddA').click(function (event) {
+        document.getElementById('Inicio').style.display = 'none';
+        document.getElementById('Administrador_Detalle').style.display = 'none';
+        document.getElementById('Estudiantes').style.display = 'none';
+        document.getElementById('Profesores').style.display = 'none';
+        document.getElementById('Administradores').style.display = 'none';
+        document.getElementById('Matriculas').style.display = 'none';
+        document.getElementById('Pagos').style.display = 'none';
+        document.getElementById('Usuario_Detalle').style.display = 'block';
+        if (EsTelefono) { $('#sidebar').css('margin-left', '-110px'); AnimacionSideBar = true; }
+    });
+
 
     /* Eventos Barra de navegación */
     $('#sidebarCollapse').click(function (event) {
@@ -161,6 +208,27 @@ function InicializacionEventos() {
 
     $('#MenuEmergente').mouseleave(function (Event) {
         $('#MenuEmergente').hide(200);
+    });
+
+    /*ACTUALIZA los datos de las tablas*/
+
+    $('#ActualizarA').click(function (event) {
+        ActualizarTodo();
+    });
+
+    /*Boton AÑADIR dependiendo del Formulario que se encuentre ACTIVO*/     
+
+    $('#AddA').click(function(event) {
+
+        $('.FlotarDerecha').hide();
+        
+        if (FormularioActivo == "Estudiantes" || FormularioActivo == "Profesores" || FormularioActivo == "Administradores") {
+            Operacion = 'Nuevo';
+            $('#Header_Usuario_Texto').text('Añadir Usuario');
+            $('#Actualizar_Usuario').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
+            $('#AddA').hide();
+        }
+
     });
 }
 

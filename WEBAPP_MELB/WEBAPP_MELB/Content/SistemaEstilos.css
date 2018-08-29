@@ -1068,9 +1068,25 @@ canvas
 /*||                                        ||*/
 /*============================================*/
 
-#Administrador_Detalle, #Estudiantes, #Profesores, #Administradores, #Matriculas, #Pagos
+#Administrador_Detalle, #Estudiantes, #Profesores, #Administradores, #Matriculas, #Pagos, #Usuario_Detalle
 {
     display: none;
+}
+
+#AddA
+{
+    display: none;
+    margin-right: 25px !important;
+    border-radius: 3px;
+    background-color: #5d9cec !important;
+    border: none   !important; 
+    margin-top: 2px;
+}
+
+#ActualizarA
+{
+    height: 32px;
+    margin-right: 30px;
 }
 
 
