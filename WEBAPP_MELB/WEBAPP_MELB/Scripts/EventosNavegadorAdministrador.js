@@ -227,8 +227,17 @@ function InicializacionEventos() {
             $('#Header_Usuario_Texto').text('Añadir Usuario');
             $('#Actualizar_Usuario').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Añadir');
             $('#AddA').hide();
+
+            Habilitar_Deshabilitar_Usuarios(true)
+            Base64Imagen($('#Imagen_Usuario').attr('src'));
         }
 
+    });
+
+    /* Eventos: Formulario Usuarios*/
+
+    $('#Cambiar_Imagen_Usuario').click(function (event) {
+        document.getElementById('Imagen_Archivo_Usuario').click();
     });
 }
 
@@ -358,4 +367,39 @@ function InicializacionTablas() {
 
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+
+
+/*----------Extras fuera de este JS------------*/
+
+function Habilitar_Deshabilitar_Usuarios(Cond) {
+    if (Cond == true) {
+        $("#ID_Usuario").prop("disabled", "false");
+        $('#Nombre_Usuario').removeAttr('disabled');
+        $('#Direccion_Usuario').removeAttr('disabled');
+        $('#Telefono1_Usuario').removeAttr('disabled');
+        $('#Telefono2_Usuario').removeAttr('disabled');
+        $('#Correo_Usuario').removeAttr('disabled');
+        $('#Cambiar_Imagen_Usuario').removeAttr('disabled');
+        $('#Actualizar_Usuario').removeAttr('disabled');
+        $('#Tipo_Usuario').removeAttr('disabled');
+        $('#Contacto_Usuario').removeAttr('disabled');
+        $('#Identificacion_Usuario').removeAttr('disabled');
+        $('.selectpicker').selectpicker('refresh');
+    }
+    else {
+        $("#ID_Usuario").prop("disabled", "true");
+        $('#Nombre_Usuario').prop('disabled', 'true');
+        $('#Direccion_Usuario').prop('disabled', 'true');
+        $('#Telefono1_Usuario').prop('disabled', 'true');
+        $('#Telefono2_Usuario').prop('disabled', 'true');
+        $('#Correo_Usuario').prop('disabled', 'true');
+        $('#Cambiar_Imagen_Usuario').prop('disabled', 'true');
+        $('#Actualizar_Usuario').prop('disabled', 'true');
+        $('#Tipo_Usuario').prop('disabled', 'true');
+        $('#Contacto_Usuario').prop('disabled', 'true');
+        $('#Identificacion_Usuario').prop('disabled', 'true');
+        $('.selectpicker').selectpicker('refresh');
+    }
 }

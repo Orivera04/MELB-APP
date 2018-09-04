@@ -1068,7 +1068,7 @@ canvas
 /*||                                        ||*/
 /*============================================*/
 
-#Administrador_Detalle, #Estudiantes, #Profesores, #Administradores, #Matriculas, #Pagos, #Usuario_Detalle
+#Administrador_Detalle, #Estudiantes, #Profesores, #Administradores, #Matriculas, #Pagos, #Usuario_Detalle, #Imagen_Archivo_Usuario
 {
     display: none;
 }
