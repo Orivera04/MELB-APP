@@ -170,7 +170,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
             {
               $.ajax({
 
-                  url: 'http://localhost:53603/api/Accesorio/',
+                  url: 'https://melbws.azurewebsites.net/api/Accesorio/',
 
                   type: 'PUT',
 

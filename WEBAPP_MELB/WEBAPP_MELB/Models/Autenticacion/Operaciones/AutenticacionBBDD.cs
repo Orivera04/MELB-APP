@@ -38,16 +38,21 @@ namespace WEBAPP_MELB.Models.Autenticacion
                 Nombre.Direction = ParameterDirection.Output;
                 SqlParameter Acceso = new SqlParameter("@Acceso", SqlDbType.VarChar, 20);
                 Acceso.Direction = ParameterDirection.Output;
+                SqlParameter Imagen = new SqlParameter("@Imagen", SqlDbType.VarChar, 35);
+                Imagen.Direction = ParameterDirection.Output;
+
+
 
                 CMD.Parameters.Add(Existe);
                 CMD.Parameters.Add(Nombre);
                 CMD.Parameters.Add(Acceso);
+                CMD.Parameters.Add(Imagen);
 
                 CMD.ExecuteNonQuery();
                 Instancia_BBDD.Cerrar_Conexion();
                 if (CMD.Parameters["@ID"].Value != DBNull.Value)
                 {
-                    return new dynamic[] { CMD.Parameters["@ID"].Value, CMD.Parameters["@Nombre"].Value,CMD.Parameters["@Acceso"].Value};
+                    return new dynamic[] { CMD.Parameters["@ID"].Value, CMD.Parameters["@Nombre"].Value,CMD.Parameters["@Acceso"].Value, CMD.Parameters["@Imagen"].Value };
                 }
                 else
                 {

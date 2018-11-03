@@ -12,6 +12,7 @@ var Funcion_Realizar = 'Actualizar';
 var Fila_Seleccionada = 0;
 var Borrar_Remision_Bandera = true;
 var Ultimo_ID;
+var ID_Empleado = [];
 
        
         function Cargar_Remisiones(Reporte) 
@@ -44,6 +45,7 @@ var Ultimo_ID;
                                             Estado,
                                             Resultado[i].Fecha_Inicio_Formateada,
                                             Resultado[i].Fecha_Fin_Formateada,
+                                            Resultado[i].Empleado_Nombre,
                                             '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                             '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                                         ]).draw(false);
@@ -62,7 +64,8 @@ var Ultimo_ID;
                                                 Resultado_Estudiante = JSON.parse(Resultado_Estudiante);
                                                 for (i = 0; i < Resultado_Estudiante.length; i++) {
                                                     ID_Estudiante.push({ ID: Resultado_Estudiante[i].ID_Estudiante, Nombre: Resultado_Estudiante[i].Nombre + ' ' + Resultado_Estudiante[i].Apellido });
-                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre +" "+ Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
+                                                    $('#ID_Estudiante_Remision').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre + " " + Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
+                                                    $('#ID_Estudiante_Lista').append('<option data-subtext="' + Resultado_Estudiante[i].Nombre + " " + Resultado_Estudiante[i].Apellido + '">#' + Resultado_Estudiante[i].ID_Estudiante + '</option>');
                                                 }
                                             }
                                         },
@@ -75,7 +78,7 @@ var Ultimo_ID;
                                                 });
                                         }
                                     });
-                                Cargar_Aulas();
+                                Cargar_ListaNegra();                                
                             }
                     }
                     else
@@ -109,7 +112,7 @@ var Ultimo_ID;
             Tabla_Desglose_Remision.clear().draw();
             $.ajax
             ({
-                url: 'http://localhost:53603/api/Remision/'+ID,
+                    url: 'https://melbws.azurewebsites.net:53603/api/Remision/'+ID,
                 type: 'GET',
                 success: function (Resultado) 
                 {
@@ -307,7 +310,7 @@ var Ultimo_ID;
             if (ID_Filtro != 0) {
                 $.ajax
                     ({
-                        url: 'http://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&ID_Filtro=' + ID_Filtro,
+                        url: 'https://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&ID_Filtro=' + ID_Filtro,
                         type: 'GET',
                         success: function (Resultado) {
                             Tabla_Remision.clear().draw();
@@ -330,6 +333,7 @@ var Ultimo_ID;
                                         Estado,
                                         Resultado[i].Fecha_Inicio_Formateada,
                                         Resultado[i].Fecha_Fin_Formateada,
+                                        Resultado[i].Empleado_Nombre,
                                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                                     ]).draw(false);
@@ -347,14 +351,14 @@ var Ultimo_ID;
             }
             else {
                 Fecha_Inicial = Fecha_Inicial.split('/');
-                Fecha_Inicial = Fecha_Inicial[1] + '/' + Fecha_Inicial[0] + '/' + Fecha_Inicial[2];
+                Fecha_Inicial = Fecha_Inicial[2] + '/' + Fecha_Inicial[1] + '/' + Fecha_Inicial[0];
 
                 Fecha_Final = Fecha_Final.split('/');
-                Fecha_Final = Fecha_Final[1] + '/' + Fecha_Final[0] + '/' + Fecha_Final[2];
+                Fecha_Final = Fecha_Final[2] + '/' + Fecha_Final[1] + '/' + Fecha_Final[0];
 
                 $.ajax
                     ({          
-                        url: 'http://localhost:53603/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
+                        url: 'https://melbws.azurewebsites.net/api/Remision?Filtro=' + Tipo_Filtro + '&Fecha_Inicial=' + Fecha_Inicial + '&Fecha_Final=' + Fecha_Final,
                         type: 'GET',
                         success: function (Resultado) {
                             Tabla_Remision.clear().draw();
@@ -377,6 +381,7 @@ var Ultimo_ID;
                                         Estado,
                                         Resultado[i].Fecha_Inicio_Formateada,
                                         Resultado[i].Fecha_Fin_Formateada,
+                                        Resultado[i].Empleado_Nombre,
                                         '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="Detallar_Datos_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                                         '<button type="button" class="btn btn-danger" onclick ="Eliminar_Remision(' + Resultado[i].ID_Remision + ')"><i class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x"></li></button>'
                                     ]).draw(false);
@@ -398,18 +403,19 @@ var Ultimo_ID;
 
         function Detallar_Datos_Remision(ID)
         {   
-            $('#Switch_Editar_Remision').prop('checked',false);
+            $('#Switch_Editar_Remision').prop('checked', false);
+            $('#ADD').hide();
             Habilitar_Deshabilitar_Remision(false);        
             Operacion = 'Actualizar';                
-            $('#Remisiones').hide();
-            $('#Remision_Detalle').show(200);
-            $('#ADD').hide();
+            $('#Remisiones').hide();     
+            $('#Remision_Detalle').show(100);            
             $('#Busqueda_Form').show();
             $('#Busqueda_Form').css('display','inline-flex');
             $('#Contenedor_Panel').show();
             $('#Header_Remision_Texto').text('Descripción de la Remision');
             $('#Actualizar_Remision').html('<span class="btn-label"><i class="ion-upload" data-pack="default" data-tags="storage, cloud"></i></span>Cerrar Remision');
             Cargar_Remision_Por_ID(ID);
+            $('#ReporteHistoricoRemision').show();
             $('#Reporte').show();
         }
 
@@ -608,6 +614,30 @@ var Ultimo_ID;
 
 /* Funciones de soporte */
 
+        function CargarEmpleados()
+        {
+            $.ajax
+                ({
+                    url: 'http://melbws.azurewebsites.net/api/Empleado/',
+                    type: 'GET',
+                    success: function (Resultado) {
+                        Resultado = JSON.parse(Resultado);
+                        for (I = 0; I < Resultado.length; I++)
+                        {
+                            ID_Empleado.push({ ID: Resultado[I].ID_Empleado, Nombre: Resultado[I].Nombre +" "+ Resultado[I].Apellido});
+                        }
+                      },
+                    error: function (Mensaje) {
+                        swal
+                            ({
+                                title: "Error",
+                                text: "No se pudo cargar los empleados",
+                                type: "error",
+                            });
+                    }
+                });
+        }
+        
         function Insertar_Actualizar_Remision(Comando)
         {   
           
@@ -638,7 +668,7 @@ var Ultimo_ID;
 
                 $.ajax
                 ({  
-                      url: 'http://localhost:53603/api/Remision',
+                      url: 'https://melbws.azurewebsites.net:53603/api/Remision',
                       type: 'POST',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -690,7 +720,7 @@ var Ultimo_ID;
                 swal.showLoading();  
                 $.ajax
                 ({
-                      url: 'http://localhost:53603/api/Remision',
+                      url: 'https://melbws.azurewebsites.net:53603/api/Remision',
                       type: 'PUT',
                       data: Remision_BBDD,
                       success: function(Resultado)
@@ -1040,131 +1070,187 @@ var Ultimo_ID;
             window.open(Documento.output('bloburl'), '_blank');
         }
 
-function GenerarDocumentoRemisionNueva()
-{
-    $.ajax
-        ({
-            url: 'http://melbws.azurewebsites.net/api/Remision/' + $('#ID_Remision').val(),
-            type: 'GET',
-            success: function (Resultado)
-            {
-                Resultado = JSON.parse(Resultado);
-
-                for (I = 0; I < Resultado[0].Lista_Desglose.length; I++)
+        function GenerarDocumentoRemisionNueva(Parametro)
+        {
+        $.ajax
+            ({
+                url: 'http://melbws.azurewebsites.net/api/Remision/' + $('#ID_Remision').val(),
+                type: 'GET',
+                success: function (Resultado)
                 {
-                    if (Resultado[0].Lista_Desglose[I].Accesorios == null)
+                    Resultado = JSON.parse(Resultado);
+
+                    for (I = 0; I < Resultado[0].Lista_Desglose.length; I++)
                     {
-                        Resultado[0].Lista_Desglose[I].Accesorios = "Ninguno";
+                        if (Resultado[0].Lista_Desglose[I].Accesorios == null)
+                        {
+                            Resultado[0].Lista_Desglose[I].Accesorios = "Ninguno";
+                        }
                     }
+
+                    var Documento = new jsPDF("l", 'cm', "a4");
+                    if (Parametro == "Historico" || Parametro == "Finalizacion")
+                    {                        
+                        var Columnas =
+                            [
+                                { title: "ID", dataKey: "ID_Instrumento" },
+                                { title: "Tipo", dataKey: "Nombre" },
+                                { title: "Descripción", dataKey: "Descripcion" },
+                                { title: "Color", dataKey: "Color" },
+                                { title: "Estado", dataKey: "Estado" },
+                                { title: "Estuche", dataKey: "Estuche_Descripcion" },
+                                { title: "Accesorios", dataKey: "Accesorios" },
+                                { title: "Observación Inicial", dataKey: "Observacion_Inicial" },
+                                { title: "Observación Final", dataKey: "Observacion_Final" }
+                            ];          
+                    }
+                    else
+                    {
+                        var Columnas =
+                            [
+                                { title: "ID", dataKey: "ID_Instrumento" },
+                                { title: "Tipo", dataKey: "Nombre" },
+                                { title: "Descripción", dataKey: "Descripcion" },
+                                { title: "Color", dataKey: "Color" },
+                                { title: "Estado", dataKey: "Estado" },
+                                { title: "Estuche", dataKey: "Estuche_Descripcion" },
+                                { title: "Accesorios", dataKey: "Accesorios" },
+                                { title: "Observación Inicial", dataKey: "Observacion_Inicial" }
+                            ];    
+                    }
+                    
+                    Documento.autoTable(Columnas, Resultado[0].Lista_Desglose,
+                        {
+                            theme: 'grid',
+                            bodyStyles: {
+                                lineColor: [221, 221, 221]
+                            },
+                            headerStyles: {
+                                lineWidth: 0,
+                                fillColor: [22, 12, 40],
+                                textColor: [255, 255, 255],
+                                cellPadding: 0.3,
+                            },
+                            styles: {
+                                overflow: 'linebreak',
+                                lineWidth: 0.03,
+                                halign: 'center',
+                                cellPadding: 0.07,
+                                fillcolor: [199, 0, 57],
+                                cellPadding: 1
+                            },
+                            margin: {
+                                top: 5.5,
+                                left: 1
+                            },
+                            addPageContent: function (Event) {
+                                /* Encabezado parte izquierda*/
+                                Documento.setFont("helvetica");
+                                Documento.setFontType("bold");
+                                Documento.setFontSize(11);
+                                Documento.text(1, 0.9, 'Música en los barrios - MeLB');
+
+                                Documento.setFontType("normal");
+                                Documento.text(1, 1.5, 'Linda vista norte, de la Estación II de Policía 1 1/2c. abajo,');
+                                Documento.text(1, 2, 'contiguo al parque.  Managua – Nicaragua.')
+                                Documento.text(1, 2.5, 'Tel. 2254-6043');
+                                Documento.text(1, 3, 'Correo electrónico: melbnicaragua@gmail.com');
+
+                                /* Encabezado parte derecha */
+
+                                Documento.addImage(LogoIMG64CasaTresMundos, 'png', 24.5, 0.2, 3, 3);
+                                Documento.addImage(LogoIMG64Melb, 'jpg', 21.6, 0.25, 3, 3);
+
+
+                                /* Cuerpo */
+
+                                Documento.setFontType("bold");
+                                Documento.text(1, 4.2, 'Numero Remisión : #' + $('#ID_Remision').val());
+                                Documento.text(7, 4.2, 'Estudiante: ' + $("#ID_Estudiante_Remision option:selected").attr('data-subtext'));
+                                Documento.text(15.5 , 4.2, 'Fecha: ' + $('#Remision_Fecha_Inicio').val());
+                                Documento.text(19.9, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre); 
+
+                                if (Parametro != null & Parametro != "Finalizacion")
+                                {
+                                    Documento.text(1, 5.0, 'Estado de la remisiòn : ' + $('#Estado_Remision').val());
+                                }
+                                else if (Parametro == null)
+                                {
+                                    Documento.text(1, 5.0, 'Tipo de documento: Nueva Remisiòn');
+                                }
+                                else
+                                {
+                                    Documento.text(1, 5.0, 'Tipo de documento: Finalizaciòn De Remisiòn');
+                                }
+                                /* Footer */
+                                Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
+                                Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
+                            }
+                        });     
+
+                    Documento.setFont("helvetica");
+                    Documento.setFontType("bold");
+                    Documento.setFontSize(11);
+                    Documento.text(1, Documento.autoTableEndPosY() + 1, 'Nota:');         
+
+                    Documento.setFont("helvetica");
+                    Documento.setFontType("normal");
+                    Documento.setFontSize(11);
+
+                    Documento.text(1, Documento.autoTableEndPosY() + 1.5, 'Los instrumentos arriba detallados quedan en resguardo de la persona registrada arriba como responsable mientras permanezca activo en Música en los Barrios');
+                    Documento.text(1, Documento.autoTableEndPosY() + 2, 'Queda por entedido que cualquier pérdida o daño de los instrumentos serán asumidos por la persona que firma la remisión al precio que MELB estime.');
+                    if (Parametro == null)
+                    {
+                        Documento.setFont("helvetica");
+                        Documento.setFontType("bold");
+                        Documento.setFontSize(11);
+
+
+                        Documento.setDrawColor(0);
+                        Documento.setLineWidth(0.03);
+
+                        Documento.line(4.5, 16.9, 7.5, 16.9);
+                        Documento.line(16, 16.9, 19.5, 16.9);
+
+                        Documento.text(4.5, 17.5, 'Recibi Conforme');
+                        Documento.text(16, 17.5, 'Entregue conforme');
+
+                        Documento.setFont("helvetica");
+                        Documento.setFontType("normal");
+                        Documento.setFontSize(11);
+
+                        Documento.text(4.5, 18, 'Responsable del instrumento');                       
+                        Documento.text(16, 18, Resultado[0].Empleado_Nombre);
+                                  
+                    }
+                    else if (Parametro == "Finalizacion")
+                    {
+                        Documento.setDrawColor(0);
+                        Documento.setLineWidth(0.03);
+
+                        Documento.line(4.5, 16.9, 7.5, 16.9);
+                        Documento.line(16, 16.9, 19.5, 16.9);
+
+                        Documento.text(4.5, 17.5, 'Entregue conforme');
+                        Documento.text(4.5, 18, 'Responsable del instrumento');
+
+                        Documento.text(16, 17.5, 'Recibi Conforme');
+                        Documento.text(16, 18, Resultado[0].Empleado_Nombre);
+                    }
+           
+                    window.open(Documento.output('bloburl'), '_blank');
+                },
+                error: function (Mensaje)
+                {
+                    swal
+                        ({
+                            title: "Error generando documento de la remisión",
+                            text: "No se pudo conectar con el servidor.",
+                            type: "error",
+                        });
                 }
 
-                var Documento = new jsPDF("l", 'cm', "a4");                
-                var Columnas =
-                    [
-                        { title: "ID Instrumento", dataKey: "ID_Instrumento" },
-                        { title: "Tipo", dataKey: "Nombre" },
-                        { title: "Descripción", dataKey: "Descripcion" },
-                        { title: "Color", dataKey: "Color" },
-                        { title: "Estado", dataKey: "Estado" },
-                        { title: "Estuche", dataKey: "Estuche_Descripcion" },
-                        { title: "Accesorios", dataKey: "Accesorios" },
-                        { title: "Observación Inicial", dataKey: "Observacion_Inicial" }
-                    ];
-                Documento.autoTable(Columnas, Resultado[0].Lista_Desglose,
-                    {
-                        theme: 'grid',
-                        bodyStyles: {
-                            lineColor: [221, 221, 221]
-                        },
-                        headerStyles: {
-                            lineWidth: 0,
-                            fillColor: [22, 12, 40],
-                            textColor: [255, 255, 255],
-                            cellPadding: 0.3,
-                        },
-                        styles: {
-                            overflow: 'linebreak',
-                            lineWidth: 0.03,
-                            halign: 'center',
-                            cellPadding: 0.07,
-                            fillcolor: [199, 0, 57],
-                            cellPadding: 1
-                        },
-                        margin: {
-                            top: 5.5,
-                            left: 1
-                        },
-                        addPageContent: function (Event) {
-                            /* Encabezado parte izquierda*/
-                            Documento.setFont("helvetica");
-                            Documento.setFontType("bold");
-                            Documento.setFontSize(11);
-                            Documento.text(1, 0.9, 'Música en los barrios - MeLB');
+            });
+        }
 
-                            Documento.setFontType("normal");
-                            Documento.text(1, 1.5, 'Linda vista norte, de la Estación II de Policía 1 1/2c. abajo,');
-                            Documento.text(1, 2, 'contiguo al parque.  Managua – Nicaragua.')
-                            Documento.text(1, 2.5, 'Tel. 2254-6043');
-                            Documento.text(1, 3, 'Correo electrónico: melbnicaragua@gmail.com');
-
-                            /* Encabezado parte derecha */
-
-                            Documento.addImage(LogoIMG64CasaTresMundos, 'png', 24.5, 0.2, 3, 3);
-                            Documento.addImage(LogoIMG64Melb, 'jpg', 21.6, 0.25, 3, 3);
-
-
-                            /* Cuerpo */
-
-                            Documento.setFontType("bold");
-                            Documento.text(1, 4.2, 'Numero Remisión : #' + $('#ID_Remision').val());
-                            Documento.text(7, 4.2, 'Estudiante: ' + $("#ID_Estudiante_Remision option:selected").attr('data-subtext'));
-                            Documento.text(15.5 , 4.2, 'Fecha: ' + $('#Remision_Fecha_Inicio').val());
-                            Documento.text(19.9, 4.2, 'Empleado: ' + Resultado[0].Empleado_Nombre);                       
-
-
-                            /* Footer */
-                            Documento.text(1, 20, 'Generado automaticamente por : MELBMOI');
-                            Documento.text(25.5, 20, 'Pagina ' + Event.pageCount);
-                        }
-                    });
-                Documento.setFont("helvetica");
-                Documento.setFontType("bold");
-                Documento.setFontSize(11);
-
-                Documento.text(1, Documento.autoTableEndPosY() + 1, 'Nota:');
-
-                Documento.setFont("helvetica");
-                Documento.setFontType("normal");
-                Documento.setFontSize(11);
-
-                Documento.text(1, Documento.autoTableEndPosY() + 1.5, 'Los instrumentos arriba detallados quedan en resguardo de la persona registrada arriba como responsable mientras permanezca activo en Música en los Barrios');
-                Documento.text(1, Documento.autoTableEndPosY() + 2, 'Queda por entedido que cualquier pérdida o daño de los instrumentos serán asumidos por la persona que firma la remisión al precio que MELB estime.');
-
-                Documento.setDrawColor(0);
-                Documento.setLineWidth(0.03);
-
-                Documento.line(4.5, 16.9, 7.5, 16.9);
-                Documento.line(16, 16.9, 19.5, 16.9);
-
-                Documento.text(4.5, 17.5, 'Recibi Conforme');
-                Documento.text(4.5, 18, 'Responsable del instrumento');
-
-                Documento.text(16, 17.5, 'Entregue conforme');
-                Documento.text(16, 18, Resultado[0].Empleado_Nombre);
-
-
-           
-                window.open(Documento.output('bloburl'), '_blank');
-            },
-            error: function (Mensaje)
-            {
-                swal
-                    ({
-                        title: "Error generando documento de la remisión",
-                        text: "No se pudo conectar con el servidor.",
-                        type: "error",
-                    });
-            }
-
-        });
-}
+       

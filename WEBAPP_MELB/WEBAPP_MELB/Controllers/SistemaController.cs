@@ -12,7 +12,7 @@ namespace WEBAPP_MELB.Controllers
         {
             if (Session["EstaLogeado"] != null)
             {
-                if (Session["Permiso"].ToString() == "2" || Session["Permiso"].ToString() == "5")
+                if (Session["Permiso"].ToString() == "2" || Session["Permiso"].ToString() == "4")
                 {
                     return View();
                 }

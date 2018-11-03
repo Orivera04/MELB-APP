@@ -56,7 +56,7 @@ function ActualizarInfoEstudiante()
         var EstudianteInfo = { ID_Estudiante: $('#ID_Estudiante').val(), Nombre: $('#Nombre_Estudiante').val(), Apellido: $('#Apellido_Estudiante').val(), Correo: $('#Correo_Estudiante').val(), Fecha_Nacimiento: $('#FechaNacimiento_Estudiante').val(), Tutor_Nombre: $('#Tutor_EstudianteNombre').val(), Tutor_Apellido: $('#Tutor_Apellido').val(), Cedula: $('#EstudianteCedula').val(), Telefono_1: $('#EstudianteTelefono1').val(), Telefono_2: $('#EstudianteTelefono2').val(), Direccion: $('#EstudianteDireccion').val(), Sexo: $('#SexoEstudiante').val(), Foto: $('#ImagenEstudiante').attr('src'), Rol: $('#EstudianteRol').val(), ID_Beca: ID };
         $.ajax
             ({
-                url: 'http://localhost:53603/api/Estudiante',
+                url: 'https://melbws.azurewebsites.net:53603/api/Estudiante',
                 type: 'PUT',
                 data: EstudianteInfo,
                 success: function (Resultado) {

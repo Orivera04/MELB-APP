@@ -44,6 +44,7 @@ var Ultimo_IDAula;
                      EstadisticasInstrumentos("1");
                      EstadisticasInstrumentos("0");
                 }
+                CargarEmpleados();
             },
 
             error: function (Mensaje) 
@@ -123,7 +124,7 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {                                                
                 $.ajax
                 ({
-                      url: 'http://localhost:53603/api/Aula/',
+                        url: 'https://melbws.azurewebsites.net:53603/api/Aula/',
                       type: 'POST',
                       data: Aula_BBDD,
                       success: function(Resultado)
@@ -161,7 +162,7 @@ function Insertar_Actualizar_Aula(Comando, ID_Aula, Numero, Piso)
             {
                 $.ajax
                 ({
-                      url: 'http://localhost:53603/api/Aula/',
+                      url: 'https://melbws.azurewebsites.net/api/Aula/',
                       type: 'PUT',
                       data: Aula_BBDD,
                       success: function(Resultado)
