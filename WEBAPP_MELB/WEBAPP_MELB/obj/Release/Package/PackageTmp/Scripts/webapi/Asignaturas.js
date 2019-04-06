@@ -26,6 +26,7 @@ function CargarClasesDocente()
                                 '<button type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick ="CargarCurso(' + Resultado[I].CodigoCurso + ',\'' + Resultado[I].NombreCurso + '\',' + Resultado[I].AlumnosInscritos + ',' + Resultado[I].Nivel + ',\'' + Resultado[I].Modalidad + '\',' + Resultado[I].Estado+')"><i class="ion-navicon-round" data-pack="default"></i></button>',
                             ]).draw(false);
                     }
+                    $('#CantidadCursos').text($('#CursosProfesor_T tr').length-1);         
                     swal.closeModal();
                 }
             },

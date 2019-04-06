@@ -65,7 +65,8 @@
                       Resultado = JSON.parse(Resultado);     
                       if(Resultado.Codigo == null)
                       {       
-                          Resultado = Resultado[0];                  
+                          Resultado = Resultado[0];     
+                          $('#Reporte').hide();
                           $('#ID_Proveedor').val(Resultado.ID_Proveedor); 
                           $('#Correo_Proveedor').val(Resultado.Correo);
                           $('#Direccion_Proveedor').val(Resultado.Direccion);

@@ -37,9 +37,10 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="active">
                 <div class="sidebar-header">
-                    <a data-toggle="tooltip" data-placement="bottom" data-original-title="Regresar al Login" href="@Url.Action("MatarSesion","Sistema")">
+                    <a  href="javascript:void(0)">
                         <img style="width:75px;" src="~/Content/assets/Logo.png" />
                     </a>
+                    
                 </div>
                 <ul class="list-unstyled components">
                     <li id="menuinicio">
@@ -59,13 +60,16 @@
                             <li id="instrumentossubmenu"><a href="javascript:void(0)">Instrumentos</a></li>
                         </ul>
                         <a href="javascript:void(0)" id="proveedoressubmenu">
-                            <i class="glyphicon glyphicon-bookmark"></i> Proveedores
+                            <i class="glyphicon glyphicon-inbox"></i> Proveedores
                         </a>
                         <a href="javascript:void(0)" id="remisionessubmenu">
                             <i class="glyphicon glyphicon-file"></i> Remisiones
                         </a>
+                        <a href="javascript:void(0)" id="listanegrasubmenu">
+                            <i class="glyphicon glyphicon-pushpin"></i> Lista Negra
+                        </a>
                         <a href="javascript:void(0)" id="aulasubmenu">
-                            <i class="glyphicon glyphicon-road"></i> Aulas
+                            <i class="glyphicon glyphicon-education"></i> Aulas
                         </a>
                     </li>
                 </ul>
@@ -104,12 +108,17 @@
                                     <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="CodigoBarra" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir etiqueta de codigo de barras">
                                         <i class="icon ion-ios-barcode" data-pack="default" data-tags="refresh"></i>
                                     </button>
+                                    <button style="display:none;margin-right:15px;" data-toggle="tooltip" data-placement="bottom" id="ReporteHistoricoRemision" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick="" data-original-title="Imprimir Reporte">
+                                        <i class="ion-clipboard" data-pack="default" data-tags="refresh"></i>
+                                    </button>
                                     <div class="input-group m-t-10" id="Busqueda_Form">
                                         <input type="number" id="Descripcion_Instrumento" class="form-control" placeholder="ID" maxlength="50">
                                         <span class="input-group-btn">
                                             <button id="Buscar_Boton" type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-search active" data-pack="default" data-tags="magnifying glass"></i></button>
                                         </span>
-                                    </div>
+                                    </div>  
+                                    
+                                    <img id="Perfil" src="@Session["Imagen"].ToString()" class="ImagenPerfil">                                    
                                 </form>
                             </li>
                         </ul>
@@ -117,6 +126,13 @@
                 </div>
             </nav>
 
+            <div id="MenuEmergente" class="MenuContextual">
+                <div class="TrianguloContextual">
+                </div>
+                <ul>
+                    <li class="LIMenu"><span class="icon ion-power CerrarS"></span><a href="@Url.Action("MatarSesion","Sistema")">Cerrar Sesiòn</a></li>
+                </ul>
+            </div>
 
             <div>
                 <div id="Inicio">
@@ -245,7 +261,7 @@
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
                                                 <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
-                                                <select id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                                <select data-show-subtext="true" data-live-search="true" id="ID_Filtro_Instrumento" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -344,7 +360,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Proveedor</label>
+                                                            <label class="control-label"> ID Proveedor</label>
                                                             <div class="input-group m-t-10">
                                                                 <select data-live-search="true" name="Proveedor_Instrumento" id="Proveedor_Instrumento" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
@@ -382,9 +398,9 @@
                                                         </div>
 
                                                         <div class="form-group" id="Campo_Aula">
-                                                            <label class="control-label">Aula</label>
+                                                            <label class="control-label">ID Aula</label>
                                                             <div class="input-group m-t-10">
-                                                                <select id="Aula_Clase" class="selectpicker" data-style="btn-white" disabled></select>
+                                                                <select data-show-subtext="true" id="Aula_Clase" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -426,9 +442,9 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label">Estuche</label>
+                                                            <label class="control-label">ID Estuche</label>
                                                             <div class="input-group m-t-10" disabled>
-                                                                <select data-live-search="true" id="Estuche_Instrumento" name="Estuche_Instrumento" title="Selecciona un estuche" class="selectpicker" data-style="btn-white" disabled></select>
+                                                                <select data-show-subtext="true" data-live-search="true" id="Estuche_Instrumento" name="Estuche_Instrumento" title="Selecciona un estuche" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
                                                         </div>
 
@@ -690,10 +706,12 @@
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
                                                 <label class="control-label col-md-4" id="Curso_Res" align="center">Filtro</label>
-                                                <select id="Filtro_Remision" class="selectpicker" data-style="btn-white" data-width="100%">
+                                                <select  id="Filtro_Remision" class="selectpicker" data-style="btn-white" data-width="100%">
                                                     <option>Instrumento</option>
                                                     <option>Estudiante</option>
-                                                    <option>Fecha</option>
+                                                    <option>Empleado</option>
+                                                    <option>Fecha de elaboración</option>
+                                                    <option>Fecha de culminación</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -702,7 +720,7 @@
                                         <div class="form-inline">
                                             <div class="input-group m-t-10">
                                                 <label id="ID_Instrumento_ET" class="control-label col-md-4" align="center">ID</label>
-                                                <select id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white" data-width="100%"></select>
+                                                <select data-show-subtext="true" data-live-search="true" id="ID_Filtro_Remisiones" class="selectpicker" data-style="btn-white" data-width="100%"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -710,7 +728,7 @@
                                     <div class="col-md-3" align="center" id="ContenedorFechaInicio">
                                         <div class="FechaInput">
                                             <div class="input-group m-t-10">
-                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%">
+                                                <input data-toggle="tooltip" data-format="d/m/Y" data-placement="bottom" data-original-title="Fecha de inicio"  data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio_Filtro" type="text" class="form-control" data-width="100%">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
                                                 </span>
@@ -720,7 +738,7 @@
                                     <div class="col-md-3" align="center" id="ContenedorFechaFin">
                                         <div class="FechaInput">
                                             <div class="input-group m-t-10">
-                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%">
+                                                <input data-large-mode="true" data-format="d/m/Y" data-toggle="tooltip" data-placement="bottom" data-original-title="Fecha de Fin" data-lang="es" id="Remision_Fecha_Terminal_Filtro" type="text" class="form-control" data-width="100%">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar"></i></button>
                                                 </span>
@@ -749,6 +767,9 @@
                                                 <th>Numero de remisión</th>
                                                 <th>Asignada A</th>
                                                 <th>Estado</th>
+                                                <th>Fecha De Elaboración</th>
+                                                <th>Fecha De Culminación</th>
+                                                <th>Elaborada por</th>
                                                 <th>Detalle</th>
                                                 <th>Eliminar</th>
                                             </tr>
@@ -798,14 +819,14 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Estudiante</label>
                                                             <div class="input-group m-t-10">
-                                                                <select id="ID_Estudiante_Remision" title="Seleccione un Estudiante" class="selectpicker" data-style="btn-white" disabled></select>
+                                                                <select data-show-subtext = "true" data-live-search="true" id="ID_Estudiante_Remision" title="Seleccione un Estudiante" class="selectpicker" data-style="btn-white" disabled></select>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="control-label">Empleado</label>
                                                             <div class="input-group m-t-10">
-                                                                <select id="ID_Empleado_Remision" title="Seleccione un Empleado" class="selectpicker" data-style="btn-white" disabled>
+                                                                <select data-show-subtext = "true" id="ID_Empleado_Remision" title="Seleccione un Empleado" class="selectpicker" data-style="btn-white" disabled>
                                                                     <option data-subtext="@Session["Usuario"].ToString()">#@Session["ID"].ToString()</option>
                                                                 </select>
                                                             </div>
@@ -816,11 +837,10 @@
                                             <div class="col-md-6">
                                                 <div class="p-20">
                                                     <form>
-
                                                         <div class="form-group">
                                                             <label class="control-label">Fecha de elaboración</label>
                                                             <div class="input-group m-t-10">
-                                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Inicio" type="text" class="form-control" disabled>
+                                                                <input  data-format="dd/mm/Y" data-large-mode="true" data-lang="es"  id="Remision_Fecha_Inicio" type="text" class="form-control" data-width="100%" disabled>
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
@@ -830,7 +850,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Fecha Fin</label>
                                                             <div class="input-group m-t-10">
-                                                                <input data-large-mode="true" data-lang="es" id="Remision_Fecha_Fin" type="text" class="form-control">
+                                                                <input data-format="d/m/Y" data-large-mode="true" data-lang="es" id="Remision_Fecha_Fin" type="text" class="form-control">
                                                                 <span class="input-group-btn">
                                                                     <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
                                                                 </span>
@@ -858,7 +878,7 @@
                         <div class="row" id="row_Instrumento_Disponible">
                             <div class="form-group col-sm-3 FlotarDerecha2">
                                 <div class="input-group m-t-10">
-                                    <select data-live-search="true" id="Instrumentos_Disponibles" name="Instrumentos_Disponibles" title="Instrumentos Disponibles" class="selectpicker" data-style="btn-white" data-width="auto"></select>
+                                    <select data-show-subtext = "true" data-live-search="true" id="Instrumentos_Disponibles" name="Instrumentos_Disponibles" title="Instrumentos Disponibles" class="selectpicker" data-style="btn-white" data-width="auto"></select>
                                     <span class="input-group-btn"><button id="Añadir_Desglose_Remision" type="button" class="btn waves-effect waves-light btn-primary btn-color" onclick=""><i class="ion-plus-round" data-pack="default" data-tags="magnifying glass"></i></button></span>
                                 </div>
                             </div>
@@ -1078,11 +1098,123 @@
                     </div>
                 </div>
 
+                <div id="ListaNegra">
+                    <div class="row" id="ListaNegraRow">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading6">
+                                <i class="icon ion-pin" aria-hidden="true"></i>
+                                <h3 class="TextoHeader">Listado de estudiantes en lista negra</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="Lista_T" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID Estudiante</th>
+                                                <th>Nombre</th>
+                                                <th>Motivo De Ingreso</th>
+                                                <th>Fecha de ingreso</th>
+                                                <th>Estado</th> 
+                                                <th>Detalle</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="Lista_TBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Lista_Detalle">
+                    <div class="row" id="row_estuches_Descripcion">
+                        <div class="panel panel-color panel-danger">
+                            <div class="panel-heading6">
+                                <i class="icon ion-pin" aria-hidden="true"></i>
+                                <h3 id="Header_Lista_Texto" class="TextoHeader">Añadir estudiante a lista</h3>
+                                <div class="FlotarDerecha">
+                                    <i class="ion-grid" data-pack="default" data-tags="menu"></i>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Switch_Editar_Lista">
+                                        <label class="onoffswitch-label" for="Switch_Editar_Lista">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">                                   
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">ID Estudiante</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select data-show-subtext="true" id="ID_Estudiante_Lista" class="selectpicker" data-style="btn-white"></select>                                                            
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Fecha Ingreso</label>
+                                                            <div class="input-group m-t-10">
+                                                                <input data-format ="d/m/Y" data-width="100%" id="Fecha_Ingreso_Lista" type="text" class="form-control" disabled>
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-primary btn-color"><i class="ion-android-calendar" data-pack="default" data-tags="credit, debit, money, shopping, cash, dollars, $"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>                                                   
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="p-20">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Motivo de ingreso</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select data-show-subtext="true" id="ID_Motivo_Ingreso" class="selectpicker" data-style="btn-white">
+                                                                    <option>Robo</option>
+                                                                    <option>Por Irresponsable</option>
+                                                                    <option>No entregar a tiempo el instrumento</option>
+                                                                    <option>No cuidar adecuadamente los instrumentos</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estado</label>
+                                                            <div class="input-group m-t-10">
+                                                                <select data-show-subtext="true" id="ID_Estudiante_EstadoLista" class="selectpicker" data-style="btn-white">
+                                                                    <option>En Lista</option>
+                                                                    <option>Habilitado</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>                                             
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <button id="Actualizar_Lista" type="button" class="btn btn-success">
+                                            <span class="btn-label"><i class="ion-upload active" data-pack="default" data-tags="storage, cloud"></i></span>Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="Aulas">
                     <div class="row" id="row_aulas">
                         <div class="panel panel-color panel-danger">
                             <div class="panel-heading5">
-                                <i class="ion-android-pin" aria-hidden="true"></i>
+                                <i class="icon ion-flag" aria-hidden="true"></i>
                                 <h3 class="TextoHeader">Aulas</h3>
                             </div>
                             <div class="panel-body">
@@ -1104,8 +1236,8 @@
                         </div>
                     </div>
                 </div>
-                <footer class="footer text-right">
-                    © 2018 MelB Versiòn Beta realizada por Oscar Rivera, Reynaldo Saul y Yader Castillo.
+                <footer class="footer text-right" id="FooterCopyright" style="margin-top:25px;">
+                    © 2018 MelB Realizada por Oscar Rivera, Yader Castillo y Reynaldo Garzòn.
                 </footer>
             </div>
 
@@ -1145,6 +1277,7 @@
     <script src="~/Scripts/webapi/Accesorio.js"></script>
     <script src="~/Scripts/webapi/Estuche.js"></script>
     <script src="~/Scripts/webapi/Aula.js"></script>
+    <script src="~/Scripts/webapi/ListaNegra.js"></script>
 
 </body>
 </html>

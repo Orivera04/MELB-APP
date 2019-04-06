@@ -220,5 +220,5 @@ function GeneralReporteHistorialPDF(Historial)
 
             }
         });
-    Documento.save('Historial.pdf');
+    window.open(Documento.output('bloburl'), '_blank');
 }

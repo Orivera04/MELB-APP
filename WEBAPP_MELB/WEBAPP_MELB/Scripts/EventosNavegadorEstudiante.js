@@ -76,7 +76,7 @@ function InicializacionControles()
     });
 
     /* Inputs : Fecha */
-    $('#FechaNacimiento_Estudiante').dateDropper(); 
+    $('#FechaNacimiento_Estudiante').dateDropper({ dateFormat: 'dd-mm-yy' }); 
     
     /* Tooltips */
     $('[data-toggle="tooltip"]').tooltip();  

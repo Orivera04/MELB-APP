@@ -113,6 +113,7 @@ var Borrar_Remision_Bandera = true;
                       if(Resultado.Codigo == null)
                       {
                           $('#Reporte').hide();
+                          $('#FooterCopyright').css('margin-top', '50px');
                           FormularioActivo = "RemisionDetalleLectura";
                           Resultado = Resultado[0];                  
                           $('#ID_Remision').val(Resultado.ID_Remision); 

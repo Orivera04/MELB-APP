@@ -95,8 +95,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
         {
             title: 'Actualizar Accesorio',
             text: 'Nombre del accessorio',
-            input : 'text',
-            inputValue : Descripcion,
+            input : 'text', 
             inputAttributes: 
             {
                 maxlength : 15
@@ -171,7 +170,7 @@ function Insertar_Actualizar_Accesorio(ID,Comando,ID_Accesorio,Nombre,Descripcio
             {
               $.ajax({
 
-                  url: 'http://melbws.azurewebsites.net/api/Accesorio/',
+                  url: 'https://melbws.azurewebsites.net/api/Accesorio/',
 
                   type: 'PUT',
 

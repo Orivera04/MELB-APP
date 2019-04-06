@@ -31,6 +31,7 @@ var LogoIMG64CasaTresMundos;
                     if (Parametro == 1) {
                         GeneralReporte(Resultado,null,false);
                     }
+
                     swal.closeModal();
                 }
                 else

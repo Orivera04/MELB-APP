@@ -213,6 +213,7 @@
     <Content Include="Scripts\webapi\Horario.js" />
     <Content Include="Scripts\webapi\Inscripciones.js" />
     <Content Include="Scripts\webapi\Instrumentos.js" />
+    <Content Include="Scripts\webapi\ListaNegra.js" />
     <Content Include="Scripts\webapi\Matricula.js" />
     <Content Include="Scripts\webapi\Notas.js" />
     <Content Include="Scripts\webapi\Pagos.js" />
